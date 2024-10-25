@@ -343,8 +343,8 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 #bindsym $mod+Ctrl+m exec pavucontrol
 
 
-bindsym --release Ctrl+Shift+c exec "xcolor | xclip -selection clipboard"
-bindsym --release Ctrl+Shift+t exec "ocrdesktop"
+bindsym --release $alt+Shift+c exec "xcolor | xclip -selection clipboard"
+bindsym --release $alt+Shift+t exec "ocrdesktop"
 ################################################################################################
 
 
