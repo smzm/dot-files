@@ -2,18 +2,12 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 
--- Remove trailing whitespaces
--- autocmd("BufWritePre", {
--- 	pattern = "",
--- 	command = "%s/\\s\\+$//e",
--- })
-
 -- Highlight text on yank
 augroup("YankHighlight", { clear = true })
 autocmd("TextYankPost", {
 	group = "YankHighlight",
 	callback = function()
-		vim.highlight.on_yank({ higroup = "IncSearch", timeout = "700" })
+		vim.highlight.on_yank({ higroup = "IncSearch", timeout = "300" })
 	end,
 })
 
@@ -23,13 +17,19 @@ autocmd("VimResized", {
 	command = "wincmd =",
 })
 
--- Close man and help with just <q>
+-- Close man and help with just with <q>
 autocmd("FileType", {
 	pattern = {
 		"help",
 		"man",
 		"lspinfo",
 		"checkhealth",
+		"qf",
+		"notify",
+		"spectre_panel",
+		"startuptime",
+		"tsplayground",
+		"PlenaryTestPopup",
 	},
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false
@@ -48,31 +48,11 @@ autocmd("BufWritePre", {
 	end,
 })
 
--- Check for spelling in text filetypes
+-- Check for spelling in text filetypes (gitcommit, markdown)
 autocmd("FileType", {
 	pattern = { "gitcommit", "markdown" },
 	callback = function()
 		vim.opt_local.spell = true
-	end,
-})
-
--- close some filetypes with <q>
-autocmd("FileType", {
-	group = augroup("close_with_q", { clear = true }),
-	pattern = {
-		"qf",
-		"help",
-		"man",
-		"notify",
-		"lspinfo",
-		"spectre_panel",
-		"startuptime",
-		"tsplayground",
-		"PlenaryTestPopup",
-	},
-	callback = function(event)
-		vim.bo[event.buf].buflisted = false
-		vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
 	end,
 })
 
@@ -88,7 +68,7 @@ autocmd("BufReadPost", {
 	end,
 })
 
--- Auto Save when insert leave
+-- Auto Save when leaving insert mode
 autocmd({ "InsertLeave", "TermOpen" }, {
 	buffer = bufnr,
 	group = augroup("auto_save", { clear = true }),

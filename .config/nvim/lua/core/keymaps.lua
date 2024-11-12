@@ -1,27 +1,23 @@
 local opts = { noremap = true, silent = true }
 local map = vim.api.nvim_set_keymap
 
--- Move Faster
-map("n", "<S-j>", "10j", opts)
-map("n", "<S-k>", "10k", opts)
-
--- Tab line forward and backward in normal mode
-map("n", "<Tab>", ">gv", opts)
-map("n", "<S-Tab>", "<", opts)
-
 -- use jk to exit insert mode
 map("i", "jk", "<ESC>", opts)
 
--- better up/down
+-- better up/down in wrapped line
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
 map("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true })
 
 -- disable hlsearch
-map("n", "<esc>", ":nohlsearch<CR>", { silent = true })
+map("n", "<esc><esc>", ":nohlsearch<CR>", { silent = true })
 
 -- delete single character without copying into register
 map("n", "x", '"_x', opts)
 map("v", "x", '"_x', opts)
+
+-- Move Faster
+map("n", "<S-j>", "10j", opts)
+map("n", "<S-k>", "10k", opts)
 
 -- (;) as (:)
 map("n", ";", ":", opts)
@@ -42,6 +38,10 @@ vim.g.maplocalleader = " "
 map("i", ",", ",<c-g>u", opts)
 map("i", ".", ".<c-g>u", opts)
 map("i", ";", ";<c-g>u", opts)
+
+-- splitting windows
+vim.api.nvim_set_keymap("n", "<leader>-", ":split<CR>", opts) -- Horizontal split
+vim.api.nvim_set_keymap("n", "<leader>|", ":vsplit<CR>", opts) -- Vertical split
 
 -- Better split navigation
 map("n", "<C-h>", "<C-w>h", opts)
@@ -69,14 +69,6 @@ map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", opts)
 map("v", "<A-j>", ":m '>+1<cr>gv=gv", opts)
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", opts)
 
--- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
-map("n", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("o", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next search result" })
-map("n", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
-map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
-map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
-
 -- Visual
 -- better paste
 map("v", "p", '"_dP', opts)
@@ -85,78 +77,12 @@ map("v", "p", '"_dP', opts)
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move down" })
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move up" })
 
--- stay in indent mode
+-- Stay in visual mode for next indentation
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
 
--- Lazy keymap
-map("n", "<leader>Ll", ":Lazy<CR>", opts)
-map("n", "<leader>Lu", ":Lazy update<CR>", opts)
-map("n", "<leader>Ls", ":Lazy sync<CR>", opts)
-map("n", "<leader>LL", ":Lazy log<CR>", opts)
-map("n", "<leader>Lc", ":Lazy clean<CR>", opts)
-map("n", "<leader>Lp", ":Lazy profile<CR>", opts)
-
--- Nvim tree
-map("n", "<leader>n", ":NvimTreeToggle<CR>", opts)
-
--- trouble.nvim keymaps
-map("n", "<leader>xx", ":TroubleToggle<CR>", opts)
-map("n", "<leader>xw", ":TroubleToggle workspace_diagnostics<CR>", opts)
-map("n", "<leader>xd", ":TroubleToggle document_diagnostics<CR>", opts)
-map("n", "<leader>xq", ":TroubleToggle quickfix<CR>", opts)
-map("n", "<leader>xl", ":TroubleToggle loclist<CR>", opts)
-map("n", "<leader>xr", ":TroubleToggle lsp_references<CR>", opts)
-
--- vim-illuminate
-map("n", "<leader>it", ":IlluminateToggle<CR>", opts)
-map("n", "<leader>ib", ":IlluminateToggleBuf<CR>", opts)
-
--- Telescope keybindings
-map("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-map("n", "<leader>fw", ":Telescope live_grep<CR>", opts)
-map("n", "<leader>fB", ":Telescope buffers<CR>", opts)
-map("n", "<leader>fh", ":Telescope help_tags<CR>", opts)
-map("n", "<leader>fm", ":Telescope man_pages<CR>", opts)
-map("n", "<leader>fr", ":Telescope oldfiles<CR>", opts)
-map("n", "<leader>fR", ":Telescope registers<CR>", opts)
-map("n", "<leader>fk", ":Telescope keymaps<CR>", opts)
-map("n", "<leader>fc", ":Telescope commands<CR>", opts)
-map("n", "<leader>fb", ":Telescope file_browser<CR>", opts)
-
--- Telescope undo tree keymap
-map("n", "<leader>u", ":Telescope undo<CR>", opts)
-
--- treesj keymaps
-map("n", "<leader>m", ":TSJToggle<CR>", opts)
-map("n", "<leader>s", ":TSJSplit<CR>", opts)
-map("n", "<leader>j", ":TSJJoin<CR>", opts)
-
--- Todo comment
-vim.keymap.set("n", "]t", function()
-	require("todo-comments").jump_next()
-end, { desc = "Next todo comment" })
-
-vim.keymap.set("n", "[t", function()
-	require("todo-comments").jump_prev()
-end, { desc = "Previous todo comment" })
-
--- Rust(cargo.toml) : Update Crates
-vim.keymap.set("n", "<leader>rcu", function()
-	require("crates").upgrade_all_crates()
-end, { desc = "Update All crates" })
-
--- Rust Debugging
--- Toggle Breakpoint
-map("n", "<leader>dbb", "<cmd> DapToggleBreakpoint <CR>", { desc = "Toggle Breakpoint" })
-map("n", "<leader>dbs", "<cmd> RustDebuggables <CR>", { desc = "Open Panel" })
-map("n", "<leader>dbo", "<cmd> DapStepOver <CR>", { desc = "Dap Step Over" })
--- Debugger Panel
-vim.keymap.set("n", "<leader>dbp", function()
-	local widgets = require("dap.ui.widgets")
-	local sidebar = widgets.sidebar(widgets.scopes)
-	sidebar.open()
-end, { desc = "Open Debugger Panel" })
-
--- LSP Diagnostics Toggle
-map("n", "<leader>lt", ":ToggleDiag <CR>", { desc = "Toggle LSP Diagnostics" })
+-- shortcut in writing
+map("i", "][", "{}<left>", opts)
+map("i", "09", "()<left>", opts)
+map("i", "''", '""<left>', opts)
+map("i", ";;", ":", opts)

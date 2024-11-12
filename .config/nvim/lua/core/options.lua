@@ -1,13 +1,14 @@
 local opt = vim.opt
 local g = vim.g
 
+-- to displaying diagnostic signs (like errors or warnings)
 vim.o.signcolumn = "yes"
 
 -- Cursor highlighting
 opt.cursorline = true
 opt.cursorcolumn = false
 
--- Pane splitting
+-- Pane splitting : add separator line
 opt.splitright = true
 opt.splitbelow = true
 
@@ -27,30 +28,31 @@ opt.termguicolors = true
 opt.background = "dark"
 
 -- Make neovim use the system clipboard
-opt.clipboard = "unnamedplus"
+-- opt.clipboard = "unnamedplus"
 
 -- Disable old vim status
 opt.showmode = false
+opt.showcmd = false
 
 -- Set relative line numbers
 opt.number = true
 opt.relativenumber = false
 opt.numberwidth = 4
 
--- Tab config
+-- <Tab> configuration
 opt.expandtab = true
 opt.smarttab = true
 opt.smartindent = true
 opt.shiftwidth = 2
 opt.tabstop = 2
 
--- Code folding
+-- Code folding : all folds to be open by default
 opt.foldenable = true
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 opt.foldcolumn = "1"
 
--- Decrease update time
+-- Decrease waiting time in key mapped sequences
 opt.timeoutlen = 500
 opt.updatetime = 200
 
@@ -58,33 +60,30 @@ opt.updatetime = 200
 -- allow backspace on indent, end of line or insert mode start position
 opt.backspace = "indent,eol,start"
 
--- Disable swapfile
+-- Disable swapfile on persistant undo
 opt.swapfile = false
 
 -- Enable persistent undo
 opt.undofile = true
 
--- cmp config
-opt.completeopt = { "menu", "menuone", "noselect" }
+-- Configures completion behavior, showing a menu even when there is only one match and not selecting any item automatically.
+opt.completeopt = { "menu", "noselect" }
 
--- Always show tabline
-opt.showtabline = 2
+-- Always show tab line at the top
+-- opt.showtabline = 2
 
--- Disable mouse support
--- opt.mouse = {}
-
--- Scrolloff
+-- Scrolloff : Maintain 5 line above/below and left/right
 opt.scrolloff = 5
 opt.sidescrolloff = 5
 
--- Disable wrapping
+-- Disable text wrapping
 opt.wrap = false
 
 -- Fill chars
 opt.fillchars = [[vert:|,horiz:-,eob: ]]
 
 -- Enable lazy redraw for performance
-opt.lazyredraw = true
+-- opt.lazyredraw = true
 
 -- Have the statusline only display at the bottom
 opt.laststatus = 3
