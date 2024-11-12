@@ -77,7 +77,7 @@ opt.scrolloff = 5
 opt.sidescrolloff = 5
 
 -- Disable text wrapping
-opt.wrap = false
+opt.wrap = true
 
 -- Fill chars
 opt.fillchars = [[vert:|,horiz:-,eob: ]]

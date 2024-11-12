@@ -31,7 +31,6 @@ return {
 			local sources = {
 				nls.builtins.formatting.stylua,
 				nls.builtins.formatting.markdownlint,
-				nls.builtins.diagnostics.markdownlint,
 				nls.builtins.formatting.fixjson,
 				nls.builtins.formatting.isort,
 				nls.builtins.formatting.black.with({
