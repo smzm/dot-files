@@ -2,9 +2,6 @@ return {
     'folke/which-key.nvim',
     keys = {
         "<leader>",
-        '"',
-        "'",
-        "`",
     },
     config = function()
         local wk = require('which-key')
