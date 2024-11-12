@@ -168,6 +168,7 @@ if os_answers['interest'] == 'Arch' :
     "telegram-desktop",
     "uv",
     "ruff",
+    "ripgrep",
     "file-roller",
     "ocrdesktop",
     "tesseract-data-eng",
@@ -210,7 +211,9 @@ elif os_answers['interest'] == 'WSL' :
         "unarchiver",
         "xdg-utils",
         "lldb",
-
+        "ruff",
+        "uv",
+        "ripgrep",
     ]
 
 
