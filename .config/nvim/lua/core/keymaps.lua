@@ -26,6 +26,9 @@ map("n", ";", ":", opts)
 map("n", "+", "<C-a>", { desc = "Increment number" })
 map("n", "-", "<C-x>", { desc = "Decrement number" })
 
+-- delete a word backward
+map("n", "dw", "vb_d", opts)
+
 -- select all
 map("n", "<C-a>", "gg<S-v>G", opts)
 
