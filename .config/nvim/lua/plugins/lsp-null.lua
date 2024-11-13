@@ -69,6 +69,7 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 			"jayp0521/mason-null-ls.nvim",
 			"SmiteshP/nvim-navic",
+			"roobert/tailwindcss-colorizer-cmp.nvim",
 		},
 		keys = {
 			{ "gd", "<cmd>Telescope lsp_definitions<cr>", desc = "Goto Definition" },
@@ -363,6 +364,7 @@ return {
 				"regex",
 				"python",
 				"rust",
+				"ron",
 				"toml",
 				"vim",
 				"vimdoc",
