@@ -23,14 +23,19 @@ map("n", "<S-k>", "10k", opts)
 map("n", ";", ":", opts)
 
 -- increment/decrement numbers
-map("n", "+", "<C-a>", { desc = "Increment number" })
-map("n", "-", "<C-x>", { desc = "Decrement number" })
+map("n", "+", "<C-a>", { noremap = true, silent = true, desc = "Increment number" })
+map("n", "-", "<C-x>", { noremap = true, silent = true, desc = "Decrement number" })
 
 -- delete a word backward
 map("n", "dw", "vb_d", opts)
 
 -- select all
 map("n", "<C-a>", "gg<S-v>G", opts)
+
+-- new tab
+-- map("n", "<leader>te", ":tabedit<CR>", opts)
+-- map("n", "<leader>tn", ":tabnext<CR>", opts)
+-- map("n", "<leader>tb", ":tabprev<CR>", opts)
 
 -- Set space as my leader key
 map("", "<Space>", "<Nop>", opts)
@@ -43,8 +48,18 @@ map("i", ".", ".<c-g>u", opts)
 map("i", ";", ";<c-g>u", opts)
 
 -- splitting windows
-vim.api.nvim_set_keymap("n", "<leader>-", ":split<CR>", opts) -- Horizontal split
-vim.api.nvim_set_keymap("n", "<leader>|", ":vsplit<CR>", opts) -- Vertical split
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>s-",
+	":split<CR>",
+	{ noremap = true, silent = true, desc = "Horizontal tab split" }
+) -- Horizontal split
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>s|",
+	":vsplit<CR>",
+	{ noremap = true, silent = true, desc = "Vertical tab split" }
+) -- Vertical split
 
 -- Better split navigation
 map("n", "<C-h>", "<C-w>h", opts)

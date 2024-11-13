@@ -6,13 +6,13 @@ return {
 		{ "<leader>t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal #2" },
 		{ "<leader>t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal #3" },
 		{ "<leader>t4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal #4" },
-		{
-			"<leader>gg",
-			function()
-				_LAZYGIT_TOGGLE()
-			end,
-			desc = "Toggle lazygit",
-		},
+		-- {
+		-- 	"<leader>gg",
+		-- 	function()
+		-- 		_LAZYGIT_TOGGLE()
+		-- 	end,
+		-- 	desc = "Toggle lazygit",
+		-- },
 	},
 	opts = {
 		size = 20,
