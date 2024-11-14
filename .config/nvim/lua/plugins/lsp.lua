@@ -265,7 +265,7 @@ return {
 			end, { desc = "Format file or range (in visual mode)" })
 		end,
 	},
-	>>> Auto completion
+	-- >>> Auto completion
 	{
 		"hrsh7th/nvim-cmp",
 		dependencies = {
