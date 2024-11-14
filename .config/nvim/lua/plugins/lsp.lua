@@ -10,7 +10,9 @@ return {
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			-- Useful status updates for LSP
-			"j-hui/fidget.nvim",
+			{ "j-hui/fidget.nvim", opts = {} },
+			-- Show nvim diagnostics using virtual lines
+			{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
 		},
 		config = function()
 			local servers = {
@@ -89,6 +91,7 @@ return {
 			local mason_lspconfig = require("mason-lspconfig")
 			local mason_tool_installer = require("mason-tool-installer")
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
+			local lsp_lines = require("lsp_lines")
 
 			-- Setup Mason
 			mason.setup({
@@ -102,6 +105,7 @@ return {
 			})
 			mason_lspconfig.setup({ ensure_installed = servers })
 			mason_tool_installer.setup({ ensure_installed = formatters })
+			lsp_lines.setup()
 
 			-- used to enable autocompletion (assign to every lsp server config)
 			local capabilities = cmp_nvim_lsp.default_capabilities()
@@ -187,7 +191,11 @@ return {
 						{ name = "DiagnosticSignInfo", text = "" },
 					},
 				},
-				virtual_text = true,
+				virtual_text = false, -- Because of lsp-line remove the regular virtual text diagnostics to avoid pointless duplication
+				virtual_lines = {
+					only_current_line = true,
+					highlight_whole_line = true,
+				},
 				update_in_insert = false,
 				underline = true,
 				severity_sort = true,
