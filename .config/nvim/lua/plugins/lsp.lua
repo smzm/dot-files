@@ -305,6 +305,8 @@ return {
 				}
 			end
 
+			vim.api.nvim_set_hl(0, "CmpWin", { bg = "#07080d" })
+
 			cmp.setup({
 				completion = {
 					completeopt = "menu,menuone,preview,noselect",
@@ -320,15 +322,8 @@ return {
 					["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 					["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 					["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-					["<C-e>"] = cmp.mapping.abort(), -- close completion window
-					["<CR>"] = cmp.mapping.confirm({ select = false }),
+					["<CR>"] = cmp.mapping.confirm({ select = true }),
 				}),
-				formatting = {
-					format = lspkind.cmp_format({
-						maxwidth = 50,
-						ellipsis_char = "...",
-					}),
-				},
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" }, -- snippets
@@ -336,12 +331,27 @@ return {
 					{ name = "path" }, -- file system paths
 				},
 				window = {
-					completion = cmp.config.window.bordered(),
-					documentation = {
-						border = border("CmpDocBorder"),
-						winhighlight = "Normal:CmpDoc",
+					completion = {
+						winhighlight = "Normal:CmpWin,FloatBorder:Title,Search:None",
+						col_offset = -3,
+						side_padding = 0,
 					},
-					--cmp.config.window.bordered(),
+					documentation = {
+						-- border = border("CmpDocBorder"),
+						winhighlight = "Normal:CmpWin",
+					},
+				},
+				formatting = {
+					fields = { "kind", "abbr", "menu" },
+					format = function(entry, vim_item)
+						local kind =
+							require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+						local strings = vim.split(kind.kind, "%s", { trimempty = true })
+						kind.kind = " " .. (strings[1] or "") .. " "
+						kind.menu = "    (" .. (strings[2] or "") .. ")"
+
+						return kind
+					end,
 				},
 				enabled = function()
 					-- Disable nvim-cmp in a telescope prompt
