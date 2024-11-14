@@ -9,6 +9,7 @@ return {
 		debug = { enabled = true },
 		notifier = { enabled = true },
 		toggle = { enabled = true },
+		words = { enabled = false },
 		terminal = {
 			win = {
 				border = "solid",
@@ -17,7 +18,7 @@ return {
 		lazygit = {
 			configure = true,
 			win = {
-				border = "solid",
+				border = "so",
 			},
 		},
 		styles = {
