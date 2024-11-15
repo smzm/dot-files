@@ -222,7 +222,7 @@ return {
 						width = 65,
 					},
 					border = {
-						padding = { 1, 4 },
+						padding = { 2, 4 },
 						style = "solid",
 					},
 				},
@@ -267,8 +267,8 @@ return {
 	end,
 	config = function(_, opts)
 		require("neo-tree").setup(opts)
-            vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08070a" })
-            vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#08070a" })
-            vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "#08070a", fg="#08070a" })
+		vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08070a" })
+		vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#08070a" })
+		vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "#08070a", fg = "#08070a" })
 	end,
 }

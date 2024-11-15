@@ -18,5 +18,10 @@ return {
 			mode = "buffers",
 			diagnostics = "nvim_lsp",
 		},
+		highlights = {
+			fill = {
+				bg = "#15141b", -- Background color for empty space
+			},
+		},
 	},
 }

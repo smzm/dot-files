@@ -1,7 +1,7 @@
 -- Codeium ai : to run --> :Codeium Auth
 return {
-	"Exafunction/codeium.vim",
-	event = "InsertEnter",
+	"monkoose/neocodeium",
+	event = "VeryLazy",
 	config = function()
 		-- Change '<C-g>' here to any keycode you like.
 		vim.keymap.set("i", "<C-e>", function()

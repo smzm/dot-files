@@ -1,0 +1,3 @@
+-- "sindrets/diffview.nvim"
+
+return {}
