@@ -15,12 +15,16 @@ return {
 		},
 		delay = 900,
 		spec = {
-			{ "<leader>f", group = "file/find" },
-			{ "<leader>h", group = "harpoon", icon={icon = "H"} },
-			{ "<leader>b", group = "buffer" },
-			{ "<leader>t", group = "terminal" },
-			{ "<leader>s", group = "split" },
-			{ "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "red" } }
+			{ "<leader>f", group = "File/find" },
+			{ "<leader>h", group = "Harpoon", icon = { icon = "H" } },
+			{ "<leader>b", group = "Buffer" },
+			{ "<leader>t", group = "Terminal" },
+			{ "<leader>s", group = "Split" },
+			{ "<leader>e", group = "Nvim-tree" },
+			{ "<leader>l", group = "LSP" },
+			{ "<leader>u", group = "Snack" },
+			{ "<leader>g", group = "Git" },
+			{ "<leader>x", group = "Diagnostics/quickfix", icon = { icon = "󱖫 ", color = "red" } },
 		},
 	},
 	keys = {
