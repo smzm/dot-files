@@ -1002,7 +1002,12 @@ if os_answers["interest"] == "Arch":
 
 
 # ===== Tmux configuration
-tmux_check = (subprocess.run("tmux -V", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE ).returncode == 0 )
+tmux_check = (
+    subprocess.run(
+        "tmux -V", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    ).returncode
+    == 0
+)
 if tmux_check:
     rprint(":thumbs_up: [green] tmux is installed.")
 
@@ -1029,7 +1034,7 @@ if tmux_check:
             stdout=DEVNULL,
         )
         os.system(
-            "git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
+            "git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm"
         )
 
 else:
