@@ -407,6 +407,11 @@ return {
 			{
 				"windwp/nvim-ts-autotag",
 			},
+			{
+				"echasnovski/mini.ai",
+				event = "BufReadPre",
+				opts = {},
+			},
 		},
 		keys = {
 			{ "<c-space>", desc = "Increment selection" },
