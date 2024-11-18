@@ -1002,44 +1002,38 @@ if os_answers["interest"] == "Arch":
 
 
 # ===== Tmux configuration
-if os_answers["interest"] == "Arch":
-    tmux_check = (
-        subprocess.run(
-            "tmux -V", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-        ).returncode
-        == 0
-    )
-    if tmux_check:
-        rprint(":thumbs_up: [green] tmux is installed.")
+tmux_check = (subprocess.run("tmux -V", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE ).returncode == 0 )
+if tmux_check:
+    rprint(":thumbs_up: [green] tmux is installed.")
 
-        tmux_config = [
-            inquirer.List(
-                "interest",
-                message="Install tmux configurations",
-                choices=["Yes", "No"],
-            ),
-        ]
-        tmux_config_answer = inquirer.prompt(tmux_config)
+    tmux_config = [
+        inquirer.List(
+            "interest",
+            message="Install tmux configurations",
+            choices=["Yes", "No"],
+        ),
+    ]
+    tmux_config_answer = inquirer.prompt(tmux_config)
 
-        if tmux_config_answer["interest"] == "Yes":
-            subprocess.run("clear", shell=True)
-            tmux_dir = subprocess.run(
-                "mkdir -p ~/.config/tmux",
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-            run(
-                f"yes | cp -rf {dotfiles_path}/.config/tmux ~/.config/",
-                shell=True,
-                stdout=DEVNULL,
-            )
-            os.system(
-                "git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
-            )
+    if tmux_config_answer["interest"] == "Yes":
+        subprocess.run("clear", shell=True)
+        tmux_dir = subprocess.run(
+            "mkdir -p ~/.config/tmux",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        run(
+            f"yes | cp -rf {dotfiles_path}/.config/tmux ~/.config/",
+            shell=True,
+            stdout=DEVNULL,
+        )
+        os.system(
+            "git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
+        )
 
-    else:
-        rprint(":thumbs_down: [red italic] tmux is not installed.\n")
+else:
+    rprint(":thumbs_down: [red italic] tmux is not installed.\n")
 
 
 # ===== lf configuration
