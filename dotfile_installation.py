@@ -211,6 +211,7 @@ elif os_answers["interest"] == "WSL":
         "openssh",
         "zsh",
         "starship",
+        "tmux",
         "ruby",
         "rust",
         "jupyter-notebook",
