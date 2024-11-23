@@ -16,7 +16,7 @@ return {
 		delay = 900,
 		spec = {
 			{ "<leader>f", group = "File/find" },
-			{ "<leader>h", group = "Harpoon", icon = { icon = "H" } },
+			{ "<leader>h", group = "Harpoon" },
 			{ "<leader>b", group = "Buffer" },
 			{ "<leader>t", group = "Terminal" },
 			{ "<leader>s", group = "Split" },
@@ -24,6 +24,7 @@ return {
 			{ "<leader>l", group = "LSP" },
 			{ "<leader>u", group = "Snack" },
 			{ "<leader>g", group = "Git" },
+			{ "<leader>a", group = "Avante" },
 			{ "<leader>x", group = "Diagnostics/quickfix", icon = { icon = "󱖫 ", color = "red" } },
 		},
 	},
