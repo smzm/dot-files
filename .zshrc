@@ -171,6 +171,7 @@ alias yt='yt-dlp -f "bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext
 alias ytcookie='yt-dlp --cookies-from-browser chrome -f "bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --add-chapters -c'
 alias lg='lazygit'
 
+
 # Enable and disable venv in python dierctory automatically
 function cd() {
   builtin cd "$@"
@@ -191,3 +192,4 @@ function cd() {
   fi
 }
 
+export GROQ_API_KEY="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"

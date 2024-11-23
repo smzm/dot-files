@@ -335,6 +335,7 @@ return {
 					{ name = "luasnip" }, -- snippets
 					{ name = "buffer" }, -- text within current buffer
 					{ name = "path" }, -- file system paths
+					{ name = "dadbod" }, -- database
 				},
 				window = {
 					completion = {
