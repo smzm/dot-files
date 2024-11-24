@@ -72,7 +72,9 @@ return {
 					},
 				},
 			}
-			local formatters = {
+
+			local ensure_installed = vim.tbl_keys(servers or {})
+			vim.list_extend(ensure_installed, {
 				-- FORMATTERS
 				{ "black" }, -- Python
 				{ "isort" }, -- Python
@@ -89,7 +91,7 @@ return {
 
 				--DAP
 				{ "debugpy" },
-			}
+			})
 
 			-- imports
 			local lspconfig = require("lspconfig")
@@ -109,8 +111,14 @@ return {
 					},
 				},
 			})
-			mason_lspconfig.setup({ ensure_installed = servers })
-			mason_tool_installer.setup({ ensure_installed = formatters })
+
+			-- mason_lspconfig.setup({ ensure_installed = servers_to_install })
+			mason_tool_installer.setup({
+				ensure_installed = ensure_installed,
+				auro_update = true,
+				run_on_start = true,
+				start_delay = 2000,
+			})
 			lsp_lines.setup()
 
 			-- used to enable autocompletion (assign to every lsp server config)
