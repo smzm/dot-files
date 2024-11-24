@@ -13,6 +13,12 @@ return {
 			{ "j-hui/fidget.nvim", opts = {} },
 			-- Show nvim diagnostics using virtual lines
 			{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
+			{
+				"luckasRanarison/tailwind-tools.nvim",
+				name = "tailwind-tools",
+				build = ":UpdateRemotePlugins",
+				opts = {}, -- your configuration
+			},
 		},
 		config = function()
 			local servers = {

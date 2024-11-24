@@ -213,16 +213,16 @@ return {
 
 			window = {
 				position = "left",
-				width = 0.2,
+				width = 0.4,
 				-- https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup
 				popup = {
 					position = "50%", -- 50% means center it
 					size = {
-						height = 0.65,
+						height = 0.9,
 						width = 65,
 					},
 					border = {
-						padding = { 2, 4 },
+						padding = { 2, 2 },
 						style = "solid",
 					},
 				},
