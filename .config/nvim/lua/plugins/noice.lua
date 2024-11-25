@@ -3,6 +3,14 @@ return {
 	config = function()
 		require("noice").setup({
 			-- add any options here
+			-- defaults for hover and signature help
+			lsp = {
+				signature = {
+					enabled = false, -- Enable signature help
+					-- auto_open = true, -- Prevent automatic opening
+					-- view = "mini", -- Use a minimal view for signature help
+				},
+			},
 			routes = {
 				{
 					filter = {

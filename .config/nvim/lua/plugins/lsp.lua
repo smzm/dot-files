@@ -187,8 +187,8 @@ return {
 					opts.desc = "Go to next diagnostic"
 					keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-					-- opts.desc = "Show documentation for what is under cursor"
-					-- keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+					opts.desc = "Show documentation for what is under cursor"
+					keymap.set("n", "N", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
 					opts.desc = "Restart LSP"
 					keymap.set("n", "<leader>ls", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
@@ -370,13 +370,14 @@ return {
 					documentation = {
 						-- border = border("CmpDocBorder"),
 						winhighlight = "Normal:CmpWin",
+						max_width = 80,
 					},
 				},
 				formatting = {
 					fields = { "kind", "abbr", "menu" },
 					format = function(entry, vim_item)
 						local kind =
-							require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+							require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 80 })(entry, vim_item)
 						local strings = vim.split(kind.kind, "%s", { trimempty = true })
 						kind.kind = " " .. (strings[1] or "") .. " "
 						kind.menu = "    (" .. (strings[2] or "") .. ")"
