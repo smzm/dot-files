@@ -27,7 +27,17 @@ return {
 				sqlls = {}, -- SQL
 				eslint = {}, -- React/NextJS/Svelte
 				emmet_language_server = {}, -- HTML
-				ts_ls = {}, -- Javascript, TypeScript
+				ts_ls = {
+					inlayHints = {
+						includeInlayParameterNameHints = "literal",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = false,
+						includeInlayVariableTypeHints = false,
+						includeInlayPropertyDeclarationTypeHints = flase,
+						includeInlayFunctionLikeReturnTypeHints = false,
+						includeInlayEnumMemberValueHints = false,
+					},
+				}, -- Javascript, TypeScript
 				html = {}, -- HTML
 				htmx = {}, -- HTMX
 				cssls = {}, -- CSS
