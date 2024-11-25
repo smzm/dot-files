@@ -28,15 +28,15 @@ return {
 				eslint = {}, -- React/NextJS/Svelte
 				emmet_language_server = {}, -- HTML
 				ts_ls = {
-					inlayHints = {
-						includeInlayParameterNameHints = "literal",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-						includeInlayFunctionParameterTypeHints = false,
-						includeInlayVariableTypeHints = false,
-						includeInlayPropertyDeclarationTypeHints = flase,
-						includeInlayFunctionLikeReturnTypeHints = false,
-						includeInlayEnumMemberValueHints = false,
-					},
+					-- inlayHints = {
+					-- 	includeInlayParameterNameHints = "literal",
+					-- 	includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+					-- 	includeInlayFunctionParameterTypeHints = false,
+					-- 	includeInlayVariableTypeHints = false,
+					-- 	includeInlayPropertyDeclarationTypeHints = false,
+					-- 	includeInlayFunctionLikeReturnTypeHints = false,
+					-- 	includeInlayEnumMemberValueHints = false,
+					-- },
 				}, -- Javascript, TypeScript
 				html = {}, -- HTML
 				htmx = {}, -- HTMX
@@ -187,8 +187,8 @@ return {
 					opts.desc = "Go to next diagnostic"
 					keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
-					opts.desc = "Show documentation for what is under cursor"
-					keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+					-- opts.desc = "Show documentation for what is under cursor"
+					-- keymap.set("n", "K", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
 					opts.desc = "Restart LSP"
 					keymap.set("n", "<leader>ls", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
@@ -221,7 +221,7 @@ return {
 					highlight_whole_line = true,
 				},
 				update_in_insert = false,
-				underline = true,
+				underline = false,
 				severity_sort = true,
 				float = {
 					focusable = true,
