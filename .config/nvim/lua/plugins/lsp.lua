@@ -347,12 +347,12 @@ return {
 					["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 					["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
-					["<Up>"] = cmp.mapping(function(fallback)
-						fallback() -- Allows Up arrow to fall back without interacting with cmp
-					end, { "i", "c" }),
-					["<Down>"] = cmp.mapping(function(fallback)
-						fallback() -- Allows Down arrow to fall back without interacting with cmp
-					end, { "i", "c" }),
+					-- ["<Up>"] = cmp.mapping(function(fallback)
+					-- 	fallback() -- Allows Up arrow to fall back without interacting with cmp
+					-- end, { "i", "c" }),
+					-- ["<Down>"] = cmp.mapping(function(fallback)
+					-- 	fallback() -- Allows Down arrow to fall back without interacting with cmp
+					-- end, { "i", "c" }),
 				}),
 				sources = {
 					{ name = "nvim_lsp" },
@@ -445,7 +445,7 @@ return {
 		},
 		opts = {
 			highlight = { enable = true },
-			indent = { enable = true, disable = { "python" } },
+			indent = { enable = false, disable = { "python" } },
 			autotag = { enable = true },
 			context_commentstring = { enable = true, enable_autocmd = false },
 			ensure_installed = {

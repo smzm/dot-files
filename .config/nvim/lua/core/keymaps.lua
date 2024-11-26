@@ -3,6 +3,10 @@ local map = vim.api.nvim_set_keymap
 
 -- use jk to exit insert mode
 map("i", "jk", "<ESC>", opts)
+map("i", "<C-k>", "<Up>", opts)
+map("i", "<C-j>", "<Down>", opts)
+map("i", "<C-l>", "<Right>", opts)
+map("i", "<C-h>", "<Left>", opts)
 
 -- better up/down in wrapped line
 map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true })
