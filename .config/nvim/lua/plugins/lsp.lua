@@ -172,8 +172,8 @@ return {
 					opts.desc = "See available code actions"
 					keymap.set({ "n", "v" }, "<leader>lc", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-					opts.desc = "Smart rename"
-					keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts) -- smart rename
+					-- opts.desc = "Smart rename"
+					-- keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts) -- smart rename
 
 					opts.desc = "Show buffer diagnostics"
 					keymap.set("n", "<leader>lD", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
@@ -332,6 +332,7 @@ return {
 			vim.api.nvim_set_hl(0, "CmpWin", { bg = "#07080d" })
 
 			cmp.setup({
+				auto_brackets = { "python" },
 				completion = {
 					completeopt = "menu,menuone,preview,noselect",
 				},
@@ -408,6 +409,7 @@ return {
 		version = false, -- last release is way too old and doesn't work on Windows
 		build = ":TSUpdate",
 		event = { "BufReadPost", "BufNewFile" },
+		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 		lazy = false,
 		dependencies = {
 			{
@@ -438,15 +440,39 @@ return {
 				event = "BufReadPre",
 				opts = {},
 			},
+			{
+				"andymass/vim-matchup",
+				init = function()
+					vim.g.matchup_matchparen_offscreen = {}
+				end,
+			},
+			{
+				-- Wisely add "end" in various filetypes
+				"RRethy/nvim-treesitter-endwise",
+			},
 		},
 		keys = {
 			{ "<c-space>", desc = "Increment selection" },
 			{ "<bs>", desc = "Schrink selection", mode = "x" },
 		},
 		opts = {
-			highlight = { enable = true },
+			highlight = {
+				enable = true,
+				disable = function(_, buf)
+					local max_filesize = 500 * 1024 -- 500 KB
+					local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(buf))
+					if ok and stats and stats.size > max_filesize then
+						return true
+					end
+				end,
+			},
 			indent = { enable = false, disable = { "python" } },
 			autotag = { enable = true },
+			endwise = { enable = true },
+			matchup = {
+				enable = true,
+				include_match_words = true,
+			},
 			context_commentstring = { enable = true, enable_autocmd = false },
 			ensure_installed = {
 				"bash",

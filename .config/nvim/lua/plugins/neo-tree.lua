@@ -31,14 +31,41 @@ return {
 	-- File explorer written in Lua
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
-	dependencies = { "MunifTanjim/nui.nvim" },
+	dependencies = {
+		"MunifTanjim/nui.nvim",
+		{
+			"s1n7ax/nvim-window-picker",
+			lazy = true,
+			opts = {
+				filter_rules = {
+					-- filter using buffer options
+					bo = {
+						-- if the file type is one of following, the window will be ignored
+						filetype = {
+							"neo-tree",
+							"neo-tree-popup",
+							"notify",
+							"packer",
+							"qf",
+							"diff",
+							"fugitive",
+							"fugitiveblame",
+						},
+
+						-- if the buffer type is one of following, the window will be ignored
+						buftype = { "nofile", "help", "terminal" },
+					},
+				},
+			},
+		},
+	},
 	cmd = "Neotree",
 	-- stylua: ignore
 	keys = {
 		{
 			'<leader>ee',
 			function()
-				require('neo-tree.command').execute({ toggle = true, dir = vim.uv.cwd() })
+                vim.cmd("Neotree left toggle reveal")
 			end,
 			desc = 'Explorer NeoTree (cwd)',
 		},
@@ -320,5 +347,8 @@ return {
 				end
 			end,
 		})
+		vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08070a" })
+		vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#08070a" })
+		vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "#08070a", fg = "#08070a" })
 	end,
 }

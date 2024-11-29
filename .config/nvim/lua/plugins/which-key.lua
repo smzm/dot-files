@@ -20,7 +20,7 @@ return {
 			{ "<leader>b", group = "Buffer" },
 			{ "<leader>t", group = "Terminal" },
 			{ "<leader>s", group = "Split" },
-			{ "<leader>e", group = "Nvim-tree" },
+			{ "<leader>e", group = "Neo-tree" },
 			{ "<leader>l", group = "LSP" },
 			{ "<leader>u", group = "Snack" },
 			{ "<leader>g", group = "Git" },
