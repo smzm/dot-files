@@ -441,10 +441,11 @@ if os_answers["interest"] == "Arch":
         "i3exit",
         "visual-studio-code-bin",
         "emoji-keyboard-bin",
+        "yazi",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
-    aur_list = ["manim"]
+    aur_list = ["manim", "yazi"]
 
 
 aur_packages_q = [
