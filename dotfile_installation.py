@@ -134,7 +134,6 @@ if os_answers["interest"] == "Arch":
         "rofi",
         "python-pywal",
         "calc",
-        "jq",
         "bc",
         "wmctrl",
         "geoip",
@@ -185,11 +184,21 @@ if os_answers["interest"] == "Arch":
         "telegram-desktop",
         "uv",
         "ruff",
-        "ripgrep",
         "file-roller",
         "ocrdesktop",
         "tesseract-data-eng",
         "lazygit",
+        "ripgrep",
+        "ffmpeg",
+        "ffmpegthumbnailer",
+        "p7zip",
+        "jq",
+        "poppler",
+        "fd",
+        "fzf",
+        "zoxide",
+        "imagemagick",
+        "bat",
     ]
 
 elif os_answers["interest"] == "WSL":
@@ -217,7 +226,6 @@ elif os_answers["interest"] == "WSL":
         "jupyter-notebook",
         "github-cli",
         "neovim",
-        "xclip",
         "lsd",
         "aria2",
         "ack",
@@ -226,14 +234,24 @@ elif os_answers["interest"] == "WSL":
         "unzip",
         "tar",
         "dnscrypt-proxy",
-        "lf",
-        "unarchiver",
+        # "xclip",
+        "xsel",
         "xdg-utils",
         "lldb",
         "ruff",
         "uv",
-        "ripgrep",
         "lazygit",
+        "ripgrep",
+        "ffmpeg",
+        "ffmpegthumbnailer",
+        "p7zip",
+        "jq",
+        "poppler",
+        "fd",
+        "fzf",
+        "zoxide",
+        "imagemagick",
+        "bat",
     ]
 
 
@@ -362,7 +380,7 @@ while len(not_installed_packages_pacman) > 0:
 # ===== Install dnsmasq and 403Online
 doh_config = [
     inquirer.List(
-        "interest", message="Install dnsmasq and 403.Online", choices=["Yes", "No"]
+        "interest", message="Install dnsmasq and 403.Online", choices=["No", "Yes"]
     )
 ]
 doh_config_answer = inquirer.prompt(doh_config)
@@ -944,6 +962,47 @@ if neovim_check:
 else:
     rprint(":thumbs_down: [red italic] neovim is not installed.\n")
 
+subprocess.run("clear", shell=True)
+
+# ===== Yazi : filemanager configuration
+yazi_check = (
+    subprocess.run(
+        "yazi --version", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    ).returncode
+    == 0
+)
+if yazi_check:
+    rprint(":thumbs_up: [green] Yazi is installed.")
+
+    yazi_config = [
+        inquirer.List(
+            "interest",
+            message="Install Yazi configurations",
+            choices=["Yes", "No"],
+        ),
+    ]
+    yazi_config_answer = inquirer.prompt(yazi_config)
+    if yazi_config_answer["interest"] == "Yes":
+        subprocess.run("clear", shell=True)
+        yazi1 = subprocess.run(
+            "mkdir -p ~/.config/yazi",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        yazi2 = subprocess.run(
+            f"yes | cp -rf {dotfiles_path}/.config/yazi/* ~/.config/yazi/",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        if yazi1 and yazi2:
+            rprint("[italic light_pink3] Installing Yazi Plugins ...")
+            subprocess.run("cd ~/.config/yazi/ ;  ya pack -i ", shell=True)
+else:
+    rprint(":thumbs_down: [red italic] Yazi is not installed.\n")
+
+subprocess.run("clear", shell=True)
 
 # ===== Font and language Configuration
 if os_answers["interest"] == "Arch":
@@ -1041,38 +1100,7 @@ if tmux_check:
 else:
     rprint(":thumbs_down: [red italic] tmux is not installed.\n")
 
-
-# ===== lf configuration
-lf_check = (
-    subprocess.run(
-        "lf --version", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-    ).returncode
-    == 0
-)
-if lf_check:
-    rprint(":thumbs_up: [green] lf is installed.")
-
-    lf_config = [
-        inquirer.List(
-            "interest",
-            message="Install lf configurations",
-            choices=["Yes", "No"],
-        ),
-    ]
-    lf_config_answer = inquirer.prompt(lf_config)
-
-    if lf_config_answer["interest"] == "Yes":
-        subprocess.run("clear", shell=True)
-        run(f"mkdir -p ~/.config/lf", shell=True, stdout=DEVNULL)
-        run(
-            f"yes | cp -rf {dotfiles_path}/.config/lf/* ~/.config/lf/",
-            shell=True,
-            stdout=DEVNULL,
-        )
-
-else:
-    rprint(":thumbs_down: [red italic] lf is not installed.\n")
-
+subprocess.run("clear", shell=True)
 
 # ===== Gh configuration
 githubcli_check = (
@@ -1106,6 +1134,8 @@ if githubcli_check:
 else:
     rprint("[red italic] github-cli is not installed.\n")
 
+
+subprocess.run("clear", shell=True)
 
 # ===== Kitty configuration
 if os_answers["interest"] == "Arch":
@@ -1142,6 +1172,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] kitty is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Zathura configuration
 if os_answers["interest"] == "Arch":
@@ -1179,6 +1210,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] kitty is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== mpv configuration
 if os_answers["interest"] == "Arch":
@@ -1217,6 +1249,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] mpv is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== GTK-3.0 configuration
 if os_answers["interest"] == "Arch":
@@ -1243,6 +1276,8 @@ if os_answers["interest"] == "Arch":
             stdout=DEVNULL,
         )
 
+
+subprocess.run("clear", shell=True)
 
 # ===== I3 configuration
 if os_answers["interest"] == "Arch":
@@ -1278,6 +1313,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] i3 is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Picom configuration
 if os_answers["interest"] == "Arch":
@@ -1313,6 +1349,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] picom is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Rofi configuration
 if os_answers["interest"] == "Arch":
@@ -1343,6 +1380,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] rofi is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Polybar configuration
 if os_answers["interest"] == "Arch":
@@ -1381,6 +1419,8 @@ if os_answers["interest"] == "Arch":
         rprint("[red italic] polybar is not installed.\n")
 
 
+subprocess.run("clear", shell=True)
+
 # ===== Dunst configuration
 if os_answers["interest"] == "Arch":
     dunst_check = (
@@ -1412,6 +1452,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] dunst is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Scrot configuration
 if os_answers["interest"] == "Arch":
@@ -1440,6 +1481,8 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] scrot is not installed.\n")
 
+
+subprocess.run("clear", shell=True)
 
 # ===== Imwheel configuration
 if os_answers["interest"] == "Arch":
@@ -1472,6 +1515,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] imwheel is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Conky configuration
 if os_answers["interest"] == "Arch":
@@ -1504,6 +1548,7 @@ if os_answers["interest"] == "Arch":
     else:
         rprint("[red italic] conky is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Docker Configuration
 if os_answers["interest"] == "Arch":
@@ -1538,6 +1583,8 @@ if os_answers["interest"] == "Arch":
         rprint("[red italic] Docker is not installed.\n")
 
 
+subprocess.run("clear", shell=True)
+
 # ===== Pacman configuration
 if os_answers["interest"] == "Arch":
     pacman_config = [
@@ -1561,9 +1608,7 @@ if os_answers["interest"] == "Arch":
         )
 
 
-# ===== Bluetooth
-# bluetooth_check = subprocess.run('NetworkManager
-
+subprocess.run("clear", shell=True)
 
 # ===== Jupyter configuration
 jupyter_check = (
@@ -1597,6 +1642,7 @@ if jupyter_check:
 else:
     rprint("[red italic] jupyter is not installed.\n")
 
+subprocess.run("clear", shell=True)
 
 # ===== Appearance
 # Apple_cursor
@@ -1626,6 +1672,8 @@ if os_answers["interest"] == "Arch":
         print("\n")
 
 
+subprocess.run("clear", shell=True)
+
 # ===== Hibernate
 if os_answers["interest"] == "Arch":
     hibernate_q = [
@@ -1653,7 +1701,7 @@ if os_answers["interest"] == "Arch":
         print("\n")
 
 
-import time
+subprocess.run("clear", shell=True)
 
 # ===== WSLU
 if os_answers["interest"] == "WSL":
@@ -1673,7 +1721,6 @@ if os_answers["interest"] == "WSL":
             "sudo sh -c 'echo -e \"\n[wslutilities]\nServer = https://pkg.wslutiliti.es/arch/\" >> /etc/pacman.conf'"
         )
         os.system("sudo pacman -Sy --noconfirm && sudo pacman -S wslu --noconfirm")
-        time.sleep(3)
 
 
 # After In Arch:
