@@ -28,7 +28,7 @@ opt.termguicolors = true
 opt.background = "dark"
 
 -- Make neovim use the system clipboard
--- opt.clipboard = "unnamedplus"
+opt.clipboard = "unnamedplus"
 
 -- Disable old vim status
 opt.showmode = false

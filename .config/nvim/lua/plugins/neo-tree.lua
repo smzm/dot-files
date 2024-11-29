@@ -1,274 +1,324 @@
+-- Plugin: Neo-tree
+
+local winwidth = 30
+
+local function toggle_width()
+	local max = winwidth * 2
+	local cur_width = vim.fn.winwidth(0)
+	local half = math.floor((winwidth + (max - winwidth) / 2) + 0.4)
+	local new_width = winwidth
+	if cur_width == winwidth then
+		new_width = half
+	elseif cur_width == half then
+		new_width = max
+	else
+		new_width = winwidth
+	end
+	vim.cmd(new_width .. " wincmd |")
+end
+
+local function get_current_directory(state)
+	local node = state.tree:get_node()
+	if node.type ~= "directory" or not node:is_expanded() then
+		node = state.tree:get_node(node:get_parent_id())
+	end
+	return node.path
+end
+
 return {
+
+	-----------------------------------------------------------------------------
+	-- File explorer written in Lua
 	"nvim-neo-tree/neo-tree.nvim",
 	branch = "v3.x",
-	event = "VeryLazy",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"MunifTanjim/nui.nvim",
-	},
-	---@diagnostic disable-next-line: assign-type-mismatch
-	keys = function()
-		local function close_side_panels()
-			vim.cmd("Neotree left close")
-			vim.cmd("Neotree right close")
-		end
-
-		return {
-			{
-				"<M-[>",
-				function()
-					vim.cmd("Neotree left toggle reveal")
-				end,
-				desc = "Explorer (Left)",
-			},
-			{
-				"<M-]>",
-				function()
-					vim.cmd("Neotree right git_status toggle reveal")
-				end,
-				desc = "Git Status (Right)",
-			},
-			{
-				"<leader>ee",
+	dependencies = { "MunifTanjim/nui.nvim" },
+	cmd = "Neotree",
+	-- stylua: ignore
+	keys = {
+		{
+			'<leader>ee',
+			function()
+				require('neo-tree.command').execute({ toggle = true, dir = vim.uv.cwd() })
+			end,
+			desc = 'Explorer NeoTree (cwd)',
+		},
+        {
+				"<Tab>",
 				function()
 					vim.cmd("Neotree float toggle reveal")
 				end,
 				desc = "Explorer",
 			},
-			{
-				"<leader>eg",
-				function()
-					vim.cmd("Neotree float git_status toggle reveal")
-				end,
-				desc = "Git Status",
-			},
-			{
-				"<leader>er",
-				function()
-					vim.cmd("Neotree float buffers toggle reveal")
-				end,
-				desc = "Recents",
-			},
-			{
-				"<leader>eh",
-				function()
-					vim.cmd("Neotree float toggle reveal git_status origin/HEAD")
-				end,
-				desc = "Head Status",
-			},
-			{
-				"<leader>eH",
-				function()
-					-- close_side_panels()
-					local all_branches = vim.fn.system("git branch -a")
-					local branches = vim.split(all_branches, "\n")
-
-					vim.ui.select(branches, {
-						prompt = "Select a branch: ",
-					}, function(branch)
-						if branch == nil then
-							return
-						else
-							vim.ui.select({
-								"float",
-								"top",
-								"right",
-								"bottom",
-								"left",
-							}, {
-								prompt = "Select a Neotree position: ",
-							}, function(position)
-								if position == nil then
-									return
-								else
-									vim.cmd("Neotree " .. position .. " toggle reveal git_status " .. branch)
-								end
-							end)
-						end
-					end)
-				end,
-				desc = "Head Status (Choose)",
-			},
-		}
+		{
+			'<LocalLeader>a',
+			function()
+				require('neo-tree.command').execute({
+					reveal = true,
+					dir = LazyVim.root()
+				})
+			end,
+			desc = 'Explorer NeoTree Reveal',
+		},
+		{
+			'<leader>eg',
+			function()
+				require('neo-tree.command').execute({ source = 'git_status', toggle = true })
+			end,
+			desc = 'Git Explorer',
+		},
+		{
+			'<leader>eb',
+			function()
+				require('neo-tree.command').execute({ source = 'buffers', toggle = true })
+			end,
+			desc = 'Buffer Explorer',
+		},
+	},
+	deactivate = function()
+		vim.cmd([[Neotree close]])
 	end,
-	--- https://github.com/nvim-neo-tree/neo-tree.nvim/blob/v3.x/lua/neo-tree/defaults.lua
-	opts = function()
-		local icons = require("core.icons")
-		local events = require("neo-tree.events")
-		local Snacks = require("snacks")
+	init = function()
+		-- FIX: use `autocmd` for lazy-loading neo-tree instead of directly requiring it,
+		-- because `cwd` is not set up properly.
+		vim.api.nvim_create_autocmd("BufEnter", {
+			group = vim.api.nvim_create_augroup("Neotree_start_directory", { clear = true }),
+			desc = "Start Neo-tree with directory",
+			once = true,
+			callback = function()
+				if package.loaded["neo-tree"] then
+					return
+				else
+					---@diagnostic disable-next-line: param-type-mismatch
+					local stats = vim.uv.fs_stat(vim.fn.argv(0))
+					if stats and stats.type == "directory" then
+						require("neo-tree")
+					end
+				end
+			end,
+		})
+	end,
+	-- See: https://github.com/nvim-neo-tree/neo-tree.nvim
+	opts = {
+		close_if_last_window = true,
+		sources = { "filesystem", "buffers", "git_status" },
+		open_files_do_not_replace_types = {
+			"terminal",
+			"Trouble",
+			"trouble",
+			"qf",
+			"edgy",
+			"Outline",
+			"gitsigns-blame",
+		},
+		popup_border_style = "rounded",
+		sort_case_insensitive = true,
 
+		source_selector = {
+			winbar = false,
+			show_scrolled_off_parent_node = true,
+			padding = { left = 1, right = 0 },
+			sources = {
+				{ source = "filesystem", display_name = "  Files" }, --      
+				{ source = "buffers", display_name = "  Buffers" }, --      
+				{ source = "git_status", display_name = " 󰊢 Git" }, -- 󰊢      
+			},
+		},
+
+		event_handlers = {
+			-- Close neo-tree when opening a file.
+			{
+				event = "file_opened",
+				handler = function()
+					require("neo-tree").close_all()
+				end,
+			},
+		},
+
+		default_component_configs = {
+			icon = {
+				folder_empty = "",
+				folder_empty_open = "",
+				default = "",
+			},
+			modified = {
+				symbol = "•",
+			},
+			name = {
+				trailing_slash = true,
+				highlight_opened_files = true, -- NeoTreeFileNameOpened
+				use_git_status_colors = false,
+			},
+			git_status = {
+				symbols = {
+					-- Change type
+					added = "A",
+					deleted = "D",
+					modified = "M",
+					renamed = "R",
+					-- Status type
+					untracked = "U",
+					ignored = "I",
+					unstaged = "",
+					staged = "S",
+					conflict = "C",
+				},
+			},
+		},
+		window = {
+			width = winwidth,
+			mappings = {
+				["q"] = "close_window",
+				["?"] = "noop",
+				["<Space>"] = "noop",
+
+				["g?"] = "show_help",
+				["<2-LeftMouse>"] = "open",
+				["<CR>"] = "open_with_window_picker",
+				["l"] = "open",
+				["h"] = "close_node",
+				["C"] = "close_node",
+				["z"] = "close_all_nodes",
+				["<C-r>"] = "refresh",
+
+				["s"] = "noop",
+				["sv"] = "open_split",
+				["sg"] = "open_vsplit",
+				["st"] = "open_tabnew",
+
+				["<"] = "prev_source",
+				[">"] = "next_source",
+
+				["dd"] = "delete",
+				["c"] = { "copy", config = { show_path = "relative" } },
+				["m"] = { "move", config = { show_path = "relative" } },
+				["a"] = { "add", nowait = true, config = { show_path = "relative" } },
+				["N"] = { "add_directory", config = { show_path = "relative" } },
+				["r"] = "rename",
+
+				["P"] = "paste_from_clipboard",
+				["p"] = {
+					"toggle_preview",
+					nowait = true,
+					config = { use_float = true },
+				},
+
+				-- Custom commands
+				["w"] = toggle_width,
+				["Y"] = {
+					function(state)
+						local node = state.tree:get_node()
+						local path = node:get_id()
+						vim.fn.setreg("+", path, "c")
+					end,
+					desc = "Copy Path to Clipboard",
+				},
+				["O"] = {
+					function(state)
+						require("lazy.util").open(state.tree:get_node().path, { system = true })
+					end,
+					desc = "Open with System Application",
+				},
+			},
+		},
+		filesystem = {
+			window = {
+				mappings = {
+					["d"] = "noop",
+					["/"] = "noop",
+					["f"] = "filter_on_submit",
+					["F"] = "fuzzy_finder",
+					["<C-c>"] = "clear_filter",
+
+					-- Custom commands
+					["gf"] = function(state)
+						require("telescope.builtin").find_files({
+							cwd = get_current_directory(state),
+						})
+					end,
+					["gr"] = function(state)
+						require("telescope.builtin").live_grep({
+							cwd = get_current_directory(state),
+						})
+					end,
+				},
+			},
+
+			-- See `:h neo-tree-cwd`
+			-- bind_to_cwd = false,
+			-- cwd_target = {
+			-- 	sidebar = 'window',
+			-- 	current = 'window',
+			-- },
+
+			filtered_items = {
+				hide_dotfiles = false,
+				hide_gitignored = false,
+				hide_by_name = {
+					".git",
+					".hg",
+					".svc",
+					".DS_Store",
+					"thumbs.db",
+					".sass-cache",
+					"node_modules",
+					".pytest_cache",
+					".mypy_cache",
+					"__pycache__",
+					".stfolder",
+					".stversions",
+				},
+				never_show_by_pattern = {
+					"vite.config.js.timestamp-*",
+				},
+			},
+			find_by_full_path_words = true,
+			group_empty_dirs = true,
+			use_libuv_file_watcher = true,
+		},
+		buffers = {
+			window = {
+				mappings = {
+					["dd"] = "buffer_delete",
+				},
+			},
+		},
+		git_status = {
+			window = {
+				mappings = {
+					["d"] = "noop",
+					["dd"] = "delete",
+				},
+			},
+		},
+		document_symbols = {
+			follow_cursor = true,
+			window = {
+				mappings = {
+					["/"] = "noop",
+					["F"] = "filter",
+				},
+			},
+		},
+	},
+	config = function(_, opts)
 		local function on_move(data)
 			Snacks.rename.on_rename_file(data.source, data.destination)
 		end
 
-		return {
-			default_component_configs = {
-				indent = {
-					with_markers = false,
-					expander_collapsed = "",
-					expander_expanded = "",
-				},
-				diagnostics = {
-					symbols = {
-						hint = icons.diagnostics.Hint,
-						info = icons.diagnostics.Info,
-						warn = icons.diagnostics.Warn,
-						error = icons.diagnostics.Error,
-					},
-				},
-				git_status = {
-					symbols = {
-						added = icons.git.added,
-						deleted = icons.git.removed,
-						modified = icons.git.modified,
-						renamed = icons.git.renamed,
-						untracked = icons.git.untracked,
-						ignored = icons.git.ignored,
-						unstaged = icons.git.unstaged,
-						staged = icons.git.staged,
-						conflict = icons.git.conflict,
-					},
-				},
-				icon = {
-					folder_closed = " ",
-					folder_open = " ",
-					folder_empty = " ",
-					folder_empty_open = " ",
-					default = "",
-				},
-				file_size = {
-					enabled = false,
-				},
-			},
-			add_blank_line_at_top = true,
-			hide_root_node = true,
-			sources = {
-				"filesystem",
-				"buffers",
-				"git_status",
-				"document_symbols",
-			},
-			filesystem = {
-				hijack_netrw_behavior = "disabled",
-				use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
-				follow_current_file = {
-					enabled = true, -- This will find and focus the file in the active buffer every time the current file is changed while the tree is open.
-				},
-				-- the current file is changed while the tree is open.
-				filtered_items = {
-					visible = false, -- when true, they will just be displayed differently than normal items
-					force_visible_in_empty_folder = false, -- when true, hidden files will be shown if the root folder is otherwise empty
-					show_hidden_count = true, -- when true, the number of hidden items in each folder will be shown as the last entry
-					hide_dotfiles = false,
-					hide_gitignored = true,
-					hide_hidden = false, -- only works on Windows for hidden files/directories
-					always_show = { -- remains visible even if other settings would normally hide it
-						".gitignore",
-					},
-					never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
-						".DS_Store",
-						"thumbs.db",
-					},
-				},
-			},
-			source_selector = {
-				winbar = false,
-				show_scrolled_off_parent_node = true,
-				statusline = false, -- toggle to show selector on statusline
-				content_layout = "center",
-				tabs_layout = "equal",
-				sources = { -- table
-					{
-						source = "filesystem", -- string
-						display_name = " 󰉓 Files ", -- string | nil
-					},
-					{
-						source = "buffers", -- string
-						display_name = " 󰈚 Buffers ", -- string | nil
-					},
-					{
-						source = "git_status", -- string
-						display_name = " 󰊢 Git ", -- string | nil
-					},
-				},
-			},
-
-			event_handlers = {
-				{ event = events.FILE_MOVED, handler = on_move },
-				{ event = events.FILE_RENAMED, handler = on_move },
-				{
-					event = "neo_tree_window_after_open",
-					handler = function()
-						vim.cmd("wincmd =")
-					end,
-				},
-
-				{
-					event = "neo_tree_window_after_close",
-					handler = function()
-						vim.cmd("wincmd =")
-					end,
-				},
-			},
-
-			window = {
-				position = "left",
-				width = 0.4,
-				-- https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup
-				popup = {
-					position = "50%", -- 50% means center it
-					size = {
-						height = 0.9,
-						width = 65,
-					},
-					border = {
-						padding = { 2, 2 },
-						style = "solid",
-					},
-				},
-				mappings = {
-					["<space>"] = false,
-					["<2-LeftMouse>"] = "open",
-					["<cr>"] = "open",
-					["L"] = "open",
-					["<esc>"] = "revert_preview",
-					["P"] = { "toggle_preview", config = { use_float = true } },
-					["<C-s>"] = "open_split",
-					["<C-v>"] = "open_vsplit",
-					["<C-t>"] = "open_tabnew",
-					["<C-d>"] = { "scroll_preview", config = { direction = 10 } },
-					["<C-u>"] = { "scroll_preview", config = { direction = -10 } },
-					["/"] = "noop",
-					["l"] = "focus_preview",
-					["O"] = function(state)
-						local node = state.tree:get_node()
-						local path = node:get_id()
-						vim.ui.open(path)
-					end,
-					["M"] = "close_all_nodes",
-					["R"] = "refresh",
-					["a"] = { "add", config = { show_path = "relative" } }, -- "none", "relative", "absolute"
-					["A"] = "add_directory", -- also accepts the config.show_path option.
-					["d"] = "delete",
-					["r"] = "rename",
-					["y"] = "copy_to_clipboard",
-					["x"] = "cut_to_clipboard",
-					["p"] = "paste_from_clipboard",
-					["c"] = "copy", -- takes text input for destination, also accepts the config.show_path option
-					["m"] = "move", -- takes text input for destination, also accepts the config.show_path option
-					["e"] = "toggle_auto_expand_width",
-					["q"] = "close_window",
-					["?"] = "show_help",
-					["<"] = "prev_source",
-					[">"] = "next_source",
-				},
-			},
-		}
-	end,
-	config = function(_, opts)
+		local events = require("neo-tree.events")
+		opts.event_handlers = opts.event_handlers or {}
+		vim.list_extend(opts.event_handlers, {
+			{ event = events.FILE_MOVED, handler = on_move },
+			{ event = events.FILE_RENAMED, handler = on_move },
+		})
 		require("neo-tree").setup(opts)
-		vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08070a" })
-		vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#08070a" })
-		vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "#08070a", fg = "#08070a" })
+		vim.api.nvim_create_autocmd("TermClose", {
+			pattern = "*lazygit",
+			callback = function()
+				if package.loaded["neo-tree.sources.git_status"] then
+					require("neo-tree.sources.git_status").refresh()
+				end
+			end,
+		})
 	end,
 }

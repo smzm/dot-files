@@ -2,7 +2,6 @@ return {
 	"folke/noice.nvim",
 	config = function()
 		require("noice").setup({
-			-- add any options here
 			-- defaults for hover and signature help
 			lsp = {
 				signature = {

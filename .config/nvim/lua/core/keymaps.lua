@@ -108,3 +108,6 @@ map("i", "][", "{}<left>", opts)
 map("i", "09", "()<left>", opts)
 map("i", "''", '""<left>', opts)
 map("i", ";;", ":", opts)
+
+-- Map backspace to delete word under cursor in normal mode
+map("n", "<BS>", "diwh", { noremap = true, silent = true })
