@@ -70,7 +70,7 @@ return {
 			desc = 'Explorer NeoTree (cwd)',
 		},
         {
-				"<Tab>",
+				"<ef>",
 				function()
 					vim.cmd("Neotree float toggle reveal")
 				end,

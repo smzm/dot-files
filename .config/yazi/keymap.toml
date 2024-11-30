@@ -257,10 +257,46 @@ keymap = [
 ]
 
 prepend_keymap = [
+  # Fuzzy find : fg
   { on = [
     "<space>",
     "f",
   ], run = "plugin fg", desc = "find file by content (fuzzy match)" },
+
+  # projects
+  { on = [
+    "P",
+    "s",
+  ], run = "plugin projects --args=save", desc = "Save current project" },
+  { on = [
+    "P",
+    "l",
+  ], run = "plugin projects --args=load", desc = "Load project" },
+  { on = [
+    "P",
+    "P",
+  ], run = "plugin projects --args=load_last", desc = "Load last project" },
+  { on = [
+    "P",
+    "d",
+  ], run = "plugin projects --args=delete", desc = "Delete the project" },
+  { on = [
+    "P",
+    "D",
+  ], run = "plugin projects --args=delete_all", desc = "Delete all project" },
+  { on = [
+    "P",
+    "m",
+  ], run = "plugin projects --args='merge current'", desc = "Merge current tab to oher project" },
+  { on = [
+    "P",
+    "M",
+  ], run = "plugin projects --args='merge all'", desc = "Merge current project to other projects" },
+
+  # copy-file-content
+  { on = [
+    "<A-y",
+  ], run = "plugin copy-file-content", desc = "Copy the file content" },
 ]
 
 [tasks]
