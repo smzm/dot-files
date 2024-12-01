@@ -4,7 +4,8 @@ deps = [
   { use = "imsi32/yatline", rev = "e255f5c" },
   { use = "imsi32/yatline-githead", rev = "a6377a8" },
   { use = "DreamMaoMao/fg", rev = "19d7689" },
-  { use = "MasouShizuka/projects", rev = "c1f9d1c" }, { use = "AnirudhG07/plugins-yazi:copy-file-contents", rev = "f871a9c" }, { use = "yazi-rs/plugins:max-preview", rev = "a53d544" },
+  { use = "MasouShizuka/projects", rev = "c1f9d1c" },
+  { use = "AnirudhG07/plugins-yazi:copy-file-contents", rev = "f871a9c" },
 ]
 
 [flavor]

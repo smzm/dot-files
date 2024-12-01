@@ -112,4 +112,8 @@ map("i", ";;", ":", opts)
 -- Map backspace to delete word under cursor in normal mode
 map("n", "<BS>", "diwh", { noremap = true, silent = true })
 
+-- use leader q to quit buffer
 map("n", "<leader>q", ":bd<CR>", { noremap = true, silent = true })
+
+-- by pressing <home> cursor will go to the first character of the line
+map("i", "<Home>", "<C-o>^", { noremap = true, silent = true })
