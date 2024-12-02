@@ -1,0 +1,55 @@
+feedlist-format " %4i %n :: [%T] › %t %> unread %U/%c total "
+feedlist-title-format " You have [%u unread] feeds out of [%t total] feeds. "
+articlelist-format " %4i %n :: %t %> %D "
+articlelist-title-format " %T ~ [%u unread] articles out of [%t total] articles. Read it fast!!!"
+datetime-format "%d %B %Y"
+html-renderer "w3m -dump -T text/html"
+
+
+# mark-as-read-on-hover no # do not mark read when we hover
+refresh-on-startup yes  # Whenever open newsboat, new feeds will be updated
+history-limit 100   # limit history to 100
+max-items 100   # limit articles to 100
+browser "open %u >/dev/null 2>&1" # open articles in default browser
+reload-threads 100  # download 100 feeds in parallel
+show-read-feeds no  # Remove the feeds, which you have read
+show-read-articles no
+
+# Key bindings
+bind-key h quit
+bind-key j down
+bind-key k up
+bind-key l open
+bind-key H prev-feed
+bind-key L next-feed
+bind-key g home
+bind-key G end
+bind-key SPACE macro-prefix 
+bind-key b bookmark 
+bind-key ^F pagedown 
+bind-key ^B pageup 
+bind-key ^H toggle-show-read-feeds
+bind-key s sort
+
+macro f set browser "setsid --fork firefox %u > /dev/null 2>&1"; open-in-browser; set browser "xdg-open %u";
+macro q quit
+
+
+color listnormal         color15 default
+color listnormal_unread  color2  default
+color listfocus_unread   color2  color0
+color listfocus          default color0
+color background         default default
+color article            default default
+color end-of-text-marker color8  default
+color info               color4  color8
+color hint-separator     default color8
+color hint-description   default color8
+color title              color14 color8
+
+highlight article "^(Feed|Title|Author|Link|Date): .+" color4 default bold
+highlight article "^(Feed|Title|Author|Link|Date):" color14 default bold
+
+highlight article "\\((link|image|video)\\)" color8 default
+highlight article "https?://[^ ]+" color4 default
+highlight article "\[[0-9]+\]" color6 default bold

@@ -1,0 +1,10 @@
+https://www.kdnuggets.com/feed  AI  "~kdnuggets"                           
+https://towardsdatascience.com/feed AI  "~towardsdatascience"
+https://www.freecodecamp.org/news/rss AI  "~freecodecamp"
+
+"query:SoftArchive:tags # \"SoftArchive\""
+https://softarchive.is/it-software/rss SoftArchive !
+https://softarchive.is/developer/rss SoftArchive !
+
+"query:YouTube:tags # \"YouTube\""
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0m81bQuthaQZmFbXEY9QSw

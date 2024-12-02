@@ -199,6 +199,7 @@ if os_answers["interest"] == "Arch":
         "zoxide",
         "imagemagick",
         "bat",
+        "newsboat",
     ]
 
 elif os_answers["interest"] == "WSL":
@@ -252,6 +253,7 @@ elif os_answers["interest"] == "WSL":
         "zoxide",
         "imagemagick",
         "bat",
+        "newsboat",
     ]
 
 
@@ -1003,6 +1005,45 @@ else:
     rprint(":thumbs_down: [red italic] Yazi is not installed.\n")
 
 subprocess.run("clear", shell=True)
+
+
+# ===== newsboat : rss reader in terminal
+newsboat_check = (
+    subprocess.run(
+        "newsboat --version", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    ).returncode
+    == 0
+)
+if newsboat_check:
+    rprint(":thumbs_up: [green] Newsboat is installed.")
+
+    newsboat_config = [
+        inquirer.List(
+            "interest",
+            message="Install Newsboat configurations",
+            choices=["Yes", "No"],
+        ),
+    ]
+    newsboat_config_answer = inquirer.prompt(newsboat_config)
+    if newsboat_config_answer["interest"] == "Yes":
+        subprocess.run("clear", shell=True)
+        newsboat1 = subprocess.run(
+            "mkdir -p ~/.config/newsboat",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        newsboat2 = subprocess.run(
+            f"yes | cp -rf {dotfiles_path}/.config/newsboat/* ~/.config/newsboat/",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+else:
+    rprint(":thumbs_down: [red italic] Newsboat is not installed.\n")
+
+subprocess.run("clear", shell=True)
+
 
 # ===== Font and language Configuration
 if os_answers["interest"] == "Arch":
