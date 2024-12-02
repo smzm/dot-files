@@ -33,3 +33,4 @@ return {
 		"rcarriga/nvim-notify",
 	},
 }
+-- To swith between noice popup and neovim use : <C-w>w

@@ -451,6 +451,18 @@ return {
 				-- Wisely add "end" in various filetypes
 				"RRethy/nvim-treesitter-endwise",
 			},
+			{
+				"nvim-treesitter/nvim-treesitter-context",
+				event = "VeryLazy", -- Load on very lazy events
+				config = function()
+					-- Custom highlight settings for sticky scroll
+					vim.api.nvim_set_hl(0, "TreesitterContext", { link = "NormalFloat" })
+
+					require("treesitter-context").setup({
+						max_lines = 5, -- Maximum number of context lines to show
+					})
+				end,
+			},
 		},
 		keys = {
 			{ "<c-space>", desc = "Increment selection" },
