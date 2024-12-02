@@ -19,6 +19,23 @@ return {
 				build = ":UpdateRemotePlugins",
 				opts = {}, -- your configuration
 			},
+			{
+				"SmiteshP/nvim-navbuddy",
+				dependencies = {
+					"SmiteshP/nvim-navic",
+					"MunifTanjim/nui.nvim",
+				},
+				opts = {
+					lsp = { auto_attach = true },
+					window = {
+						border = "rounded",
+						size = "70%",
+					},
+				},
+				keys = {
+					{ "-", ":Navbuddy<CR>", desc = "Open Navbuddy" },
+				},
+			},
 		},
 		config = function()
 			local servers = {
