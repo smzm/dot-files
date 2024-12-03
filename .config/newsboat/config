@@ -6,7 +6,7 @@ datetime-format "%d %B %Y"
 html-renderer "w3m -dump -T text/html"
 
 
-# mark-as-read-on-hover no # do not mark read when we hover
+mark-as-read-on-hover yes # mark read when we hover
 refresh-on-startup yes  # Whenever open newsboat, new feeds will be updated
 history-limit 100   # limit history to 100
 max-items 100   # limit articles to 100
