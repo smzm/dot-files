@@ -14,12 +14,6 @@ return {
 			-- Show nvim diagnostics using virtual lines
 			{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
 			{
-				"luckasRanarison/tailwind-tools.nvim",
-				name = "tailwind-tools",
-				build = ":UpdateRemotePlugins",
-				opts = {}, -- your configuration
-			},
-			{
 				"SmiteshP/nvim-navbuddy",
 				dependencies = {
 					"SmiteshP/nvim-navic",
@@ -33,7 +27,7 @@ return {
 					},
 				},
 				keys = {
-					{ "-", ":Navbuddy<CR>", desc = "Open Navbuddy" },
+					{ "\\", ":Navbuddy<CR>", desc = "Open Navbuddy" },
 				},
 			},
 		},
@@ -530,6 +524,7 @@ return {
 				"vim",
 				"vimdoc",
 				"yaml",
+				"xml",
 			},
 			incremental_selection = {
 				enable = true,
