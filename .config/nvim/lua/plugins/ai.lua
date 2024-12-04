@@ -25,9 +25,9 @@ return {
 			vendors = {
 				groq = {
 					__inherited_from = "openai",
-					api_key_name = "GROQ_API_KEY",
+					api_key_name = "GLHF_API_KEY",
 					endpoint = "https://api.groq.com/openai/v1/",
-					model = "llama-3.1-70b-versatile",
+					model = "hf:Qwen/Qwen2.5-Coder-32B-Instruct",
 				},
 			},
 		},
