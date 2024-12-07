@@ -447,7 +447,6 @@ return {
 			{
 				"windwp/nvim-ts-autotag",
 				event = "InsertEnter",
-				opts = {},
 			},
 			{
 				"echasnovski/mini.ai",

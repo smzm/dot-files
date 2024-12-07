@@ -21,13 +21,19 @@ return {
 		version = false, -- set this if you want to always pull the latest change
 		opts = {
 			-- https://github.com/yetone/avante.nvim/wiki/Custom-providers#openai-compatible-providers
-			provider = "groq",
+			provider = "glhf",
 			vendors = {
-				groq = {
+				glhf = {
 					__inherited_from = "openai",
 					api_key_name = "GLHF_API_KEY",
-					endpoint = "https://api.groq.com/openai/v1/",
+					endpoint = "https://glhf.chat/api/openai/v1",
 					model = "hf:Qwen/Qwen2.5-Coder-32B-Instruct",
+				},
+				ollama = {
+					__inherited_from = "openai",
+					api_key_name = "",
+					endpoint = "http://127.0.0.1:11434/v1",
+					model = "codegemma",
 				},
 			},
 		},
