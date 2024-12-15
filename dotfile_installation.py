@@ -878,7 +878,7 @@ zsh_config = [
     inquirer.List(
         "interest",
         message="Install OH-MY-ZSH and their configurations",
-        choices=["Yes", "No"],
+        choices=["No", "Yes"],
     ),
 ]
 zsh_config_answer = inquirer.prompt(zsh_config)
@@ -933,10 +933,11 @@ if neovim_check:
         inquirer.List(
             "interest",
             message="Install Neovim configurations",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         ),
     ]
     nvim_config_answer = inquirer.prompt(nvim_config)
+    
     if nvim_config_answer["interest"] == "Yes":
         subprocess.run("clear", shell=True)
         # VIM-PLUG
@@ -980,7 +981,7 @@ if yazi_check:
         inquirer.List(
             "interest",
             message="Install Yazi configurations",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         ),
     ]
     yazi_config_answer = inquirer.prompt(yazi_config)
