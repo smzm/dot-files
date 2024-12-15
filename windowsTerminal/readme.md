@@ -467,20 +467,22 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 ```
 ```json
 "profiles": {
-		"defaults": {
-			"colorScheme": "Catppuccin Mocha",
-			"font": {
-				"cellHeight": "1.4",
-				"face": "JetBrainsMono Nerd Font",
-				"size": 16.0,
-				"weight": "light"
-			},
-			"historySize": 12000,
-			"intenseTextStyle": "bright",
-			"opacity": 70,
-			"padding": "15",
-			"useAcrylic": true
-},
+		 "defaults": 
+        {
+            "colorScheme": "Aura Dark",
+            "font": 
+            {
+                "cellHeight": "1.6",
+                "face": "CaskaydiaCove Nerd Font Mono",
+                "size": 13,
+                "weight": "light"
+            },
+            "historySize": 12000,
+            "intenseTextStyle": "bright",
+            "opacity": 70,
+            "padding": "15",
+            "useAcrylic": true
+        },
 ```
 
 
