@@ -338,7 +338,7 @@ while len(not_installed_packages_pacman) > 0:
         inquirer.List(
             "interest",
             message="Do you want to try again and install packges was not installed successfully",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         )
     ]
     not_installed_pacman_answer = inquirer.prompt(not_installed_pacman_q)
@@ -540,7 +540,7 @@ while len(not_installed_packages_aur) > 0:
         inquirer.List(
             "interest",
             message="Do you want to try again and install aur packges was not installed successfully",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         )
     ]
     not_installed_aur_answer = inquirer.prompt(not_installed_aur_q)
@@ -676,7 +676,7 @@ while len(not_installed_packages_pip) > 0:
         inquirer.List(
             "interest",
             message="Do you want to try again and install pip packges was not installed successfully",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         )
     ]
     not_installed_pip_answer = inquirer.prompt(not_installed_pip_q)
