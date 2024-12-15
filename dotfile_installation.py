@@ -42,7 +42,7 @@ reflector_q = [
     inquirer.List(
         "interest",
         message="Do you want to update pacman mirrorlist",
-        choices=["Yes", "No"],
+        choices=["No", "Yes"],
     )
 ]
 reflector_answer = inquirer.prompt(reflector_q)
