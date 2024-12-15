@@ -831,7 +831,7 @@ while len(not_installed_packages_npm) > 0:
         inquirer.List(
             "interest",
             message="Do you want to try again and install npm packges was not installed successfully",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         )
     ]
     not_installed_npm_answer = inquirer.prompt(not_installed_npm_q)
@@ -1022,7 +1022,7 @@ if newsboat_check:
         inquirer.List(
             "interest",
             message="Install Newsboat configurations",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         ),
     ]
     newsboat_config_answer = inquirer.prompt(newsboat_config)
@@ -1052,7 +1052,7 @@ if os_answers["interest"] == "Arch":
         inquirer.List(
             "interest",
             message="Install font and language configurations",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         ),
     ]
     font_config_answer = inquirer.prompt(font_config)
@@ -1083,7 +1083,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install trashcli configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             ),
         ]
         trashcli_config_answer = inquirer.prompt(trashcli_config)
@@ -1117,7 +1117,7 @@ if tmux_check:
         inquirer.List(
             "interest",
             message="Install tmux configurations",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         ),
     ]
     tmux_config_answer = inquirer.prompt(tmux_config)
@@ -1159,7 +1159,7 @@ if githubcli_check:
         inquirer.List(
             "interest",
             message="Install github-cli configurations",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         ),
     ]
     githubcli_config_answer = inquirer.prompt(githubcli_config)
@@ -1198,7 +1198,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install kitty configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             )
         ]
         kitty_config_answer = inquirer.prompt(kitty_config)
@@ -1235,7 +1235,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install zathura configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             ),
         ]
         zathura_config_answer = inquirer.prompt(zathura_config)
@@ -1270,7 +1270,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install mpv configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             ),
         ]
         mpv_config_answer = inquirer.prompt(mpv_config)
@@ -1299,7 +1299,7 @@ if os_answers["interest"] == "Arch":
         inquirer.List(
             "interest",
             message="Install gtk configurations",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         )
     ]
     gtk_config_answer = inquirer.prompt(gtk_config)
@@ -1335,7 +1335,7 @@ if os_answers["interest"] == "Arch":
 
         i3_config = [
             inquirer.List(
-                "interest", message="Install i3 configurations", choices=["Yes", "No"]
+                "interest", message="Install i3 configurations", choices=["No", "Yes"],
             )
         ]
         i3_config_answer = inquirer.prompt(i3_config)
@@ -1376,7 +1376,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install picom configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             )
         ]
         picom_config_answer = inquirer.prompt(picom_config)
@@ -1407,7 +1407,7 @@ if os_answers["interest"] == "Arch":
 
         rofi_config = [
             inquirer.List(
-                "interest", message="Install rofi configurations", choices=["Yes", "No"]
+                "interest", message="Install rofi configurations", choices=["No", "Yes"],
             )
         ]
         rofi_config_answer = inquirer.prompt(rofi_config)
@@ -1440,7 +1440,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install polybar configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             )
         ]
         polybar_config_answer = inquirer.prompt(polybar_config)
@@ -1479,7 +1479,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install dunst configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             )
         ]
         dunst_config_answer = inquirer.prompt(dunst_config)
@@ -1512,7 +1512,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install scrot configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             )
         ]
         scrot_config_answer = inquirer.prompt(scrot_config)
@@ -1542,7 +1542,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install imwheel configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             )
         ]
         imwheel_config_answer = inquirer.prompt(imwheel_config)
@@ -1575,7 +1575,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Install conky configurations",
-                choices=["Yes", "No"],
+                choices=["No", "Yes"],
             )
         ]
         conky_config_answer = inquirer.prompt(conky_config)
@@ -1609,7 +1609,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Configure Docker to run commands without sudo permission",
-                choices=["Yes", "No"],
+               choices=["No", "Yes"],
             )
         ]
         docker_config_answer = inquirer.prompt(docker_config)
@@ -1631,7 +1631,7 @@ subprocess.run("clear", shell=True)
 if os_answers["interest"] == "Arch":
     pacman_config = [
         inquirer.List(
-            "interest", message="Install pacman configurations", choices=["Yes", "No"]
+            "interest", message="Install pacman configurations", choices=["No", "Yes"],
         )
     ]
     pacman_config_answer = inquirer.prompt(pacman_config)
@@ -1668,7 +1668,7 @@ if jupyter_check:
         inquirer.List(
             "interest",
             message="Install jupyter notebook configuration",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         )
     ]
     jupyter_config_answer = inquirer.prompt(jupyter_config)
@@ -1690,7 +1690,7 @@ subprocess.run("clear", shell=True)
 # Apple_cursor
 if os_answers["interest"] == "Arch":
     applecursor_config = [
-        inquirer.List("interest", message="Install apple cursor", choices=["Yes", "No"])
+        inquirer.List("interest", message="Install apple cursor", choices=["No", "Yes"])
     ]
     applecursor_config_answer = inquirer.prompt(applecursor_config)
     if applecursor_config_answer["interest"] == "Yes":
@@ -1722,7 +1722,7 @@ if os_answers["interest"] == "Arch":
         inquirer.List(
             "hibernate",
             message="Do you have any partion swap for enabling hibernate",
-            choices=["Yes", "No"],
+            choices=["No", "Yes"],
         )
     ]
     hibernate_answers = inquirer.prompt(hibernate_q)
@@ -1749,7 +1749,7 @@ subprocess.run("clear", shell=True)
 if os_answers["interest"] == "WSL":
     wslu_config = [
         inquirer.List(
-            "interest", message="Do you want to use wslu", choices=["Yes", "No"]
+            "interest", message="Do you want to use wslu", choices=["No", "Yes"]
         )
     ]
     wslu_config_answer = inquirer.prompt(wslu_config)
