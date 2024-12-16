@@ -203,6 +203,9 @@ return {
 
 					opts.desc = "Restart LSP"
 					keymap.set("n", "<leader>ls", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+					opts.desc = "Toggle LSP diagnostics on hover"
+					keymap.set("n", "<leader>le", require("lsp_lines").toggle, opts) -- mapping to restart lsp if necessary
 				end,
 			})
 
