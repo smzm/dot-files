@@ -24,7 +24,6 @@ except ModuleNotFoundError:
 # ===== Get path of dotfiles directory
 dotfiles_path = os.popen("echo $PWD").read().rstrip()
 
-
 # ===== Is it WSL or Arch
 os_q = [
     inquirer.List(
@@ -70,9 +69,7 @@ if reflector_answer["interest"] == "Yes":
 # ===== Update pacman packages
 subprocess.run("sudo pacman -Syu --noconfirm", shell=True)
 
-
 print("\n")
-
 
 if os_answers["interest"] == "Arch":
     # ===== Install pacman packages : ARCH
@@ -397,22 +394,36 @@ if doh_config_answer["interest"] == "Yes":
     )
     if pacman_result.returncode == 0:
         os.system(f"sudo cp -f {dotfiles_path}/etc/dnsmasq.conf /etc/dnsmasq.conf")
-        os.system(
-            "sudo systemctl disable systemd-resolved ; sudo systemctl stop systemd-resolved"
-        )
-        os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
 
-        # remove /etc/resolve.conf
-        os.system("sudo chattr -i /etc/resolv.conf")
-        os.system("sudo rm -rf /etc/resolv.conf")
-        os.system(
-            "sudo grep -qxF '[main]' /etc/NetworkManager/NetworkManager.conf || echo -e '[main]\ndns=dnsmasq' | sudo tee -a /etc/NetworkManager/NetworkManager.conf"
-        )
-        os.system("sudo systemctl restart NetworkManager")
+        if os_q == "WSL":
+            os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
+            os.system(
+                "sudo systemctl enable systemd-resolved ; sudo systemctl start systemd-resolved"
+            )
+            os.system(
+                "sudo grep -q '^\[Resolve\]' /etc/systemd/resolved.conf && ! grep -q '^DNS=127.0.0.1:5353' /etc/systemd/resolved.conf && sudo sed -i '/^\[Resolve\]/a DNS=127.0.0.1:5353' /etc/systemd/resolved.conf"
+            )
+            os.system(
+                "sudo grep -q '^port 5353$' /etc/dnsmasq.conf || sudo sed -i '/#DNS PORT/!b;n;/^port 5353$/b;a port 5353' /etc/dnsmasq.conf"
+            )
+
+        if os_q == "ARCH":
+            os.system(
+                "sudo systemctl disable systemd-resolved ; sudo systemctl stop systemd-resolved"
+            )
+            os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
+
+            # remove /etc/resolve.conf
+            os.system("sudo chattr -i /etc/resolv.conf")
+            os.system("sudo rm -rf /etc/resolv.conf")
+            os.system(
+                "sudo grep -qxF '[main]' /etc/NetworkManager/NetworkManager.conf || echo -e '[main]\ndns=dnsmasq' | sudo tee -a /etc/NetworkManager/NetworkManager.conf"
+            )
+            os.system("sudo systemctl restart NetworkManager")
 
         print("\n")
-else:
-    rprint("[red italic] dnsmasq could not installed.\n")
+    else:
+        rprint("[red italic] dnsmasq could not installed.\n")
 
 
 # ===== Arch community packages : Paru
@@ -937,7 +948,7 @@ if neovim_check:
         ),
     ]
     nvim_config_answer = inquirer.prompt(nvim_config)
-    
+
     if nvim_config_answer["interest"] == "Yes":
         subprocess.run("clear", shell=True)
         # VIM-PLUG
@@ -1335,7 +1346,9 @@ if os_answers["interest"] == "Arch":
 
         i3_config = [
             inquirer.List(
-                "interest", message="Install i3 configurations", choices=["No", "Yes"],
+                "interest",
+                message="Install i3 configurations",
+                choices=["No", "Yes"],
             )
         ]
         i3_config_answer = inquirer.prompt(i3_config)
@@ -1407,7 +1420,9 @@ if os_answers["interest"] == "Arch":
 
         rofi_config = [
             inquirer.List(
-                "interest", message="Install rofi configurations", choices=["No", "Yes"],
+                "interest",
+                message="Install rofi configurations",
+                choices=["No", "Yes"],
             )
         ]
         rofi_config_answer = inquirer.prompt(rofi_config)
@@ -1609,7 +1624,7 @@ if os_answers["interest"] == "Arch":
             inquirer.List(
                 "interest",
                 message="Configure Docker to run commands without sudo permission",
-               choices=["No", "Yes"],
+                choices=["No", "Yes"],
             )
         ]
         docker_config_answer = inquirer.prompt(docker_config)
@@ -1631,7 +1646,9 @@ subprocess.run("clear", shell=True)
 if os_answers["interest"] == "Arch":
     pacman_config = [
         inquirer.List(
-            "interest", message="Install pacman configurations", choices=["No", "Yes"],
+            "interest",
+            message="Install pacman configurations",
+            choices=["No", "Yes"],
         )
     ]
     pacman_config_answer = inquirer.prompt(pacman_config)
