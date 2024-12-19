@@ -98,7 +98,6 @@ if os_answers["interest"] == "Arch":
         "neovim",
         "xclip",
         "python-pynvim",
-        "trash-cli",
         "cronie",
         "lsd",
         "tmux",
@@ -473,10 +472,11 @@ if os_answers["interest"] == "Arch":
         "visual-studio-code-bin",
         "emoji-keyboard-bin",
         "yazi",
+        "trashy",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
-    aur_list = ["manim", "yazi"]
+    aur_list = ["manim", "yazi", "trashy"]
 
 
 aur_packages_q = [
@@ -576,144 +576,6 @@ while len(not_installed_packages_aur) > 0:
                 aur_stderr = aur_result.stderr.decode().strip()
                 # Problem  : package does not exist
                 if re.search(r"could not find all required packages", aur_stderr):
-                    rprint(
-                        f"[bold white] {package} : [red italic] NOT INSTALLED. couldn't find this package !"
-                    )
-                else:
-                    rprint(
-                        f"[bold white] {package} : [red italic] NOT INSTALLED. There was a problem in installing this package !"
-                    )
-    # If there isn't not installed package break the while and go on
-    else:
-        break
-
-
-subprocess.run("clear", shell=True)
-
-
-# ===== Python packages
-python_packages_list = [
-    "numpy",
-    "pandas",
-    "scipy",
-    "sympy",
-    "matplotlib",
-    "plotly",
-    "python-language-server",
-    "pynvim",
-]
-
-python_packages = [
-    inquirer.Checkbox(
-        "interest",
-        message="Install python packages [SELECT WITH SPACE]",
-        choices=["ALL ⬇️", *python_packages_list],
-    ),
-]
-python_package_answers = inquirer.prompt(python_packages)
-
-
-not_installed_packages_pip = []
-installed_packages_pip = []
-if "ALL ⬇️" in python_package_answers["interest"]:
-    rprint("[bold blue] Installing all pip packages :")
-    rprint(Columns(python_packages_list, equal=True, expand=True))
-
-    for package in python_packages_list:
-        rprint(f"\n[yellow italic] installing {package}...")
-
-        pip_result = subprocess.run(
-            f"pip install {package} --upgrade",
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        # if pip package installed successfuly
-        if pip_result.returncode == 0:
-            rprint(f"[bold green] {package} : [italic] installed.")
-            installed_packages_pip.append(package)
-        # if pip package not installed successfuly
-        else:
-            not_installed_packages_pip.append(package)
-            pip_stderr = pip_result.stderr.decode().strip()
-            # Problem  : package does not exist
-            if re.search(
-                r"Could not find a version that satisfies the requirement", aur_stderr
-            ):
-                rprint(
-                    f"[bold white] {package} : [red italic] NOT INSTALLED. couldn't find this package !"
-                )
-            else:
-                rprint(
-                    f"[bold white] {package} : [red italic] NOT INSTALLED. There was a problem in installing this package !"
-                )
-
-    print("\n")
-else:
-    rprint("[italic salmon1] Installing selected packages :")
-    rprint(Columns(python_package_answers["interest"], equal=True, expand=True))
-    for package in python_package_answers["interest"]:
-        pip_result = subprocess.run(
-            f"pip install {package} --upgrade",
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        # if pip package installed successfuly
-        if pip_result.returncode == 0:
-            rprint(f"[bold green] {package} : [italic] installed.")
-            installed_packages_pip.append(package)
-        # if package not installed successfuly
-        else:
-            not_installed_packages_pip.append(package)
-            pip_stderr = pip_result.stderr.decode().strip()
-            # Problem  : package does not exist
-            if re.search(
-                r"Could not find a version that satisfies the requirement", aur_stderr
-            ):
-                rprint(
-                    f"[bold white] {package} : [red italic] NOT INSTALLED. couldn't find this package !"
-                )
-            else:
-                rprint(
-                    f"[bold white] {package} : [red italic] NOT INSTALLED. There was a problem in installing this package !"
-                )
-
-
-# If there is any not installed packae then ask for try again
-while len(not_installed_packages_pip) > 0:
-    print("\n")
-    not_installed_pip_q = [
-        inquirer.List(
-            "interest",
-            message="Do you want to try again and install pip packges was not installed successfully",
-            choices=["No", "Yes"],
-        )
-    ]
-    not_installed_pip_answer = inquirer.prompt(not_installed_pip_q)
-    if not_installed_pip_answer["interest"] == "Yes":
-        rprint("[italic salmon1] Installing selected packages :")
-        rprint(Columns(not_installed_packages_pip, equal=True, expand=True))
-        for package in not_installed_packages_pip:
-            rprint(f"\n[yellow italic] installing {package}...")
-            pip_result = subprocess.run(
-                f"pip install {package} --upgrade",
-                shell=True,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-            )
-            # if pip package installed successfuly
-            if pip_result.returncode == 0:
-                rprint(f"[bold green] {package} : [italic] installed.")
-                installed_packages_pip.append(package)
-                not_installed_packages_pip.remove(package)
-            else:
-                pip_stderr = pip_result.stderr.decode().strip()
-                # Problem  : package does not exist
-                if re.search(
-                    r"Could not find a version that satisfies the requirement",
-                    aur_stderr,
-                ):
                     rprint(
                         f"[bold white] {package} : [red italic] NOT INSTALLED. couldn't find this package !"
                     )
@@ -1074,44 +936,6 @@ if os_answers["interest"] == "Arch":
         os.system("mkdir -p $HOME/.fonts")
         os.system(f"yes | cp -rf {dotfiles_path}/.fonts/* $HOME/.fonts/")
         os.system("fc-cache -fv")
-
-
-# ===== Trash-cli configuration
-if os_answers["interest"] == "Arch":
-    trashcli_check = (
-        subprocess.run(
-            "trash --version",
-            shell=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        ).returncode
-        == 0
-    )
-    if trashcli_check:
-        rprint(":thumbs_up: [green] trash-cli is installed.")
-
-        trashcli_config = [
-            inquirer.List(
-                "interest",
-                message="Install trashcli configurations",
-                choices=["No", "Yes"],
-            ),
-        ]
-        trashcli_config_answer = inquirer.prompt(trashcli_config)
-    else:
-        rprint(":thumbs_down: [red italic] trash-cli is not installed.\n")
-
-    if trashcli_config_answer["interest"] == "Yes":
-        subprocess.run("clear", shell=True)
-        os.system("sudo mkdir -p --parent /.Trash")
-        os.system("sudo chmod a+rw /.Trash")
-        os.system("sudo chmod +t /.Trash")
-        if not run(
-            'crontab -l | grep "trash-empty"', shell=True, stdout=DEVNULL, stderr=STDOUT
-        ):
-            os.system(
-                '(crontab -l ; echo "@daily $(which trash-empty) 30") | crontab -'
-            )
 
 
 # ===== Tmux configuration
