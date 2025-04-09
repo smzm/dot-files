@@ -70,7 +70,9 @@ return {
 		end,
 		keys = {
 			{ "<F12>" },
-			{ "<leader>t", "<cmd>ToggleTerm direction=float<CR>", desc = "terminal float" },
+			{ "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", desc = "terminal float" },
+			{ "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "horizontal terminal" },
+			{ "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", desc = "vertical terminal" },
 			{ "<leader>t1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal #1" },
 			{ "<leader>t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal #2" },
 			{ "<leader>t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal #3" },
