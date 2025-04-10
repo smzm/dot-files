@@ -3,7 +3,7 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	main = "ibl",
 	opts = {
-		indent = { char = "│", highlight = { "Conceal" } }, -- ┊ Conceal defined in core/highlight
+		indent = { char = "│", highlight = { "Indentation" } }, -- ┊ Conceal defined in core/highlight
 		scope = { enabled = false },
 	},
 }

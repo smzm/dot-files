@@ -1,5 +1,4 @@
 -- Plugin: Neo-tree
-
 local winwidth = 30
 
 local function toggle_width()
