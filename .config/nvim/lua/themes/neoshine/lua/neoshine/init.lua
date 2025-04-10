@@ -28,7 +28,7 @@ function theme.setup()
 		cyan = "#4dd0e1",
 		low_cyan = "#7fc6c5",
 		purple = "#6e678e",
-        pink = "#F0A6CA",
+		pink = "#F0A6CA",
 		black = "#000000",
 	}
 
@@ -83,7 +83,7 @@ function theme.setup()
 		["@variable.builtin"] = { fg = colors.fg },
 		["@variable.parameter"] = { fg = colors.gray, italic = true },
 		["@variable.parameter.builtin"] = { fg = colors.midGrayLighter },
-		["@boolean"] = { fg = colors.pink },
+		["@boolean"] = { fg = colors.orange },
 		["@number"] = { fg = colors.low_peach },
 		["@number.float"] = { fg = colors.low_peach },
 		["@character"] = { fg = colors.low_peach },
