@@ -1,36 +1,39 @@
 local theme = {}
 
+-- Define colors
+local colors = {
+	bg = "#0b0b0f",
+	fg = "#e6e6e6",
+	yellow = "#e6e7a3",
+	peach = "#f9b98c",
+	low_peach = "#c68181",
+	dimGray = "#161616",
+	darkGray = "#37373d",
+	midGrayDarker = "#565b5f",
+	midGrayLighter = "#69737c",
+	gray = "#9099a1",
+	lightGray = "#bbc0c5",
+	brown = "#51484f",
+	red = "#d84f68",
+	teal = "#54c0a3",
+	green = "#4ebe96",
+	blue = "#479ffa",
+	magenta = "#ba68c8",
+	cyan = "#4dd0e1",
+	low_cyan = "#7fc6c5",
+	purple = "#6e678e",
+	pink = "#F0A6CA",
+	black = "#000000",
+}
+
 function theme.setup()
 	-- Reset existing highlight groups
 	vim.cmd("highlight clear")
 	vim.o.background = "dark" -- Set the theme background
 	vim.o.termguicolors = true -- Enable true colors
-
-	-- Define colors
-	local colors = {
-		bg = "#0b0b0f",
-		fg = "#e6e6e6",
-		yellow = "#e6e7a3",
-		peach = "#f9b98c",
-		low_peach = "#c68181",
-		dimGray = "#161616",
-		darkGray = "#37373d",
-		midGrayDarker = "#565b5f",
-		midGrayLighter = "#69737c",
-		gray = "#9099a1",
-		lightGray = "#bbc0c5",
-		brown = "#51484f",
-		red = "#d84f68",
-		teal = "#54c0a3",
-		green = "#4ebe96",
-		blue = "#479ffa",
-		magenta = "#ba68c8",
-		cyan = "#4dd0e1",
-		low_cyan = "#7fc6c5",
-		purple = "#6e678e",
-		pink = "#F0A6CA",
-		black = "#000000",
-	}
+	if vim.fn.exists("syntax_on") then
+		vim.cmd("syntax reset")
+	end
 
 	vim.api.nvim_set_hl(0, "Indentation", { fg = colors.dimGray })
 
@@ -118,5 +121,7 @@ function theme.setup()
 		vim.api.nvim_set_hl(0, group, opts)
 	end
 end
+
+theme.colors = colors
 
 return theme

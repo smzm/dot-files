@@ -1,3 +1,4 @@
+-- dir = "~/.config/nvim/lua/themes/neoshine", -- local path
 return {
 	{
 		"iamcco/markdown-preview.nvim",
@@ -12,13 +13,29 @@ return {
 		},
 	},
 	{
-		"MeanderingProgrammer/markdown.nvim",
-		main = "render-markdown",
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
 		opts = {},
-		name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
-		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you use the mini.nvim suite
 		config = function()
-			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#08070a" })
+			local neoshine = require("themes.neoshine.lua.neoshine")
+			local colors = neoshine.colors
+
+			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#0f0f0f" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = colors.dimGray })
+			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = "#aeafaf" })
+
+			require("render-markdown").setup({
+				render_modes = true,
+				heading = {
+					border = false,
+					background = {
+						"RenderMarkdownH1Bg",
+					},
+					foreground = {
+						"RenderMarkdownH1",
+					},
+				},
+			})
 		end,
 	},
 }

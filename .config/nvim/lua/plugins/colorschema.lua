@@ -1,5 +1,5 @@
 return {
-	dir = "~/.config/nvim/lua/themes/neoshine", -- local path
+	dir = "~/.config/nvim/lua/themes/neoshine", -- local pathk
 	name = "neoshine", -- optional but recommended
 	lazy = false,
 	priority = 1000, -- make sure it's loaded early
