@@ -874,7 +874,7 @@ if yazi_check:
         )
         if yazi1 and yazi2:
             rprint("[italic light_pink3] Installing Yazi Plugins ...")
-            subprocess.run("cd ~/.config/yazi/ ;  ya pack -i ", shell=True)
+            subprocess.run("cd ~/.config/yazi/ ; ya pack -a yazi-rs/plugins:full-border imsi32/yatline MasouShizuka/projects DreamMaoMao/fg", shell=True)
 else:
     rprint(":thumbs_down: [red italic] Yazi is not installed.\n")
 
