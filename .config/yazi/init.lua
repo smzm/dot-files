@@ -123,50 +123,6 @@ require("yatline"):setup({
 	},
 })
 
-require("yatline-githead"):setup({
-	show_branch = true,
-	branch_prefix = "",
-	branch_symbol = "",
-	branch_borders = "",
-
-	commit_symbol = " ",
-
-	show_behind_ahead = true,
-	behind_symbol = " ",
-	ahead_symbol = " ",
-
-	show_stashes = true,
-	stashes_symbol = " ",
-
-	show_state = true,
-	show_state_prefix = true,
-	state_symbol = "󱅉",
-
-	show_staged = true,
-	staged_symbol = " ",
-
-	show_unstaged = true,
-	unstaged_symbol = " ",
-
-	show_untracked = true,
-	untracked_symbol = " ",
-
-	prefix_color = color_palette.pink,
-	branch_color = color_palette.pink,
-	commit_color = color_palette.mauve,
-	stashes_color = color_palette.teal,
-	state_color = color_palette.lavender,
-	staged_color = color_palette.green,
-	unstaged_color = color_palette.yellow,
-	untracked_color = color_palette.pink,
-	ahead_color = color_palette.green,
-	behind_color = color_palette.yellow,
-})
-
-require("zoxide"):setup({
-	update_db = true,
-})
-
 require("projects"):setup({
 	save = {
 		method = "yazi", -- yazi | lua
