@@ -33,8 +33,8 @@ local colors = {
 	peach = "#f9b98c",
 	low_peach = "#c68181",
 	dimGray = "#13131D",
-	darkGray = "#2F2F3E",
-	midGrayDarker = "#41414c",
+	darkGray = "#1c1c2a",
+	midGrayDarker = "#2f2f3e",
 	midGrayLighter = "#565365",
 	gray = "#898999",
 	lightGray = "#ACACB8",
@@ -46,7 +46,8 @@ local colors = {
 	magenta = "#ba68c8",
 	cyan = "#4dd0e1",
 	low_cyan = "#7fc6c5",
-	purple = "#6e678e",
+	purple = "#9D7FC7",
+	low_purple = "#6e678e",
 	pink = "#F0A6CA",
 	black = "#000000",
 }
@@ -65,18 +66,18 @@ function theme.setup()
 	-- Apply highlight groups
 	local highlights = {
 		Normal = { fg = colors.fg, bg = colors.bg }, -- Default text
-		Comment = { fg = colors.darkGray, italic = true }, -- Comments
+		Comment = { fg = colors.midGrayDarker, italic = true }, -- Comments
 		String = { fg = colors.midGrayLighter }, -- Strings
 		Function = { fg = colors.low_cyan }, -- Function names
-		Keyword = { fg = colors.lightGray }, -- Keywords like function keyword, methods
+		Keyword = { fg = colors.midGrayDarker }, -- Keywords like function keyword, methods
 		Identifier = { fg = colors.gray }, -- Variable types like const, <...>
 		Type = { fg = colors.midGrayDarker }, -- Type declarations (int, float, etc.)
-		LineNr = { fg = colors.darkGray }, -- Line numbers
+		LineNr = { fg = "#1c1c2a" }, -- Line numbers
 		CursorLineNr = { fg = colors.midGrayLighter, bold = true }, -- Current line number
-		Visual = { bg = colors.darkGray }, -- Visual selection
+		Visual = { bg = colors.midGrayDarker }, -- Visual selection
 		StatusLine = { fg = colors.gray, bg = colors.dimGray }, -- Status line
 		Pmenu = { fg = colors.gray, bg = colors.dimGray }, -- Popup menu
-		PmenuSel = { fg = colors.bg, bg = colors.darkGray }, -- Selected popup item
+		PmenuSel = { fg = colors.bg, bg = colors.midGrayDarker }, -- Selected popup item
 		Error = { fg = colors.bg, bg = colors.red, bold = true }, -- Error messages
 		Warning = { fg = colors.peach, bold = true }, -- Warning messages
 		Operator = { fg = colors.midGrayLighter }, -- For signs like =, +, -, *
@@ -102,10 +103,10 @@ function theme.setup()
 		Indentation = { fg = colors.dimGray }, -- Indentation
 		["@keyword"] = { fg = colors.lightGray, bold = true },
 		["@property"] = { fg = colors.gray },
-		["@type"] = { fg = colors.midGrayDarker },
-		["@type.qualifier"] = { fg = colors.midGrayDarker, italic = true },
-		["@type.builtin"] = { fg = colors.midGrayDarker, italic = true },
-		["@type.definition"] = { fg = colors.midGrayDarker, italic = true },
+		["@type"] = { fg = colors.midGrayLighter },
+		["@type.qualifier"] = { fg = colors.midGrayLighter, italic = true },
+		["@type.builtin"] = { fg = colors.midGrayLighter, italic = true },
+		["@type.definition"] = { fg = colors.midGrayLighter, italic = true },
 		["@string"] = { fg = colors.midGrayLighter },
 		["@variable"] = { fg = colors.lightGray },
 		["@variable.builtin"] = { fg = colors.fg },
@@ -122,14 +123,14 @@ function theme.setup()
 		["@function"] = { fg = colors.low_cyan },
 		["@function.builtin"] = { fg = colors.low_peach },
 		["@constructor"] = { fg = colors.low_cyan, bold = true },
-		["@punctuation"] = { fg = colors.midGrayDarker },
+		["@punctuation"] = { fg = colors.midGrayLighter },
 		["@punctuation.special"] = { fg = colors.lightGray },
 		["@operator"] = { fg = colors.midGrayLighter },
-		["@module"] = { fg = colors.midGrayDarker },
-		["@module.builtin"] = { fg = colors.midGrayDarker, bold = true },
+		["@module"] = { fg = colors.midGrayLighter },
+		["@module.builtin"] = { fg = colors.midGrayLighter, bold = true },
 		["@constant"] = { fg = colors.gray, italic = true },
 		["@constant.builtin"] = { fg = colors.gray, italic = true },
-		["@comment"] = { fg = colors.darkGray, italic = true },
+		["@comment"] = { fg = colors.midGrayDarker, italic = true },
 		["@tag"] = { fg = colors.lightGray },
 		["@tag.builtin"] = { fg = colors.low_peach, bold = true },
 		["@markup"] = { fg = colors.blue },
