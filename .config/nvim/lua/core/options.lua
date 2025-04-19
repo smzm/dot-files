@@ -4,6 +4,9 @@ local g = vim.g
 -- to displaying diagnostic signs (like errors or warnings)
 vim.o.signcolumn = "yes"
 
+-- Disable the status line at bottom
+vim.o.laststatus = 0
+
 -- Cursor highlighting
 opt.cursorline = true
 opt.cursorcolumn = false
@@ -84,9 +87,6 @@ opt.fillchars = [[vert:|,horiz:-,eob: ]]
 
 -- Enable lazy redraw for performance
 -- opt.lazyredraw = true
-
--- Have the statusline only display at the bottom
-opt.laststatus = 3
 
 -- Disable continuation comments in next line
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")

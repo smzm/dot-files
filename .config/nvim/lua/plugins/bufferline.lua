@@ -20,7 +20,7 @@ return {
 		},
 		highlights = {
 			fill = {
-				bg = "#111116", -- Background color for empty space
+				bg = "#0d0d15", -- Background color for empty space
 			},
 		},
 	},

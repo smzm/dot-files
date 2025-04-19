@@ -1,17 +1,17 @@
 local theme = {}
 
 local colors = {
-	bg = "#0d0d15", -- 0d0d15
+	bg = "#0b0b0f", -- bluish : 0d0d15
 	fg = "#e6e6e6",
 	yellow = "#e6e7a3",
 	peach = "#f9b98c",
 	low_peach = "#c68181",
 	dimGray = "#13131D",
-	darkGray = "#1c1c2a",
-	midGrayDarker = "#2f2f3e",
+	darkGray = "#1f1f2e",
+	midGrayDarker = "#353543",
 	midGrayLighter = "#565365",
 	gray = "#898999",
-	lightGray = "#ACACB8",
+	lightGray = "#C2C2C5",
 	brown = "#51484f",
 	red = "#d84f68",
 	teal = "#54c0a3",
@@ -21,7 +21,7 @@ local colors = {
 	cyan = "#4dd0e1",
 	low_cyan = "#7fc6c5",
 	purple = "#9D7FC7",
-	low_purple = "#6e678e",
+	low_purple = "#c5b3e4",
 	pink = "#F0A6CA",
 	black = "#000000",
 }
@@ -81,7 +81,7 @@ function theme.setup()
 		["@type.qualifier"] = { fg = colors.midGrayLighter, italic = true },
 		["@type.builtin"] = { fg = colors.midGrayLighter, italic = true },
 		["@type.definition"] = { fg = colors.midGrayLighter, italic = true },
-		["@string"] = { fg = colors.midGrayLighter },
+		["@string"] = { fg = colors.low_purple },
 		["@variable"] = { fg = colors.lightGray },
 		["@variable.builtin"] = { fg = colors.fg },
 		["@variable.parameter"] = { fg = colors.gray, italic = true },

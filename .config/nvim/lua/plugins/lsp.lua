@@ -348,7 +348,7 @@ return {
 				}
 			end
 
-			vim.api.nvim_set_hl(0, "CmpWin", { bg = "#07080d" })
+			vim.api.nvim_set_hl(0, "CmpWin", { bg = "#1c1c21" })
 
 			cmp.setup({
 				auto_brackets = { "python" },
@@ -476,16 +476,16 @@ return {
 				event = "VeryLazy", -- Load on very lazy events
 				config = function()
 					-- Custom highlight settings for sticky scroll
-					vim.api.nvim_set_hl(0, "TreesitterContext", { link = "Keyword" })
-					vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "Keyword" })
-					vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { link = "Keyword" })
-					vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Keyword" })
-					vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { link = "Keyword" })
+					-- vim.api.nvim_set_hl(0, "TreesitterContext", { link = "Keyword" })
+					-- vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "Keyword" })
+					-- vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { link = "Keyword" })
+					-- vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Keyword" })
+					-- vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { link = "Keyword" })
 
 					require("treesitter-context").setup({
 						enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 						multiwindow = false, -- Enable multiwindow support.
-						max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+						max_lines = 2, -- How many lines the window should span. Values <= 0 mean no limit.
 						min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 						line_numbers = true,
 						multiline_threshold = 20, -- Maximum number of lines to show for a single context
