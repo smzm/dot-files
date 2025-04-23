@@ -476,7 +476,7 @@ return {
 				event = "VeryLazy", -- Load on very lazy events
 				config = function()
 					-- Custom highlight settings for sticky scroll
-					-- vim.api.nvim_set_hl(0, "TreesitterContext", { link = "Keyword" })
+					vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#151515" })
 					-- vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "Keyword" })
 					-- vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { link = "Keyword" })
 					-- vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Keyword" })
@@ -485,7 +485,7 @@ return {
 					require("treesitter-context").setup({
 						enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 						multiwindow = false, -- Enable multiwindow support.
-						max_lines = 2, -- How many lines the window should span. Values <= 0 mean no limit.
+						max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
 						min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 						line_numbers = true,
 						multiline_threshold = 20, -- Maximum number of lines to show for a single context

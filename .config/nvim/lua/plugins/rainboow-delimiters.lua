@@ -27,13 +27,13 @@ return {
 
 		-- Define custom colors for each delimiter level
 		vim.cmd([[
-                highlight RainbowDelimiterGray guifg=#69737c
-                highlight RainbowDelimiterCyan guifg=#7fc6c5
-                highlight RainbowDelimiterRed guifg=#CF9797
-                highlight RainbowDelimiterYellow guifg=#CDC184
-                highlight RainbowDelimiterBlue guifg=#bbdef0
-                highlight RainbowDelimiterGreen guifg=#75C3A4
-                highlight RainbowDelimiterViolet guifg=#D160A0
+                highlight RainbowDelimiterGray guifg=#363636
+                highlight RainbowDelimiterCyan guifg=#616161
+                highlight RainbowDelimiterRed guifg=#878787
+                highlight RainbowDelimiterYellow guifg=#C9C9C9
+                highlight RainbowDelimiterBlue guifg=#D9D9D9
+                highlight RainbowDelimiterGreen guifg=#E8E8E8
+                highlight RainbowDelimiterViolet guifg=#E2E2E2
             ]])
 	end,
 }

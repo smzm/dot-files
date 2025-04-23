@@ -346,8 +346,8 @@ return {
 				end
 			end,
 		})
-		vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#08070a" })
-		vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#08070a" })
-		vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "#08070a", fg = "#08070a" })
+		vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#090909" })
+		vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#0c0c0c" })
+		vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "#0c0c0c", fg = "#08070a" })
 	end,
 }
