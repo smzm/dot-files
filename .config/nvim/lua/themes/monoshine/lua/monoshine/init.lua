@@ -73,6 +73,9 @@ function theme.setup()
 		Todo = { fg = colors.yellow, bold = true }, -- TODO comments
 		Tag = { fg = colors.peach },
 		Special = { fg = colors.fg }, -- Special symbols or escape sequences
+		IncSearch = { fg = colors.bg, bg = colors.lightGray },
+		Search = { fg = colors.bg, bg = colors.midGrayLighter },
+		CurSearch = { fg = colors.bg, bg = colors.lightGray },
 		CursorLine = { bg = colors.dimGray },
 		Indentation = { fg = colors.dimGray }, -- Indentation
 		["@keyword"] = { fg = colors.fg, bold = true },
