@@ -36,6 +36,7 @@ function theme.setup()
 	end
 
 	vim.api.nvim_set_hl(0, "Indentation", { fg = colors.dimGray })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = colors.darkGray })
 
 	-- Apply highlight groups
 	local highlights = {
