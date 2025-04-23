@@ -48,7 +48,7 @@ function theme.setup()
 		Type = { fg = colors.midGrayDarker }, -- Type declarations (int, float, etc.)
 		LineNr = { fg = colors.dimGray }, -- Line numbers
 		CursorLineNr = { fg = colors.midGrayLighter, bold = true }, -- Current line number
-		Visual = { bg = colors.midGrayDarker }, -- Visual selection
+		Visual = { bg = colors.black, fg = colors.fg }, -- Visual selection
 		StatusLine = { fg = colors.gray, bg = colors.dimGray }, -- Status line
 		Pmenu = { fg = colors.gray, bg = colors.dimGray }, -- Popup menu
 		PmenuSel = { fg = colors.bg, bg = colors.midGrayDarker }, -- Selected popup item
