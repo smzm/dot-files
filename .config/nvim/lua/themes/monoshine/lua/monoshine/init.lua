@@ -72,6 +72,10 @@ function theme.setup()
 		Title = { fg = colors.low_peach, bold = true }, -- Titles
 		Todo = { fg = colors.yellow, bold = true }, -- TODO comments
 		Tag = { fg = colors.peach },
+		WinBar = { fg = colors.fg, bg = colors.bg },
+		WinBarNC = { fg = colors.fg, bg = colors.bg },
+		debarWinSeparator = { bg = colors.bg },
+		NormalFloat = { fg = colors.midGrayLighter, bg = colors.bg },
 		Special = { fg = colors.fg }, -- Special symbols or escape sequences
 		IncSearch = { fg = colors.bg, bg = colors.lightGray },
 		Search = { fg = colors.bg, bg = colors.midGrayLighter },

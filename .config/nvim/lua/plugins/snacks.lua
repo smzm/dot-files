@@ -54,7 +54,7 @@ return {
                         wo = {
                             border = "solid",
                             spell = false,
-                            wrap = false,
+                            wrap = true,
                             signcolumn = "yes",
                             statuscolumn = " ",
                             conceallevel = 3,
