@@ -6,7 +6,7 @@ local colors = {
 	yellow = "#e6e7a3",
 	peach = "#f9b98c",
 	low_peach = "#c68181",
-	dimGray = "#262626",
+	dimGray = "#161616",
 	darkGray = "#303030",
 	midGrayDarker = "#555555",
 	midGrayLighter = "#7b7b7b",
@@ -46,7 +46,7 @@ function theme.setup()
 		Keyword = { fg = colors.midGrayDarker }, -- Keywords like function keyword, methods
 		Identifier = { fg = colors.gray }, -- Variable types like const, <...>
 		Type = { fg = colors.midGrayDarker }, -- Type declarations (int, float, etc.)
-		LineNr = { fg = "#1c1c2a" }, -- Line numbers
+		LineNr = { fg = colors.dimGray }, -- Line numbers
 		CursorLineNr = { fg = colors.midGrayLighter, bold = true }, -- Current line number
 		Visual = { bg = colors.midGrayDarker }, -- Visual selection
 		StatusLine = { fg = colors.gray, bg = colors.dimGray }, -- Status line
