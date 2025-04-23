@@ -6,7 +6,8 @@ local colors = {
 	yellow = "#e6e7a3",
 	peach = "#f9b98c",
 	low_peach = "#c68181",
-	dimGray = "#161616",
+	dimGrayDarker = "#121212",
+	dimGrayLighter = "#242424",
 	darkGray = "#303030",
 	midGrayDarker = "#555555",
 	midGrayLighter = "#7b7b7b",
@@ -35,8 +36,8 @@ function theme.setup()
 		vim.cmd("syntax reset")
 	end
 
-	vim.api.nvim_set_hl(0, "Indentation", { fg = colors.dimGray })
-	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = colors.darkGray })
+	vim.api.nvim_set_hl(0, "Indentation", { fg = colors.dimGrayDarker })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = colors.dimGrayLighter })
 
 	-- Apply highlight groups
 	local highlights = {
@@ -47,7 +48,7 @@ function theme.setup()
 		Keyword = { fg = colors.midGrayDarker }, -- Keywords like function keyword, methods
 		Identifier = { fg = colors.gray }, -- Variable types like const, <...>
 		Type = { fg = colors.midGrayDarker }, -- Type declarations (int, float, etc.)
-		LineNr = { fg = colors.dimGray }, -- Line numbers
+		LineNr = { fg = colors.dimGrayDarker }, -- Line numbers
 		CursorLineNr = { fg = colors.midGrayLighter, bold = true }, -- Current line number
 		Visual = { bg = colors.black, fg = colors.fg }, -- Visual selection
 		StatusLine = { fg = colors.gray, bg = colors.dimGray }, -- Status line
@@ -81,8 +82,8 @@ function theme.setup()
 		IncSearch = { fg = colors.bg, bg = colors.lightGray },
 		Search = { fg = colors.bg, bg = colors.midGrayLighter },
 		CurSearch = { fg = colors.bg, bg = colors.lightGray },
-		CursorLine = { bg = colors.dimGray },
-		Indentation = { fg = colors.dimGray }, -- Indentation
+		CursorLine = { bg = colors.dimGrayDarker },
+		Indentation = { fg = colors.dimGrayDarker }, -- Indentation
 		["@keyword"] = { fg = colors.fg, bold = true },
 		["@type"] = { fg = colors.midGrayDarker },
 		["@type.qualifier"] = { fg = colors.midGrayDarker },
