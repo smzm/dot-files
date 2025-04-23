@@ -46,8 +46,8 @@ opt.numberwidth = 4
 opt.expandtab = true
 opt.smarttab = true
 opt.smartindent = true
-opt.shiftwidth = 4
-opt.tabstop = 4
+opt.shiftwidth = 2
+opt.tabstop = 2
 
 -- Code folding : all folds to be open by default
 opt.foldenable = true

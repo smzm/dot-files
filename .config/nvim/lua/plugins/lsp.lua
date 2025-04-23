@@ -256,11 +256,11 @@ return {
 			end
 
 			-- Change Color of hints
-			vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = "#52577d", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = "#52577d", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = "#52577d", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#424561", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#424561", bg = bg })
+			vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = "#606060", bg = bg })
+			vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = "#606060", bg = bg })
+			vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = "#606060", bg = bg })
+			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#606060", bg = bg })
+			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#606060", bg = bg })
 			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e8546a", bg = None })
 		end,
 	},
@@ -348,7 +348,7 @@ return {
 				}
 			end
 
-			vim.api.nvim_set_hl(0, "CmpWin", { bg = "#1c1c21" })
+			vim.api.nvim_set_hl(0, "CmpWin", { bg = "#1e1e1e" })
 
 			cmp.setup({
 				auto_brackets = { "python" },

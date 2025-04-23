@@ -17,11 +17,11 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
 		opts = {},
 		config = function()
-			local neoshine = require("themes.neoshine.lua.neoshine")
+			local neoshine = require("themes.monoshine.lua.monoshine")
 			local colors = neoshine.colors
 
-			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = "#2B2B3B", fg = colors.fg })
-			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = "#565676", fg = colors.lightGray })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = "#252525", fg = colors.fg })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = "##454545", fg = colors.lightGray })
 			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = colors.pink })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#111117" })
 

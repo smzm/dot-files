@@ -72,10 +72,10 @@ map("n", "<C-k>", "<C-w>k", opts)
 map("n", "<C-l>", "<C-w>l", opts)
 
 -- Resize splits with arrow keys
-map("n", "<M-l>", ":vertical resize -1<CR>", opts)
-map("n", "<M-h>", ":vertical resize +1<CR>", opts)
-map("n", "<M-k>", ":resize +1<CR>", opts)
-map("n", "<M-j>", ":resize -1<CR>", opts)
+-- map("n", "<M-l>", ":vertical resize -1<CR>", opts)
+-- map("n", "<M-h>", ":vertical resize +1<CR>", opts)
+-- map("n", "<M-k>", ":resize +1<CR>", opts)
+-- map("n", "<M-j>", ":resize -1<CR>", opts)
 
 -- Buffer navigation
 map("n", "[b", ":BufferLineCyclePrev<CR>", opts)
@@ -84,20 +84,16 @@ map("n", "<C-PageUp>", ":BufferLineCyclePrev<CR>", opts)
 map("n", "<C-PageDown>", ":BufferLineCycleNext<CR>", opts)
 
 -- Move lines
-map("n", "<C-A-K>", "<cmd>m .-2<cr>==", opts)
-map("n", "<C-A-J>", "<cmd>m .+1<cr>==", opts)
-map("i", "<C-A-j>", "<esc><cmd>m .+1<cr>==gi", opts)
-map("i", "<C-A-k>", "<esc><cmd>m .-2<cr>==gi", opts)
-map("v", "<C-A-j>", ":m '>+1<cr>gv=gv", opts)
-map("v", "<C-A-k>", ":m '<-2<cr>gv=gv", opts)
+map("n", "<A-k>", "<cmd>m .-2<cr>==", opts)
+map("n", "<A-j>", "<cmd>m .+1<cr>==", opts)
+map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", opts)
+map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", opts)
+map("v", "<A-j>", ":m '>+1<cr>gv=gv", opts)
+map("v", "<A-k>", ":m '<-2<cr>gv=gv", opts)
 
 -- Visual
 -- better paste
 map("v", "p", '"_dP', opts)
-
--- move selected lines
-map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move down" })
-map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move up" })
 
 -- Stay in visual mode for next indentation
 map("v", "<", "<gv", opts)
