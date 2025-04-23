@@ -14,7 +14,7 @@ return {
 				match = "SpecialKey",
 				current = "SpecialKey",
 				backdrop = "FlashBackdrop",
-				label = "TodoBgPERF",
+				label = "IncSearch",
 			},
 		},
 	},
