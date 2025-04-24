@@ -118,13 +118,12 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 				"size": 12,
 				"weight": "light",
 				"features": {
-					"calt": 1, // Contextual alternates
-					"liga": 1, // Standard ligatures
-					"zero": 1, // Slashed zero
-					"ss03": 1, // Stylistic set 3 (alternate '0')
-					"ss04": 1, // Stylistic set 4 (alternate 'l')
-					"ss05": 1, // Stylistic set 5 (alternate 'i')
-					// "cv01": 1, // Character variant 1 (affects italics)
+					"calt": 1,
+					"liga": 1,
+					"zero": 1,
+					"ss03": 1,
+					"ss04": 1,
+					"ss05": 1,
 					"ss19": 1,
 					"ss20": 1,
 					"kern": 1,
