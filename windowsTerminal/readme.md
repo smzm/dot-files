@@ -106,7 +106,11 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 
 #### Add custom config : 
 ```json
-    "copyOnSelect": true,
+{
+	"actions":[...],
+	"copyFormatting": "none",
+	"copyOnSelect": true,
+}
 ```
 ```json
 "profiles": {
