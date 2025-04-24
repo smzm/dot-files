@@ -22,8 +22,8 @@ return {
 
 			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = "#252525", fg = colors.fg })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = "#454545", fg = colors.lightGray })
-			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = colors.pink })
-			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#111117" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = colors.midGrayLighter })
+			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#030303" })
 
 			require("render-markdown").setup({
 				render_modes = true,

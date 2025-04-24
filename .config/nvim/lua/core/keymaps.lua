@@ -113,3 +113,27 @@ map("n", "<leader>q", ":bd<CR>", { noremap = true, silent = true })
 
 -- by pressing <home> cursor will go to the first character of the line
 map("i", "<Home>", "<C-o>^", { noremap = true, silent = true })
+
+-- Smart markdown link opener (supports #section anchors)
+vim.keymap.set("n", "<leader>gl", function()
+	local line = vim.fn.getline(".")
+	local link = line:match("%[.-%]%((.-)%)")
+	if not link then
+		return
+	end
+
+	local path, anchor = link:match("([^#]+)#?(.*)")
+	if not path then
+		return
+	end
+
+	-- Open the markdown file
+	vim.cmd("edit " .. path)
+
+	-- Jump to the heading, if anchor is present
+	if anchor ~= "" then
+		-- convert kebab-case to normal search pattern
+		local anchor_pattern = anchor:gsub("-", ".*")
+		vim.fn.search(anchor_pattern, "w")
+	end
+end, { desc = "Open markdown file and jump to anchor", noremap = true, silent = true })
