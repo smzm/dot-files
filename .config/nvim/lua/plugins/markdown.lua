@@ -22,8 +22,9 @@ return {
 
 			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = "#252525", fg = colors.fg })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = "#454545", fg = colors.lightGray })
-			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = colors.midGrayLighter })
+			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = colors.midGrayDarker })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#030303" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { bg = colors.dimGrayDarker })
 
 			require("render-markdown").setup({
 				render_modes = true,
@@ -40,3 +41,41 @@ return {
 		end,
 	},
 }
+
+-- RenderMarkdownTableFill
+-- RenderMarkdownTableRow
+-- RenderMarkdownBullet
+-- RenderMarkdownTableHead
+-- RenderMarkdownCode
+-- RenderMarkdownCodeInline
+-- RenderMarkdownCodeFallback
+-- RenderMarkdownChecked
+-- RenderMarkdownUnchecked
+-- RenderMarkdownH6Bg
+-- RenderMarkdownLink
+-- RenderMarkdownH3Bg
+-- RenderMarkdownH2Bg
+-- RenderMarkdownH1Bg
+-- RenderMarkdownTodo
+-- RenderMarkdownH6
+-- RenderMarkdownDash
+-- RenderMarkdownH4Bg
+-- RenderMarkdownHint
+-- RenderMarkdownWarn
+-- RenderMarkdownInfo
+-- RenderMarkdownH1
+-- RenderMarkdownH2
+-- RenderMarkdownH3
+-- RenderMarkdownH4
+-- RenderMarkdownH5
+-- RenderMarkdownMath
+-- RenderMarkdownWikiLink
+-- RenderMarkdownCodeBorder
+-- RenderMarkdownInlineHighlight
+-- RenderMarkdownQuote
+-- RenderMarkdownIndent
+-- RenderMarkdownHtmlComment
+-- RenderMarkdownSign
+-- RenderMarkdownH5Bg
+-- RenderMarkdownSuccess
+-- RenderMarkdownError
