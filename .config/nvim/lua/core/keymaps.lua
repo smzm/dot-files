@@ -115,25 +115,27 @@ map("n", "<leader>q", ":bd<CR>", { noremap = true, silent = true })
 map("i", "<Home>", "<C-o>^", { noremap = true, silent = true })
 
 -- Smart markdown link opener (supports #section anchors)
-vim.keymap.set("n", "<leader>gl", function()
+vim.keymap.set("n", "gl", function()
 	local line = vim.fn.getline(".")
 	local link = line:match("%[.-%]%((.-)%)")
 	if not link then
 		return
 	end
 
-	local path, anchor = link:match("([^#]+)#?(.*)")
-	if not path then
-		return
-	end
-
-	-- Open the markdown file
-	vim.cmd("edit " .. path)
-
-	-- Jump to the heading, if anchor is present
-	if anchor ~= "" then
-		-- convert kebab-case to normal search pattern
-		local anchor_pattern = anchor:gsub("-", ".*")
-		vim.fn.search(anchor_pattern, "w")
+	local path, anchor = link:match("([^#]*)#?(.*)")
+	if path == "" then
+		-- Inline anchor: stay in current buffer
+		if anchor ~= "" then
+			-- Match markdown headers that start with #
+			local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", ".*")
+			vim.fn.search(anchor_pattern, "w")
+		end
+	else
+		-- External file: open and jump
+		vim.cmd("edit " .. path)
+		if anchor ~= "" then
+			local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", ".*")
+			vim.fn.search(anchor_pattern, "w")
+		end
 	end
 end, { desc = "Open markdown file and jump to anchor", noremap = true, silent = true })
