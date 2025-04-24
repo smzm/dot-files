@@ -114,7 +114,7 @@ map("n", "<leader>q", ":bd<CR>", { noremap = true, silent = true })
 -- by pressing <home> cursor will go to the first character of the line
 map("i", "<Home>", "<C-o>^", { noremap = true, silent = true })
 
--- Smart markdown link opener (supports #section anchors)
+-- Smart markdown link opener (supports #section anchors and relative paths)
 vim.keymap.set("n", "gl", function()
 	local line = vim.fn.getline(".")
 	local link = line:match("%[.-%]%((.-)%)")
@@ -123,6 +123,7 @@ vim.keymap.set("n", "gl", function()
 	end
 
 	local path, anchor = link:match("([^#]*)#?(.*)")
+
 	if path == "" then
 		-- Inline anchor: stay in current buffer
 		if anchor ~= "" then
@@ -131,11 +132,22 @@ vim.keymap.set("n", "gl", function()
 			vim.fn.search(anchor_pattern, "w")
 		end
 	else
-		-- External file: open and jump
-		vim.cmd("edit " .. path)
+		-- Handle relative paths
+		if path:match("^%.") then
+			-- Path starts with ./ or ../ (relative path)
+			local current_file = vim.fn.expand("%:p")
+			local current_dir = vim.fn.fnamemodify(current_file, ":h")
+			local absolute_path = vim.fn.simplify(current_dir .. "/" .. path)
+			vim.cmd("edit " .. absolute_path)
+		else
+			-- Absolute path or path without leading ./
+			vim.cmd("edit " .. path)
+		end
+
+		-- Jump to anchor if present
 		if anchor ~= "" then
 			local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", ".*")
 			vim.fn.search(anchor_pattern, "w")
 		end
 	end
-end, { desc = "Open markdown file and jump to anchor", noremap = true, silent = true })
+end, { desc = "Open markdown link and jump to anchor", noremap = true, silent = true })
