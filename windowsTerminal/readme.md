@@ -105,9 +105,11 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 <br>
 
 #### Add custom config : 
-```json
+```jsonc
 {
-	"actions":[...],
+	"actions": [
+   		// ...
+	],
 	"copyFormatting": "none",
 	"copyOnSelect": true,
 }
