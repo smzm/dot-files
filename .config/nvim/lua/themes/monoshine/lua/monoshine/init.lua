@@ -79,7 +79,7 @@ function theme.setup()
 		WinBarNC = { fg = colors.fg, bg = colors.bg },
 		debarWinSeparator = { bg = colors.bg },
 		NormalFloat = { fg = colors.midGrayLighter, bg = colors.bg },
-		MatchParen = { fg = colors.fg, bg = colors.black, bold = true },
+		MatchParen = { fg = colors.bg, bg = colors.lightGray, bold = true },
 		Special = { fg = colors.fg }, -- Special symbols or escape sequences
 		IncSearch = { fg = colors.bg, bg = colors.lightGray },
 		Search = { fg = colors.bg, bg = colors.midGrayLighter },
