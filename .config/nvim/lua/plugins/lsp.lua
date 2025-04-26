@@ -1,5 +1,4 @@
-return {
-	-- >>> LSP
+return { -- >>> LSP
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
@@ -54,7 +53,8 @@ return {
 				cssls = {}, -- CSS
 				tailwindcss = {}, -- Tailwind CSS
 				templ = {}, -- Templ
-				pyright = {}, -- Python
+				pyright = {}, -- Python : pyright
+				ruff = {}, -- Python : ruff
 				dockerls = {}, -- Docker
 				docker_compose_language_service = {}, --Docker-Compose
 				jsonls = {}, -- JSON
@@ -106,6 +106,7 @@ return {
 
 				-- LINTERS
 				{ "codespell" },
+				{ "ruff" },
 				-- { "eslint_d" },
 				{ "pylint" },
 				{ "shellcheck" },
@@ -287,7 +288,7 @@ return {
 					graphql = { "prettier" },
 					liquid = { "prettier" },
 					lua = { "stylua" },
-					python = { "isort", "black" },
+					python = { "isort", "black", "ruff" },
 				},
 				format_on_save = {
 					lsp_fallback = true,
