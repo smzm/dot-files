@@ -45,7 +45,7 @@ function theme.setup()
 		Normal = { fg = colors.fg, bg = colors.bg }, -- Default text
 		Comment = { fg = colors.midGrayDarker, italic = true }, -- Comments
 		String = { fg = colors.midGrayLighter }, -- Strings
-		Function = { fg = colors.low_cyan }, -- Function names
+		Function = { fg = colors.lightGray }, -- Function names
 		Keyword = { fg = colors.midGrayDarker }, -- Keywords like function keyword, methods
 		Identifier = { fg = colors.gray }, -- Variable types like const, <...>
 		Type = { fg = colors.midGrayDarker }, -- Type declarations (int, float, etc.)
@@ -55,25 +55,25 @@ function theme.setup()
 		StatusLine = { fg = colors.gray, bg = colors.dimGray }, -- Status line
 		Pmenu = { fg = colors.gray, bg = colors.dimGray }, -- Popup menu
 		PmenuSel = { fg = colors.bg, bg = colors.midGrayDarker }, -- Selected popup item
-		Error = { fg = colors.bg, bg = colors.red, bold = true }, -- Error messages
+		Error = { fg = colors.bg, bg = colors.fg, bold = true }, -- Error messages
 		Warning = { fg = colors.peach, bold = true }, -- Warning messages
 		Operator = { fg = colors.midGrayLighter }, -- For signs like =, +, -, *
 		Delimiter = { fg = colors.midGrayDarker }, -- Brackets and braces: (), {}, []
-		Constant = { fg = colors.yellow }, -- Constants: true, false, nil
+		Constant = { fg = colors.lightGray }, -- Constants: true, false, nil
 		Number = { fg = colors.peach }, -- Numbers
-		Boolean = { fg = colors.pink }, -- Boolean: true, false
+		Boolean = { fg = colors.lightGray }, -- Boolean: true, false
 		Float = { fg = colors.peach }, -- Floating point numbers
-		Character = { fg = colors.green }, -- Single characters: 'a'
+		Character = { fg = colors.lightGray }, -- Single characters: 'a'
 		PreProc = { fg = colors.gray }, -- Preprocessor directives (#define)
-		Include = { fg = colors.cyan }, -- Include statements (#include)
-		Define = { fg = colors.cyan }, -- #define macros
-		Macro = { fg = colors.cyan }, -- Macros
+		Include = { fg = colors.lightGray }, -- Include statements (#include)
+		Define = { fg = colors.lightGray }, -- #define macros
+		Macro = { fg = colors.lightGray }, -- Macros
 		StorageClass = { fg = colors.lightGray }, -- static, extern, etc.
 		Structure = { fg = colors.lightGray }, -- struct, union
 		Typedef = { fg = colors.lightGray }, -- typedef
 		Underlined = { fg = colors.gray, underline = true }, -- Underlined text
 		Title = { fg = colors.low_peach, bold = true }, -- Titles
-		Todo = { fg = colors.yellow, bold = true }, -- TODO comments
+		Todo = { fg = colors.lightGray, bold = true }, -- TODO comments
 		Tag = { fg = colors.peach },
 		WinBar = { fg = colors.fg, bg = colors.bg },
 		WinBarNC = { fg = colors.fg, bg = colors.bg },
