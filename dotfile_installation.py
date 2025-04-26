@@ -386,7 +386,7 @@ doh_config_answer = inquirer.prompt(doh_config)
 if doh_config_answer["interest"] == "Yes":
     subprocess.run("clear", shell=True)
     pacman_result = subprocess.run(
-        f"sudo pacman -S dnsmasq --noconfirm",
+        "sudo pacman -S dnsmasq --noconfirm",
         shell=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -473,10 +473,11 @@ if os_answers["interest"] == "Arch":
         "emoji-keyboard-bin",
         "yazi",
         "trashy",
+        "quarto-cli-bin-pre-release",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
-    aur_list = ["manim", "yazi", "trashy"]
+    aur_list = ["manim", "yazi", "trashy", "quarto-cli-bin-pre-release"]
 
 
 aur_packages_q = [
@@ -874,7 +875,10 @@ if yazi_check:
         )
         if yazi1 and yazi2:
             rprint("[italic light_pink3] Installing Yazi Plugins ...")
-            subprocess.run("cd ~/.config/yazi/ ; ya pack -a yazi-rs/plugins:full-border imsi32/yatline MasouShizuka/projects DreamMaoMao/fg AnirudhG07/plugins-yazi:copy-file-contents Lil-Dank/lazygit pirafrank/what-size", shell=True)
+            subprocess.run(
+                "cd ~/.config/yazi/ ; ya pack -a yazi-rs/plugins:full-border imsi32/yatline MasouShizuka/projects DreamMaoMao/fg AnirudhG07/plugins-yazi:copy-file-contents Lil-Dank/lazygit pirafrank/what-size",
+                shell=True,
+            )
 else:
     rprint(":thumbs_down: [red italic] Yazi is not installed.\n")
 
@@ -1546,7 +1550,7 @@ if os_answers["interest"] == "Arch":
             "tar xvf ~/.icons/macOSMonterey.tar.gz", shell=True, stdout=DEVNULL
         )
         subprocess.run("rm ~/.icons/macOSMonterey.tar.gz", shell=True, stdout=DEVNULL)
-        subprocess.run(f"mkdir -p ~/.config/gtk-3.0", shell=True, stdout=DEVNULL)
+        subprocess.run("mkdir -p ~/.config/gtk-3.0", shell=True, stdout=DEVNULL)
         subprocess.run(
             f"yes | sudo cp -rf {dotfiles_path}/.config/gtk-3.0/* ~/.config/gtk-3.0/",
             shell=True,
