@@ -63,6 +63,7 @@ function theme.setup()
 		Number = { fg = colors.peach }, -- Numbers
 		Boolean = { fg = colors.lightGray }, -- Boolean: true, false
 		Float = { fg = colors.peach }, -- Floating point numbers
+		FloatBorder = { fg = colors.midGrayLighter, bg = colors.bg }, -- Floating point border
 		Character = { fg = colors.lightGray }, -- Single characters: 'a'
 		PreProc = { fg = colors.gray }, -- Preprocessor directives (#define)
 		Include = { fg = colors.lightGray }, -- Include statements (#include)
@@ -77,8 +78,11 @@ function theme.setup()
 		Tag = { fg = colors.peach },
 		WinBar = { fg = colors.fg, bg = colors.bg },
 		WinBarNC = { fg = colors.fg, bg = colors.bg },
-		debarWinSeparator = { bg = colors.bg },
+		debarWinSeparator = { bg = colors.bg, fg = colors.midGrayLighter },
 		NormalFloat = { fg = colors.midGrayLighter, bg = colors.bg },
+		LspFloatWinNormal = { fg = colors.midGrayLighter, bg = colors.bg },
+		LspFloatWinBorder = { fg = colors.midGrayDarker, bg = colors.bg },
+		LspInfoBorder = { fg = colors.midGrayDarker, bg = colors.bg },
 		MatchParen = { fg = colors.bg, bg = colors.lightGray, bold = true },
 		Special = { fg = colors.fg }, -- Special symbols or escape sequences
 		IncSearch = { fg = colors.bg, bg = colors.lightGray },

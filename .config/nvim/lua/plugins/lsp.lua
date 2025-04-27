@@ -200,7 +200,7 @@ return { -- >>> LSP
 					keymap.set("n", "]d", vim.diagnostic.goto_next, opts) -- jump to next diagnostic in buffer
 
 					opts.desc = "Show documentation for what is under cursor"
-					keymap.set("n", "N", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
+					keymap.set("n", "<leader>ll", vim.lsp.buf.hover, opts) -- show documentation for what is under cursor
 
 					opts.desc = "Restart LSP"
 					keymap.set("n", "<leader>ls", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
@@ -209,7 +209,6 @@ return { -- >>> LSP
 					keymap.set("n", "<leader>le", require("lsp_lines").toggle, opts) -- mapping to restart lsp if necessary
 				end,
 			})
-
 			-- Configuring Appearance
 			-- ==> Show diagnostic windows on hover :
 			-- vim.diagnostic.config({
@@ -240,7 +239,7 @@ return { -- >>> LSP
 				severity_sort = true,
 				float = {
 					focusable = true,
-					style = "minimal",
+					style = "border",
 					border = "none",
 					source = "always",
 					header = "",
@@ -354,7 +353,7 @@ return { -- >>> LSP
 			cmp.setup({
 				auto_brackets = { "python" },
 				completion = {
-					completeopt = "menu,menuone,preview,noselect",
+					completeoptk = "menu,menuone,preview,noselect",
 				},
 				snippet = {
 					expand = function(args)

@@ -109,7 +109,7 @@ map("i", ";;", ":", opts)
 map("n", "<BS>", "diwh", { noremap = true, silent = true })
 
 -- use leader q to quit buffer
-map("n", "<leader>q", ":bd<CR>", { noremap = true, silent = true })
+map("n", "<leader>qq", ":bd<CR>", { noremap = true, silent = true, desc = "Exit from current buffer" })
 
 -- by pressing <home> cursor will go to the first character of the line
 map("i", "<Home>", "<C-o>^", { noremap = true, silent = true })

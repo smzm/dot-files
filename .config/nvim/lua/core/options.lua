@@ -50,12 +50,6 @@ opt.smartindent = true
 opt.shiftwidth = 2
 opt.tabstop = 2
 
--- Code folding : all folds to be open by default
-opt.foldenable = true
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-opt.foldcolumn = "1"
-
 -- Decrease waiting time in key mapped sequences
 opt.timeoutlen = 500
 opt.updatetime = 200
@@ -92,3 +86,12 @@ opt.fillchars = [[vert:|,horiz:-,eob: ]]
 -- Disable continuation comments in next line
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+
+-- Figure out foldable sections like functions, classes, blocks, etc using Treesitter.
+opt.foldenable = true
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldcolumn = "1"
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"
+opt.foldtext = "getline(v:foldstart) .. ' ... ' .. (v:foldend - v:foldstart) .. ' lines'"

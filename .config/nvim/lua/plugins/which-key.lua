@@ -25,6 +25,7 @@ return {
 			{ "<leader>u", group = "Snack" },
 			{ "<leader>g", group = "Git" },
 			{ "<leader>a", group = "Avante" },
+			{ "<leader>q", group = "Quarto" },
 			{ "<leader>x", group = "Diagnostics/quickfix", icon = { icon = "󱖫 ", color = "red" } },
 		},
 	},

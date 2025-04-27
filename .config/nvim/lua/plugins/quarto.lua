@@ -31,5 +31,14 @@ return {
 				},
 			})
 		end,
+		keys = {
+			{
+				"<leader>qp",
+				function()
+					vim.cmd("QuartoPreview")
+				end,
+				desc = "Quarto Preview",
+			},
+		},
 	},
 }
