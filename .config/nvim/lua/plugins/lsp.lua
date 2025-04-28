@@ -12,23 +12,6 @@ return { -- >>> LSP
 			{ "j-hui/fidget.nvim", opts = {} },
 			-- Show nvim diagnostics using virtual lines
 			{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
-			{
-				"SmiteshP/nvim-navbuddy",
-				dependencies = {
-					"SmiteshP/nvim-navic",
-					"MunifTanjim/nui.nvim",
-				},
-				opts = {
-					lsp = { auto_attach = true },
-					window = {
-						border = "rounded",
-						size = "70%",
-					},
-				},
-				keys = {
-					{ "\\", ":Navbuddy<CR>", desc = "Open Navbuddy" },
-				},
-			},
 		},
 		config = function()
 			local servers = {
@@ -406,13 +389,13 @@ return { -- >>> LSP
 				},
 				window = {
 					completion = {
-						winhighlight = "Normal:CmpWin,FloatBorder:Title,Search:None",
+						winhighlight = "NormalNC:CmpWin,FloatBorder:Title,Search:None",
 						col_offset = -3,
 						side_padding = 0,
 					},
 					documentation = {
 						-- border = border("CmpDocBorder"),
-						winhighlight = "Normal:CmpWin",
+						winhighlight = "NormalNC:CmpWin",
 						max_width = 80,
 					},
 				},

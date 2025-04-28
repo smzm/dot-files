@@ -79,10 +79,12 @@ function theme.setup()
 		WinBar = { fg = colors.fg, bg = colors.bg },
 		WinBarNC = { fg = colors.fg, bg = colors.bg },
 		debarWinSeparator = { bg = colors.bg, fg = colors.midGrayLighter },
-		NormalFloat = { fg = colors.midGrayLighter, bg = colors.bg },
+		NormalFloat = { fg = colors.midGrayDarker, bg = colors.bg },
+		NormalNC = { fg = colors.midGrayDarker, bg = colors.bg },
 		LspFloatWinNormal = { fg = colors.midGrayLighter, bg = colors.bg },
 		LspFloatWinBorder = { fg = colors.midGrayDarker, bg = colors.bg },
 		LspInfoBorder = { fg = colors.midGrayDarker, bg = colors.bg },
+		WinSeparator = { fg = colors.midGrayDarker, bg = colors.bg },
 		MatchParen = { fg = colors.bg, bg = colors.lightGray, bold = true },
 		Special = { fg = colors.fg }, -- Special symbols or escape sequences
 		IncSearch = { fg = colors.bg, bg = colors.lightGray },

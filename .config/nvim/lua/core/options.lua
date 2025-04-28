@@ -78,7 +78,15 @@ opt.sidescrolloff = 5
 opt.wrap = true
 
 -- Fill chars
-opt.fillchars = [[vert:|,horiz:-,eob: ]]
+opt.fillchars = {
+	horiz = "─", -- for horizontal split lines
+	horizup = "┴", -- corner up
+	horizdown = "┬", -- corner down
+	vert = "│", -- vertical split line (you already use)
+	vertleft = "┤", -- corner left
+	vertright = "├", -- corner right
+	verthoriz = "┼", -- cross point
+}
 
 -- Enable lazy redraw for performance
 -- opt.lazyredraw = true

@@ -1,36 +1,51 @@
 return {
 	"folke/noice.nvim",
-	config = function()
-		require("noice").setup({
-			-- defaults for hover and signature help
+	dependencies = {
+		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+		"MunifTanjim/nui.nvim",
+		"rcarriga/nvim-notify",
+	},
+	opts = {
+		opts = {
 			lsp = {
-				signature = {
-					enabled = false, -- Enable signature help
-					-- auto_open = true, -- Prevent automatic opening
-					-- view = "mini", -- Use a minimal view for signature help
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+					["cmp.entry.get_documentation"] = true,
 				},
 			},
+			messages = {
+				view_search = false,
+			},
+			presets = {
+				bottom_search = true,
+				command_palette = true,
+				long_message_to_split = true,
+				lsp_doc_border = true,
+			},
 			routes = {
+				-- See :h ui-messages
 				{
 					filter = {
 						event = "msg_show",
 						any = {
 							{ find = "%d+L, %d+B" },
-							{ find = "; after #%d+" },
-							{ find = "; before #%d+" },
-							{ find = "%d fewer lines" },
-							{ find = "%d more lines" },
+							{ find = "^%d+ changes?; after #%d+" },
+							{ find = "^%d+ changes?; before #%d+" },
+							{ find = "^Hunk %d+ of %d+$" },
+							{ find = "^%d+ fewer lines;?" },
+							{ find = "^%d+ more lines?;?" },
+							{ find = "^%d+ line less;?" },
+							{ find = "^Already at newest change" },
+							{ kind = "wmsg" },
+							{ kind = "emsg", find = "E486" },
+							{ kind = "quickfix" },
 						},
 					},
-					opts = { skip = true },
+					view = "mini",
 				},
 			},
-		})
-	end,
-	dependencies = {
-		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-		"MunifTanjim/nui.nvim",
-		"rcarriga/nvim-notify",
+		},
 	},
 }
 -- To swith between noice popup and neovim use : <C-w>w
