@@ -6,7 +6,7 @@ return { -- show tree of symbols in the current file
 	},
 	opts = {
 		outline_items = {
-			show_symbol_lineno = true,
+			-- show_symbol_lineno = true,
 			auto_jump = true,
 			auto_preview = true,
 		},
@@ -17,21 +17,16 @@ return { -- show tree of symbols in the current file
 			auto_jump = true,
 			jump_highlight_duration = 300,
 			center_on_jump = true,
+			auto_close = true,
 		},
 		symbols = {
-			icon_fetcher = function(k, buf)
-				if k == "String" then
-					return ""
-				end
-				return false
+			icon_fetcher = function()
+				return ""
 			end,
-			icon_source = "lspkind",
 		},
 		preview_window = {
 			open_hover_on_preview = true,
 			live = true,
-			winhl = "NormalFloat:",
-			border = "rounded",
 		},
 		providers = {
 			priority = { "markdown", "lsp" },

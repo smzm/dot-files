@@ -75,6 +75,7 @@ function theme.setup()
 		Underlined = { fg = colors.gray, underline = true }, -- Underlined text
 		Title = { fg = colors.low_peach, bold = true }, -- Titles
 		Todo = { fg = colors.lightGray, bold = true }, -- TODO comments
+		Conceal = { fg = colors.darkGray, bg = colors.darkGray }, -- Conceal
 		Tag = { fg = colors.peach },
 		WinBar = { fg = colors.fg, bg = colors.bg },
 		WinBarNC = { fg = colors.fg, bg = colors.bg },

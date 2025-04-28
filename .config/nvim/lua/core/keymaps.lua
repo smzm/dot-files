@@ -60,7 +60,7 @@ vim.api.nvim_set_keymap(
 ) -- Horizontal split
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>s|",
+	"<leader>s\\",
 	":vsplit<CR>",
 	{ noremap = true, silent = true, desc = "Vertical tab split" }
 ) -- Vertical split
@@ -72,10 +72,10 @@ map("n", "<C-k>", "<C-w>k", opts)
 map("n", "<C-l>", "<C-w>l", opts)
 
 -- Resize splits with arrow keys
--- map("n", "<M-l>", ":vertical resize -1<CR>", opts)
--- map("n", "<M-h>", ":vertical resize +1<CR>", opts)
--- map("n", "<M-k>", ":resize +1<CR>", opts)
--- map("n", "<M-j>", ":resize -1<CR>", opts)
+map("n", "<C-M-L>", ":vertical resize -1<CR>", opts)
+map("n", "<C-M-H>", ":vertical resize +1<CR>", opts)
+map("n", "<C-M-K>", ":resize +1<CR>", opts)
+map("n", "<C-M-J>", ":resize -1<CR>", opts)
 
 -- Buffer navigation
 map("n", "[b", ":BufferLineCyclePrev<CR>", opts)
