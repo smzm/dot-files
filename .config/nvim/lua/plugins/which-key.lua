@@ -27,7 +27,6 @@ return {
 			{ "<leader>g", group = "Git", icon = {} },
 			{ "<leader>q", group = "Quarto", icon = {} },
 			{ "<leader>o", group = "Outline", icon = {} },
-			{ "<leader>a", group = "Avante", icon = {} },
 			{ "<leader>c", group = "Code", icon = {} },
 			{ "<leader>i", group = "Image", icon = {} },
 			{ "<leader>x", group = "Diagnostics/quickfix", icon = { icon = "󱖫 ", color = "red" } },
