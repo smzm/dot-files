@@ -1,44 +1,40 @@
--- An open-source scientific and technical publishing system
 return {
 
-	{
+	{ -- requires plugins in lua/plugins/treesitter.lua and lua/plugins/lsp.lua
+		-- for complete functionality (language features)
 		"quarto-dev/quarto-nvim",
-		dependencies = {
-			"jmbuhr/otter.nvim",
-			"nvim-treesitter/nvim-treesitter",
+		dev = false,
+		opts = {
+			lspFeatures = {
+				enabled = true,
+				chunks = "curly",
+			},
+			codeRunner = {
+				enabled = true,
+				default_method = "slime",
+			},
 		},
-		config = function()
-			require("quarto").setup({
-				debug = false,
-				closePreviewOnExit = true,
-				lspFeatures = {
-					enabled = true,
-					chunks = "curly",
-					languages = { "r", "python", "julia", "bash", "html" },
-					diagnostics = {
-						enabled = true,
-						triggers = { "BufWritePost" },
-					},
-					completion = {
-						enabled = true,
-					},
+		dependencies = {
+			-- for language features in code cells
+			-- configured in lua/plugins/lsp.lua
+			"jmbuhr/otter.nvim",
+		},
+	},
+	{ -- directly open ipynb files as quarto docuements
+		-- and convert back behind the scenes
+		"GCBallesteros/jupytext.nvim",
+		opts = {
+			custom_language_formatting = {
+				python = {
+					extension = "qmd",
+					style = "quarto",
+					force_ft = "quarto",
 				},
-				codeRunner = {
-					enabled = true,
-					default_method = "slime", -- "molten", "slime", "iron" or <function>
-					ft_runners = {}, -- filetype to runner, ie. `{ python = "molten" }`.
-					-- Takes precedence over `default_method`
-					never_run = { "yaml" }, -- filetypes which are never sent to a code runner
+				r = {
+					extension = "qmd",
+					style = "quarto",
+					force_ft = "quarto",
 				},
-			})
-		end,
-		keys = {
-			{
-				"<leader>qp",
-				function()
-					vim.cmd("QuartoPreview")
-				end,
-				desc = "Quarto Preview",
 			},
 		},
 	},
@@ -87,7 +83,6 @@ return {
 			local function set_terminal()
 				vim.fn.call("slime#config", {})
 			end
-
 			vim.keymap.set("n", "<leader>cm", mark_terminal, { desc = "[m]ark terminal" })
 			vim.keymap.set("n", "<leader>cs", set_terminal, { desc = "[s]et terminal" })
 		end,
@@ -129,5 +124,48 @@ return {
 		keys = {
 			{ "<leader>qm", ':lua require"nabla".toggle_virt()<cr>', desc = "toggle [m]ath equations" },
 		},
+	},
+
+	{
+		"benlubas/molten-nvim",
+		dev = false,
+		enabled = true,
+		version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
+		build = ":UpdateRemotePlugins",
+		init = function()
+			vim.g.molten_image_provider = "image.nvim"
+			-- vim.g.molten_output_win_max_height = 20
+			vim.g.molten_auto_open_output = true
+			vim.g.molten_auto_open_html_in_browser = true
+			vim.g.molten_tick_rate = 200
+		end,
+		config = function()
+			local init = function()
+				local quarto_cfg = require("quarto.config").config
+				quarto_cfg.codeRunner.default_method = "molten"
+				vim.cmd([[MoltenInit]])
+			end
+			local deinit = function()
+				local quarto_cfg = require("quarto.config").config
+				quarto_cfg.codeRunner.default_method = "slime"
+				vim.cmd([[MoltenDeinit]])
+			end
+			vim.keymap.set("n", "<leader>mi", init, { silent = true, desc = "Initialize molten" })
+			vim.keymap.set("n", "<leader>md", deinit, { silent = true, desc = "Stop molten" })
+			vim.keymap.set("n", "<leader>mp", ":MoltenImagePopup<CR>", { silent = true, desc = "molten image popup" })
+			vim.keymap.set(
+				"n",
+				"<leader>mb",
+				":MoltenOpenInBrowser<CR>",
+				{ silent = true, desc = "molten open in browser" }
+			)
+			vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "hide output" })
+			vim.keymap.set(
+				"n",
+				"<leader>ms",
+				":noautocmd MoltenEnterOutput<CR>",
+				{ silent = true, desc = "show/enter output" }
+			)
+		end,
 	},
 }
