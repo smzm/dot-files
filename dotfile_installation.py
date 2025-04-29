@@ -199,6 +199,7 @@ elif os_answers["interest"] == "WSL":
         "python",
         "python-pip",
         "python-ipykernel",
+        "python-pynvim",
         "pyenv",
         "nodejs",
         "npm",
