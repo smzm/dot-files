@@ -842,6 +842,7 @@ if gopass_check:
                 r"""
 echo "use-agent" >> ~/.gnupg/gpg.conf &&
 echo "enable-ssh-support" >> ~/.gnupg/gpg-agent.conf &&
+echo "pinentry-program /usr/bin/pinentry-tty" >> ~/.gnupg/gpg-agent.conf &&
 gpgconf --kill gpg-agent &&
 gpgconf --launch gpg-agent &&
 echo 'export GPG_TTY=$(tty)' >> ~/.zshrc &&
