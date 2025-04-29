@@ -1,5 +1,6 @@
 -- An open-source scientific and technical publishing system
 return {
+
 	{
 		"quarto-dev/quarto-nvim",
 		dependencies = {
@@ -41,6 +42,7 @@ return {
 			},
 		},
 	},
+
 	{ -- directly open ipynb files as quarto docuements
 		-- and convert back behind the scenes
 		"GCBallesteros/jupytext.nvim",
@@ -59,6 +61,7 @@ return {
 			},
 		},
 	},
+
 	{ -- send code from python/r/qmd documets to a terminal or REPL
 		-- like ipython, R, bash
 		"jpalardy/vim-slime",
@@ -103,6 +106,7 @@ return {
 			local function set_terminal()
 				vim.fn.call("slime#config", {})
 			end
+
 			vim.keymap.set("n", "<leader>cm", mark_terminal, { desc = "[m]ark terminal" })
 			vim.keymap.set("n", "<leader>cs", set_terminal, { desc = "[s]et terminal" })
 		end,
@@ -170,24 +174,19 @@ return {
 				quarto_cfg.codeRunner.default_method = "slime"
 				vim.cmd([[MoltenDeinit]])
 			end
-			vim.keymap.set("n", "<localleader>mi", init, { silent = true, desc = "Initialize molten" })
-			vim.keymap.set("n", "<localleader>md", deinit, { silent = true, desc = "Stop molten" })
+			vim.keymap.set("n", "<leader>mi", init, { silent = true, desc = "Initialize molten" })
+			vim.keymap.set("n", "<leader>md", deinit, { silent = true, desc = "Stop molten" })
+			vim.keymap.set("n", "<leader>mp", ":MoltenImagePopup<CR>", { silent = true, desc = "molten image popup" })
 			vim.keymap.set(
 				"n",
-				"<localleader>mp",
-				":MoltenImagePopup<CR>",
-				{ silent = true, desc = "molten image popup" }
-			)
-			vim.keymap.set(
-				"n",
-				"<localleader>mb",
+				"<leader>mb",
 				":MoltenOpenInBrowser<CR>",
 				{ silent = true, desc = "molten open in browser" }
 			)
-			vim.keymap.set("n", "<localleader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "hide output" })
+			vim.keymap.set("n", "<leader>mh", ":MoltenHideOutput<CR>", { silent = true, desc = "hide output" })
 			vim.keymap.set(
 				"n",
-				"<localleader>ms",
+				"<leader>ms",
 				":noautocmd MoltenEnterOutput<CR>",
 				{ silent = true, desc = "show/enter output" }
 			)

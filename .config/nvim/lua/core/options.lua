@@ -51,7 +51,7 @@ opt.shiftwidth = 2
 opt.tabstop = 2
 
 -- Decrease waiting time in key mapped sequences
-opt.timeoutlen = 500
+opt.timeoutlen = 700
 opt.updatetime = 200
 
 -- backspace

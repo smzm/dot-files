@@ -10,6 +10,10 @@ return {
 			-- Add cursors vertically with Ctrl+Up / Ctrl+Down
 			["Select Cursor Down"] = "<C-Down>",
 			["Select Cursor Up"] = "<C-Up>",
+			["Select All"] = "",
+			["Start Regex Search"] = "",
+			["Add Cursor At Pos"] = "",
+			["Reselect Last"] = "",
 		}
 	end,
 }

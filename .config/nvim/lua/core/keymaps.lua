@@ -42,9 +42,10 @@ map("n", "<C-a>", "gg<S-v>G", opts)
 -- map("n", "<leader>tb", ":tabprev<CR>", opts)
 
 -- Set space as my leader key
-map("", "<Space>", "<Nop>", opts)
+map("", "\\", "<Nop>", opts)
+map("", "<Space>", "<Nop>", opts) -- map space to nop
 vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = "\\"
 
 -- Add undo break-points
 map("i", ",", ",<c-g>u", opts)

@@ -11,6 +11,7 @@ return {
 		preset = "modern",
 		triggers = {
 			{ "<leader>", mode = { "n" } },
+			{ "<localleader>", mode = { "n" } },
 			{ "<Ctrl>", mode = { "n" } },
 		},
 		delay = 900,
