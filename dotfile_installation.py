@@ -1,25 +1,15 @@
 import os
 import re
 import subprocess
+import time
 from subprocess import DEVNULL, PIPE, STDOUT, run
 
-# import or install inquirer
-try:
-    import inquirer
-except ModuleNotFoundError:
-    os.system("pip install inquirer")
+import inquirer
+from rich.console import Console
 
-# import or install rich
-try:
-    import rich
-    from rich.columns import Columns
-    from rich.console import Console
-
-    console = Console()
-    from rich import print as rprint
-except ModuleNotFoundError:
-    os.system("pip install rich")
-
+console = Console()
+from rich import print as rprint
+from rich.columns import Columns
 
 # ===== Get path of dotfiles directory
 dotfiles_path = os.popen("echo $PWD").read().rstrip()
@@ -198,7 +188,7 @@ if os_answers["interest"] == "Arch":
         "newsboat",
         "gopass",
         "gnupg",
-]
+    ]
 
 elif os_answers["interest"] == "WSL":
     # ===== Install pacman packages : WSL
@@ -800,13 +790,95 @@ subprocess.run("clear", shell=True)
 # ===== gopass + GPG Installation
 gopass_check = (
     subprocess.run(
-        "gopass --version; gpg --version", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        "gopass --version; gpg --version",
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     ).returncode
     == 0
 )
 if gopass_check:
     rprint(":thumbs_up: [green] gopass+GPG is installed.")
+    gpg_generate_key = [
+        inquirer.List(
+            "interest",
+            message="Config gopass + GPG for secret management ",
+            choices=["No", "Yes"],
+        )
+    ]
 
+    gpg_generate_key_answer = inquirer.prompt(gpg_generate_key)
+
+    if gpg_generate_key_answer["interest"] == "Yes":
+        subprocess.run("clear", shell=True)
+        subprocess.run("echo '--> Generate GPG key :'", shell=True)
+        gpg_hint_command = [
+            "echo",
+            "-e",
+            "  - Kind of key → Choose: 1 (RSA and RSA).\n  - Key size → Type: 4096 (for strong encryption).\n  - Expiry → Choose an expiry (or 0 for never).\n  - Name and Email → Provide your name & email (used to identify the key).\n  - Passphrase → Choose a secure one (used to protect your private key).\n\n",
+        ]
+        subprocess.run(gpg_hint_command)
+        gpg_generate_key = subprocess.run(
+            "gpg --full-generate-key",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        if gpg_generate_key:
+            subprocess.run("echo -e '\n--> Initialize gopass with GPG :'", shell=True)
+            email_prompt = [
+                inquirer.Text(
+                    "email",
+                    message="Email → Provide your email address your entered in previous step ",
+                )
+            ]
+            gpg_email = inquirer.prompt(email_prompt)
+            gopass_init = subprocess.run(f"gopass init {gpg_email}", shell=True)
+
+        if gopass_init:
+            subprocess.run("echo -e '\n--> Enable GPG Agent :'", shell=True)
+            gpg_agent_enable = subprocess.run(
+                r"""
+echo "use-agent" >> ~/.gnupg/gpg.conf &&
+echo "enable-ssh-support" >> ~/.gnupg/gpg-agent.conf &&
+gpgconf --kill gpg-agent &&
+gpgconf --launch gpg-agent &&
+echo 'export GPG_TTY=$(tty)' >> ~/.zshrc &&
+source ~/.zshrc
+                """,
+                shell=True,
+                executable="/bin/zsh",  # Optional but helpful if using zsh
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            if gpg_agent_enable.returncode == 0:
+                # Final Success Message
+                subprocess.run("clear", shell=True)
+                rprint(" [green] Gopass + GPG configured successfully!")
+                time.sleep(5)
+
+            else:
+                rprint(
+                    ":x: [red] Error enabling GPG agent. Please check the output above."
+                )
+                time.sleep(5)
+        else:
+            rprint(
+                ":x: [red] Error initializing Gopass with GPG. Please check the output above."
+            )
+
+            time.sleep(5)
+    else:
+        rprint(":information_source: [yellow] Skipping Gopass + GPG configuration.")
+        time.sleep(5)
+else:
+    rprint(
+        ":x: [red] Gopass or GPG not installed. Please install both before running the script."
+    )
+    time.sleep(5)
+
+
+subprocess.run("clear", shell=True)
 
 # ===== Neovim Installation
 neovim_check = (
@@ -1576,34 +1648,34 @@ if os_answers["interest"] == "Arch":
 
 subprocess.run("clear", shell=True)
 
-# ===== Hibernate
-if os_answers["interest"] == "Arch":
-    hibernate_q = [
-        inquirer.List(
-            "hibernate",
-            message="Do you have any partion swap for enabling hibernate",
-            choices=["No", "Yes"],
-        )
-    ]
-    hibernate_answers = inquirer.prompt(hibernate_q)
-    if hibernate_answers["hibernate"] == "Yes":
-        subprocess.run("clear", shell=True)
-        subprocess.run(
-            "sudo blkid | grep 'swap' | grep -o '[[:space:]]UUID=\"[a-zA-Z0-9\-]*\"' | grep -o '[a-zA-Z0-9\-]*' | tail -n1 | xargs echo | xargs -I {} sudo sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/\"$/ resume=UUID={}\"/' /etc/default/grub",
-            shell=True,
-            stdout=DEVNULL,
-        )
-        subprocess.run(
-            "sudo sed -i '/^HOOKS=/ s/)$/ resume)/' /etc/mkinitcpio.conf",
-            shell=True,
-            stdout=DEVNULL,
-        )
-        subprocess.run("sudo grub-mkconfig -o /boot/grub/grub.cfg", shell=True)
-        subprocess.run("sudo mkinitcpio -P", shell=True)
-        print("\n")
-
-
-subprocess.run("clear", shell=True)
+# # ===== Hibernate
+# if os_answers["interest"] == "Arch":
+#     hibernate_q = [
+#         inquirer.List(
+#             "hibernate",
+#             message="Do you have any partion swap for enabling hibernate",
+#             choices=["No", "Yes"],
+#         )
+#     ]
+#     hibernate_answers = inquirer.prompt(hibernate_q)
+#     if hibernate_answers["hibernate"] == "Yes":
+#         subprocess.run("clear", shell=True)
+#         subprocess.run(
+#             "sudo blkid | grep 'swap' | grep -o '[[:space:]]UUID=\"[a-zA-Z0-9\-]*\"' | grep -o '[a-zA-Z0-9\-]*' | tail -n1 | xargs echo | xargs -I {} sudo sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=/ s/\"$/ resume=UUID={}\"/' /etc/default/grub",
+#             shell=True,
+#             stdout=DEVNULL,
+#         )
+#         subprocess.run(
+#             "sudo sed -i '/^HOOKS=/ s/)$/ resume)/' /etc/mkinitcpio.conf",
+#             shell=True,
+#             stdout=DEVNULL,
+#         )
+#         subprocess.run("sudo grub-mkconfig -o /boot/grub/grub.cfg", shell=True)
+#         subprocess.run("sudo mkinitcpio -P", shell=True)
+#         print("\n")
+#
+#
+# subprocess.run("clear", shell=True)
 
 # ===== WSLU
 if os_answers["interest"] == "WSL":
