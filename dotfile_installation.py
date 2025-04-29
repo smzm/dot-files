@@ -196,6 +196,7 @@ if os_answers["interest"] == "Arch":
         "imagemagick",
         "bat",
         "newsboat",
+        "pass",
     ]
 
 elif os_answers["interest"] == "WSL":
@@ -250,6 +251,7 @@ elif os_answers["interest"] == "WSL":
         "imagemagick",
         "bat",
         "newsboat",
+        "pass"
     ]
 
 
