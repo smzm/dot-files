@@ -103,3 +103,6 @@ opt.foldcolumn = "1"
 opt.foldmethod = "expr"
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldtext = "getline(v:foldstart) .. ' ... ' .. (v:foldend - v:foldstart) .. ' lines'"
+
+-- Enable python env in neovim
+vim.g.python3_host_prog = "/usr/sbin/python3"

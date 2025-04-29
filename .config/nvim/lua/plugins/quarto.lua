@@ -53,11 +53,6 @@ return {
 					style = "quarto",
 					force_ft = "quarto",
 				},
-				r = {
-					extension = "qmd",
-					style = "quarto",
-					force_ft = "quarto",
-				},
 			},
 		},
 	},
