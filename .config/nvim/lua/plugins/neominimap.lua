@@ -59,21 +59,12 @@ return {
 		}
 	end,
 	config = function()
-		local monoshine = require("themes.monoshine.lua.monoshine")
-		local colors = monoshine.colors
-
 		-- background can be 'NONE' or nil
 		vim.api.nvim_set_hl(0, "NeominimapBackground", { bg = "NONE" })
-		vim.api.nvim_set_hl(0, "NeominimapBorder", { fg = colors.dimGrayDarker })
-		vim.api.nvim_set_hl(0, "NeominimapCursorLine", { bg = colors.dimGrayMiddle })
-		vim.api.nvim_set_hl(0, "NeominimapCursorLineSign", { bg = colors.dimGrayMiddle })
-		vim.api.nvim_set_hl(0, "NeominimapCursorLineNr", { bg = colors.dimGrayMiddle })
-		vim.api.nvim_set_hl(0, "NeominimapCursorLineFold", { bg = colors.dimGrayMiddle })
-		vim.api.nvim_set_hl(0, "NeominimapWordLine", { bg = colors.dimGrayLighter })
-		vim.api.nvim_set_hl(0, "NeominimapWordSign", { bg = colors.dimGrayLighter })
-		vim.api.nvim_set_hl(0, "NeominimapWordIcon", { bg = colors.dimGrayLighter })
-		vim.api.nvim_set_hl(0, "NeominimapCurrentWordLine", { bg = colors.gray })
-		vim.api.nvim_set_hl(0, "NeominimapCurrentWordSign", { bg = colors.gray })
-		vim.api.nvim_set_hl(0, "NeominimapCurrentWordIcon", { bg = colors.gray })
+		vim.api.nvim_set_hl(0, "NeominimapBorder", { link = "Conceal" })
+		vim.api.nvim_set_hl(0, "NeominimapCursorLine", { link = "FloatBorder" })
+		vim.api.nvim_set_hl(0, "NeominimapCursorLineSign", { link = "FloatBorder" })
+		vim.api.nvim_set_hl(0, "NeominimapCursorLineNr", { link = "FloatBorder" })
+		vim.api.nvim_set_hl(0, "NeominimapCursorLineFold", { link = "FloatBorder" })
 	end,
 }

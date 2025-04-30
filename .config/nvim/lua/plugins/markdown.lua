@@ -17,14 +17,15 @@ return {
 		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
 		opts = {},
 		config = function()
-			local monoshine = require("themes.monoshine.lua.monoshine")
-			local colors = monoshine.colors
-
-			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { bg = "#252525", fg = colors.fg })
-			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { bg = "#454545", fg = colors.lightGray })
-			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { fg = colors.midGrayDarker })
-			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#030303" })
-			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { bg = colors.dimGrayDarker })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { link = "H1" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { link = "H2" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH3Bg", { link = "H3" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH4Bg", { link = "Normal" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH5Bg", { link = "Normal" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH6Bg", { link = "Normal" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { link = "Underlined" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "NormalNC" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { link = "Todo" })
 
 			require("render-markdown").setup({
 				render_modes = true,

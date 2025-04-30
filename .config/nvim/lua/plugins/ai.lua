@@ -68,23 +68,20 @@ return {
 		config = function(_, opts)
 			require("avante").setup(opts)
 
-			local monoshine = require("themes.monoshine.lua.monoshine")
-			local colors = monoshine.colors
-
 			-- Custom highlights here
 			local hl = vim.api.nvim_set_hl
-			hl(0, "AvanteSidebarWinHorizontalSeparator", { fg = colors.midGrayDarker, bg = colors.bg })
-			-- hl(0, "AvanteSidebarWinSeparator", { fg = colors.midGrayDarker, bg = colors.bg })
+			hl(0, "AvanteSidebarWinHorizontalSeparator", { link = "Normal" })
+			hl(0, "AvanteSidebarWinSeparator", { link = "Conceal" })
 
 			-- ✅  Avante Highlights
-			hl(0, "AvantePromptBorder", { fg = "#444444", bg = "#1a1a1a" })
-			hl(0, "AvantePopup", { fg = "#cccccc", bg = "#101010" })
-			hl(0, "AvanteTitle", { fg = colors.bg, bg = colors.fg })
-			hl(0, "AvanteReversedTitle", { fg = colors.fg, bg = colors.bg })
-			hl(0, "AvanteThirdTitle", { fg = colors.bg, bg = colors.gray })
-			hl(0, "AvanteReversedThirdTitle", { fg = colors.gray, bg = colors.bg })
-			hl(0, "AvanteSubtitle", { fg = colors.bg, bg = colors.midGrayDarker })
-			hl(0, "AvanteReversedSubtitle", { fg = colors.midGrayDarker, bg = colors.bg })
+			hl(0, "AvanteSidebarNormal", { link = "Normal" })
+
+			hl(0, "AvanteTitle", { link = "H1" })
+			hl(0, "AvanteReversedTitle", { link = "ReversedH1" })
+			hl(0, "AvanteThirdTitle", { link = "H3" })
+			hl(0, "AvanteReversedThirdTitle", { link = "ReversedH3" })
+			hl(0, "AvanteSubtitle", { link = "H2" })
+			hl(0, "AvanteReversedSubtitle", { link = "ReversedH2" })
 
 			-- ✅ Avante Keybindings
 			local map = vim.keymap.set

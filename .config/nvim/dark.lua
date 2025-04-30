@@ -1,36 +1,6 @@
 local theme = {}
 
-local light_colors = {
-	white = "#ffffff",
-	gray_000 = "#FAFAFA",
-	gray_050 = "#EAEAEA",
-	gray_100 = "#E1E1E1",
-	gray_150 = "#DEDEDE",
-	gray_200 = "#D3D3D3",
-	gray_250 = "#C9C9C9",
-	gray_300 = "#BFBFBF",
-	gray_350 = "#A6A6A6",
-	gray_400 = "#999999",
-	gray_450 = "#8C8C8C",
-	gray_500 = "#737373",
-	gray_550 = "#666666",
-	gray_600 = "#595959",
-	gray_650 = "#4D4D4D",
-	gray_700 = "#404040",
-	gray_750 = "#333333",
-	gray_800 = "#262626",
-	gray_850 = "#1A1A1A",
-	gray_900 = "#151515",
-	gray_950 = "#0D0D0D",
-	gray_1000 = "#090909",
-	black = "#000000",
-	red = "#FF0000",
-	blue = "#0000FF",
-}
-
-
-
-local dark_colors = {
+local colors = {
 	white = "#ffffff",
 	gray_1000 = "#FAFAFA",
 	gray_950 = "#EAEAEA",
@@ -50,9 +20,9 @@ local dark_colors = {
 	gray_250 = "#333333",
 	gray_200 = "#262626",
 	gray_150 = "#1A1A1A",
-	gray_100 = "#151515",
-	gray_050 = "#0D0D0D",
-	gray_000 = "#090909",
+	gray_100 = "#0D0D0D",
+	gray_050 = "#090909",
+	gray_000 = "#040404",
 	black = "#000000",
 	red = "#FF0000",
 	blue = "#0000FF",
@@ -61,56 +31,34 @@ local dark_colors = {
 function theme.setup()
 -- Reset existing highlight groups
 	vim.cmd("highlight clear")
-	vim.o.background = "light" -- Set the theme background
+	vim.o.background = "dark" -- Set the theme background
 	vim.o.termguicolors = true -- Enable true colors
 	if vim.fn.exists("syntax_on") then
 		vim.cmd("syntax reset")
 	end
 
-    local theme = vim.o.background == "dark" and dark_colors or light_colors
-	local background = theme.gray_000
-    local bg_lighter_01 = theme.gray_050
-    local bg_lighter_02 = theme.gray_100
-    local bg_lighter_03 = theme.gray_150
-    local bg_lighter_04 = theme.gray_200
-    local bg_lighter_05 = theme.gray_250
-    local bg_lighter_06 = theme.gray_300
-    local bg_lighter_07 = theme.gray_350
-    local bg_lighter_08 = theme.gray_400
-    local bg_lighter_09 = theme.gray_450
-    local bg_lighter_10 = theme.gray_500
-    local bg_lighter_11 = theme.gray_550
-    local bg_lighter_12 = theme.gray_600
-    local bg_lighter_13 = theme.gray_650
-    local bg_lighter_14 = theme.gray_700
-    local bg_lighter_15 = theme.gray_750
-    local bg_lighter_16 = theme.gray_800
-    local bg_lighter_17 = theme.gray_850
-    local bg_lighter_18 = theme.gray_900
-    local bg_lighter_19 = theme.gray_950
-    local bg_lighter_20 = theme.gray_1000
+	local background = colors.gray_050
+	local foreground = colors.gray_950
 
-	local foreground = theme.gray_800
-
-    vim.api.nvim_set_hl(0, "Indentation", { fg = bg_lighter_01 })
-	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_lighter_02 })
+    vim.api.nvim_set_hl(0, "Indentation", { fg = colors.gray_150 })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = colors.gray_200 })
 
 	-- 👉 Headings
-	vim.api.nvim_set_hl(0, "H1", { fg = bg_lighter_01 , bg = bg_lighter_17 , bold = true })
-	vim.api.nvim_set_hl(0, "ReversedH1", { fg = bg_lighter_17, bg = bg_lighter_01, bold = true })
-	vim.api.nvim_set_hl(0, "H2", { fg = bg_lighter_01, bg = bg_lighter_12, bold = true })
-	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_lighter_12, bg = bg_lighter_01, bold = true })
-	vim.api.nvim_set_hl(0, "H3", { fg = bg_lighter_01, bg = bg_lighter_07, bold = true })
-	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_lighter_07 , bg = bg_lighter_01, bold = true })
+	vim.api.nvim_set_hl(0, "H1", { fg = colors.gray_100, bg = colors.gray_900, bold = true })
+	vim.api.nvim_set_hl(0, "ReversedH1", { fg = colors.gray_900, bg = colors.gray_100, bold = true })
+	vim.api.nvim_set_hl(0, "H2", { fg = colors.gray_100, bg = colors.gray_700, bold = true })
+	vim.api.nvim_set_hl(0, "ReversedH2", { fg = colors.gray_700, bg = colors.gray_100, bold = true })
+	vim.api.nvim_set_hl(0, "H3", { fg = colors.gray_100, bg = colors.gray_500, bold = true })
+	vim.api.nvim_set_hl(0, "ReversedH3", { fg = colors.gray_500, bg = colors.gray_100, bold = true })
 
     local highlights = {
     --     Added = { fg = "" , bg = ""}
         -- @diff.plus
 
-        Boolean = { fg = foreground },
+        Boolean = { fg = colors.gray_700 },
         -- @boolean
 
-        Character = { fg = bg_lighter_10 },
+        Character = { fg = colors.gray_700 },
         -- @character
         -- @character.special
 
@@ -119,7 +67,7 @@ function theme.setup()
 
     --     ColorColumn = { fg = "" , bg = ""}
 
-        Comment = { fg = bg_lighter_05, italic = true },
+        Comment = { fg = colors.gray_350 },
         -- @comment
         -- @comment.error
         -- @comment.warning
@@ -131,7 +79,7 @@ function theme.setup()
 
         Conceal = { fg = background , bg = background},
 
-        Constant = { fg = bg_lighter_07 },
+        Constant = { fg = colors.gray_900 },
         -- @constant
         -- @constant.builtin
         -- Character
@@ -139,20 +87,20 @@ function theme.setup()
         -- Boolean
         -- Float
 
-        CurSearch = { fg = background , bg = bg_lighter_18},
-        -- IncSearch
+    --     CurSearch = { fg = "" , bg = ""}
+    --     -- IncSearch
 
-        Cursor = { bg = bg_lighter_02 },
+        Cursor = { bg = colors.gray_150 },
         -- lCursor
         -- CursorIM
 
-        CursorColumn = { fg = bg_lighter_02 },
+        CursorColumn = { fg = colors.gray_200 },
 
-        CursorLine = { bg = bg_lighter_01 },
+        CursorLine = { bg = colors.gray_150 },
 
-        CursorLineNr = { bg = bg_lighter_01},
+        CursorLineNr = { bg = colors.gray_150},
 
-        CursorLineFold = { bg = bg_lighter_02 }, 
+        CursorLineFold = { bg = colors.gray_400 }, 
 
     --     CursorLineSign = { fg = "" , bg = ""}
 
@@ -212,7 +160,7 @@ function theme.setup()
 
     --     Directory = { fg = "" , bg = ""}
 
-        Delimiter = { fg = bg_lighter_09 },
+        Delimiter = { fg = colors.gray_750 },
         -- @punctuation
         -- NvimParenthesis
         -- NvimLambda
@@ -306,29 +254,29 @@ function theme.setup()
 
     --     ErrorMsg = { fg = "" , bg = ""}
 
-        Float = { fg = foreground },
+        Float = { fg = colors.gray_900},
         -- @number.float
         -- NvimFloat
 
-        FloatBorder = { fg = bg_lighter_10, bg = bg_lighter_02 },
+        FloatBorder = { fg = colors.gray_300, bg = colors.gray_100 },
 
-        FloatFooter = { fg = bg_lighter_12, bg = bg_lighter_02 },
+        FloatFooter = { fg = colors.gray_300, bg = colors.gray_100 },
 
     --     FloatShadow = { fg = "" , bg = ""}
 
     --     FloatShadowThrough = { fg = "" , bg = ""}
 
-        FloatTitle = { fg = bg_lighter_14, bold = true },
+        FloatTitle = { fg = colors.gray_700, bg = colors.gray_100, bold = true },
 
     --     FoldColumn = { fg = "" , bg = ""}
 
-        Folded = { fg = bg_lighter_12 , bg = bg_lighter_02 },
+        Folded = { fg = colors.gray_500, bg = colors.gray_200 },
 
         Function = { fg = foreground },
         -- @function
         ["@function.builtin"] = { fg = foreground, bold = true },
 
-        Identifier = { fg = bg_lighter_12, bold=true },
+        Identifier = { fg = colors.gray_700 },
         -- @property
         -- NvimIdentifier
         -- NvimIdentifierScope
@@ -348,7 +296,7 @@ function theme.setup()
     --     Label = { fg = "" , bg = ""}
     --     -- @label
 
-        LineNr = { fg = bg_lighter_03 },
+        LineNr = { fg = colors.gray_300 },
         -- LineNrAbove
         -- LineNrBelow
 
@@ -357,18 +305,18 @@ function theme.setup()
 
     --     LspInlayHint = { fg = "" , bg = ""}
 
-        LspReferenceRead = { fg = bg_lighter_14, bg = bg_lighter_01 },
+        LspReferenceRead = { fg = colors.gray_700, bg = colors.gray_100 },
 
     --     LspReferenceTarget = { fg = "" , bg = ""}
 
-        LspReferenceText = { fg = bg_lighter_14, bg = bg_lighter_01 },
+        LspReferenceText = { fg = colors.gray_700, bg = colors.gray_100 },
         -- LspReferenceRead
         -- LspReferenceWrite
         -- Visual
         -- VisualNOS
         -- SnippetTabstop
 
-        LspReferenceWrite = { fg = bg_lighter_14, bg = background },
+        LspReferenceWrite = { fg = colors.gray_700, bg = background },
 
     --     LspSignatureActiveParameter = { fg = "" , bg = ""}
 
@@ -376,7 +324,7 @@ function theme.setup()
     --     -- @attribute
     --     -- @attribute.builtin
 
-        MatchParen = { fg = bg_lighter_01 , bg = bg_lighter_18, bold = true },
+        MatchParen = { fg = colors.gray_100, bg = colors.gray_750, bold = true },
 
     --     ModeMsg = { fg = "" , bg = ""}
 
@@ -398,11 +346,11 @@ function theme.setup()
         -- @diff
         -- NvimSpacing
 
-        NormalFloat = { fg = bg_lighter_12, bg = bg_lighter_02 },
+        NormalFloat = { fg = colors.gray_600, bg = colors.gray_100 },
 
-        NormalNC = { bg = background },
+        NormalNC = { bg = colors.gray_100},
 
-        Number = { fg = foreground },
+        Number = { fg = colors.gray_900 },
         -- @number
         -- @number.float
         -- NvimNumber
@@ -463,12 +411,12 @@ function theme.setup()
     --     NvimStringSpecial = { fg = "" , bg = ""}
     --     -- NvimDoubleQuotedEscape
 
-        Operator = { fg = bg_lighter_16 },
+        Operator = { fg = colors.gray_700 },
         -- @operator
         -- NvimAssignment
         -- NvimOperator
 
-        Pmenu = { fg = bg_lighter_14, bg = bg_lighter_01 },
+        Pmenu = { fg = colors.gray_700, bg = colors.gray_100 },
         -- PmenuKind
         -- PmenuExtra
         -- PmenuSbar
@@ -481,7 +429,7 @@ function theme.setup()
 
     --     PmenuMatchSel = { fg = "" , bg = ""}
 
-        PmenuSel = {  fg = background, bg = bg_lighter_10 },
+        PmenuSel = {  fg = background, bg = colors.gray_200 },
         -- PmenuKindSel
         -- PmenuExtraSel
         -- WildMenu
@@ -513,14 +461,14 @@ function theme.setup()
 
     --     Repeat = { fg = "" , bg = ""}
 
-        Search = { fg =bg_lighter_16 , bg = bg_lighter_06},
+        Search = { fg = colors.gray_050, bg = colors.gray_300 },
         -- Substitute
 
     --     SignColumn = { fg = "" , bg = ""}
 
     --     SnippetTabstop = { fg = "" , bg = ""}
 
-        Special = { fg = bg_lighter_08},
+        Special = { fg = colors.gray_450},
         -- @module.builtin
         -- @string.regexp
         -- @string.special
@@ -541,13 +489,13 @@ function theme.setup()
         -- NvimStringSpecial
         
         
-        SpecialChar = { fg = bg_lighter_11 },
+        SpecialChar = { fg = colors.gray_650 },
         -- @string.special
         -- @string.escape
         -- @character.special
         -- NvimStringSpecial
         ["@variable"] = { link = "SpecialChar" },
-        ["@.builtin"] = { link = "SpecialChar" },
+        ["@variable.builtin"] = { link = "SpecialChar" },
         ["@variable.parameter.builtin"] = { link = "SpecialChar" },
 
     --     SpecialComment = { fg = "" , bg = ""}
@@ -562,15 +510,15 @@ function theme.setup()
 
     --     SpellRare = { fg = "" , bg = ""}
 
-        Statement = { fg = bg_lighter_10 },
+        Statement = { fg = colors.gray_550 },
         -- Conditional
         -- Repeat
         -- Label
         -- Keyword
         -- Exception
 
-        StatusLine = { fg = foreground, bg = background },
-        -- MsgSeparator
+    --     StatusLine = { fg = "" , bg = ""}
+    --     -- MsgSeparator
 
     --     StatusLineNC = { fg = "" , bg = ""}
     --     -- TabLine
@@ -581,7 +529,7 @@ function theme.setup()
 
     --     StorageClass = { fg = "" , bg = ""}
 
-        String = { fg = bg_lighter_09 },
+        String = { fg = colors.gray_550 },
         -- @string
         -- @string.regexp
         -- @string.special
@@ -589,7 +537,7 @@ function theme.setup()
         -- @string.special.url
         -- NvimString
 
-        Structure = { fg = bg_lighter_11 },
+        Structure = { fg = colors.gray_450 },
         -- @module
         -- @module.builtin
 
@@ -601,21 +549,21 @@ function theme.setup()
 
     --     TabLineSel = { fg = "" , bg = ""}
 
-        Tag = { fg = bg_lighter_16 },
+        Tag = { fg = colors.gray_550 },
         -- @tag
         -- @tag.builtin
 
     --     TermCursor = { fg = "" , bg = ""}
 
-        Title = { fg = bg_lighter_16 , bold = true },
+        Title = { fg = colors.gray_800, bold = true },
         -- @markup.heading
         -- FloatTitle
         -- FloatFooter
 
-        Todo = { fg = bg_lighter_16 , bg = bg_lighter_02 },
+        Todo = { fg = colors.gray_800 , bg = colors.gray_200 },
         -- @comment.todo
 
-        Type = { fg = bg_lighter_08 },
+        Type = { fg = colors.gray_450 },
         -- @type
         -- @type.builtin
         -- StorageClass
@@ -624,15 +572,15 @@ function theme.setup()
         -- NvimOptionSigil
         -- NvimEnvironmentSigil
 
-        Typedef = { fg = bg_lighter_10 },
+        Typedef = { fg = colors.gray_500 },
 
-        Underlined = { fg = bg_lighter_10 , underline = true },
+        Underlined = { fg = colors.gray_450, underline = true },
         -- @string.special.url
         -- @markup.link
 
     --     VertSplit = { fg = "" , bg = ""}
 
-        Visual = {fg = foreground, bg = bg_lighter_04 },
+        Visual = {fg = background, bg = colors.gray_450 },
         -- LspReferenceText
         -- LspSignatureActiveParameter
         -- SnippetTabstop
@@ -678,6 +626,8 @@ function theme.setup()
 		vim.api.nvim_set_hl(0, group, opts)
 	end
 end
+
+theme.colors = colors
 
 return theme
 

@@ -323,7 +323,7 @@ return { -- >>> LSP
 				}
 			end
 
-			vim.api.nvim_set_hl(0, "CmpWin", { bg = "#1e1e1e" })
+			vim.api.nvim_set_hl(0, "CmpWin", { link = "NormalNC" })
 
 			cmp.setup({
 				auto_brackets = { "python" },
@@ -473,7 +473,7 @@ return { -- >>> LSP
 				event = "VeryLazy", -- Load on very lazy events
 				config = function()
 					-- Custom highlight settings for sticky scroll
-					vim.api.nvim_set_hl(0, "TreesitterContext", { bg = "#151515" })
+					vim.api.nvim_set_hl(0, "TreesitterContext", { link = "NormalNC" })
 					-- vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "Keyword" })
 					-- vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { link = "Keyword" })
 					-- vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Keyword" })

@@ -26,14 +26,12 @@ return {
 		}
 
 		-- Define custom colors for each delimiter level
-		vim.cmd([[
-                highlight RainbowDelimiterGray guifg=#BABABA
-                highlight RainbowDelimiterCyan guifg=#BABABA
-                highlight RainbowDelimiterRed guifg=#BABABA
-                highlight RainbowDelimiterYellow guifg=#BABABA
-                highlight RainbowDelimiterBlue guifg=#BABABA
-                highlight RainbowDelimiterGreen guifg=#BABABA
-                highlight RainbowDelimiterViolet guifg=#BABABA
-            ]])
+		vim.api.nvim_set_hl(0, "RainbowDelimiterGray", { link = "Delimiter" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { link = "Delimiter" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { link = "Delimiter" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { link = "Delimiter" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { link = "Delimiter" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { link = "Delimiter" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { link = "Delimiter" })
 	end,
 }

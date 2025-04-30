@@ -13,15 +13,15 @@ return {
 		{ "<leader>bh", "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer prev" },
 		{ "<leader>bl", "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer next" },
 	},
-	opts = {
-		options = {
+	config = function()
+		require("bufferline").setup {
+		  options = {
 			mode = "buffers",
 			diagnostics = "nvim_lsp",
-		},
-		highlights = {
-			fill = {
-				bg = "#0c0c0c", -- Background color for empty space
-			},
-		},
-	},
+		  },
+		}
+	  
+		-- Link highlights to Normal
+		vim.api.nvim_set_hl(0, "BufferLineFill", { link = "Normal" })
+	  end
 }
