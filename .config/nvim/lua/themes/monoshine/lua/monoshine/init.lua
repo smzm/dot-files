@@ -67,39 +67,39 @@ function theme.setup()
 
 	local theme = vim.o.background == "dark" and dark_colors or light_colors
 	local background = theme.gray_000
-	local bg_furthur_01 = theme.gray_050
-	local bg_furthur_02 = theme.gray_100
-	local bg_furthur_03 = theme.gray_150
-	local bg_furthur_04 = theme.gray_200
-	local bg_furthur_05 = theme.gray_250
-	local bg_furthur_06 = theme.gray_300
-	local bg_furthur_07 = theme.gray_350
-	local bg_furthur_08 = theme.gray_400
-	local bg_furthur_09 = theme.gray_450
-	local bg_furthur_10 = theme.gray_500
-	local bg_furthur_11 = theme.gray_550
-	local bg_furthur_12 = theme.gray_600
-	local bg_furthur_13 = theme.gray_650
-	local bg_furthur_14 = theme.gray_700
-	local bg_furthur_15 = theme.gray_750
-	local bg_furthur_16 = theme.gray_800
-	local bg_furthur_17 = theme.gray_850
-	local bg_furthur_18 = theme.gray_900
-	local bg_furthur_19 = theme.gray_950
-	local bg_furthur_20 = theme.gray_1000
+	local bg_further_01 = theme.gray_050
+	local bg_further_02 = theme.gray_100
+	local bg_further_03 = theme.gray_150
+	local bg_further_04 = theme.gray_200
+	local bg_further_05 = theme.gray_250
+	local bg_further_06 = theme.gray_300
+	local bg_further_07 = theme.gray_350
+	local bg_further_08 = theme.gray_400
+	local bg_further_09 = theme.gray_450
+	local bg_further_10 = theme.gray_500
+	local bg_further_11 = theme.gray_550
+	local bg_further_12 = theme.gray_600
+	local bg_further_13 = theme.gray_650
+	local bg_further_14 = theme.gray_700
+	local bg_further_15 = theme.gray_750
+	local bg_further_16 = theme.gray_800
+	local bg_further_17 = theme.gray_850
+	local bg_further_18 = theme.gray_900
+	local bg_further_19 = theme.gray_950
+	local bg_further_20 = theme.gray_1000
 
 	local foreground = theme.gray_800
 
-	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_furthur_01 })
-	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_furthur_02 })
+	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_further_01 })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_further_02 })
 
 	-- 👉 Headings
-	vim.api.nvim_set_hl(0, "H1", { fg = bg_furthur_01, bg = bg_lighter_17, bold = true })
-	vim.api.nvim_set_hl(0, "ReversedH1", { fg = bg_furthur_17, bg = bg_lighter_01, bold = true })
-	vim.api.nvim_set_hl(0, "H2", { fg = bg_furthur_01, bg = bg_lighter_12, bold = true })
-	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_furthur_12, bg = bg_lighter_01, bold = true })
-	vim.api.nvim_set_hl(0, "H3", { fg = bg_furthur_01, bg = bg_lighter_07, bold = true })
-	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_furthur_07, bg = bg_lighter_01, bold = true })
+	vim.api.nvim_set_hl(0, "H1", { fg = bg_further_01, bg = bg_further_17, bold = true })
+	vim.api.nvim_set_hl(0, "ReversedH1", { fg = bg_further_17, bg = bg_further_01, bold = true })
+	vim.api.nvim_set_hl(0, "H2", { fg = bg_further_01, bg = bg_further_12, bold = true })
+	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_further_12, bg = bg_further_01, bold = true })
+	vim.api.nvim_set_hl(0, "H3", { fg = bg_further_01, bg = bg_further_07, bold = true })
+	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_further_07, bg = bg_further_01, bold = true })
 
 	local highlights = {
 		--     Added = { fg = "" , bg = ""}
@@ -108,7 +108,7 @@ function theme.setup()
 		Boolean = { fg = foreground },
 		-- @boolean
 
-		Character = { fg = bg_furthur_10 },
+		Character = { fg = bg_further_10 },
 		-- @character
 		-- @character.special
 
@@ -117,7 +117,7 @@ function theme.setup()
 
 		--     ColorColumn = { fg = "" , bg = ""}
 
-		Comment = { fg = bg_furthur_05, italic = true },
+		Comment = { fg = bg_further_05, italic = true },
 		-- @comment
 		-- @comment.error
 		-- @comment.warning
@@ -129,7 +129,7 @@ function theme.setup()
 
 		Conceal = { fg = background, bg = background },
 
-		Constant = { fg = bg_furthur_07 },
+		Constant = { fg = bg_further_07 },
 		-- @constant
 		-- @constant.builtin
 		-- Character
@@ -137,20 +137,20 @@ function theme.setup()
 		-- Boolean
 		-- Float
 
-		CurSearch = { fg = background, bg = bg_furthur_18 },
+		CurSearch = { fg = background, bg = bg_further_18 },
 		-- IncSearch
 
-		Cursor = { bg = bg_furthur_02 },
+		Cursor = { bg = bg_further_02 },
 		-- lCursor
 		-- CursorIM
 
-		CursorColumn = { fg = bg_furthur_02 },
+		CursorColumn = { fg = bg_further_02 },
 
-		CursorLine = { bg = bg_furthur_01 },
+		CursorLine = { bg = bg_further_01 },
 
-		CursorLineNr = { bg = bg_furthur_01 },
+		CursorLineNr = { bg = bg_further_01 },
 
-		CursorLineFold = { bg = bg_furthur_02 },
+		CursorLineFold = { bg = bg_further_02 },
 
 		--     CursorLineSign = { fg = "" , bg = ""}
 
@@ -210,7 +210,7 @@ function theme.setup()
 
 		--     Directory = { fg = "" , bg = ""}
 
-		Delimiter = { fg = bg_furthur_09 },
+		Delimiter = { fg = bg_further_09 },
 		-- @punctuation
 		-- NvimParenthesis
 		-- NvimLambda
@@ -308,25 +308,25 @@ function theme.setup()
 		-- @number.float
 		-- NvimFloat
 
-		FloatBorder = { fg = bg_furthur_10, bg = bg_lighter_02 },
+		FloatBorder = { fg = bg_further_10, bg = bg_further_02 },
 
-		FloatFooter = { fg = bg_furthur_12, bg = bg_lighter_02 },
+		FloatFooter = { fg = bg_further_12, bg = bg_further_02 },
 
 		--     FloatShadow = { fg = "" , bg = ""}
 
 		--     FloatShadowThrough = { fg = "" , bg = ""}
 
-		FloatTitle = { fg = bg_furthur_14, bold = true },
+		FloatTitle = { fg = bg_further_14, bold = true },
 
 		--     FoldColumn = { fg = "" , bg = ""}
 
-		Folded = { fg = bg_furthur_12, bg = bg_lighter_02 },
+		Folded = { fg = bg_further_12, bg = bg_further_02 },
 
 		Function = { fg = foreground },
 		-- @function
 		["@function.builtin"] = { fg = foreground, bold = true },
 
-		Identifier = { fg = bg_furthur_12, bold = true },
+		Identifier = { fg = bg_further_12, bold = true },
 		-- @property
 		-- NvimIdentifier
 		-- NvimIdentifierScope
@@ -346,7 +346,7 @@ function theme.setup()
 		--     Label = { fg = "" , bg = ""}
 		--     -- @label
 
-		LineNr = { fg = bg_furthur_03 },
+		LineNr = { fg = bg_further_03 },
 		-- LineNrAbove
 		-- LineNrBelow
 
@@ -355,18 +355,18 @@ function theme.setup()
 
 		--     LspInlayHint = { fg = "" , bg = ""}
 
-		LspReferenceRead = { fg = bg_furthur_14, bg = bg_lighter_01 },
+		LspReferenceRead = { fg = bg_further_14, bg = bg_further_01 },
 
 		--     LspReferenceTarget = { fg = "" , bg = ""}
 
-		LspReferenceText = { fg = bg_furthur_14, bg = bg_lighter_01 },
+		LspReferenceText = { fg = bg_further_14, bg = bg_further_01 },
 		-- LspReferenceRead
 		-- LspReferenceWrite
 		-- Visual
 		-- VisualNOS
 		-- SnippetTabstop
 
-		LspReferenceWrite = { fg = bg_furthur_14, bg = background },
+		LspReferenceWrite = { fg = bg_further_14, bg = background },
 
 		--     LspSignatureActiveParameter = { fg = "" , bg = ""}
 
@@ -374,7 +374,7 @@ function theme.setup()
 		--     -- @attribute
 		--     -- @attribute.builtin
 
-		MatchParen = { fg = bg_furthur_01, bg = bg_lighter_18, bold = true },
+		MatchParen = { fg = bg_further_01, bg = bg_further_18, bold = true },
 
 		--     ModeMsg = { fg = "" , bg = ""}
 
@@ -396,7 +396,7 @@ function theme.setup()
 		-- @diff
 		-- NvimSpacing
 
-		NormalFloat = { fg = bg_furthur_12, bg = bg_lighter_02 },
+		NormalFloat = { fg = bg_further_12, bg = bg_further_02 },
 
 		NormalNC = { bg = background },
 
@@ -461,12 +461,12 @@ function theme.setup()
 		--     NvimStringSpecial = { fg = "" , bg = ""}
 		--     -- NvimDoubleQuotedEscape
 
-		Operator = { fg = bg_furthur_16 },
+		Operator = { fg = bg_further_16 },
 		-- @operator
 		-- NvimAssignment
 		-- NvimOperator
 
-		Pmenu = { fg = bg_furthur_14, bg = bg_lighter_01 },
+		Pmenu = { fg = bg_further_14, bg = bg_further_01 },
 		-- PmenuKind
 		-- PmenuExtra
 		-- PmenuSbar
@@ -479,7 +479,7 @@ function theme.setup()
 
 		--     PmenuMatchSel = { fg = "" , bg = ""}
 
-		PmenuSel = { fg = background, bg = bg_furthur_10 },
+		PmenuSel = { fg = background, bg = bg_further_10 },
 		-- PmenuKindSel
 		-- PmenuExtraSel
 		-- WildMenu
@@ -511,14 +511,14 @@ function theme.setup()
 
 		--     Repeat = { fg = "" , bg = ""}
 
-		Search = { fg = bg_furthur_16, bg = bg_lighter_06 },
+		Search = { fg = bg_further_16, bg = bg_further_06 },
 		-- Substitute
 
 		--     SignColumn = { fg = "" , bg = ""}
 
 		--     SnippetTabstop = { fg = "" , bg = ""}
 
-		Special = { fg = bg_furthur_08 },
+		Special = { fg = bg_further_08 },
 		-- @module.builtin
 		-- @string.regexp
 		-- @string.special
@@ -538,7 +538,7 @@ function theme.setup()
 		-- NvimRegister
 		-- NvimStringSpecial
 
-		SpecialChar = { fg = bg_furthur_11 },
+		SpecialChar = { fg = bg_further_11 },
 		-- @string.special
 		-- @string.escape
 		-- @character.special
@@ -559,7 +559,7 @@ function theme.setup()
 
 		--     SpellRare = { fg = "" , bg = ""}
 
-		Statement = { fg = bg_furthur_10 },
+		Statement = { fg = bg_further_10 },
 		-- Conditional
 		-- Repeat
 		-- Label
@@ -578,7 +578,7 @@ function theme.setup()
 
 		--     StorageClass = { fg = "" , bg = ""}
 
-		String = { fg = bg_furthur_09 },
+		String = { fg = bg_further_09 },
 		-- @string
 		-- @string.regexp
 		-- @string.special
@@ -586,7 +586,7 @@ function theme.setup()
 		-- @string.special.url
 		-- NvimString
 
-		Structure = { fg = bg_furthur_11 },
+		Structure = { fg = bg_further_11 },
 		-- @module
 		-- @module.builtin
 
@@ -598,21 +598,21 @@ function theme.setup()
 
 		--     TabLineSel = { fg = "" , bg = ""}
 
-		Tag = { fg = bg_furthur_16 },
+		Tag = { fg = bg_further_16 },
 		-- @tag
 		-- @tag.builtin
 
 		--     TermCursor = { fg = "" , bg = ""}
 
-		Title = { fg = bg_furthur_16, bold = true },
+		Title = { fg = bg_further_16, bold = true },
 		-- @markup.heading
 		-- FloatTitle
 		-- FloatFooter
 
-		Todo = { fg = bg_furthur_16, bg = bg_lighter_02 },
+		Todo = { fg = bg_further_16, bg = bg_further_02 },
 		-- @comment.todo
 
-		Type = { fg = bg_furthur_08 },
+		Type = { fg = bg_further_08 },
 		-- @type
 		-- @type.builtin
 		-- StorageClass
@@ -621,15 +621,15 @@ function theme.setup()
 		-- NvimOptionSigil
 		-- NvimEnvironmentSigil
 
-		Typedef = { fg = bg_furthur_10 },
+		Typedef = { fg = bg_further_10 },
 
-		Underlined = { fg = bg_furthur_10, underline = true },
+		Underlined = { fg = bg_further_10, underline = true },
 		-- @string.special.url
 		-- @markup.link
 
 		--     VertSplit = { fg = "" , bg = ""}
 
-		Visual = { fg = foreground, bg = bg_furthur_04 },
+		Visual = { fg = foreground, bg = bg_further_04 },
 		-- LspReferenceText
 		-- LspSignatureActiveParameter
 		-- SnippetTabstop
