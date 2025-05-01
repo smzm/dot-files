@@ -22,6 +22,8 @@ map("v", "x", '"_x', opts)
 -- Move Faster
 map("n", "<S-j>", "10j", opts)
 map("n", "<S-k>", "10k", opts)
+map("v", "<S-j>", "10j", opts)
+map("v", "<S-k>", "10k", opts)
 
 -- (;) as (:)
 map("n", ";", ":", opts)

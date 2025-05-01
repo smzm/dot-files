@@ -231,7 +231,7 @@ function theme.setup()
 		-- NvimComma
 		-- NvimArrow
 
-		--     EndOfBuffer = { fg = "" , bg = ""}
+		EndOfBuffer = { link = "Conceal" }, -- ~ sign in the gutter
 
 		--     Error = { fg = "" , bg = ""}
 		--     -- NvimInvalid
@@ -378,7 +378,7 @@ function theme.setup()
 		--     -- @attribute
 		--     -- @attribute.builtin
 
-		MatchParen = { fg = bg_shades_01, bg = bg_shades_18, bold = true },
+		MatchParen = { fg = bg_shades_01, bg = bg_shades_07, bold = true },
 
 		--     ModeMsg = { fg = "" , bg = ""}
 

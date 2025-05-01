@@ -204,13 +204,25 @@ return { -- >>> LSP
 			-- -- ==> Show diagnostic inline text :
 			vim.diagnostic.config({
 				signs = {
-					active = true,
-					values = {
-						{ name = "DiagnosticSignError", text = "" },
-						{ name = "DiagnosticSignWarn", text = "" },
-						{ name = "DiagnosticSignHint", text = "󰌶" },
-						{ name = "DiagnosticSignInfo", text = "" },
+					text = {
+						[vim.diagnostic.severity.ERROR] = "",
+						[vim.diagnostic.severity.WARN] = "",
+						[vim.diagnostic.severity.HINT] = "󰌶",
+						[vim.diagnostic.severity.INFO] = "",
 					},
+					texthl = {
+						[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+						[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+						[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+						[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+					},
+					-- linehl = {
+					-- 	[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+					-- 	[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+					-- 	[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+					-- 	[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+					-- },
+					numhl = {},
 				},
 				virtual_text = false, -- Because of lsp-line remove the regular virtual text diagnostics to avoid pointless duplication
 				virtual_lines = {
