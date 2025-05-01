@@ -308,7 +308,7 @@ function theme.setup()
 
 		--     ErrorMsg = { fg = "" , bg = ""}
 
-		Float = { fg = foreground },
+		Float = { fg = bg_shades_08 },
 		-- @number.float
 		-- NvimFloat
 

@@ -41,9 +41,15 @@ return {
 					model = "codegemma",
 				},
 			},
+			mappings = {
+				ask = "<localleader>a",
+				edit = "<localleader>e",
+				refresh = "<localleader>r", -- optional
+			},
+			-- hints = { enabled = false },
 			behaviour = {
 				auto_suggestions = false,
-				auto_set_keymaps = false,
+				-- auto_set_keymaps = false,
 				auto_focus_sidebar = true,
 				-- auto_suggestions_respect_ignore = false,
 				-- auto_set_highlight_group = true,
@@ -82,18 +88,18 @@ return {
 			hl(0, "AvanteReversedThirdTitle", { link = "ReversedH3" })
 			hl(0, "AvanteSubtitle", { link = "H2" })
 			hl(0, "AvanteReversedSubtitle", { link = "ReversedH2" })
+			hl(0, "AvanteInlineHint", { link = "ReversedH3" })
 
 			-- ✅ Avante Keybindings
 			local map = vim.keymap.set
 			local opts = { noremap = true, silent = true, desc = "Avante: " }
 
-			map("n", "<localleader>a", ":AvanteAsk<Space>", { desc = "Ask AI" })
+			map("n", "<localleader>a", ":AvanteAsk<CR>", { desc = "Ask AI" })
 			map("n", "<localleader>b", ":AvanteBuild<CR>", { desc = "Build Dependencies" })
 			map("n", "<localleader>c", ":AvanteChat<CR>", { desc = "Start Chat Session" })
 			map("n", "<localleader>n", ":AvanteChatNew<CR>", { desc = "New Chat Session" })
 			map("n", "<localleader>h", ":AvanteHistory<CR>", { desc = "Chat History" })
 			map("n", "<localleader>l", ":AvanteClear<CR>", { desc = "Clear Chat" })
-			map("v", "<localleader>e", ":AvanteEdit<CR>", { desc = "Edit Selected Code" }) -- visual mode
 			map("n", "<localleader>f", ":AvanteFocus<CR>", { desc = "Toggle Focus Sidebar" })
 			map("n", "<localleader>r", ":AvanteRefresh<CR>", { desc = "Refresh Avante UI" })
 			map("n", "<localleader>s", ":AvanteStop<CR>", { desc = "Stop AI Request" })
