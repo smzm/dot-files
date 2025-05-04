@@ -173,6 +173,12 @@ alias ytcookie='yt-dlp --cookies-from-browser chrome -f "bestvideo[height=1080][
 alias lg='lazygit'
 
 
+# Eza
+alias l="eza -l --icons --git -a"
+alias ll="eza --tree --level=2 --long --icons --git"
+alias ltree="eza --tree --level=2  --icons --git"
+
+
 # Enable and disable venv in python dierctory automatically
 function cd() {
   builtin cd "$@"
