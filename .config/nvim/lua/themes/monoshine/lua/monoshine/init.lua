@@ -334,7 +334,7 @@ function theme.setup()
 		-- LspCodeLensSeparator
 		-- LspInlayHint = { fg = "" , bg = ""}
 
-		LspReferenceRead = { fg = bg_shades_14, bg = bg_shades_01 },
+		LspReferenceRead = { fg = bg_shades_14, bg = bg_shades_02 },
 		-- LspReferenceTarget = { fg = "" , bg = ""}
 
 		LspReferenceText = { fg = bg_shades_14, bg = bg_shades_01 },
@@ -488,7 +488,7 @@ function theme.setup()
 		-- NvimStringSpecial
 		["@variable"] = { link = "SpecialChar" },
 		["@variable.builtin"] = { link = "SpecialChar" },
-		["@variable.parameter.builtin"] = { link = "SpecialChar" },
+		["@variable.parameter"] = { fg = bg_shades_11 },
 		-- SpecialComment = { fg = "" , bg = ""}
 		-- SpecialKey = { fg = "" , bg = ""}
 		-- SpellBad = { fg = "" , bg = ""}
