@@ -335,7 +335,7 @@ return { -- >>> LSP
 				}
 			end
 
-			vim.api.nvim_set_hl(0, "CmpWin", { link = "NormalNC" })
+			vim.api.nvim_set_hl(0, "CmpWin", { link = "NormalFloat" })
 
 			cmp.setup({
 				auto_brackets = { "python" },

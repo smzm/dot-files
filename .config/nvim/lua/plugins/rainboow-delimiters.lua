@@ -26,12 +26,12 @@ return {
 		}
 
 		-- Define custom colors for each delimiter level
-		vim.api.nvim_set_hl(0, "RainbowDelimiterGray", { link = "Delimiter" })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { link = "Delimiter" })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { link = "Delimiter" })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { link = "Delimiter" })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { link = "Delimiter" })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { link = "Delimiter" })
-		vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { link = "Delimiter" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterGray", { link = "NvimParenthesis" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { link = "NvimParenthesis" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { link = "NvimParenthesis" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { link = "NvimParenthesis" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { link = "NvimParenthesis" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { link = "NvimParenthesis" })
+		vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { link = "NvimParenthesis" })
 	end,
 }

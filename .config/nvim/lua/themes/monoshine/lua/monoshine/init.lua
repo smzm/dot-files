@@ -41,6 +41,7 @@ function theme.setup()
 
 	-- Set different background colors based on light/dark mode
 	local background
+	local foreground
 	local bg_shades_01, bg_shades_02, bg_shades_03, bg_shades_04, bg_shades_05
 	local bg_shades_06, bg_shades_07, bg_shades_08, bg_shades_09, bg_shades_10
 	local bg_shades_11, bg_shades_12, bg_shades_13, bg_shades_14, bg_shades_15
@@ -68,6 +69,7 @@ function theme.setup()
 		bg_shades_18 = colors.gray_100
 		bg_shades_19 = colors.gray_050
 		bg_shades_20 = colors.gray_000 -- Lightest shade
+		foreground = colors.gray_300
 	else
 		background = colors.gray_050 -- Light background
 		bg_shades_01 = colors.gray_100
@@ -90,9 +92,8 @@ function theme.setup()
 		bg_shades_18 = colors.gray_950
 		bg_shades_19 = colors.gray_1000
 		bg_shades_20 = colors.black -- Darkest shade
+		foreground = colors.gray_800
 	end
-
-	local foreground = theme.gray_800
 
 	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_shades_01 })
 	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_02 })
@@ -194,9 +195,9 @@ function theme.setup()
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
-		Delimiter = { fg = bg_shades_09 },
+		Delimiter = { fg = bg_shades_15 },
 		-- @punctuation
-		-- NvimParenthesis
+		NvimParenthesis = { fg = bg_shades_08 },
 		-- NvimLambda
 		-- NvimNestingParenthesis
 		-- NvimCallingParenthesis
@@ -308,7 +309,7 @@ function theme.setup()
 		-- @function
 		["@function.builtin"] = { fg = foreground, bold = true },
 
-		Identifier = { fg = bg_shades_12, bold = true },
+		Identifier = { fg = bg_shades_11, bold = true },
 		-- @property
 		-- NvimIdentifier
 		-- NvimIdentifierScope
@@ -367,7 +368,7 @@ function theme.setup()
 		-- @diff
 		-- NvimSpacing
 
-		NormalFloat = { fg = bg_shades_12, bg = bg_shades_02 },
+		NormalFloat = { fg = bg_shades_10, bg = bg_shades_02 },
 
 		NormalNC = { bg = background },
 
@@ -420,7 +421,7 @@ function theme.setup()
 		-- NvimStringSpecial = { fg = "" , bg = ""}
 		-- NvimDoubleQuotedEscape
 
-		Operator = { fg = bg_shades_16 },
+		Operator = { fg = bg_shades_14 },
 		-- @operator
 		-- NvimAssignment
 		-- NvimOperator
@@ -460,7 +461,7 @@ function theme.setup()
 		-- SignColumn = { fg = "" , bg = ""}
 		-- SnippetTabstop = { fg = "" , bg = ""}
 
-		Special = { fg = bg_shades_08 },
+		Special = { fg = bg_shades_14 },
 		-- @module.builtin
 		-- @string.regexp
 		-- @string.special
@@ -480,13 +481,13 @@ function theme.setup()
 		-- NvimRegister
 		-- NvimStringSpecial
 
-		SpecialChar = { fg = bg_shades_13 },
+		SpecialChar = { fg = bg_shades_10 },
 		-- @string.special
 		-- @string.escape
 		-- @character.special
 		-- NvimStringSpecial
 		["@variable"] = { link = "SpecialChar" },
-		["@.builtin"] = { link = "SpecialChar" },
+		["@variable.builtin"] = { link = "SpecialChar" },
 		["@variable.parameter.builtin"] = { link = "SpecialChar" },
 		-- SpecialComment = { fg = "" , bg = ""}
 		-- SpecialKey = { fg = "" , bg = ""}
@@ -510,7 +511,7 @@ function theme.setup()
 		-- StatusLineTermNC = { fg = "" , bg = ""}
 		-- StorageClass = { fg = "" , bg = ""}
 
-		String = { fg = bg_shades_09 },
+		String = { fg = bg_shades_07 },
 		-- @string
 		-- @string.regexp
 		-- @string.special
@@ -518,7 +519,7 @@ function theme.setup()
 		-- @string.special.url
 		-- NvimString
 
-		Structure = { fg = bg_shades_11 },
+		Structure = { fg = bg_shades_09 },
 		-- @module
 		-- @module.builtin
 		-- Substitute = { fg = "" , bg = ""}
