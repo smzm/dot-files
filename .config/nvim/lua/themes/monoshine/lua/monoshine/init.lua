@@ -106,7 +106,7 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
 
 	local highlights = {
-		--     Added = { fg = "" , bg = ""}
+		-- Added = { fg = "" , bg = ""}
 		-- @diff.plus
 
 		Boolean = { fg = foreground },
@@ -115,11 +115,9 @@ function theme.setup()
 		Character = { fg = bg_shades_10 },
 		-- @character
 		-- @character.special
-
 		-- Changed = { fg = "" , bg = ""}
 		-- @diff.delta
-
-		--     ColorColumn = { fg = "" , bg = ""}
+		-- ColorColumn = { fg = "" , bg = ""}
 
 		Comment = { fg = bg_shades_05, italic = true },
 		-- @comment
@@ -128,8 +126,7 @@ function theme.setup()
 		-- @comment.note
 		-- @comment.todo
 		-- DiagnosticUnnecessary
-
-		--     ComplMatchIns = { fg = "" , bg = ""}
+		-- ComplMatchIns = { fg = "" , bg = ""}
 
 		Conceal = { fg = background, bg = background },
 
@@ -155,64 +152,47 @@ function theme.setup()
 		CursorLineNr = { bg = bg_shades_01 },
 
 		CursorLineFold = { bg = bg_shades_02 },
-
-		--     CursorLineSign = { fg = "" , bg = ""}
-
-		--     DiffAdd = { fg = "" , bg = ""}
-
-		--     DiffChange = { fg = "" , bg = ""}
-
-		--     DiffDelete = { fg = "" , bg = ""}
-
-		--     DiffText = { fg = "" , bg = ""}
-
-		--     DiagnosticDeprecated = { fg = "" , bg = ""}
-		--     -- @lsp.mod.deprecated
-
-		--     DiagnosticError = { fg = "" , bg = ""}
-		--     -- DiagnosticFloatingError
-		--     -- DiagnosticVirtualTextError
-		--     -- DiagnosticVirtualLinesError
-		--     -- DiagnosticSignError
-		--     -- @comment.error
-
-		--     DiagnosticHint = { fg = "" , bg = ""}
-		--     -- DiagnosticFloatingHint
-		--     -- DiagnosticVirtualTextHint
-		--     -- DiagnosticVirtualLinesHint
-		--     -- DiagnosticSignHint
-
-		--     DiagnosticInfo = { fg = "" , bg = ""}
-		--     -- DiagnosticFloatingInfo
-		--     -- DiagnosticVirtualTextInfo
-		--     -- DiagnosticVirtualLinesInfo
-		--     -- DiagnosticSignInfo
-		--     -- @comment.note
-
-		--     DiagnosticOk = { fg = "" , bg = ""}
-		--     -- DiagnosticFloatingOk
-		--     -- DiagnosticVirtualTextOk
-		--     -- DiagnosticVirtualLinesOk
-		--     -- DiagnosticSignOk
-
-		--     DiagnosticUnderlineError = { fg = "" , bg = ""}
-
-		--     DiagnosticUnderlineHint = { fg = "" , bg = ""}
-
-		--     DiagnosticUnderlineInfo = { fg = "" , bg = ""}
-
-		--     DiagnosticUnderlineOk = { fg = "" , bg = ""}
-
-		--     DiagnosticUnderlineWarn = { fg = "" , bg = ""}
-
-		--     DiagnosticWarn = { fg = "" , bg = ""}
-		--     -- DiagnosticFloatingWarn
-		--     -- DiagnosticVirtualTextWarn
-		--     -- DiagnosticVirtualLinesWarn
-		--     -- DiagnosticSignWarn
-		--     -- @comment.warning
-
-		--     Directory = { fg = "" , bg = ""}
+		--  CursorLineSign = { fg = "" , bg = ""}
+		--  DiffAdd = { fg = "" , bg = ""}
+		--  DiffChange = { fg = "" , bg = ""}
+		--  DiffDelete = { fg = "" , bg = ""}
+		--  DiffText = { fg = "" , bg = ""}
+		--  DiagnosticDeprecated = { fg = "" , bg = ""}
+		--  @lsp.mod.deprecated
+		--  DiagnosticError = { fg = "" , bg = ""}
+		--  DiagnosticFloatingError
+		--  DiagnosticVirtualTextError
+		--  DiagnosticVirtualLinesError
+		--  DiagnosticSignError
+		--  @comment.error
+		--  DiagnosticHint = { fg = "" , bg = ""}
+		--  DiagnosticFloatingHint
+		--  DiagnosticVirtualTextHint
+		--  DiagnosticVirtualLinesHint
+		--  DiagnosticSignHint
+		--  DiagnosticInfo = { fg = "" , bg = ""}
+		--  DiagnosticFloatingInfo
+		--  DiagnosticVirtualTextInfo
+		--  DiagnosticVirtualLinesInfo
+		--  DiagnosticSignInfo
+		--  @comment.note
+		--  DiagnosticOk = { fg = "" , bg = ""}
+		--  DiagnosticFloatingOk
+		--  DiagnosticVirtualTextOk
+		--  DiagnosticVirtualLinesOk
+		--  DiagnosticSignOk
+		--  DiagnosticUnderlineError = { fg = "" , bg = ""}
+		--  DiagnosticUnderlineHint = { fg = "" , bg = ""}
+		--  DiagnosticUnderlineInfo = { fg = "" , bg = ""}
+		--  DiagnosticUnderlineOk = { fg = "" , bg = ""}
+		--  DiagnosticUnderlineWarn = { fg = "" , bg = ""}
+		--  DiagnosticWarn = { fg = "" , bg = ""}
+		--  DiagnosticFloatingWarn
+		--  DiagnosticVirtualTextWarn
+		--  DiagnosticVirtualLinesWarn
+		--  DiagnosticSignWarn
+		--  @comment.warning
+		--  Directory = { fg = "" , bg = ""}
 
 		Delimiter = { fg = bg_shades_09 },
 		-- @punctuation
@@ -233,80 +213,79 @@ function theme.setup()
 
 		EndOfBuffer = { link = "Conceal" }, -- ~ sign in the gutter
 
-		--     Error = { fg = "" , bg = ""}
-		--     -- NvimInvalid
-		--     -- NvimInvalidAssignment
-		--     -- NvimInvalidPlainAssignment
-		--     -- NvimInvalidAugmentedAssignment
-		--     -- NvimInvalidAssignmentWithAddition
-		--     -- NvimInvalidAssignmentWithSubtraction
-		--     -- NvimInvalidAssignmentWithConcatenation
-		--     -- NvimInvalidOperator
-		--     -- NvimInvalidUnaryOperator
-		--     -- NvimInvalidUnaryPlus
-		--     -- NvimInvalidUnaryMinus
-		--     -- NvimInvalidNot
-		--     -- NvimInvalidBinaryOperator
-		--     -- NvimInvalidComparison
-		--     -- NvimInvalidComparisonModifier
-		--     -- NvimInvalidBinaryPlus
-		--     -- NvimInvalidBinaryMinus
-		--     -- NvimInvalidConcat
-		--     -- NvimInvalidConcatOrSubscript
-		--     -- NvimInvalidOr
-		--     -- NvimInvalidAnd
-		--     -- NvimInvalidMultiplication
-		--     -- NvimInvalidDivision
-		--     -- NvimInvalidMod
-		--     -- NvimInvalidTernary
-		--     -- NvimInvalidTernaryColon
-		--     -- NvimInvalidDelimiter
-		--     -- NvimInvalidParenthesis
-		--     -- NvimInvalidLambda
-		--     -- NvimInvalidNestingParenthesis
-		--     -- NvimInvalidCallingParenthesis
-		--     -- NvimInvalidSubscript
-		--     -- NvimInvalidSubscriptBracket
-		--     -- NvimInvalidSubscriptColon
-		--     -- NvimInvalidCurly
-		--     -- NvimInvalidContainer
-		--     -- NvimInvalidDict
-		--     -- NvimInvalidList
-		--     -- NvimInvalidValue
-		--     -- NvimInvalidIdentifier
-		--     -- NvimInvalidIdentifierScope
-		--     -- NvimInvalidIdentifierScopeDelimiter
-		--     -- NvimInvalidIdentifierName
-		--     -- NvimInvalidIdentifierKey
-		--     -- NvimInvalidColon
-		--     -- NvimInvalidComma
-		--     -- NvimInvalidArrow
-		--     -- NvimInvalidRegister
-		--     -- NvimInvalidNumber
-		--     -- NvimInvalidFloat
-		--     -- NvimInvalidNumberPrefix
-		--     -- NvimInvalidOptionSigil
-		--     -- NvimInvalidOptionName
-		--     -- NvimInvalidOptionScope
-		--     -- NvimInvalidOptionScopeDelimiter
-		--     -- NvimInvalidEnvironmentSigil
-		--     -- NvimInvalidEnvironmentName
-		--     -- NvimInvalidString
-		--     -- NvimInvalidStringBody
-		--     -- NvimInvalidStringQuote
-		--     -- NvimInvalidStringSpecial
-		--     -- NvimInvalidSingleQuote
-		--     -- NvimInvalidSingleQuotedBody
-		--     -- NvimInvalidSingleQuotedQuote
-		--     -- NvimInvalidDoubleQuote
-		--     -- NvimInvalidDoubleQuotedBody
-		--     -- NvimInvalidDoubleQuotedEscape
-		--     -- NvimInvalidDoubleQuotedUnknownEscape
-		--     -- NvimInvalidFigureBrace
-		--     -- NvimInvalidSpacing
-		--     -- NvimInternalError
-
-		--     ErrorMsg = { fg = "" , bg = ""}
+		-- Error = { fg = "" , bg = ""}
+		-- NvimInvalid
+		-- NvimInvalidAssignment
+		-- NvimInvalidPlainAssignment
+		-- NvimInvalidAugmentedAssignment
+		-- NvimInvalidAssignmentWithAddition
+		-- NvimInvalidAssignmentWithSubtraction
+		-- NvimInvalidAssignmentWithConcatenation
+		-- NvimInvalidOperator
+		-- NvimInvalidUnaryOperator
+		-- NvimInvalidUnaryPlus
+		-- NvimInvalidUnaryMinus
+		-- NvimInvalidNot
+		-- NvimInvalidBinaryOperator
+		-- NvimInvalidComparison
+		-- NvimInvalidComparisonModifier
+		-- NvimInvalidBinaryPlus
+		-- NvimInvalidBinaryMinus
+		-- NvimInvalidConcat
+		-- NvimInvalidConcatOrSubscript
+		-- NvimInvalidOr
+		-- NvimInvalidAnd
+		-- NvimInvalidMultiplication
+		-- NvimInvalidDivision
+		-- NvimInvalidMod
+		-- NvimInvalidTernary
+		-- NvimInvalidTernaryColon
+		-- NvimInvalidDelimiter
+		-- NvimInvalidParenthesis
+		-- NvimInvalidLambda
+		-- NvimInvalidNestingParenthesis
+		-- NvimInvalidCallingParenthesis
+		-- NvimInvalidSubscript
+		-- NvimInvalidSubscriptBracket
+		-- NvimInvalidSubscriptColon
+		-- NvimInvalidCurly
+		-- NvimInvalidContainer
+		-- NvimInvalidDict
+		-- NvimInvalidList
+		-- NvimInvalidValue
+		-- NvimInvalidIdentifier
+		-- NvimInvalidIdentifierScope
+		-- NvimInvalidIdentifierScopeDelimiter
+		-- NvimInvalidIdentifierName
+		-- NvimInvalidIdentifierKey
+		-- NvimInvalidColon
+		-- NvimInvalidComma
+		-- NvimInvalidArrow
+		-- NvimInvalidRegister
+		-- NvimInvalidNumber
+		-- NvimInvalidFloat
+		-- NvimInvalidNumberPrefix
+		-- NvimInvalidOptionSigil
+		-- NvimInvalidOptionName
+		-- NvimInvalidOptionScope
+		-- NvimInvalidOptionScopeDelimiter
+		-- NvimInvalidEnvironmentSigil
+		-- NvimInvalidEnvironmentName
+		-- NvimInvalidString
+		-- NvimInvalidStringBody
+		-- NvimInvalidStringQuote
+		-- NvimInvalidStringSpecial
+		-- NvimInvalidSingleQuote
+		-- NvimInvalidSingleQuotedBody
+		-- NvimInvalidSingleQuotedQuote
+		-- NvimInvalidDoubleQuote
+		-- NvimInvalidDoubleQuotedBody
+		-- NvimInvalidDoubleQuotedEscape
+		-- NvimInvalidDoubleQuotedUnknownEscape
+		-- NvimInvalidFigureBrace
+		-- NvimInvalidSpacing
+		-- NvimInternalError
+		-- ErrorMsg = { fg = "" , bg = ""}
 
 		Float = { fg = bg_shades_08 },
 		-- @number.float
@@ -316,13 +295,12 @@ function theme.setup()
 
 		FloatFooter = { fg = bg_shades_12, bg = bg_shades_02 },
 
-		--     FloatShadow = { fg = "" , bg = ""}
-
-		--     FloatShadowThrough = { fg = "" , bg = ""}
+		-- FloatShadow = { fg = "" , bg = ""}
+		-- FloatShadowThrough = { fg = "" , bg = ""}
 
 		FloatTitle = { fg = bg_shades_14, bold = true },
 
-		--     FoldColumn = { fg = "" , bg = ""}
+		-- FoldColumn = { fg = "" , bg = ""}
 
 		Folded = { fg = bg_shades_12, bg = bg_shades_02 },
 
@@ -341,27 +319,22 @@ function theme.setup()
 		-- NvimOptionScope
 		-- NvimOptionScopeDelimiter
 		-- NvimEnvironmentName
-
-		--     Ignore = { fg = "" , bg = ""}
+		-- Ignore = { fg = "" , bg = ""}
 
 		Keyword = { fg = foreground, bold = true },
 		-- @keyword
-
-		--     Label = { fg = "" , bg = ""}
-		--     -- @label
+		-- Label = { fg = "" , bg = ""}
+		-- @label
 
 		LineNr = { fg = bg_shades_03 },
 		-- LineNrAbove
 		-- LineNrBelow
-
-		--     LspCodeLens = { fg = "" , bg = ""}
-		--     -- LspCodeLensSeparator
-
-		--     LspInlayHint = { fg = "" , bg = ""}
+		-- LspCodeLens = { fg = "" , bg = ""}
+		-- LspCodeLensSeparator
+		-- LspInlayHint = { fg = "" , bg = ""}
 
 		LspReferenceRead = { fg = bg_shades_14, bg = bg_shades_01 },
-
-		--     LspReferenceTarget = { fg = "" , bg = ""}
+		-- LspReferenceTarget = { fg = "" , bg = ""}
 
 		LspReferenceText = { fg = bg_shades_14, bg = bg_shades_01 },
 		-- LspReferenceRead
@@ -371,22 +344,16 @@ function theme.setup()
 		-- SnippetTabstop
 
 		LspReferenceWrite = { fg = bg_shades_14, bg = background },
-
-		--     LspSignatureActiveParameter = { fg = "" , bg = ""}
-
-		--     Macro = { fg = "" , bg = ""}
-		--     -- @attribute
-		--     -- @attribute.builtin
+		-- LspSignatureActiveParameter = { fg = "" , bg = ""}
+		-- @attribute
+		-- @attribute.builtin
 
 		MatchParen = { fg = bg_shades_01, bg = bg_shades_07, bold = true },
 
-		--     ModeMsg = { fg = "" , bg = ""}
-
-		--     MoreMsg = { fg = "" , bg = ""}
-
-		--     MsgArea = { fg = "" , bg = ""}
-
-		--     MsgSeparator = { fg = "" , bg = ""}
+		-- ModeMsg = { fg = "" , bg = ""}
+		-- MoreMsg = { fg = "" , bg = ""}
+		-- MsgArea = { fg = "" , bg = ""}
+		-- MsgSeparator = { fg = "" , bg = ""}
 
 		NonText = { fg = foreground },
 		-- SpecialKey
@@ -408,62 +375,50 @@ function theme.setup()
 		-- @number
 		-- @number.float
 		-- NvimNumber
-
-		--     NvimAssignment = { fg = "" , bg = ""}
-		--     -- NvimPlainAssignment
-		--     -- NvimAugmentedAssignment
-		--     -- NvimAssignmentWithAddition
-		--     -- NvimAssignmentWithSubtraction
-		--     -- NvimAssignmentWithConcatenation
-
-		--     NvimDoubleQuotedUnknownEscape = { fg = "" , bg = ""}
-
-		--     NvimEnvironmentSigil = { fg = "" , bg = ""}
-
-		--     NvimFigureBrace = { fg = "" , bg = ""}
-
-		--     NvimInternalError = { fg = "" , bg = ""}
-		--     -- NvimSingleQuotedUnknownEscape
-		--     -- NvimInvalidSingleQuotedUnknownEscape
-
-		--     NvimNumberPrefix = { fg = "" , bg = ""}
-
-		--     NvimOperator = { fg = "" , bg = ""}
-		--     -- NvimUnaryOperator
-		--     -- NvimUnaryPlus
-		--     -- NvimUnaryMinus
-		--     -- NvimNot
-		--     -- NvimBinaryOperator
-		--     -- NvimComparison
-		--     -- NvimComparisonModifier
-		--     -- NvimBinaryPlus
-		--     -- NvimBinaryMinus
-		--     -- NvimConcat
-		--     -- NvimConcatOrSubscript
-		--     -- NvimOr
-		--     -- NvimAnd
-		--     -- NvimMultiplication
-		--     -- NvimDivision
-		--     -- NvimMod
-		--     -- NvimTernary
-		--     -- NvimTernaryColon
-
-		--     NvimOptionSigil = { fg = "" , bg = ""}
-
-		--     NvimRegister = { fg = "" , bg = ""}
-
-		--     NvimSingleQuotedQuote = { fg = "" , bg = ""}
-
-		--     NvimString = { fg = "" , bg = ""}
-		--     -- NvimStringBody
-		--     -- NvimStringQuote
-		--     -- NvimSingleQuote
-		--     -- NvimSingleQuotedBody
-		--     -- NvimDoubleQuote
-		--     -- NvimDoubleQuotedBody
-
-		--     NvimStringSpecial = { fg = "" , bg = ""}
-		--     -- NvimDoubleQuotedEscape
+		-- NvimAssignment = { fg = "" , bg = ""}
+		-- NvimPlainAssignment
+		-- NvimAugmentedAssignment
+		-- NvimAssignmentWithAddition
+		-- NvimAssignmentWithSubtraction
+		-- NvimAssignmentWithConcatenation
+		-- NvimDoubleQuotedUnknownEscape = { fg = "" , bg = ""}
+		-- NvimEnvironmentSigil = { fg = "" , bg = ""}
+		-- NvimFigureBrace = { fg = "" , bg = ""}
+		-- NvimInternalError = { fg = "" , bg = ""}
+		-- NvimSingleQuotedUnknownEscape
+		-- NvimInvalidSingleQuotedUnknownEscape
+		-- NvimNumberPrefix = { fg = "" , bg = ""}
+		-- NvimOperator = { fg = "" , bg = ""}
+		-- NvimUnaryOperator
+		-- NvimUnaryPlus
+		-- NvimUnaryMinus
+		-- NvimNot
+		-- NvimBinaryOperator
+		-- NvimComparison
+		-- NvimComparisonModifier
+		-- NvimBinaryPlus
+		-- NvimBinaryMinus
+		-- NvimConcat
+		-- NvimConcatOrSubscript
+		-- NvimOr
+		-- NvimAnd
+		-- NvimMultiplication
+		-- NvimDivision
+		-- NvimMod
+		-- NvimTernary
+		-- NvimTernaryColon
+		-- NvimOptionSigil = { fg = "" , bg = ""}
+		-- NvimRegister = { fg = "" , bg = ""}
+		-- NvimSingleQuotedQuote = { fg = "" , bg = ""}
+		-- NvimString = { fg = "" , bg = ""}
+		-- NvimStringBody
+		-- NvimStringQuote
+		-- NvimSingleQuote
+		-- NvimSingleQuotedBody
+		-- NvimDoubleQuote
+		-- NvimDoubleQuotedBody
+		-- NvimStringSpecial = { fg = "" , bg = ""}
+		-- NvimDoubleQuotedEscape
 
 		Operator = { fg = bg_shades_16 },
 		-- @operator
@@ -474,53 +429,36 @@ function theme.setup()
 		-- PmenuKind
 		-- PmenuExtra
 		-- PmenuSbar
-
-		--     PmenuExtraSel = { fg = "" , bg = ""}
-
-		--     PmenuKindSel = { fg = "" , bg = ""}
-
-		--     PmenuMatch = { fg = "" , bg = ""}
-
-		--     PmenuMatchSel = { fg = "" , bg = ""}
+		-- PmenuExtraSel = { fg = "" , bg = ""}
+		-- PmenuKindSel = { fg = "" , bg = ""}
+		-- PmenuMatch = { fg = "" , bg = ""}
+		-- PmenuMatchSel = { fg = "" , bg = ""}
 
 		PmenuSel = { fg = background, bg = bg_shades_10 },
 		-- PmenuKindSel
 		-- PmenuExtraSel
 		-- WildMenu
-
-		--     PmenuThumb = { fg = "" , bg = ""}
-
-		--     PreCondit = { fg = "" , bg = ""}
-
-		--     PreProc = { fg = "" , bg = ""}
-		--     -- Include
-		--     -- Define
-		--     -- Macro
-		--     -- PreCondit
-
-		--     Question = { fg = "" , bg = ""}
-
-		--     QuickFixLine = { fg = "" , bg = ""}
-
-		--     RedrawDebugClear = { fg = "" , bg = ""}
-
-		--     RedrawDebugComposed = { fg = "" , bg = ""}
-
-		--     RedrawDebugNormal = { fg = "" , bg = ""}
-
-		--     RedrawDebugRecompose = { fg = "" , bg = ""}
-
-		--     Removed = { fg = "" , bg = ""}
-		--     -- @diff.minus
-
-		--     Repeat = { fg = "" , bg = ""}
+		-- PmenuThumb = { fg = "" , bg = ""}
+		-- PreCondit = { fg = "" , bg = ""}
+		-- PreProc = { fg = "" , bg = ""}
+		-- Include
+		-- Define
+		-- Macro
+		-- PreCondit
+		-- Question = { fg = "" , bg = ""}
+		-- QuickFixLine = { fg = "" , bg = ""}
+		-- RedrawDebugClear = { fg = "" , bg = ""}
+		-- RedrawDebugComposed = { fg = "" , bg = ""}
+		-- RedrawDebugNormal = { fg = "" , bg = ""}
+		-- RedrawDebugRecompose = { fg = "" , bg = ""}
+		-- Removed = { fg = "" , bg = ""}
+		-- @diff.minus
+		-- Repeat = { fg = "" , bg = ""}
 
 		Search = { fg = bg_shades_16, bg = bg_shades_06 },
 		-- Substitute
-
-		--     SignColumn = { fg = "" , bg = ""}
-
-		--     SnippetTabstop = { fg = "" , bg = ""}
+		-- SignColumn = { fg = "" , bg = ""}
+		-- SnippetTabstop = { fg = "" , bg = ""}
 
 		Special = { fg = bg_shades_08 },
 		-- @module.builtin
@@ -542,7 +480,7 @@ function theme.setup()
 		-- NvimRegister
 		-- NvimStringSpecial
 
-		SpecialChar = { fg = bg_shades_11 },
+		SpecialChar = { fg = bg_shades_13 },
 		-- @string.special
 		-- @string.escape
 		-- @character.special
@@ -550,18 +488,12 @@ function theme.setup()
 		["@variable"] = { link = "SpecialChar" },
 		["@.builtin"] = { link = "SpecialChar" },
 		["@variable.parameter.builtin"] = { link = "SpecialChar" },
-
-		--     SpecialComment = { fg = "" , bg = ""}
-
-		--     SpecialKey = { fg = "" , bg = ""}
-
-		--     SpellBad = { fg = "" , bg = ""}
-
-		--     SpellCap = { fg = "" , bg = ""}
-
-		--     SpellLocal = { fg = "" , bg = ""}
-
-		--     SpellRare = { fg = "" , bg = ""}
+		-- SpecialComment = { fg = "" , bg = ""}
+		-- SpecialKey = { fg = "" , bg = ""}
+		-- SpellBad = { fg = "" , bg = ""}
+		-- SpellCap = { fg = "" , bg = ""}
+		-- SpellLocal = { fg = "" , bg = ""}
+		-- SpellRare = { fg = "" , bg = ""}
 
 		Statement = { fg = bg_shades_10 },
 		-- Conditional
@@ -572,15 +504,11 @@ function theme.setup()
 
 		StatusLine = { fg = foreground, bg = background },
 		-- MsgSeparator
-
-		--     StatusLineNC = { fg = "" , bg = ""}
-		--     -- TabLine
-
-		--     StatusLineTerm = { fg = "" , bg = ""}
-
-		--     StatusLineTermNC = { fg = "" , bg = ""}
-
-		--     StorageClass = { fg = "" , bg = ""}
+		-- StatusLineNC = { fg = "" , bg = ""}
+		-- TabLine
+		-- StatusLineTerm = { fg = "" , bg = ""}
+		-- StatusLineTermNC = { fg = "" , bg = ""}
+		-- StorageClass = { fg = "" , bg = ""}
 
 		String = { fg = bg_shades_09 },
 		-- @string
@@ -593,20 +521,15 @@ function theme.setup()
 		Structure = { fg = bg_shades_11 },
 		-- @module
 		-- @module.builtin
-
-		--     Substitute = { fg = "" , bg = ""}
-
-		--     TabLine = { fg = "" , bg = ""}
-
-		--     TabLineFill = { fg = "" , bg = ""}
-
-		--     TabLineSel = { fg = "" , bg = ""}
+		-- Substitute = { fg = "" , bg = ""}
+		-- TabLine = { fg = "" , bg = ""}
+		-- TabLineFill = { fg = "" , bg = ""}
+		-- TabLineSel = { fg = "" , bg = ""}
 
 		Tag = { fg = bg_shades_16 },
 		-- @tag
 		-- @tag.builtin
-
-		--     TermCursor = { fg = "" , bg = ""}
+		-- TermCursor = { fg = "" , bg = ""}
 
 		Title = { fg = bg_shades_16, bold = true },
 		-- @markup.heading
@@ -630,35 +553,24 @@ function theme.setup()
 		Underlined = { fg = bg_shades_10, underline = true },
 		-- @string.special.url
 		-- @markup.link
-
-		--     VertSplit = { fg = "" , bg = ""}
+		-- VertSplit = { fg = "" , bg = ""}
 
 		Visual = { fg = foreground, bg = bg_shades_04 },
 		-- LspReferenceText
 		-- LspSignatureActiveParameter
 		-- SnippetTabstop
 		-- VisualNOS
-
-		--     VisualNC = { fg = "" , bg = ""}
-
-		--     VisualNOS = { fg = "" , bg = ""}
-
-		--     WarningMsg = { fg = "" , bg = ""}
-
-		--     Whitespace = { fg = "" , bg = ""}
-
-		--     WildMenu = { fg = "" , bg = ""}
-
-		--     WinBar = { fg = "" , bg = ""}
-
-		--     WinBarNC = { fg = "" , bg = ""}
-
-		--     WinSeparator = { fg = "" , bg = ""}
-		--     -- VertSplit
-
-		--     @diff = { fg = "" , bg = ""}
-
-		--     @lsp = { fg = "" , bg = ""}
+		-- VisualNC = { fg = "" , bg = ""}
+		-- VisualNOS = { fg = "" , bg = ""}
+		-- WarningMsg = { fg = "" , bg = ""}
+		-- Whitespace = { fg = "" , bg = ""}
+		-- WildMenu = { fg = "" , bg = ""}
+		-- WinBar = { fg = "" , bg = ""}
+		-- WinBarNC = { fg = "" , bg = ""}
+		-- WinSeparator = { fg = "" , bg = ""}
+		-- VertSplit
+		-- @diff = { fg = "" , bg = ""}
+		-- @lsp = { fg = "" , bg = ""}
 
 		["@markup"] = { fg = foreground },
 		["@markup.strong"] = { fg = foreground, bold = true },
@@ -668,9 +580,8 @@ function theme.setup()
 		["@markup.heading"] = { fg = foreground, bold = true },
 		["@markup.link"] = { fg = foreground, underline = true },
 
-		--     @markup.heading.1.delimiter.vimdoc = { fg = "" , bg = ""}
-
-		--     @markup.heading.2.delimiter.vimdoc = { fg = "" , bg = ""}
+		-- @markup.heading.1.delimiter.vimdoc = { fg = "" , bg = ""}
+		-- @markup.heading.2.delimiter.vimdoc = { fg = "" , bg = ""}
 	}
 
 	-- Set highlights using API
