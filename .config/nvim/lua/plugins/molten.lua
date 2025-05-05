@@ -68,12 +68,22 @@ return {
 			local cursor_line = vim.fn.line(".")
 			local cursor_line_text = vim.fn.getline(cursor_line)
 
-			-- Case 1: If cursor is on a line that starts with ```python
-			if cursor_line_text:match("^```python") then
+			-- Helper function to check if a line is a Python code block start
+			local function is_python_block_start(line_text)
+				return line_text:match("^```python") or line_text:match("^```{python}")
+			end
+
+			-- Helper function to check if a line is a code block end
+			local function is_code_block_end(line_text)
+				return line_text:match("^```$")
+			end
+
+			-- Case 1: If cursor is on a line that starts with ```python or ```{python}
+			if is_python_block_start(cursor_line_text) then
 				local end_line = cursor_line + 1
 				-- Find the next occurrence of ```
 				while end_line <= vim.fn.line("$") do
-					if vim.fn.getline(end_line):match("^```$") then
+					if is_code_block_end(vim.fn.getline(end_line)) then
 						break
 					end
 					end_line = end_line + 1
@@ -84,16 +94,16 @@ return {
 				vim.api.nvim_input("<Esc>")
 
 				-- Case 2: If cursor is on a line that starts with ```
-			elseif cursor_line_text:match("^```$") then
+			elseif is_code_block_end(cursor_line_text) then
 				local start_line = cursor_line - 1
-				-- Find the previous occurrence of ```python
+				-- Find the previous occurrence of ```python or ```{python}
 				while start_line >= 1 do
-					if vim.fn.getline(start_line):match("^```python") then
+					if is_python_block_start(vim.fn.getline(start_line)) then
 						break
 					end
 					start_line = start_line - 1
 				end
-				if start_line >= 1 then -- Found ```python
+				if start_line >= 1 then -- Found ```python or ```{python}
 					-- Select the range and execute
 					vim.cmd(string.format("normal! %dGV%dG", start_line + 1, cursor_line - 1))
 					vim.cmd("MoltenEvaluateVisual")
@@ -103,11 +113,11 @@ return {
 				-- Case 3: Check if inside a code block
 			else
 				local start_line = cursor_line
-				-- Look backwards for ```python
+				-- Look backwards for ```python or ```{python}
 				while start_line >= 1 do
-					if vim.fn.getline(start_line):match("^```python") then
+					if is_python_block_start(vim.fn.getline(start_line)) then
 						break
-					elseif vim.fn.getline(start_line):match("^```$") then
+					elseif is_code_block_end(vim.fn.getline(start_line)) then
 						-- We hit a closing ``` first, so we're not in a code block
 						start_line = -1
 						break
@@ -115,11 +125,11 @@ return {
 					start_line = start_line - 1
 				end
 
-				if start_line >= 1 then -- Found ```python, so we're in a code block
+				if start_line >= 1 then -- Found ```python or ```{python}, so we're in a code block
 					local end_line = cursor_line
 					-- Look forward for ```
 					while end_line <= vim.fn.line("$") do
-						if vim.fn.getline(end_line):match("^```$") then
+						if is_code_block_end(vim.fn.getline(end_line)) then
 							break
 						end
 						end_line = end_line + 1

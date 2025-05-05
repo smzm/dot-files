@@ -48,6 +48,15 @@ return {
 		end,
 		-- Run the :Mtm command to toggle markdown table mode.
 	},
+	{ -- for lsp features in code cells / embedded code
+		"jmbuhr/otter.nvim",
+		dependencies = {
+			{
+				"nvim-treesitter/nvim-treesitter",
+			},
+		},
+		opts = {},
+	},
 	{ -- format things as tables
 		"godlygeek/tabular",
 	},
