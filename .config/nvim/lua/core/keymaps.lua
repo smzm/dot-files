@@ -156,7 +156,7 @@ vim.keymap.set("n", "gl", function()
 end, { desc = "Open markdown link and jump to anchor", noremap = true, silent = true })
 
 -- Copy LSP diagnostic text
-vim.keymap.set("n", "<leader>cp", function()
+vim.keymap.set("n", "<leader>lp", function()
 	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
 	if #diagnostics > 0 then
 		local msg = diagnostics[1].message
@@ -166,3 +166,5 @@ vim.keymap.set("n", "<leader>cp", function()
 		print("No diagnostic on this line")
 	end
 end, { desc = "Copy LSP diagnostic on this line" })
+
+-- >>>>>>>>>>>>>>>>>>>>>>>>

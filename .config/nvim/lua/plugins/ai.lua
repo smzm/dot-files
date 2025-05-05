@@ -44,7 +44,7 @@ return {
 			mappings = {
 				ask = "<localleader>a",
 				edit = "<localleader>e",
-				refresh = "<localleader>r", -- optional
+				refresh = "<localleader>ar", -- optional
 			},
 			-- hints = { enabled = false },
 			behaviour = {
@@ -94,20 +94,20 @@ return {
 			local map = vim.keymap.set
 			local opts = { noremap = true, silent = true, desc = "Avante: " }
 
-			map("n", "<localleader>a", ":AvanteAsk<CR>", { desc = "Ask AI" })
-			map("n", "<localleader>b", ":AvanteBuild<CR>", { desc = "Build Dependencies" })
-			map("n", "<localleader>c", ":AvanteChat<CR>", { desc = "Start Chat Session" })
-			map("n", "<localleader>n", ":AvanteChatNew<CR>", { desc = "New Chat Session" })
-			map("n", "<localleader>h", ":AvanteHistory<CR>", { desc = "Chat History" })
-			map("n", "<localleader>l", ":AvanteClear<CR>", { desc = "Clear Chat" })
-			map("n", "<localleader>f", ":AvanteFocus<CR>", { desc = "Toggle Focus Sidebar" })
-			map("n", "<localleader>r", ":AvanteRefresh<CR>", { desc = "Refresh Avante UI" })
-			map("n", "<localleader>s", ":AvanteStop<CR>", { desc = "Stop AI Request" })
-			map("n", "<localleader>v", ":AvanteSwitchProvider<CR>", { desc = "Switch AI Provider" })
-			map("n", "<localleader>m", ":AvanteModels<CR>", { desc = "List Available Models" })
-			map("n", "<localleader>w", ":AvanteShowRepoMap<CR>", { desc = "Show Repo Map" })
-			map("n", "<localleader>\\", ":AvanteToggle<CR>", { desc = "Toggle Sidebar" })
-			map("n", "<localleader>p", ":AvanteSwitchSelectorProvider<CR>", { desc = "Switch Selector Provider" })
+			map("n", "<localleader>aa", ":AvanteAsk<CR>", { desc = "Ask AI" })
+			map("n", "<localleader>ab", ":AvanteBuild<CR>", { desc = "Build Dependencies" })
+			map("n", "<localleader>ac", ":AvanteChat<CR>", { desc = "Start Chat Session" })
+			map("n", "<localleader>an", ":AvanteChatNew<CR>", { desc = "New Chat Session" })
+			map("n", "<localleader>ah", ":AvanteHistory<CR>", { desc = "Chat History" })
+			map("n", "<localleader>al", ":AvanteClear<CR>", { desc = "Clear Chat" })
+			map("n", "<localleader>af", ":AvanteFocus<CR>", { desc = "Toggle Focus Sidebar" })
+			map("n", "<localleader>ar", ":AvanteRefresh<CR>", { desc = "Refresh Avante UI" })
+			map("n", "<localleader>as", ":AvanteStop<CR>", { desc = "Stop AI Request" })
+			map("n", "<localleader>av", ":AvanteSwitchProvider<CR>", { desc = "Switch AI Provider" })
+			map("n", "<localleader>am", ":AvanteModels<CR>", { desc = "List Available Models" })
+			map("n", "<localleader>aw", ":AvanteShowRepoMap<CR>", { desc = "Show Repo Map" })
+			map("n", "<localleader>\\", ":AvanteToggle<CR>", { desc = "Toggle Avante Sidebar" })
+			map("n", "<localleader>ap", ":AvanteSwitchSelectorProvider<CR>", { desc = "Switch Selector Provider" })
 		end,
 
 		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

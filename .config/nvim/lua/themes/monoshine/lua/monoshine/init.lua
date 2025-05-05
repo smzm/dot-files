@@ -105,7 +105,7 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_shades_12, bg = bg_shades_01, bold = true })
 	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_01, bg = bg_shades_07, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "CodeBlock", { bg = bg_shades_01 })
+	vim.api.nvim_set_hl(0, "CodeBlock", { bg = colors.black })
 
 	local highlights = {
 		-- Added = { fg = "" , bg = ""}
@@ -149,7 +149,7 @@ function theme.setup()
 
 		CursorColumn = { fg = bg_shades_02 },
 
-		CursorLine = { bg = bg_shades_01 },
+		CursorLine = { bg = bg_shades_02 },
 
 		CursorLineNr = { bg = bg_shades_01 },
 
@@ -293,7 +293,7 @@ function theme.setup()
 		-- @number.float
 		-- NvimFloat
 
-		FloatBorder = { fg = bg_shades_10, bg = bg_shades_02 },
+		FloatBorder = { fg = bg_shades_10 },
 
 		FloatFooter = { fg = bg_shades_12, bg = bg_shades_02 },
 
@@ -369,7 +369,7 @@ function theme.setup()
 		-- @diff
 		-- NvimSpacing
 
-		NormalFloat = { fg = bg_shades_10, bg = bg_shades_02 },
+		NormalFloat = { fg = bg_shades_14, bg = bg_shades_02 },
 
 		NormalNC = { bg = background },
 

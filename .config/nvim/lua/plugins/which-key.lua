@@ -30,6 +30,7 @@ return {
 			{ "<leader>c", group = "Code", icon = {} },
 			{ "<leader>i", group = "Image", icon = {} },
 			{ "<leader>x", group = "Diagnostics/quickfix", icon = { icon = "󱖫 ", color = "red" } },
+			{ "<localleader>m", group = "Molten", icon = {} },
 		},
 	},
 	keys = {
