@@ -105,6 +105,7 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_shades_12, bg = bg_shades_01, bold = true })
 	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_01, bg = bg_shades_07, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
+	vim.api.nvim_set_hl(0, "CodeBlock", { bg = bg_shades_01 })
 
 	local highlights = {
 		-- Added = { fg = "" , bg = ""}

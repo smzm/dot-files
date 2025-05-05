@@ -105,3 +105,14 @@ autocmd({ "InsertLeave", "TermOpen" }, {
 		})
 	end,
 })
+
+-- When you open a Python file inside a project folder with .venv, it will use that interpreter.
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.py",
+	callback = function()
+		local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
+		if vim.fn.filereadable(venv_path) == 1 then
+			vim.g.molten_python_executable = venv_path
+		end
+	end,
+})
