@@ -106,3 +106,4 @@ opt.foldtext = "getline(v:foldstart) .. ' ... ' .. (v:foldend - v:foldstart) .. 
 
 -- Enable python env in neovim
 vim.g.python3_host_prog = "/usr/sbin/python3"
+

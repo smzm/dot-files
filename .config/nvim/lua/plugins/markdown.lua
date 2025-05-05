@@ -41,6 +41,13 @@ return {
 			})
 		end,
 	},
+	{
+		"Kicamon/markdown-table-mode.nvim",
+		config = function()
+			require("markdown-table-mode").setup()
+		end,
+		-- Run the :Mtm command to toggle markdown table mode.
+	},
 	{ -- format things as tables
 		"godlygeek/tabular",
 	},

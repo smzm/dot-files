@@ -19,4 +19,23 @@ return {
 			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open lazy git" },
 		},
 	},
+	{
+		"y3owk1n/time-machine.nvim",
+		cmd = {
+			"TimeMachineToggle",
+			"TimeMachinePurgeBuffer",
+			"TimeMachinePurgeAll",
+			"TimeMachineLogShow",
+			"TimeMachineLogClear",
+		},
+		---@type TimeMachine.Config
+		opts = {},
+		keys = {
+			{
+				"<leader>gt",
+				"<cmd>TimeMachineToggle<cr>",
+				desc = "[Time Machine] Toggle Tree",
+			},
+		},
+	},
 }
