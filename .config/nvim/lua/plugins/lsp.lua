@@ -389,7 +389,7 @@ return { -- >>> LSP
 					{ name = "buffer" }, -- text within current buffer
 					{ name = "path" }, -- file system paths
 					{ name = "dadbod" }, -- database
-					{ name = "render-markdown" }, -- database
+					{ name = "render-markdown" },
 				},
 				window = {
 					completion = {
