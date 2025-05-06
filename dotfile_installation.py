@@ -465,11 +465,10 @@ if os_answers["interest"] == "Arch":
         "emoji-keyboard-bin",
         "yazi",
         "trashy",
-        "quarto-cli-bin-pre-release",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
-    aur_list = ["manim", "yazi", "trashy", "quarto-cli-bin-pre-release"]
+    aur_list = ["manim", "yazi", "trashy"]
 
 
 aur_packages_q = [
