@@ -117,7 +117,23 @@ map("n", "<leader>qq", ":bd<CR>", { noremap = true, silent = true, desc = "Exit 
 -- by pressing <home> cursor will go to the first character of the line
 map("i", "<Home>", "<C-o>^", { noremap = true, silent = true })
 
--- Smart markdown link opener (supports #section anchors and relative paths)
+-- Copy LSP diagnostic text
+vim.keymap.set("n", "<leader>lp", function()
+	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+	if #diagnostics > 0 then
+		local msg = diagnostics[1].message
+		vim.fn.setreg("+", msg)
+		print("Copied to clipboard: " .. msg)
+	else
+		print("No diagnostic on this line")
+	end
+end, { desc = "Copy LSP diagnostic on this line" })
+
+-------------------------------------------------------------------------------
+--                       Markdown keymaps
+-------------------------------------------------------------------------------
+
+-- >>>>>>>>>>>>>>>>>>>>>>>> Smart markdown link opener
 vim.keymap.set("n", "gl", function()
 	local line = vim.fn.getline(".")
 	local link = line:match("%[.-%]%((.-)%)")
@@ -154,17 +170,3 @@ vim.keymap.set("n", "gl", function()
 		end
 	end
 end, { desc = "Open markdown link and jump to anchor", noremap = true, silent = true })
-
--- Copy LSP diagnostic text
-vim.keymap.set("n", "<leader>lp", function()
-	local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
-	if #diagnostics > 0 then
-		local msg = diagnostics[1].message
-		vim.fn.setreg("+", msg)
-		print("Copied to clipboard: " .. msg)
-	else
-		print("No diagnostic on this line")
-	end
-end, { desc = "Copy LSP diagnostic on this line" })
-
--- >>>>>>>>>>>>>>>>>>>>>>>>

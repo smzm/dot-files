@@ -290,8 +290,6 @@ function theme.setup()
 		-- ErrorMsg = { fg = "" , bg = ""}
 
 		Float = { fg = bg_shades_08 },
-		FloatSecond = { fg = bg_shades_10 },
-		FloatThird = { fg = bg_shades_12 },
 		-- @number.float
 		-- NvimFloat
 
@@ -359,12 +357,12 @@ function theme.setup()
 		-- MsgArea = { fg = "" , bg = ""}
 		-- MsgSeparator = { fg = "" , bg = ""}
 
-		NonText = { fg = foreground },
+		NonText = { fg = bg_shades_06, bg = bg_shades_02 },
 		-- SpecialKey
 		-- EndOfBuffer
-		-- Whitespace
 		-- LspCodeLens
 		-- LspInlayHint
+		Whitespace = { bg = background },
 
 		Normal = { fg = foreground, bg = background },
 		-- Ignore
@@ -429,20 +427,20 @@ function theme.setup()
 		-- NvimAssignment
 		-- NvimOperator
 
-		Pmenu = { fg = bg_shades_14, bg = bg_shades_02 },
+		Pmenu = { fg = bg_shades_08, bg = bg_shades_02 },
 		-- PmenuKind
-		-- PmenuExtra
 		-- PmenuSbar
 		-- PmenuExtraSel = { fg = "" , bg = ""}
 		-- PmenuKindSel = { fg = "" , bg = ""}
 		-- PmenuMatch = { fg = "" , bg = ""}
 		-- PmenuMatchSel = { fg = "" , bg = ""}
+		PmenuExtra = { fg = bg_shades_08 },
+		PmenuThumb = { fg = bg_shades_10, bg = bg_shades_04 },
 
-		PmenuSel = { fg = background, bg = bg_shades_08 },
+		PmenuSel = { fg = bg_shades_14, bg = bg_shades_06 },
 		-- PmenuKindSel
 		-- PmenuExtraSel
 		-- WildMenu
-		-- PmenuThumb = { fg = "" , bg = ""}
 		-- PreCondit = { fg = "" , bg = ""}
 		-- PreProc = { fg = "" , bg = ""}
 		-- Include
