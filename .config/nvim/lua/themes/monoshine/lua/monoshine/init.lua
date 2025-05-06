@@ -99,11 +99,11 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_02 })
 
 	-- 👉 Headings
-	vim.api.nvim_set_hl(0, "H1", { fg = bg_shades_01, bg = bg_shades_17, bold = true })
+	vim.api.nvim_set_hl(0, "H1", { fg = bg_shades_01, bg = bg_shades_18, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH1", { fg = bg_shades_17, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "H2", { fg = bg_shades_01, bg = bg_shades_12, bold = true })
+	vim.api.nvim_set_hl(0, "H2", { fg = bg_shades_01, bg = bg_shades_13, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_shades_12, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_01, bg = bg_shades_07, bold = true })
+	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_01, bg = bg_shades_10, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
 	vim.api.nvim_set_hl(0, "CodeBlock", { bg = colors.black })
 
@@ -290,6 +290,8 @@ function theme.setup()
 		-- ErrorMsg = { fg = "" , bg = ""}
 
 		Float = { fg = bg_shades_08 },
+		FloatSecond = { fg = bg_shades_10 },
+		FloatThird = { fg = bg_shades_12 },
 		-- @number.float
 		-- NvimFloat
 
@@ -427,7 +429,7 @@ function theme.setup()
 		-- NvimAssignment
 		-- NvimOperator
 
-		Pmenu = { fg = bg_shades_14, bg = bg_shades_01 },
+		Pmenu = { fg = bg_shades_14, bg = bg_shades_02 },
 		-- PmenuKind
 		-- PmenuExtra
 		-- PmenuSbar
@@ -436,7 +438,7 @@ function theme.setup()
 		-- PmenuMatch = { fg = "" , bg = ""}
 		-- PmenuMatchSel = { fg = "" , bg = ""}
 
-		PmenuSel = { fg = background, bg = bg_shades_10 },
+		PmenuSel = { fg = background, bg = bg_shades_08 },
 		-- PmenuKindSel
 		-- PmenuExtraSel
 		-- WildMenu
@@ -581,6 +583,7 @@ function theme.setup()
 		["@markup.strikethrough"] = { fg = foreground, strikethrough = true },
 		["@markup.heading"] = { fg = foreground, bold = true },
 		["@markup.link"] = { fg = foreground, underline = true },
+		["@markup.quote"] = { fg = bg_shades_09, bg = bg_shades_03 },
 
 		-- @markup.heading.1.delimiter.vimdoc = { fg = "" , bg = ""}
 		-- @markup.heading.2.delimiter.vimdoc = { fg = "" , bg = ""}

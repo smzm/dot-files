@@ -335,7 +335,12 @@ return { -- >>> LSP
 				}
 			end
 
-			vim.api.nvim_set_hl(0, "CmpWin", { link = "NormalFloat" })
+			-- Completion menu background
+			vim.api.nvim_set_hl(0, "CmpWin", { link = "Pmenu" })
+			vim.api.nvim_set_hl(0, "CmpItemKind", { link = "Comment" }) -- the type/kind (Function, Variable, etc.)
+			vim.api.nvim_set_hl(0, "CmpItemAbbr", { link = "FloatSecond" }) -- the abbreviation (main text)
+			vim.api.nvim_set_hl(0, "CmpItemAbbrMatch", { link = "FloatThird" }) -- matched part of the abbreviation
+			vim.api.nvim_set_hl(0, "CmpItemMenu", { link = "Float" }) -- matched part of the abbreviation
 
 			cmp.setup({
 				auto_brackets = { "python" },
@@ -393,13 +398,13 @@ return { -- >>> LSP
 				},
 				window = {
 					completion = {
-						winhighlight = "NormalNC:CmpWin,FloatBorder:Title,Search:None",
+						-- winhighlight = "NormalNC:CmpWin,FloatBorder:Title,Search:None",
 						col_offset = -3,
 						side_padding = 0,
 					},
 					documentation = {
 						-- border = border("CmpDocBorder"),
-						winhighlight = "NormalNC:CmpWin",
+						-- winhighlight = "NormalNC:CmpWin",
 						max_width = 80,
 					},
 				},

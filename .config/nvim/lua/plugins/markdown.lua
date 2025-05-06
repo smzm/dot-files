@@ -14,6 +14,32 @@ return {
 			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { link = "Underlined" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "CodeBlock" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { link = "CodeBlock" })
+			-- RenderMarkdownTodo  -- Linked to @markup.raw
+			-- RenderMarkdownChecked  -- Linked to @markup.list.checked
+			-- RenderMarkdownTableHead  -- Linked to @markup.heading
+			-- RenderMarkdownTableRow  -- Linked to Normal
+			-- RenderMarkdownTableFill  -- Linked to Conceal
+			-- RenderMarkdownSuccess  -- Linked to DiagnosticOk
+			-- RenderMarkdownWarn  -- Linked to DiagnosticWarn
+			-- RenderMarkdownInfo  -- Linked to DiagnosticInfo
+			-- RenderMarkdownError  -- Linked to DiagnosticError
+			-- RenderMarkdownHint  -- Linked to DiagnosticHint
+			-- RenderMarkdownSign  -- Linked to SignColumn
+			-- RenderMarkdownMath  -- Linked to @markup.math
+			-- RenderMarkdownHtmlComment  -- Linked to @comment
+			-- RenderMarkdownLink  -- Linked to Underlined
+			-- RenderMarkdownWikiLink  -- Linked to RenderMarkdownLink
+			-- RenderMarkdownUnchecked  -- Linked to @markup.list.unchecked
+			-- RenderMarkdownDash  -- Linked to LineNr
+			-- RenderMarkdownInlineHighlight  -- Linked to RenderMarkdownCodeInline
+			-- RenderMarkdownQuote  -- Linked to @markup.quote
+			-- RenderMarkdownQuote6  -- Linked to RenderMarkdownQuote
+			-- RenderMarkdownQuote5  -- Linked to RenderMarkdownQuote
+			-- RenderMarkdownQuote4  -- Linked to RenderMarkdownQuote
+			-- RenderMarkdownQuote3  -- Linked to RenderMarkdownQuote
+			-- RenderMarkdownQuote2  -- Linked to RenderMarkdownQuote
+			-- RenderMarkdownQuote1  -- Linked to RenderMarkdownQuote
+			-- RenderMarkdownBullet  -- Linked to Normal
 
 			require("render-markdown").setup({
 				render_modes = true,
@@ -207,7 +233,7 @@ return {
 			vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
 				pattern = "*.md",
 				callback = function()
-					require("otter").activate({ "python", "javascript", "typescript" })
+					require("otter").activate({ "python", "typescript" })
 				end,
 			})
 		end,
