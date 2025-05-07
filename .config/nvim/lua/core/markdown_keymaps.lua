@@ -178,7 +178,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"v",
-			"<leader>p",
+			"<leader>ml",
 			":<C-u>lua _G.markdown_link_creator()<CR>",
 			{ noremap = true, silent = true, desc = "Create markdown link from selection" }
 		)
