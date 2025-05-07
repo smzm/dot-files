@@ -41,6 +41,7 @@ vim.keymap.set("n", "gl", function()
 end, { desc = "Open markdown link and jump to anchor", noremap = true, silent = true })
 
 -- -- >>>>>>>>>>>>>>>>>>>>>>>> Markdown link creator with file generation functionality
+-- Markdown link creator with file generation functionality
 
 -- Define the markdown link creator function
 local function markdown_link_creator()
@@ -96,8 +97,8 @@ local function markdown_link_creator()
 		file_name = file_name:match("^%s*(.-)%s*$")
 		header_text = header_text:match("^%s*(.-)%s*$")
 
-		-- Replace spaces with underscores in file_name
-		file_name = file_name:gsub("%s+", "_")
+		-- Replace spaces with underscores in file_name and make lowercase
+		file_name = file_name:gsub("%s+", "_"):lower()
 
 		-- Replace spaces with hyphens in header_text
 		header_text = header_text:gsub("%s+", "-")
@@ -109,13 +110,18 @@ local function markdown_link_creator()
 		link_text = "[" .. display_text .. "](./" .. file_name .. ".md#" .. header_text .. ")"
 	else
 		-- Simple case - just create a direct link
-		link_text = selected_text
 
-		-- Replace spaces with underscores for the file name
-		file_name = selected_text:gsub("%s+", "_")
+		-- Trim whitespace from the selected text before processing
+		local trimmed_text = selected_text:match("^%s*(.-)%s*$")
+
+		-- Keep the original trimmed text for display
+		link_text = trimmed_text
+
+		-- Replace spaces with underscores for the file name and make lowercase
+		file_name = trimmed_text:gsub("%s+", "_"):lower()
 
 		-- Create markdown link
-		link_text = "[" .. selected_text .. "](./" .. file_name .. ".md)"
+		link_text = "[" .. trimmed_text .. "](./" .. file_name .. ".md)"
 	end
 
 	-- Delete the selected text and replace it with the markdown link
