@@ -106,6 +106,13 @@ return {
 	},
 
 	{
+		"jakewvincent/mkdnflow.nvim",
+		config = function()
+			require("mkdnflow").setup({})
+		end,
+	},
+
+	{
 		-- TO CREATE ENV : python -m ipykernel install --user --name=myenv --display-name "MyEnv"
 		"benlubas/molten-nvim",
 		dev = false,
