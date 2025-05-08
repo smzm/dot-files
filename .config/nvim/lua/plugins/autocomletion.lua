@@ -1,5 +1,151 @@
--- completion plugin with support for LSPs and external sources that updates
+-- >>> Auto completion
+-- You need to enable capabilities in lsp.lua based on plugin you are using here.
+-- >>> CMP
+-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- >>> Blink
+-- local capabilities = require("blink.cmp").get_lsp_capabilities()
+
 return {
+	-- {
+	-- 	"hrsh7th/nvim-cmp",
+	-- 	dependencies = {
+	-- 		"hrsh7th/cmp-buffer", -- source for text in buffer
+	-- 		"hrsh7th/cmp-nvim-lsp",
+	-- 		"hrsh7th/cmp-path", -- source for file system paths
+	-- 		{
+	-- 			"L3MON4D3/LuaSnip",
+	-- 			-- follow latest release.
+	-- 			version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+	-- 			-- install jsregexp (optional!).
+	-- 			build = "make install_jsregexp",
+	-- 		},
+	-- 		"saadparwaiz1/cmp_luasnip", -- for autocompletion
+	-- 		"rafamadriz/friendly-snippets", -- useful snippets
+	-- 		"onsails/lspkind.nvim", -- vs-code like pictograms
+	-- 	},
+	-- 	event = "InsertEnter",
+	-- 	config = function()
+	-- 		local cmp = require("cmp")
+	-- 		local luasnip = require("luasnip")
+	-- 		local lspkind = require("lspkind")
+	-- 		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+	--
+	-- 		-- cmp_autopairs : insert `(` after select function or method item
+	-- 		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+	--
+	-- 		-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+	-- 		require("luasnip.loaders.from_vscode").lazy_load()
+	--
+	-- 		local function border(hl_name)
+	-- 			return {
+	-- 				{ "╭", hl_name },
+	-- 				{ "─", hl_name },
+	-- 				{ "╮", hl_name },
+	-- 				{ "│", hl_name },
+	-- 				{ "╯", hl_name },
+	-- 				{ "─", hl_name },
+	-- 				{ "╰", hl_name },
+	-- 				{ "│", hl_name },
+	-- 			}
+	-- 		end
+	--
+	-- 		vim.api.nvim_set_hl(0, "CmpWin", { link = "NormalFloat" })
+	--
+	-- 		cmp.setup({
+	-- 			auto_brackets = { "python" },
+	-- 			completion = {
+	-- 				completeoptk = "menu,menuone,preview,noselect",
+	-- 			},
+	-- 			snippet = {
+	-- 				expand = function(args)
+	-- 					luasnip.lsp_expand(args.body) -- For `luasnip` users.
+	-- 				end,
+	-- 			},
+	-- 			mapping = cmp.mapping.preset.insert({
+	-- 				["<C-k>"] = cmp.mapping.select_prev_item(),
+	-- 				["<C-j>"] = cmp.mapping.select_next_item(),
+	-- 				["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
+	-- 				["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
+	-- 				["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+	-- 				-- When hit enter, automatically add an import at the top of the file
+	-- 				["<CR>"] = cmp.mapping(function(fallback)
+	-- 					if cmp.visible() then
+	-- 						local entry = cmp.get_selected_entry()
+	-- 						if not entry then
+	-- 							-- If nothing selected, select the first item
+	-- 							cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+	-- 							entry = cmp.get_selected_entry()
+	-- 						end
+	-- 						if entry then
+	-- 							cmp.confirm({ select = true })
+	-- 							local item = entry.completion_item
+	-- 							if item.additionalTextEdits then
+	-- 								vim.lsp.util.apply_text_edits(item.additionalTextEdits, 0)
+	-- 							end
+	-- 						else
+	-- 							fallback()
+	-- 						end
+	-- 					else
+	-- 						fallback()
+	-- 					end
+	-- 				end, { "i", "s" }),
+	--
+	-- 				-- ["<Up>"] = cmp.mapping(function(fallback)
+	-- 				-- 	fallback() -- Allows Up arrow to fall back without interacting with cmp
+	-- 				-- end, { "i", "c" }),
+	-- 				-- ["<Down>"] = cmp.mapping(function(fallback)
+	-- 				-- 	fallback() -- Allows Down arrow to fall back without interacting with cmp
+	-- 				-- end, { "i", "c" }),
+	-- 			}),
+	-- 			sources = {
+	-- 				{ name = "nvim_lsp" },
+	-- 				{ name = "luasnip" }, -- snippets
+	-- 				{ name = "buffer" }, -- text within current buffer
+	-- 				{ name = "path" }, -- file system paths
+	-- 				{ name = "dadbod" }, -- database
+	-- 				{ name = "render-markdown" },
+	-- 			},
+	-- 			window = {
+	-- 				completion = {
+	-- 					winhighlight = "NormalNC:CmpWin,FloatBorder:Title,Search:None",
+	-- 					col_offset = -3,
+	-- 					side_padding = 0,
+	-- 				},
+	-- 				documentation = {
+	-- 					-- border = border("CmpDocBorder"),
+	-- 					winhighlight = "NormalNC:CmpWin",
+	-- 					max_width = 80,
+	-- 				},
+	-- 			},
+	-- 			formatting = {
+	-- 				fields = { "kind", "abbr", "menu" },
+	-- 				format = function(entry, vim_item)
+	-- 					local kind =
+	-- 						require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 80 })(entry, vim_item)
+	-- 					local strings = vim.split(kind.kind, "%s", { trimempty = true })
+	-- 					kind.kind = " " .. (strings[1] or "") .. " "
+	-- 					kind.menu = "    (" .. (strings[2] or "") .. ")"
+	--
+	-- 					return kind
+	-- 				end,
+	-- 			},
+	-- 			enabled = function()
+	-- 				-- Disable nvim-cmp in a telescope prompt
+	-- 				if buftype == "prompt" then
+	-- 					return false
+	-- 				end
+	-- 				-- Disable completion in comments
+	-- 				local context = require("cmp.config.context")
+	-- 				-- Keep command mode completion enabled when cursor is in a comment
+	-- 				if vim.api.nvim_get_mode().mode == "c" then
+	-- 					return true
+	-- 				else
+	-- 					return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
+	-- 				end
+	-- 			end,
+	-- 		})
+	-- 	end,
+	-- },
 	{
 		"saghen/blink.cmp",
 		-- optional: provides snippets for the snippet source

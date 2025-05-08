@@ -12,7 +12,6 @@ return { -- >>> LSP
 			{ "j-hui/fidget.nvim", opts = {} },
 			-- Show nvim diagnostics using virtual lines
 			{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
-			{ "saghen/blink.cmp" },
 		},
 		config = function()
 			local servers = {
