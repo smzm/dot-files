@@ -69,14 +69,14 @@ return {
 			})
 		end,
 		keys = {
-			{"n",  "<F12>" },
-			{"n",  "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", desc = "terminal float" },
-			{"n",  "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "horizontal terminal" },
-			{"n",  "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", desc = "vertical terminal" },
-			{"n",  "<leader>t1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal #1" },
-			{"n",  "<leader>t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal #2" },
-			{"n",  "<leader>t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal #3" },
-			{"n",  "<leader>t4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal #4" },
+			{ "<F12>" },
+			{ "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", desc = "terminal float" },
+			{ "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "horizontal terminal" },
+			{ "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", desc = "vertical terminal" },
+			{ "<leader>t1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal #1" },
+			{ "<leader>t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal #2" },
+			{ "<leader>t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal #3" },
+			{ "<leader>t4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal #4" },
 		},
 	},
 }

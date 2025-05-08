@@ -75,7 +75,7 @@ return {
 	{ -- preview equations
 		"jbyuki/nabla.nvim",
 		keys = {
-			{ "n", "<leader>qm", ':lua require"nabla".toggle_virt()<cr>', desc = "toggle [m]ath equations" },
+			{ "<leader>qm", ':lua require"nabla".toggle_virt()<cr>', desc = "toggle [m]ath equations" },
 		},
 	},
 
@@ -331,7 +331,7 @@ return {
 			},
 		},
 		keys = {
-			{ "n", "<leader>ii", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+			{ "<leader>ii", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
 		},
 		config = function(_, opts) -- Pass opts to config
 			-- The original config for img-clip.nvim already required "image",
