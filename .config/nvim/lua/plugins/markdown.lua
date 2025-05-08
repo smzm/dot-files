@@ -75,7 +75,7 @@ return {
 	{ -- preview equations
 		"jbyuki/nabla.nvim",
 		keys = {
-			{ "<leader>qm", ':lua require"nabla".toggle_virt()<cr>', desc = "toggle [m]ath equations" },
+			{ "n", "<leader>qm", ':lua require"nabla".toggle_virt()<cr>', desc = "toggle [m]ath equations" },
 		},
 	},
 
@@ -331,7 +331,7 @@ return {
 			},
 		},
 		keys = {
-			{ "<leader>ii", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+			{ "n", "<leader>ii", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
 		},
 		config = function(_, opts) -- Pass opts to config
 			-- The original config for img-clip.nvim already required "image",
@@ -610,7 +610,7 @@ return {
 				handle_image_paste(img_dir)
 			end
 
-			vim.keymap.set({ "n", "i" }, "<leader>iv", process_image, { desc = "[P]Paste image in 'assets' directory" })
+			vim.keymap.set({ "n" }, "<leader>iv", process_image, { desc = "[P]Paste image in 'assets' directory" })
 
 			vim.keymap.set("n", "<leader>iR", function()
 				local function get_image_path()
