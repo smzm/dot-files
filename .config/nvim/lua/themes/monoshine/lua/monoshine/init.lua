@@ -105,7 +105,7 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_shades_12, bg = bg_shades_01, bold = true })
 	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_01, bg = bg_shades_10, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "CodeBlock", { bg = bg_shades_01 })
+	vim.api.nvim_set_hl(0, "CodeBlock", { link = "Whitespace" })
 	vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = bg_shades_11, bg = bg_shades_04 })
 
 	local highlights = {
@@ -363,7 +363,7 @@ function theme.setup()
 		-- EndOfBuffer
 		-- LspCodeLens
 		-- LspInlayHint
-		Whitespace = { bg = background },
+		Whitespace = { bg = bg_shades_01 },
 
 		Normal = { fg = foreground, bg = background },
 		-- Ignore
