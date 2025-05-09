@@ -12,10 +12,17 @@ return {
 			vim.api.nvim_set_hl(0, "RenderMarkdownH6Bg", { link = "Normal" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { link = "Underlined" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "CodeBlock" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownCodeBorder", { link = "CodeBorder" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { link = "InlineCodeBlock" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownIndent", { link = "Normal" })
 			-- ... (other highlight links remain commented or active as you had them) ...
 
 			require("render-markdown").setup({
+				code = {
+					width = "full",
+					border = "thin",
+				},
+				completions = { blink = { enabled = true } },
 				render_modes = true,
 				heading = {
 					border = false,

@@ -1,6 +1,6 @@
 local theme = {}
 
-local light_colors = {
+local colors = {
 	white = "#ffffff",
 	gray_000 = "#FAFAFA",
 	gray_050 = "#EAEAEA",
@@ -36,8 +36,6 @@ function theme.setup()
 	if vim.fn.exists("syntax_on") then
 		vim.cmd("syntax reset")
 	end
-
-	local colors = vim.o.background == "dark" and dark_colors or light_colors
 
 	-- Set different background colors based on light/dark mode
 	local background
@@ -105,7 +103,8 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_shades_12, bg = bg_shades_01, bold = true })
 	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_01, bg = bg_shades_10, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "CodeBlock", { link = "Whitespace" })
+	vim.api.nvim_set_hl(0, "CodeBlock", { bg = bg_shades_01 })
+	vim.api.nvim_set_hl(0, "CodeBorder", { bg = bg_shades_04, fg = bg_shades_15 })
 	vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = bg_shades_11, bg = bg_shades_04 })
 
 	local highlights = {
@@ -152,7 +151,7 @@ function theme.setup()
 
 		CursorLine = { bg = bg_shades_02 },
 
-		CursorLineNr = { bg = bg_shades_01 },
+		CursorLineNr = { bg = bg_shades_02 },
 
 		CursorLineFold = { bg = bg_shades_02 },
 		--  CursorLineSign = { fg = "" , bg = ""}
@@ -363,7 +362,8 @@ function theme.setup()
 		-- EndOfBuffer
 		-- LspCodeLens
 		-- LspInlayHint
-		Whitespace = { bg = bg_shades_01 },
+		-- Whitespace
+		IblWhitespace = { bg = "NONE", fg = "NONE", nocombine = true },
 
 		Normal = { fg = foreground, bg = background },
 		-- Ignore
@@ -566,7 +566,6 @@ function theme.setup()
 		-- VisualNC = { fg = "" , bg = ""}
 		-- VisualNOS = { fg = "" , bg = ""}
 		-- WarningMsg = { fg = "" , bg = ""}
-		-- Whitespace = { fg = "" , bg = ""}
 		-- WildMenu = { fg = "" , bg = ""}
 		-- WinBar = { fg = "" , bg = ""}
 		-- WinBarNC = { fg = "" , bg = ""}

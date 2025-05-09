@@ -36,8 +36,49 @@ return { -- >>> LSP
 				cssls = {}, -- CSS
 				tailwindcss = {}, -- Tailwind CSS
 				templ = {}, -- Templ
-				pyright = {}, -- Python : pyright
-				ruff = {}, -- Python : ruff
+				-- pyright = {}, -- Python : pyright
+				pylsp = {
+					settings = {
+						pylsp = {
+							plugins = {
+								pyflakes = { enabled = false },
+								pycodestyle = { enabled = false },
+								autopep8 = { enabled = false },
+								yapf = { enabled = false },
+								mccabe = { enabled = false },
+								pylsp_mypy = { enabled = false },
+								pylsp_black = { enabled = false },
+								pylsp_isort = { enabled = false },
+							},
+						},
+					},
+				},
+				ruff = {
+					commands = {
+						RuffAutofix = {
+							function()
+								vim.lsp.buf.execute_command({
+									command = "ruff.applyAutofix",
+									arguments = {
+										{ uri = vim.uri_from_bufnr(0) },
+									},
+								})
+							end,
+							description = "Ruff: Fix all auto-fixable problems",
+						},
+						RuffOrganizeImports = {
+							function()
+								vim.lsp.buf.execute_command({
+									command = "ruff.applyOrganizeImports",
+									arguments = {
+										{ uri = vim.uri_from_bufnr(0) },
+									},
+								})
+							end,
+							description = "Ruff: Format imports",
+						},
+					},
+				},
 				dockerls = {}, -- Docker
 				docker_compose_language_service = {}, --Docker-Compose
 				jsonls = {}, -- JSON
