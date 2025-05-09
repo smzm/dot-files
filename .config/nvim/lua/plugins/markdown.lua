@@ -184,13 +184,9 @@ return {
 		end,
 		config = function()
 			local init = function()
-				local quarto_cfg = require("quarto.config").config
-				quarto_cfg.codeRunner.default_method = "molten"
 				vim.cmd([[MoltenInit]])
 			end
 			local deinit = function()
-				local quarto_cfg = require("quarto.config").config
-				quarto_cfg.codeRunner.default_method = "slime"
 				vim.cmd([[MoltenDeinit]])
 			end
 			vim.keymap.set("n", "<localleader>mi", init, { silent = true, desc = "Initialize molten" })
@@ -234,16 +230,28 @@ return {
 				{ desc = "execute visual selection", buffer = true, silent = true }
 			)
 
-			-- Add the new keymap for highlighting code block and running MoltenEvaluateVisual
+			-- Helper function to check if a line is a Python block start
+			local function is_python_block_start(line_text)
+				return line_text:match("^```python") or line_text:match("^```{python}")
+			end
+
+			-- Helper function to check if a line is a code block end
+			local function is_code_block_end(line_text)
+				return line_text:match("^```$")
+			end
+
+			-- Function to highlight text between start_line and end_line and run it with Molten
+			local function highlight_and_run(start_line, end_line)
+				vim.cmd(string.format("normal! %dGV%dG", start_line, end_line))
+				vim.cmd("MoltenEvaluateVisual")
+				vim.api.nvim_input("<Esc>")
+			end
+
+			-- Add the keymap for highlighting code block and running MoltenEvaluateVisual
 			vim.keymap.set("n", "<localleader><space>", function()
 				local cursor_line = vim.fn.line(".")
 				local cursor_line_text = vim.fn.getline(cursor_line)
-				local function is_python_block_start(line_text)
-					return line_text:match("^```python") or line_text:match("^```{python}")
-				end
-				local function is_code_block_end(line_text)
-					return line_text:match("^```$")
-				end
+
 				if is_python_block_start(cursor_line_text) then
 					local end_line = cursor_line + 1
 					while end_line <= vim.fn.line("$") do
@@ -252,9 +260,7 @@ return {
 						end
 						end_line = end_line + 1
 					end
-					vim.cmd(string.format("normal! %dGV%dG", cursor_line + 1, end_line - 1))
-					vim.cmd("MoltenEvaluateVisual")
-					vim.api.nvim_input("<Esc>")
+					highlight_and_run(cursor_line + 1, end_line - 1)
 				elseif is_code_block_end(cursor_line_text) then
 					local start_line = cursor_line - 1
 					while start_line >= 1 do
@@ -264,9 +270,7 @@ return {
 						start_line = start_line - 1
 					end
 					if start_line >= 1 then
-						vim.cmd(string.format("normal! %dGV%dG", start_line + 1, cursor_line - 1))
-						vim.cmd("MoltenEvaluateVisual")
-						vim.api.nvim_input("<Esc>")
+						highlight_and_run(start_line + 1, cursor_line - 1)
 					end
 				else
 					local start_line = cursor_line
@@ -287,9 +291,7 @@ return {
 							end
 							end_line = end_line + 1
 						end
-						vim.cmd(string.format("normal! %dGV%dG", start_line + 1, end_line - 1))
-						vim.cmd("MoltenEvaluateVisual")
-						vim.api.nvim_input("<Esc>")
+						highlight_and_run(start_line + 1, end_line - 1)
 					end
 				end
 			end, { silent = true, desc = "highlight code block and run Molten" })
