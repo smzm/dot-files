@@ -15,22 +15,98 @@ return {
 			vim.api.nvim_set_hl(0, "RenderMarkdownCodeBorder", { link = "CodeBorder" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { link = "InlineCodeBlock" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownIndent", { link = "Normal" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownQuote", { link = "Label" })
 			-- ... (other highlight links remain commented or active as you had them) ...
 
 			require("render-markdown").setup({
 				code = {
+					sign = false,
 					width = "full",
 					border = "thin",
 				},
 				completions = { blink = { enabled = true } },
 				render_modes = true,
+
 				heading = {
 					border = false,
+					sign = true,
 					background = {
 						"RenderMarkdownH1Bg",
 					},
 					foreground = {
 						"RenderMarkdownH1",
+					},
+				},
+				checkbox = {
+					checked = { scope_highlight = "@markup.strikethrough", icon = "✔ " },
+					custom = {
+						important = {
+							raw = "[~]",
+							rendered = "󰓎 ",
+							highlight = "DiagnosticWarn",
+						},
+					},
+				},
+				callout = {
+					note = {
+						raw = "[!NOTE]",
+						rendered = "󰋽 Note",
+						highlight = "RenderMarkdownInfo",
+						category = "github",
+					},
+					important = {
+						raw = "[!IMPORTANT]",
+						rendered = "󰅾 Important",
+						highlight = "RenderMarkdownHint",
+						category = "github",
+					},
+					warning = {
+						raw = "[!WARNING]",
+						rendered = "󰀪 Warning",
+						highlight = "RenderMarkdownWarn",
+						category = "github",
+					},
+					caution = {
+						raw = "[!CAUTION]",
+						rendered = "󰳦 Caution",
+						highlight = "RenderMarkdownError",
+						category = "github",
+					},
+					info = {
+						raw = "[!INFO]",
+						rendered = "󰋽 Info",
+						highlight = "RenderMarkdownInfo",
+						category = "obsidian",
+					},
+					todo = {
+						raw = "[!TODO]",
+						rendered = "󰗡 Todo",
+						highlight = "RenderMarkdownInfo",
+						category = "obsidian",
+					},
+					error = {
+						raw = "[!ERROR]",
+						rendered = "󱐌 Error",
+						highlight = "RenderMarkdownError",
+						category = "obsidian",
+					},
+					example = {
+						raw = "[!EXAMPLE]",
+						rendered = "󰉹 Example",
+						highlight = "RenderMarkdownHint",
+						category = "obsidian",
+					},
+					cite = {
+						raw = "[!CITE]",
+						rendered = "󱆨 Cite",
+						highlight = "RenderMarkdownQuote",
+						category = "obsidian",
+					},
+					index = {
+						raw = "[!INDEX]",
+						rendered = "📇 Index",
+						highlight = "RenderMarkdownQuote",
+						category = "obsidian",
 					},
 				},
 			})

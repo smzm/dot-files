@@ -101,10 +101,10 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "ReversedH1", { fg = bg_shades_17, bg = bg_shades_01, bold = true })
 	vim.api.nvim_set_hl(0, "H2", { fg = bg_shades_01, bg = bg_shades_13, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH2", { fg = bg_shades_12, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_01, bg = bg_shades_10, bold = true })
+	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_02, bg = bg_shades_07, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
 	vim.api.nvim_set_hl(0, "CodeBlock", { bg = bg_shades_01 })
-	vim.api.nvim_set_hl(0, "CodeBorder", { bg = bg_shades_04, fg = bg_shades_15 })
+	vim.api.nvim_set_hl(0, "CodeBorder", { bg = bg_shades_03, fg = bg_shades_06 })
 	vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = bg_shades_11, bg = bg_shades_04 })
 
 	local highlights = {
@@ -325,7 +325,7 @@ function theme.setup()
 
 		Keyword = { fg = foreground, bold = true },
 		-- @keyword
-		-- Label = { fg = "" , bg = ""}
+		Label = { fg = background, bg = bg_shades_16 },
 		-- @label
 
 		LineNr = { fg = bg_shades_03 },
@@ -578,7 +578,7 @@ function theme.setup()
 		["@markup.strong"] = { fg = foreground, bold = true },
 		["@markup.italic"] = { fg = foreground, italic = true },
 		["@markup.underline"] = { fg = foreground, underline = true },
-		["@markup.strikethrough"] = { fg = foreground, strikethrough = true },
+		["@markup.strikethrough"] = { fg = bg_shades_08, strikethrough = true },
 		["@markup.heading"] = { fg = foreground, bold = true },
 		["@markup.link"] = { fg = foreground, underline = true },
 		["@markup.quote"] = { fg = bg_shades_09, bg = bg_shades_03 },
