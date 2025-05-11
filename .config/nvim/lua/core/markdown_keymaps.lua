@@ -187,3 +187,33 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Make the function globally available
 _G.markdown_link_creator = markdown_link_creator
+
+-- >>>>>>>>>>>>>>>>>>>>>>>> Copy Markdown link to current header
+vim.keymap.set("n", "<leader>mc", function()
+	-- Get the current line under the cursor
+	local line = vim.fn.getline(".")
+
+	-- Strip leading '#' and any spaces to get the actual header text
+	local header_text = line:gsub("^#+%s*", "")
+
+	-- Create GitHub-style anchor: lowercase, hyphenated, no special chars
+	local anchor = header_text
+		:lower()
+		:gsub("[^a-z0-9 -]", "") -- remove special characters
+		:gsub("%s+", "-") -- spaces to dashes
+		:gsub("-+", "-") -- collapse multiple dashes
+		:gsub("^%-", "")
+		:gsub("%-$", "") -- trim leading/trailing dashes
+
+	-- Get current file name only (e.g., "series.md")
+	local filename = vim.fn.expand("%:t")
+
+	-- Build the final Markdown link
+	local link = string.format("[%s](./%s#%s)", header_text, filename, anchor)
+
+	-- Copy to clipboard
+	vim.fn.setreg("+", link)
+
+	-- Show message
+	print("Copied: " .. link)
+end, { desc = "Copy Markdown link to current header (clean)" })
