@@ -69,8 +69,8 @@ function theme.setup()
 	bg_shades_20 = colors.gray_050 -- Lightest shade
 	foreground = colors.gray_400
 
-	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_shades_01 })
-	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_02 })
+	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_shades_02 })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_03 })
 
 	-- 👉 Headings
 	vim.api.nvim_set_hl(0, "H1", { fg = bg_shades_01, bg = bg_shades_18, bold = true })
@@ -555,7 +555,7 @@ function theme.setup()
 		["@markup.underline"] = { fg = foreground, underline = true },
 		["@markup.strikethrough"] = { fg = bg_shades_08, strikethrough = true },
 		["@markup.heading"] = { fg = foreground, bold = true },
-		["@markup.link"] = { fg = foreground, underline = true },
+		["@markup.link"] = { fg = bg_shades_09 },
 		["@markup.quote"] = { fg = bg_shades_09, bg = bg_shades_03 },
 
 		-- @markup.heading.1.delimiter.vimdoc = { fg = "" , bg = ""}

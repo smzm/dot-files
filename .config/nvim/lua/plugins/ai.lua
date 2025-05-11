@@ -9,11 +9,11 @@ return {
 					clear_suggestion = "<C-]>",
 					accept_word = "<A-l>",
 				},
-				condition = function()
-					local ft = vim.bo.filetype
-					local filename = vim.fn.expand("%:t")
-					return ft == "markdown" or filename == ".env"
-				end,
+				-- ignore_filetypes = { md = true },
+				-- color = {
+				-- 	suggestion_color = "#ffffff",
+				-- 	cterm = 244,
+				-- },
 			})
 		end,
 	},

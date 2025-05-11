@@ -10,7 +10,7 @@ return {
 			vim.api.nvim_set_hl(0, "RenderMarkdownH4Bg", { link = "H4" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH5Bg", { link = "Normal" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH6Bg", { link = "Normal" })
-			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { link = "Underlined" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { link = "@markup.link" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCode", { link = "CodeBlock" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCodeBorder", { link = "CodeBorder" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { link = "InlineCodeBlock" })
