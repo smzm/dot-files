@@ -22,8 +22,8 @@ local colors = {
 	gray_850 = "#1A1A1A",
 	gray_900 = "#151515",
 	gray_950 = "#0D0D0D",
-	gray_1000 = "#101010",
-	gray_1050 = "#060606",
+	gray_1000 = "#090909",
+	gray_1050 = "#070707",
 	black = "#000000",
 	red = "#FF0000",
 	blue = "#0000FF",
@@ -67,7 +67,7 @@ function theme.setup()
 	bg_shades_18 = colors.gray_150
 	bg_shades_19 = colors.gray_100
 	bg_shades_20 = colors.gray_050 -- Lightest shade
-	foreground = colors.gray_300
+	foreground = colors.gray_400
 
 	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_shades_01 })
 	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_02 })
@@ -173,7 +173,7 @@ function theme.setup()
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
-		Delimiter = { fg = bg_shades_15 },
+		Delimiter = { fg = bg_shades_10 },
 		-- @punctuation
 		NvimParenthesis = { fg = bg_shades_08 },
 		-- NvimLambda
@@ -283,11 +283,11 @@ function theme.setup()
 
 		Folded = { fg = bg_shades_12, bg = bg_shades_02 },
 
-		Function = { fg = foreground },
+		Function = { fg = bg_shades_14 },
 		-- @function
-		["@function.builtin"] = { fg = foreground, bold = true },
+		["@function.builtin"] = { fg = bg_shades_14, bold = true },
 
-		Identifier = { fg = bg_shades_11, bold = true },
+		Identifier = { fg = bg_shades_08 },
 		-- @property
 		-- NvimIdentifier
 		-- NvimIdentifierScope
@@ -300,7 +300,7 @@ function theme.setup()
 		-- NvimEnvironmentName
 		-- Ignore = { fg = "" , bg = ""}
 
-		Keyword = { fg = foreground, bold = true },
+		Keyword = { fg = bg_shades_13, bold = true },
 		-- @keyword
 		Label = { fg = background, bg = bg_shades_16 },
 		-- @label
@@ -398,7 +398,7 @@ function theme.setup()
 		-- NvimStringSpecial = { fg = "" , bg = ""}
 		-- NvimDoubleQuotedEscape
 
-		Operator = { fg = bg_shades_14 },
+		Operator = { fg = bg_shades_12 },
 		-- @operator
 		-- NvimAssignment
 		-- NvimOperator
@@ -438,7 +438,7 @@ function theme.setup()
 		-- SignColumn = { fg = "" , bg = ""}
 		-- SnippetTabstop = { fg = "" , bg = ""}
 
-		Special = { fg = bg_shades_14 },
+		Special = { fg = bg_shades_11 },
 		-- @module.builtin
 		-- @string.regexp
 		-- @string.special
@@ -458,14 +458,14 @@ function theme.setup()
 		-- NvimRegister
 		-- NvimStringSpecial
 
-		SpecialChar = { fg = bg_shades_07 },
+		SpecialChar = { fg = bg_shades_09 },
 		-- @string.special
 		-- @string.escape
 		-- @character.special
 		-- NvimStringSpecial
 		["@variable"] = { link = "SpecialChar" },
 		["@variable.builtin"] = { link = "SpecialChar" },
-		["@variable.parameter"] = { fg = bg_shades_11 },
+		["@variable.parameter"] = { fg = bg_shades_10 },
 		-- SpecialComment = { fg = "" , bg = ""}
 		-- SpecialKey = { fg = "" , bg = ""}
 		-- SpellBad = { fg = "" , bg = ""}
@@ -496,7 +496,7 @@ function theme.setup()
 		-- @string.special.url
 		-- NvimString
 
-		Structure = { fg = bg_shades_09 },
+		Structure = { fg = bg_shades_08 },
 		-- @module
 		-- @module.builtin
 		-- Substitute = { fg = "" , bg = ""}
@@ -504,12 +504,12 @@ function theme.setup()
 		-- TabLineFill = { fg = "" , bg = ""}
 		-- TabLineSel = { fg = "" , bg = ""}
 
-		Tag = { fg = bg_shades_16 },
+		Tag = { fg = bg_shades_14 },
 		-- @tag
 		-- @tag.builtin
 		-- TermCursor = { fg = "" , bg = ""}
 
-		Title = { fg = bg_shades_16, bold = true },
+		Title = { fg = bg_shades_14, bold = true },
 		-- @markup.heading
 		-- FloatTitle
 		-- FloatFooter
@@ -526,14 +526,14 @@ function theme.setup()
 		-- NvimOptionSigil
 		-- NvimEnvironmentSigil
 
-		Typedef = { fg = bg_shades_10 },
+		Typedef = { fg = bg_shades_08 },
 
 		Underlined = { fg = bg_shades_10, underline = true },
 		-- @string.special.url
 		-- @markup.link
 		-- VertSplit = { fg = "" , bg = ""}
 
-		Visual = { fg = foreground, bg = bg_shades_04 },
+		Visual = { fg = foreground, bg = bg_shades_06 },
 		-- LspReferenceText
 		-- LspSignatureActiveParameter
 		-- SnippetTabstop
