@@ -29,7 +29,7 @@ return {
 
 				heading = {
 					width = { "full", "full", "full", "block" },
-					min_width = 30,
+					min_width = 50,
 					border = false,
 					sign = true,
 					background = {
