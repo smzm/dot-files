@@ -7,7 +7,7 @@ return {
 			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { link = "H1" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { link = "H2" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH3Bg", { link = "H3" })
-			vim.api.nvim_set_hl(0, "RenderMarkdownH4Bg", { link = "Normal" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownH4Bg", { link = "H4" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH5Bg", { link = "Normal" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH6Bg", { link = "Normal" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownLink", { link = "Underlined" })
@@ -28,6 +28,8 @@ return {
 				render_modes = true,
 
 				heading = {
+					width = { "full", "full", "full", "block" },
+					min_width = 30,
 					border = false,
 					sign = true,
 					background = {
