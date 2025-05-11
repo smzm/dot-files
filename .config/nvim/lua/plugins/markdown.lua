@@ -28,7 +28,7 @@ return {
 				render_modes = true,
 
 				heading = {
-					width = { "full", "full", "full", "block" },
+					width = { "full", "full", "full" },
 					min_width = 50,
 					border = false,
 					sign = true,
