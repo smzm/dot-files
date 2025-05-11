@@ -22,7 +22,7 @@ local colors = {
 	gray_850 = "#1A1A1A",
 	gray_900 = "#151515",
 	gray_950 = "#0D0D0D",
-	gray_1000 = "#090909",
+	gray_1000 = "#060606",
 	black = "#000000",
 	red = "#FF0000",
 	blue = "#0000FF",
@@ -145,7 +145,7 @@ function theme.setup()
 		-- Float
 
 		CurSearch = { fg = background, bg = bg_shades_18 },
-		-- IncSearch
+		-- 6ncSearch
 
 		Cursor = { bg = bg_shades_02 },
 		-- lCursor
@@ -339,17 +339,15 @@ function theme.setup()
 		-- LspCodeLensSeparator
 		-- LspInlayHint = { fg = "" , bg = ""}
 
-		LspReferenceRead = { fg = bg_shades_14, bg = bg_shades_02 },
+		LspReferenceRead = { fg = bg_shades_14, bg = "NONE", bold = true },
 		-- LspReferenceTarget = { fg = "" , bg = ""}
 
-		LspReferenceText = { fg = bg_shades_14, bg = bg_shades_01 },
-		-- LspReferenceRead
-		-- LspReferenceWrite
+		LspReferenceText = { fg = "NONE", bg = "NONE" },
 		-- Visual
 		-- VisualNOS
 		-- SnippetTabstop
 
-		LspReferenceWrite = { fg = bg_shades_14, bg = background },
+		LspReferenceWrite = { fg = bg_shades_14, bg = "NONE", bold = true },
 		-- LspSignatureActiveParameter = { fg = "" , bg = ""}
 		-- @attribute
 		-- @attribute.builtin
@@ -487,7 +485,7 @@ function theme.setup()
 		-- NvimRegister
 		-- NvimStringSpecial
 
-		SpecialChar = { fg = bg_shades_10 },
+		SpecialChar = { fg = bg_shades_06 },
 		-- @string.special
 		-- @string.escape
 		-- @character.special
