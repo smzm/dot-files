@@ -106,7 +106,7 @@ return {
 			map("n", "<localleader>av", ":AvanteSwitchProvider<CR>", { desc = "Switch AI Provider" })
 			map("n", "<localleader>am", ":AvanteModels<CR>", { desc = "List Available Models" })
 			map("n", "<localleader>aw", ":AvanteShowRepoMap<CR>", { desc = "Show Repo Map" })
-			map("n", "<localleader>\\", ":AvanteToggle<CR>", { desc = "Toggle Avante Sidebar" })
+			map("n", "<localleader><space>", ":AvanteToggle<CR>", { desc = "Toggle Avante Sidebar" })
 			map("n", "<localleader>ap", ":AvanteSwitchSelectorProvider<CR>", { desc = "Switch Selector Provider" })
 		end,
 
