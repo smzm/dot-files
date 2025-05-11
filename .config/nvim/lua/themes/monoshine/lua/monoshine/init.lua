@@ -107,9 +107,9 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_02, bg = bg_shades_07, bold = true })
 	vim.api.nvim_set_hl(0, "H4", { fg = bg_shades_10, bg = bg_shades_02, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "CodeBlock", { bg = bg_shades_02 })
-	vim.api.nvim_set_hl(0, "CodeBorder", { fg = bg_shades_06, bg = bg_shades_02 })
-	vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = bg_shades_11, bg = bg_shades_04 })
+	vim.api.nvim_set_hl(0, "CodeBlock", { bg = colors.black })
+	vim.api.nvim_set_hl(0, "CodeBorder", { fg = bg_shades_06, bg = colors.black })
+	vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = bg_shades_11, bg = bg_shades_02 })
 
 	local highlights = {
 		-- Added = { fg = "" , bg = ""}

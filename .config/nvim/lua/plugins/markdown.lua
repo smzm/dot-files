@@ -23,6 +23,7 @@ return {
 					sign = false,
 					width = "full",
 					border = "thin",
+					left_pad = 5,
 				},
 				completions = { blink = { enabled = true } },
 				render_modes = true,
