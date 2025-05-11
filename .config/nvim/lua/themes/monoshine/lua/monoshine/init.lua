@@ -23,11 +23,38 @@ local colors = {
 	gray_900 = "#151515",
 	gray_950 = "#0D0D0D",
 	gray_1000 = "#090909",
-	gray_1050 = "#070707",
 	black = "#000000",
 	red = "#FF0000",
 	blue = "#0000FF",
 }
+
+-- local colors = {
+-- 	white = "#ffffff",
+-- 	gray_000 = "#FAFAFA",
+-- 	gray_050 = "#EAEAEA",
+-- 	gray_100 = "#E1E1E1",
+-- 	gray_150 = "#DEDEDE",
+-- 	gray_200 = "#D3D3D3",
+-- 	gray_250 = "#C9C9C9",
+-- 	gray_300 = "#BFBFBF",
+-- 	gray_350 = "#A6A6A6",
+-- 	gray_400 = "#999999",
+-- 	gray_450 = "#8C8C8C",
+-- 	gray_500 = "#737373",
+-- 	gray_550 = "#666666",
+-- 	gray_600 = "#595959",
+-- 	gray_650 = "#4D4D4D",
+-- 	gray_700 = "#404040",
+-- 	gray_750 = "#343434",
+-- 	gray_800 = "#303030",
+-- 	gray_850 = "#242424",
+-- 	gray_900 = "#202020",
+-- 	gray_950 = "#161616",
+-- 	gray_1000 = "#121212",
+-- 	black = "#000000",
+-- 	red = "#FF0000",
+-- 	blue = "#0000FF",
+-- }
 
 function theme.setup()
 	-- Reset existing highlight groups
@@ -46,28 +73,28 @@ function theme.setup()
 	local bg_shades_11, bg_shades_12, bg_shades_13, bg_shades_14, bg_shades_15
 	local bg_shades_16, bg_shades_17, bg_shades_18, bg_shades_19, bg_shades_20
 
-	background = colors.gray_1050 -- Darkest background
-	bg_shades_01 = colors.gray_1000
-	bg_shades_02 = colors.gray_950
-	bg_shades_03 = colors.gray_900
-	bg_shades_04 = colors.gray_850
-	bg_shades_05 = colors.gray_800
-	bg_shades_06 = colors.gray_750
-	bg_shades_07 = colors.gray_700
-	bg_shades_08 = colors.gray_650
-	bg_shades_09 = colors.gray_600
-	bg_shades_10 = colors.gray_550
-	bg_shades_11 = colors.gray_500
-	bg_shades_12 = colors.gray_450
-	bg_shades_13 = colors.gray_400
-	bg_shades_14 = colors.gray_350
-	bg_shades_15 = colors.gray_300
-	bg_shades_16 = colors.gray_250
-	bg_shades_17 = colors.gray_200
-	bg_shades_18 = colors.gray_150
-	bg_shades_19 = colors.gray_100
-	bg_shades_20 = colors.gray_050 -- Lightest shade
-	foreground = colors.gray_400
+	background = colors.gray_1000 -- Darkest background
+	bg_shades_01 = colors.gray_950
+	bg_shades_02 = colors.gray_900
+	bg_shades_03 = colors.gray_850
+	bg_shades_04 = colors.gray_800
+	bg_shades_05 = colors.gray_750
+	bg_shades_06 = colors.gray_700
+	bg_shades_07 = colors.gray_650
+	bg_shades_08 = colors.gray_600
+	bg_shades_09 = colors.gray_550
+	bg_shades_10 = colors.gray_500
+	bg_shades_11 = colors.gray_450
+	bg_shades_12 = colors.gray_400
+	bg_shades_13 = colors.gray_350
+	bg_shades_14 = colors.gray_300
+	bg_shades_15 = colors.gray_250
+	bg_shades_16 = colors.gray_200
+	bg_shades_17 = colors.gray_150
+	bg_shades_18 = colors.gray_100
+	bg_shades_19 = colors.gray_050
+	bg_shades_20 = colors.gray_000 -- Lightest shade
+	foreground = colors.gray_300
 
 	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_shades_01 })
 	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_02 })
@@ -118,7 +145,7 @@ function theme.setup()
 		-- Float
 
 		CurSearch = { fg = background, bg = bg_shades_18 },
-		-- 6ncSearch
+		-- IncSearch
 
 		Cursor = { bg = bg_shades_02 },
 		-- lCursor
@@ -173,7 +200,7 @@ function theme.setup()
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
-		Delimiter = { fg = bg_shades_10 },
+		Delimiter = { fg = bg_shades_15 },
 		-- @punctuation
 		NvimParenthesis = { fg = bg_shades_08 },
 		-- NvimLambda
@@ -283,11 +310,11 @@ function theme.setup()
 
 		Folded = { fg = bg_shades_12, bg = bg_shades_02 },
 
-		Function = { fg = bg_shades_14 },
+		Function = { fg = foreground },
 		-- @function
-		["@function.builtin"] = { fg = bg_shades_14, bold = true },
+		["@function.builtin"] = { fg = foreground, bold = true },
 
-		Identifier = { fg = bg_shades_08 },
+		Identifier = { fg = bg_shades_11, bold = true },
 		-- @property
 		-- NvimIdentifier
 		-- NvimIdentifierScope
@@ -300,7 +327,7 @@ function theme.setup()
 		-- NvimEnvironmentName
 		-- Ignore = { fg = "" , bg = ""}
 
-		Keyword = { fg = bg_shades_13, bold = true },
+		Keyword = { fg = foreground, bold = true },
 		-- @keyword
 		Label = { fg = background, bg = bg_shades_16 },
 		-- @label
@@ -312,15 +339,17 @@ function theme.setup()
 		-- LspCodeLensSeparator
 		-- LspInlayHint = { fg = "" , bg = ""}
 
-		LspReferenceRead = { fg = bg_shades_14, bg = "NONE", bold = true },
+		LspReferenceRead = { fg = bg_shades_14, bg = bg_shades_02 },
 		-- LspReferenceTarget = { fg = "" , bg = ""}
 
-		LspReferenceText = { fg = "NONE", bg = "NONE" },
+		LspReferenceText = { fg = bg_shades_14, bg = bg_shades_01 },
+		-- LspReferenceRead
+		-- LspReferenceWrite
 		-- Visual
 		-- VisualNOS
 		-- SnippetTabstop
 
-		LspReferenceWrite = { fg = bg_shades_14, bg = "NONE", bold = true },
+		LspReferenceWrite = { fg = bg_shades_14, bg = background },
 		-- LspSignatureActiveParameter = { fg = "" , bg = ""}
 		-- @attribute
 		-- @attribute.builtin
@@ -398,7 +427,7 @@ function theme.setup()
 		-- NvimStringSpecial = { fg = "" , bg = ""}
 		-- NvimDoubleQuotedEscape
 
-		Operator = { fg = bg_shades_12 },
+		Operator = { fg = bg_shades_14 },
 		-- @operator
 		-- NvimAssignment
 		-- NvimOperator
@@ -438,7 +467,7 @@ function theme.setup()
 		-- SignColumn = { fg = "" , bg = ""}
 		-- SnippetTabstop = { fg = "" , bg = ""}
 
-		Special = { fg = bg_shades_11 },
+		Special = { fg = bg_shades_14 },
 		-- @module.builtin
 		-- @string.regexp
 		-- @string.special
@@ -458,14 +487,14 @@ function theme.setup()
 		-- NvimRegister
 		-- NvimStringSpecial
 
-		SpecialChar = { fg = bg_shades_09 },
+		SpecialChar = { fg = bg_shades_10 },
 		-- @string.special
 		-- @string.escape
 		-- @character.special
 		-- NvimStringSpecial
 		["@variable"] = { link = "SpecialChar" },
 		["@variable.builtin"] = { link = "SpecialChar" },
-		["@variable.parameter"] = { fg = bg_shades_10 },
+		["@variable.parameter"] = { fg = bg_shades_11 },
 		-- SpecialComment = { fg = "" , bg = ""}
 		-- SpecialKey = { fg = "" , bg = ""}
 		-- SpellBad = { fg = "" , bg = ""}
@@ -496,7 +525,7 @@ function theme.setup()
 		-- @string.special.url
 		-- NvimString
 
-		Structure = { fg = bg_shades_08 },
+		Structure = { fg = bg_shades_09 },
 		-- @module
 		-- @module.builtin
 		-- Substitute = { fg = "" , bg = ""}
@@ -504,12 +533,12 @@ function theme.setup()
 		-- TabLineFill = { fg = "" , bg = ""}
 		-- TabLineSel = { fg = "" , bg = ""}
 
-		Tag = { fg = bg_shades_14 },
+		Tag = { fg = bg_shades_16 },
 		-- @tag
 		-- @tag.builtin
 		-- TermCursor = { fg = "" , bg = ""}
 
-		Title = { fg = bg_shades_14, bold = true },
+		Title = { fg = bg_shades_16, bold = true },
 		-- @markup.heading
 		-- FloatTitle
 		-- FloatFooter
@@ -526,14 +555,14 @@ function theme.setup()
 		-- NvimOptionSigil
 		-- NvimEnvironmentSigil
 
-		Typedef = { fg = bg_shades_08 },
+		Typedef = { fg = bg_shades_10 },
 
 		Underlined = { fg = bg_shades_10, underline = true },
 		-- @string.special.url
 		-- @markup.link
 		-- VertSplit = { fg = "" , bg = ""}
 
-		Visual = { fg = foreground, bg = bg_shades_06 },
+		Visual = { fg = foreground, bg = bg_shades_04 },
 		-- LspReferenceText
 		-- LspSignatureActiveParameter
 		-- SnippetTabstop
