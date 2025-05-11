@@ -184,6 +184,10 @@ return {
 			vim.g.molten_output_virt_lines = true
 			vim.g.molten_virt_text_output = true
 			vim.g.molten_tick_rate = 200
+
+			-- Configurable delays for running all blocks
+			vim.g.molten_run_all_initial_delay_ms = 3000 -- Delay after the first block (allows for kernel selection)
+			vim.g.molten_run_all_subsequent_delay_ms = 500 -- Delay between subsequent blocks
 		end,
 		config = function()
 			local init = function()
@@ -192,6 +196,7 @@ return {
 			local deinit = function()
 				vim.cmd([[MoltenDeinit]])
 			end
+
 			vim.keymap.set("n", "<localleader>mi", init, { silent = true, desc = "Initialize molten" })
 			vim.keymap.set("n", "<localleader>md", deinit, { silent = true, desc = "Stop molten" })
 			vim.keymap.set(
@@ -216,8 +221,8 @@ return {
 			vim.keymap.set(
 				"n",
 				"<localleader>mu",
-				":MoltenReevaluateAll<CR>",
-				{ silent = true, desc = "Re-evaluate all" }
+				":MoltenReevaluateAll<CR>", -- This is Molten's own re-evaluate all, might behave differently
+				{ silent = true, desc = "Re-evaluate all (Molten built-in)" }
 			)
 			vim.keymap.set(
 				"n",
@@ -243,58 +248,39 @@ return {
 				return line_text:match("^```$")
 			end
 
-			-- Function to highlight text between start_line and end_line and run it with Molten
-			local function highlight_and_run(start_line, end_line)
-				-- Add a check for empty or invalid ranges
+			-- Function to highlight text between start_line and end_line and run it with Molten (for <localleader>mx)
+			local function highlight_and_run_single_block(start_line, end_line)
 				if start_line > end_line then
 					vim.notify("Molten: No code to run in the block.", vim.log.levels.INFO)
 					return
 				end
-				-- Ensure lines are within buffer bounds (basic sanity check)
 				local last_buffer_line = vim.fn.line("$")
 				if start_line < 1 or end_line > last_buffer_line or start_line > last_buffer_line or end_line < 1 then
 					vim.notify("Molten: Invalid line numbers for code block.", vim.log.levels.ERROR)
 					return
 				end
 
-				-- 1. Ensure we are in normal mode, then make the visual selection
-				vim.api.nvim_input("<Esc>") -- Ensure normal mode before `normal!` commands
+				vim.api.nvim_input("<Esc>")
 				vim.cmd(string.format("normal! %dGV%dG", start_line, end_line))
 
-				-- 2. Defer the command execution to allow Vim to update its internal state (like selection marks)
-				-- A small delay, even 0 or 1, can often be sufficient. Start with 5ms as a test.
 				vim.defer_fn(function()
-					-- At this point, Vim should be in visual mode with the correct selection,
-					-- and '< and '> marks should be up-to-date.
 					vim.cmd("MoltenEvaluateVisual")
-
-					-- 3. Optionally, ensure we return to normal mode.
-					-- MoltenEvaluateVisual might do this itself.
-					-- Your "v" mapping `:<C-u>MoltenEvaluateVisual<CR>gv` suggests that
-					-- MoltenEvaluateVisual likely leaves Vim in Normal mode, then `gv` re-selects.
-					-- So, we just need to ensure we are not left in Visual mode.
-					-- Let's defer this slightly too, to ensure MoltenEvaluateVisual has completed its mode changes.
 					vim.defer_fn(function()
-						-- vim.fn.mode(true) returns the full mode string e.g. "v", "V", "\026" (CTRL-V)
-						-- We check if the current mode string contains 'v' or 'V' (for line or char visual)
-						-- or character 0x16 (CTRL-V for block visual). The pattern \026 represents CTRL-V.
 						if vim.fn.mode(true):find("[vV\026]") then
 							vim.api.nvim_input("<Esc>")
 						end
-					end, 10) -- Small delay for safety, can try 0, 5, or adjust as needed.
-				end, 5) -- Defer by a small amount (e.g., 5ms, try 0 or 1 first).
+					end, 10)
+				end, 5)
 			end
 
-			-- Add the keymap for highlighting code block and running MoltenEvaluateVisual
 			vim.keymap.set("n", "<localleader>\\", function()
+				-- ... (block finding logic from your previous working version) ...
 				local cursor_line = vim.fn.line(".")
 				local cursor_line_text = vim.fn.getline(cursor_line)
 				local current_buf_total_lines = vim.fn.line("$")
-
 				local code_block_start_line, code_block_end_line
 
 				if is_python_block_start(cursor_line_text) then
-					-- Cursor is on the opening ```python
 					code_block_start_line = cursor_line
 					local search_line = cursor_line + 1
 					while search_line <= current_buf_total_lines do
@@ -305,7 +291,6 @@ return {
 						search_line = search_line + 1
 					end
 				elseif is_code_block_end(cursor_line_text) then
-					-- Cursor is on the closing ```
 					code_block_end_line = cursor_line
 					local search_line = cursor_line - 1
 					while search_line >= 1 do
@@ -316,8 +301,6 @@ return {
 						search_line = search_line - 1
 					end
 				else
-					-- Cursor is inside a code block (or outside any block)
-					-- Search upwards for ```python
 					local search_up_line = cursor_line
 					while search_up_line >= 1 do
 						local line_text_up = vim.fn.getline(search_up_line)
@@ -325,34 +308,22 @@ return {
 							code_block_start_line = search_up_line
 							break
 						elseif is_code_block_end(line_text_up) and search_up_line < cursor_line then
-							-- We hit a closing ``` before an opening one while searching up from inside,
-							-- so we are not in a block (or in a malformed one).
 							code_block_start_line = nil
 							break
 						end
 						search_up_line = search_up_line - 1
 					end
-
 					if code_block_start_line then
-						-- Search downwards for ```
-						local search_down_line = cursor_line
-						-- Start searching from *after* the found start_line if cursor was above it,
-						-- or from cursor_line if cursor was below start_line.
-						-- To be safe, always search from code_block_start_line + 1 if cursor is above or on start_line
-						-- or from cursor_line if cursor is below start_line.
-						-- Simpler: just ensure search_down_line starts at or after code_block_start_line.
-						search_down_line = math.max(cursor_line, code_block_start_line + 1)
-
+						local search_down_line = math.max(cursor_line, code_block_start_line + 1)
 						while search_down_line <= current_buf_total_lines do
 							local line_text_down = vim.fn.getline(search_down_line)
 							if is_code_block_end(line_text_down) then
 								code_block_end_line = search_down_line
 								break
-							end
-							-- If we hit another ```python before a closing ```, this logic doesn't handle nested blocks
-							-- and assumes the current block is malformed or ends before this new one.
-							if is_python_block_start(line_text_down) and search_down_line > code_block_start_line then
-								code_block_end_line = nil -- Invalid nesting or premature end
+							elseif
+								is_python_block_start(line_text_down) and search_down_line > code_block_start_line
+							then
+								code_block_end_line = nil
 								break
 							end
 							search_down_line = search_down_line + 1
@@ -361,12 +332,118 @@ return {
 				end
 
 				if code_block_start_line and code_block_end_line and code_block_start_line < code_block_end_line then
-					-- The content to run is between the fences
-					highlight_and_run(code_block_start_line + 1, code_block_end_line - 1)
+					highlight_and_run_single_block(code_block_start_line + 1, code_block_end_line - 1)
 				else
 					vim.notify("Molten: Not inside a valid Python code block or block not found.", vim.log.levels.INFO)
 				end
-			end, { silent = true, desc = "highlight code block and run Molten" })
+			end, { silent = true, desc = "Molten: Run current block" })
+
+			---------------------------------------------------------------------
+			-- NEW: Run all Python code blocks sequentially
+			---------------------------------------------------------------------
+			local collected_blocks_to_run = {}
+			local current_block_run_idx = 0
+
+			local function collect_python_code_blocks()
+				local blocks = {}
+				local current_line = 1
+				local total_lines = vim.fn.line("$")
+
+				while current_line <= total_lines do
+					local line_text = vim.fn.getline(current_line)
+					if is_python_block_start(line_text) then
+						local block_start_fence = current_line
+						local content_start_line = current_line + 1
+						local content_end_line = -1
+
+						-- Search for the end of the block
+						local search_end_line = content_start_line
+						while search_end_line <= total_lines do
+							if is_code_block_end(vim.fn.getline(search_end_line)) then
+								content_end_line = search_end_line - 1
+								current_line = search_end_line -- Continue search from after this block
+								break
+							end
+							search_end_line = search_end_line + 1
+						end
+
+						if content_end_line ~= -1 and content_start_line <= content_end_line then
+							table.insert(blocks, {
+								start_line = content_start_line,
+								end_line = content_end_line,
+								fence_start = block_start_fence,
+							})
+						elseif content_end_line == -1 then -- No closing fence found
+							current_line = total_lines + 1 -- Stop searching
+						end
+					end
+					current_line = current_line + 1
+				end
+				return blocks
+			end
+
+			local function run_next_block_in_sequence()
+				current_block_run_idx = current_block_run_idx + 1
+				if current_block_run_idx > #collected_blocks_to_run then
+					vim.notify("Molten: Finished running all Python code blocks.", vim.log.levels.INFO)
+					collected_blocks_to_run = {} -- Clear for next run
+					current_block_run_idx = 0
+					return
+				end
+
+				local block = collected_blocks_to_run[current_block_run_idx]
+				vim.notify(
+					string.format(
+						"Molten: Running block %d/%d (lines %d-%d)",
+						current_block_run_idx,
+						#collected_blocks_to_run,
+						block.start_line,
+						block.end_line
+					),
+					vim.log.levels.INFO
+				)
+
+				-- Move cursor to the start of the block for visual feedback
+				vim.api.nvim_win_set_cursor(0, { block.fence_start, 0 })
+
+				-- Select and run
+				vim.api.nvim_input("<Esc>") -- Ensure normal mode
+				vim.cmd(string.format("normal! %dGV%dG", block.start_line, block.end_line))
+
+				vim.defer_fn(function()
+					vim.cmd("MoltenEvaluateVisual")
+					vim.defer_fn(function()
+						if vim.fn.mode(true):find("[vV\026]") then
+							vim.api.nvim_input("<Esc>")
+						end
+						-- Schedule the next block execution
+						local delay_ms
+						if current_block_run_idx == 1 then
+							delay_ms = vim.g.molten_run_all_initial_delay_ms
+						else
+							delay_ms = vim.g.molten_run_all_subsequent_delay_ms
+						end
+						vim.defer_fn(run_next_block_in_sequence, delay_ms)
+					end, 50) -- Small delay for Molten cmd to queue and <Esc>
+				end, 10) -- Small delay for visual selection to register
+			end
+
+			vim.keymap.set("n", "<localleader>ma", function() -- 'ma' for Molten All
+				collected_blocks_to_run = collect_python_code_blocks()
+				if #collected_blocks_to_run == 0 then
+					vim.notify("Molten: No Python code blocks found to run.", vim.log.levels.INFO)
+					return
+				end
+
+				current_block_run_idx = 0 -- Reset index
+				vim.notify(
+					"Molten: Starting to run " .. #collected_blocks_to_run .. " Python code blocks...",
+					vim.log.levels.INFO
+				)
+
+				-- Start the sequence
+				run_next_block_in_sequence()
+			end, { silent = true, desc = "Molten: Run all Python blocks" })
 		end,
 	},
 
