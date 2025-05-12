@@ -165,8 +165,8 @@ return {
 		},
 	},
 
+	-- TO CREATE ENV : https://github.com/benlubas/molten-nvim/blob/main/docs/Virtual-Environments.md
 	{
-		-- TO CREATE ENV : python -m ipykernel install --user --name=myenv --display-name "MyEnv"
 		"benlubas/molten-nvim",
 		dev = false,
 		enabled = true,
