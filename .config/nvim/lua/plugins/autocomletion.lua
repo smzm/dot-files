@@ -150,9 +150,31 @@ return {
 		"saghen/blink.cmp",
 		-- optional: provides snippets for the snippet source
 		dependencies = {
-			"rafamadriz/friendly-snippets",
-			"moyiz/blink-emoji.nvim",
-			"Kaiser-Yang/blink-cmp-dictionary",
+			{ "rafamadriz/friendly-snippets" },
+			{ "moyiz/blink-emoji.nvim" },
+			{ "Kaiser-Yang/blink-cmp-dictionary" },
+			{
+				"L3MON4D3/LuaSnip",
+				-- follow latest release.
+				version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+				-- install jsregexp (optional!).
+				build = "make install_jsregexp",
+				config = function(_, opts)
+					local ls = require("luasnip")
+					local s = ls.snippet
+					local t = ls.text_node
+					local i = ls.insert_node
+
+					ls.add_snippets("markdown", {
+						s("pycode", {
+							t("```python"),
+							t({ "", "" }),
+							i(1, "code"),
+							t({ "", "```" }),
+						}),
+					})
+				end,
+			},
 		},
 
 		-- use a release tag to download pre-built binaries
@@ -207,8 +229,11 @@ return {
 
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
+			snippets = {
+				preset = "luasnip",
+			},
 			sources = {
-				default = { "lsp", "path", "buffer", "dadbod", "emoji", "dictionary" },
+				default = { "lsp", "path", "snippets", "buffer", "dadbod", "emoji", "dictionary" },
 				providers = {
 					lsp = {
 						name = "lsp",
