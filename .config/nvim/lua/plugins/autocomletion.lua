@@ -169,7 +169,34 @@ return {
 						s("pycode", {
 							t("```python"),
 							t({ "", "" }),
-							i(1, "code"),
+							i(1, ""),
+							t({ "", "```" }),
+						}),
+					})
+
+					ls.add_snippets("markdown", {
+						s("tscode", {
+							t("```typescript"),
+							t({ "", "" }),
+							i(1, ""),
+							t({ "", "```" }),
+						}),
+					})
+
+					ls.add_snippets("markdown", {
+						s("jscode", {
+							t("```javascript"),
+							t({ "", "" }),
+							i(1, ""),
+							t({ "", "```" }),
+						}),
+					})
+
+					ls.add_snippets("markdown", {
+						s("tsxcode", {
+							t("```tsx"),
+							t({ "", "" }),
+							i(1, ""),
 							t({ "", "```" }),
 						}),
 					})
@@ -201,8 +228,8 @@ return {
 			-- See :h blink-cmp-config-keymap for defining your own keymap
 			keymap = {
 				preset = "enter",
-				["<Tab>"] = { "snippet_forward", "fallback" },
-				["<S-Tab>"] = { "snippet_backward", "fallback" },
+				-- ["<Tab>"] = { "snippet_forward", "fallback" },
+				-- ["<S-Tab>"] = { "snippet_backward", "fallback" },
 
 				["<Up>"] = { "select_prev", "fallback" },
 				["<Down>"] = { "select_next", "fallback" },
