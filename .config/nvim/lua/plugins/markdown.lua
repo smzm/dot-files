@@ -450,24 +450,25 @@ return {
 	{ -- show images in nvim!
 		"3rd/image.nvim",
 		enabled = true,
-		dev = false,
+		build = false,
 		ft = { "markdown", "quarto", "vimwiki" },
-		cond = function()
-			return vim.fn.has("win32") ~= 1
-		end,
-		dependencies = {
-			"leafo/magick",
-		},
 		config = function()
 			local image = require("image")
 			image.setup({
 				backend = "kitty",
+				processor = "magick_cli",
 				integrations = {
 					markdown = {
 						enabled = true,
 						only_render_image_at_cursor = true,
 						only_render_image_at_cursor_mode = "popup",
 						filetypes = { "markdown", "vimwiki", "quarto" },
+					},
+					html = {
+						enabled = true,
+					},
+					css = {
+						enabled = true,
 					},
 				},
 				editor_only_render_when_focused = false,
