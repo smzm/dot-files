@@ -95,7 +95,6 @@ if os_answers["interest"] == "Arch":
         "unarchiver",
         "ripgrep",
         "peco",
-        "ack",
         "lostfiles",
         "github-cli",
         "tldr",
@@ -159,7 +158,6 @@ if os_answers["interest"] == "Arch":
         "blueman",
         "udisks2",
         "udiskie",
-        "python-pytorch-cuda",
         "ollama-cuda",
         "yt-dlp",
         "inter-font",
@@ -438,8 +436,8 @@ if os_answers["interest"] == "Arch":
     aur_list = [
         #'xbindkeys_config-gtk2',
         #'clipit',
-        "udevil",
-        "tailwind-css",
+        #"udevil",
+        "tailwindcss",
         "tailwindcss-language-server",
         "picom",
         "polybar",
@@ -456,7 +454,7 @@ if os_answers["interest"] == "Arch":
         "noto-fonts-emoji",
         "pulseaudio-ctl",
         "jmtpfs",
-        "flat-remix",
+        # "flat-remix",
         "flatplat-blue-theme",
         "apple_cursor",
         "ttf-poppins",
@@ -465,7 +463,6 @@ if os_answers["interest"] == "Arch":
         "emoji-keyboard-bin",
         "yazi",
         "trashy",
-        "python-jupytext",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
