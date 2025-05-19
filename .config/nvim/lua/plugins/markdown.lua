@@ -144,20 +144,6 @@ return {
 		end,
 	},
 
-	{ -- directly open ipynb files as Markdown docuements
-		-- and convert back behind the scenes
-		"GCBallesteros/jupytext.nvim",
-		opts = {
-			custom_language_formatting = {
-				python = {
-					extension = "md",
-					style = "markdown",
-					force_ft = "markdown",
-				},
-			},
-		},
-	},
-
 	{ -- preview equations
 		"jbyuki/nabla.nvim",
 		keys = {
@@ -166,6 +152,7 @@ return {
 	},
 
 	-- TO CREATE ENV : https://github.com/benlubas/molten-nvim/blob/main/docs/Virtual-Environments.md
+	-- run "mkdir -p ~/.local/share/jupyter/runtime" at beginning to create the runtime directory
 	{
 		"benlubas/molten-nvim",
 		dev = false,
