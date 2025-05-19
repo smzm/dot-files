@@ -166,7 +166,7 @@ return {
 		init = function()
 			vim.g.molten_image_provider = "image.nvim"
 			vim.g.molten_auto_image_popup = true
-			vim.g.molten_image_location = "both"
+			vim.g.molten_image_location = "float" -- or "virt", "both"
 			vim.g.molten_output_show_exec_time = true
 			vim.g.molten_auto_open_output = false
 			vim.g.molten_auto_open_html_in_browser = false
