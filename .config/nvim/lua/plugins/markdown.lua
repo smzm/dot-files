@@ -165,8 +165,11 @@ return {
 		},
 		init = function()
 			vim.g.molten_image_provider = "image.nvim"
+			vim.g.molten_auto_image_popup = true
+			vim.g.molten_image_location = "both"
+			vim.g.molten_output_show_exec_time = true
 			vim.g.molten_auto_open_output = false
-			vim.g.molten_auto_open_html_in_browser = true
+			vim.g.molten_auto_open_html_in_browser = false
 			vim.g.molten_output_show_more = true
 			vim.g.molten_output_virt_lines = true
 			vim.g.molten_virt_text_output = true

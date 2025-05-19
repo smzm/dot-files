@@ -54,6 +54,22 @@ return { -- >>> LSP
 				-- 	},
 				-- },
 				ruff = {
+					on_attach = function(client, bufnr)
+						-- Disable specific diagnostics for markdown files
+						if vim.bo[bufnr].filetype == "markdown" then
+							client.server_capabilities.diagnosticProvider = false
+						end
+
+						-- Keep the commands configuration
+						vim.lsp.buf.execute_command = function(command)
+							if command.command == "ruff.applyAutofix" then
+								-- Your existing command logic
+							end
+							if command.command == "ruff.applyOrganizeImports" then
+								-- Your existing command logic
+							end
+						end
+					end,
 					commands = {
 						RuffAutofix = {
 							function()
