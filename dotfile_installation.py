@@ -184,6 +184,8 @@ if os_answers["interest"] == "Arch":
         "bat",
         "newsboat",
         "eza",
+        "playerctl",
+        "luarocks",
     ]
 
 elif os_answers["interest"] == "WSL":
@@ -240,6 +242,7 @@ elif os_answers["interest"] == "WSL":
         "bat",
         "newsboat",
         "eza",
+        "luarocks",
     ]
 
 
@@ -436,7 +439,7 @@ if os_answers["interest"] == "Arch":
     aur_list = [
         #'xbindkeys_config-gtk2',
         #'clipit',
-        #"udevil",
+        # "udevil",
         "tailwindcss",
         "tailwindcss-language-server",
         "picom",

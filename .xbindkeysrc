@@ -35,45 +35,49 @@
 
 
 
-#seekForward
-"xdotool search --class mpv key Right"
-    m:0x18 + c:114
-    Alt+Mod2 + Right 
+# --- Media Controls using playerctl ---
+# All bindings use only the NumLock (Mod2) modifier + arrow or numpad keys
 
-#seekBackward
-"xdotool search --class mpv key Left"
-    m:0x18 + c:113
-    Alt+Mod2 + Left 
+# ▶️ Seek forward 5 seconds
+# Press NumLock + → (Right Arrow)
+"playerctl position 5+"
+    m:0x0 + c:85
+    KP_Right
 
-#volumeUp
-"xdotool search --class mpv key k"
-    m:0x18 + c:111
-    Alt+Mod2 + Up 
+# ⏪ Seek backward 5 seconds
+# Press NumLock + ← (Left Arrow)
+"playerctl position 5-"
+    m:0x0 + c:83
+    KP_Left
 
-#volumeDown
-"xdotool search --class mpv key j"
-    m:0x18 + c:116
-    Alt+Mod2 + Down 
+# 🔊 Increase volume by 5%
+# Press NumLock + ↑ (Up Arrow)
+"playerctl volume 0.05+"
+    m:0x00 + c:80
+    KP_Up
 
-#pause
-"xdotool search --class mpv key space"
-    m:0x18 + c:65
-    Alt+Mod2 + space 
+# 🔉 Decrease volume by 5%
+# Press NumLock + ↓ (Down Arrow)
+"playerctl volume 0.05-"
+    m:0x0 + c:88
+    KP_Down
 
-#"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
-"if pgrep -x spotify > /dev/null ; then dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause ;else  spotify ;fi"
-    m:0x10 + c:127
-    Alt+Mod2 + Pause 
+# ⏯️ Toggle play/pause
+# Just press the Pause key (no modifiers)
+"playerctl play-pause"
+    m:0x0 + c:84
+    KP_Begin
 
-#Next Track Spotify
-"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
-    m:0x18 + c:117
-    Alt+Mod2 + Next 
+# ⏭️ Next track
+# Press NumLock + Next (usually PgDn or keypad 3)
+"playerctl next"
+    m:0x0 + c:81
+    KP_Prior
 
-#Previous Track Spotify
-"dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
-    m:0x18 + c:112
-    Alt+Mod2 + Prior 
+# ⏮️ Previous track
+# Press NumLock + Prior (usually PgUp or keypad 9)
+"playerctl previous"
+    m:0x0 + c:79
+    KP_Home
 
-#
 # End of xbindkeys configuration
