@@ -39,45 +39,32 @@
 # All bindings use only the NumLock (Mod2) modifier + arrow or numpad keys
 
 # ▶️ Seek forward 5 seconds
-# Press NumLock + → (Right Arrow)
 "playerctl position 5+"
-    m:0x0 + c:85
-    KP_Right
+    Mod1 + KP_6
 
 # ⏪ Seek backward 5 seconds
-# Press NumLock + ← (Left Arrow)
 "playerctl position 5-"
-    m:0x0 + c:83
-    KP_Left
+    Mod1 + KP_4
 
 # 🔊 Increase volume by 5%
-# Press NumLock + ↑ (Up Arrow)
 "playerctl volume 0.05+"
-    m:0x00 + c:80
-    KP_Up
+    Mod1 + KP_8
 
 # 🔉 Decrease volume by 5%
-# Press NumLock + ↓ (Down Arrow)
 "playerctl volume 0.05-"
-    m:0x0 + c:88
-    KP_Down
+     Mod1 + KP_2
 
 # ⏯️ Toggle play/pause
-# Just press the Pause key (no modifiers)
 "playerctl play-pause"
-    m:0x0 + c:84
-    KP_Begin
+    Pause
 
 # ⏭️ Next track
-# Press NumLock + Next (usually PgDn or keypad 3)
 "playerctl next"
-    m:0x0 + c:81
-    KP_Prior
+    Mod1 + KP_9
 
 # ⏮️ Previous track
-# Press NumLock + Prior (usually PgUp or keypad 9)
 "playerctl previous"
-    m:0x0 + c:79
-    KP_Home
+    Mod1 + KP_7
+
 
 # End of xbindkeys configuration
