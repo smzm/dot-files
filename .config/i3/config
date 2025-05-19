@@ -140,9 +140,9 @@ bindsym $mod+y border pixel 4
 #bindsym $mod+n border normal
 
 # start a terminal
-#bindsym $mod+Return  exec kitty ; split horizontal
-#bindsym $mod+Return  exec warp-terminal ; split horizontal
-bindsym $mod+Return exec warp-terminal
+bindsym $mod+Return  exec kitty
+
+
 
 # kill focused window
 bindsym $mod+q kill
