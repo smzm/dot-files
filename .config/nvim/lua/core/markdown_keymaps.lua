@@ -1,44 +1,105 @@
 -------------------------------------------------------------------------------
 --                       Markdown keymaps
 -------------------------------------------------------------------------------
-
 -- >>>>>>>>>>>>>>>>>>>>>>>> Smart markdown link opener
 vim.keymap.set("n", "gl", function()
 	local line = vim.fn.getline(".")
-	local link = line:match("%[.-%]%((.-)%)")
-	if not link then
+	local link_target = line:match("%[.-%]%((.-)%)") -- This is the full content within ()
+
+	if not link_target then
+		vim.notify("No markdown link found on this line.", vim.log.levels.WARN)
 		return
 	end
 
-	local path, anchor = link:match("([^#]*)#?(.*)")
+	-- Check for web link first, using the full link_target
+	if link_target:match("^https?://") then
+		vim.notify("Opening in browser: " .. link_target, vim.log.levels.INFO)
+		if vim.ui.open then -- Preferred method for Neovim 0.8+
+			vim.ui.open(link_target)
+		else
+			-- Fallback for older Neovim or if vim.ui.open is not configured
+			local cmd
+			if vim.fn.has("macunix") then
+				cmd = { "open", link_target }
+			elseif vim.fn.has("win32") or vim.fn.has("win64") then
+				-- 'explorer' often works well for URLs directly.
+				-- 'start' might need `cmd /c start ""` if the URL has spaces,
+				-- so we add an empty title argument for 'start'.
+				cmd = { "cmd", "/c", "start", "", link_target }
+				-- Alternative for Windows: cmd = {"explorer", link_target}
+			else -- Assume Linux/BSD
+				cmd = { "xdg-open", link_target }
+			end
+			local job_id = vim.fn.jobstart(cmd, { detach = true })
+			-- jobstart returns a positive job ID on success, or nil if detached immediately
+			-- and the command is likely to succeed quickly.
+			-- It returns 0 or -1 on failure to start.
+			if not (job_id and job_id > 0) and job_id ~= nil then
+				vim.notify("Failed to start browser command for: " .. link_target, vim.log.levels.ERROR)
+			end
+		end
+		return -- We've handled the web link
+	end
+
+	-- If not a web link, proceed with local file/anchor logic
+	-- Now, split the link_target into path and anchor for local navigation
+	local path, anchor = link_target:match("([^#]*)#?(.*)")
 
 	if path == "" then
 		-- Inline anchor: stay in current buffer
 		if anchor ~= "" then
-			-- Match markdown headers that start with #
-			local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", ".*")
-			vim.fn.search(anchor_pattern, "w")
+			local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", "[ -]?") -- Allow space or hyphen
+			if vim.fn.search(anchor_pattern, "w") == 0 then
+				vim.notify("Anchor #" .. anchor .. " not found in current file.", vim.log.levels.WARN)
+			end
+		else
+			vim.notify("Empty local link target.", vim.log.levels.WARN)
 		end
 	else
-		-- Handle relative paths
-		if path:match("^%.") then
-			-- Path starts with ./ or ../ (relative path)
-			local current_file = vim.fn.expand("%:p")
-			local current_dir = vim.fn.fnamemodify(current_file, ":h")
-			local absolute_path = vim.fn.simplify(current_dir .. "/" .. path)
-			vim.cmd("edit " .. absolute_path)
+		-- Handle local file paths
+		local file_to_open
+		if path:match("^%./") or path:match("^%ऊं/") then -- Starts with ./ or ../
+			local current_file_path = vim.fn.expand("%:p")
+			if current_file_path == "" then
+				vim.notify("Cannot resolve relative path: current buffer has no name.", vim.log.levels.ERROR)
+				return
+			end
+			local current_dir = vim.fn.fnamemodify(current_file_path, ":h")
+			file_to_open = vim.fn.simplify(current_dir .. "/" .. path)
+		elseif not path:match("^/") and not path:match("^[a-zA-Z]:\\") then -- Not absolute, try relative to current file
+			local current_file_path = vim.fn.expand("%:p")
+			if current_file_path ~= "" then
+				local current_dir = vim.fn.fnamodify(current_file_path, ":h")
+				local potential_path = vim.fn.simplify(current_dir .. "/" .. path)
+				if vim.fn.filereadable(potential_path) == 1 or vim.fn.isdirectory(potential_path) == 1 then
+					file_to_open = potential_path
+				else
+					file_to_open = path -- Fallback to original path (could be relative to cwd)
+				end
+			else
+				file_to_open = path -- No current file, assume relative to cwd or absolute
+			end
 		else
-			-- Absolute path or path without leading ./
-			vim.cmd("edit " .. path)
+			-- Absolute path
+			file_to_open = path
 		end
 
-		-- Jump to anchor if present
-		if anchor ~= "" then
-			local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", ".*")
-			vim.fn.search(anchor_pattern, "w")
+		-- Check if the file exists before trying to open
+		if vim.fn.filereadable(file_to_open) == 1 or vim.fn.isdirectory(file_to_open) == 1 then
+			vim.cmd("edit " .. vim.fn.fnameescape(file_to_open))
+
+			-- Jump to anchor if present
+			if anchor ~= "" then
+				local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", "[ -]?") -- Allow space or hyphen
+				if vim.fn.search(anchor_pattern, "w") == 0 then
+					vim.notify("Anchor #" .. anchor .. " not found in " .. file_to_open, vim.log.levels.WARN)
+				end
+			end
+		else
+			vim.notify("File not found: " .. file_to_open, vim.log.levels.ERROR)
 		end
 	end
-end, { desc = "Open markdown link and jump to anchor", noremap = true, silent = true })
+end, { desc = "Open markdown link (web links in browser, local in nvim)", noremap = true, silent = true })
 
 -- -- >>>>>>>>>>>>>>>>>>>>>>>> Markdown link creator with file generation functionality
 -- Markdown link creator with file generation functionality
