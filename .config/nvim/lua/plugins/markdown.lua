@@ -450,8 +450,9 @@ return {
 				integrations = {
 					markdown = {
 						enabled = true,
-						only_render_image_at_cursor = true,
+						only_render_image_at_cursor = false,
 						only_render_image_at_cursor_mode = "popup",
+						floating_windows = false,
 						filetypes = { "markdown", "vimwiki", "quarto" },
 					},
 					html = {
@@ -586,7 +587,7 @@ return {
 			-------------------------------------------------------------------------------
 			--                       Assets directory
 			-------------------------------------------------------------------------------
-			local IMAGE_STORAGE_PATH = "img"
+			local IMAGE_STORAGE_PATH = ""
 
 			local function find_assets_dir()
 				local dir = vim.fn.expand("%:p:h")
@@ -605,7 +606,7 @@ return {
 					return require("img-clip").paste_image({
 						dir_path = dir_path,
 						use_absolute_path = false,
-						relative_to_current_file = false,
+						relative_to_current_file = true,
 						file_name = file_name,
 						extension = ext or "avif",
 						process_cmd = cmd or "convert - -quality 75 avif:-",
