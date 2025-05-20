@@ -257,17 +257,32 @@ vim.keymap.set("n", "<leader>mc", function()
 	-- Strip leading '#' and any spaces to get the actual header text
 	local header_text = line:gsub("^#+%s*", "")
 
-	-- Create GitHub-style anchor: lowercase, hyphenated, no special chars
+	-- Create GitHub-style anchor following the specified rules:
 	local anchor = header_text
 		:lower()
-		:gsub("[^a-z0-9 -]", "") -- remove special characters
-		:gsub("%s+", "-") -- spaces to dashes
-		:gsub("-+", "-") -- collapse multiple dashes
-		:gsub("^%-", "")
-		:gsub("%-$", "") -- trim leading/trailing dashes
+		-- Specific pre-processing to match the example output's quirks
+		:gsub("['’]", "") -- Remove apostrophes (e.g., "don't" -> "dont")
+		:gsub("[()]", "") -- Remove parentheses (e.g., "reshape()" -> "reshape")
+		:gsub(",", "") -- Remove commas
+		-- At this point, for your example, header would be like:
+		-- "changing shape of array but dont change data  :reshape" (assuming no space after colon in input for this exact output)
+		-- or "changing shape of array but dont change data  : reshape" if space was there
+		-- Now, the transformation to hyphens
+		:gsub(
+			":",
+			"-"
+		) -- Explicitly convert colons to hyphens
+		:gsub("%s+", "-") -- Convert spaces to hyphens
+		:gsub("-+", "-") -- Collapse multiple hyphens
+		:gsub("^%-+", "")
+		:gsub("%-+$", "")
 
 	-- Get current file name only (e.g., "series.md")
 	local filename = vim.fn.expand("%:t")
+	if filename == "" then
+		filename = "untitled.md" -- Fallback if buffer has no name
+		print("Warning: Buffer has no name, using 'untitled.md' for link.")
+	end
 
 	-- Build the final Markdown link
 	local link = string.format("[%s](./%s#%s)", header_text, filename, anchor)
@@ -277,4 +292,4 @@ vim.keymap.set("n", "<leader>mc", function()
 
 	-- Show message
 	print("Copied: " .. link)
-end, { desc = "Copy Markdown link to current header (clean)" })
+end, { desc = "Copy Markdown link to current header (GitHub style)" })
