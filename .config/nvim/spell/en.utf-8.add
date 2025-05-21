@@ -22,3 +22,7 @@ ndim
 dtype
 Argmin
 Argmax
+matplotlib
+PyPlot
+str
+bool

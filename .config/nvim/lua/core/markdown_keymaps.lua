@@ -2,63 +2,151 @@
 --                       Markdown keymaps
 -------------------------------------------------------------------------------
 -- >>>>>>>>>>>>>>>>>>>>>>>> Smart markdown link opener
+
+-- Helper function to check if a line is inside a code block using Tree-sitter
+local function is_line_in_code_block(bufnr, lnum)
+	if not vim.treesitter or not vim.treesitter.get_parser then
+		vim.schedule(function()
+			vim.notify("Tree-sitter not available for code block check.", vim.log.levels.DEBUG)
+		end)
+		return false
+	end
+	local lang = vim.bo[bufnr].filetype -- Get language from buffer, default to 'markdown'
+	if lang ~= "markdown" and lang ~= "md" then -- Ensure it's a markdown file type
+		-- If we are in a non-markdown file (e.g. after opening a .py file from a link)
+		-- this check isn't relevant, or we'd need the specific parser for that file.
+		-- For now, let's assume headers in non-markdown files aren't what we're targeting with this logic.
+		return false
+	end
+
+	local parser = vim.treesitter.get_parser(bufnr, "markdown") -- Explicitly use markdown parser
+	if not parser then
+		vim.schedule(function()
+			vim.notify("Markdown Tree-sitter parser not available for buffer " .. bufnr, vim.log.levels.DEBUG)
+		end)
+		return false
+	end
+
+	local tree = parser:parse()[1]
+	if not tree then
+		return false
+	end
+	local root = tree:root()
+	if not root then
+		return false
+	end
+
+	-- Get the node at the beginning of the line (lnum is 1-indexed, TS is 0-indexed)
+	local node = root:named_descendant_for_range(lnum - 1, 0, lnum - 1, 0)
+	if not node then
+		return false
+	end
+
+	local current_node = node
+	while current_node do
+		local node_type = current_node:type()
+		if node_type == "fenced_code_block" or node_type == "indented_code_block" then
+			return true
+		end
+		-- Stop if we hit a block-level element that isn't a code block,
+		-- or if we reach too high up the tree without finding a code block.
+		-- This prevents checking parents unnecessarily if the node itself is e.g. a paragraph.
+		if current_node:parent() == root and node_type ~= "document" then -- 'document' is often the root node type
+			-- If the direct child of root is not a code block, then this line isn't in one.
+			-- This check can be refined based on specific tree structures.
+			break
+		end
+		current_node = current_node:parent()
+	end
+	return false
+end
+
+-- Function to search for an anchor, skipping those in code blocks
+local function search_markdown_anchor(anchor_pattern, bufnr)
+	local original_cursor_pos = vim.api.nvim_win_get_cursor(0) -- {row, col} 0-indexed for API
+	local found_valid_match = false
+
+	-- Start search from the top of the buffer for consistency
+	vim.api.nvim_win_set_cursor(0, { 1, 0 }) -- API cursor is 1-indexed for row
+
+	while true do
+		local current_search_line = vim.fn.search(anchor_pattern, "W") -- 'W' means don't wrap, returns line nr or 0
+		if current_search_line == 0 then
+			break -- No more matches
+		end
+
+		-- vim.fn.search() returns 1-indexed line number
+		if not is_line_in_code_block(bufnr, current_search_line) then
+			-- Found a valid header not in a code block.
+			-- vim.fn.search() already moved the cursor to the match.
+			found_valid_match = true
+			break
+		end
+
+		-- Match was in a code block, continue search from the next line
+		-- Move cursor to ensure search() continues from after the current invalid match
+		if current_search_line == vim.api.nvim_buf_line_count(bufnr) then
+			break -- Was last line and in code block, no further matches possible
+		end
+		vim.api.nvim_win_set_cursor(0, { current_search_line + 1, 0 })
+	end
+
+	if not found_valid_match then
+		vim.api.nvim_win_set_cursor(0, original_cursor_pos) -- Restore cursor if no valid match found
+		return false
+	end
+	return true -- Cursor is on the valid match
+end
+
 vim.keymap.set("n", "gl", function()
 	local line = vim.fn.getline(".")
-	local link_target = line:match("%[.-%]%((.-)%)") -- This is the full content within ()
+	local link_target = line:match("%[.-%]%((.-)%)")
 
 	if not link_target then
 		vim.notify("No markdown link found on this line.", vim.log.levels.WARN)
 		return
 	end
 
-	-- Check for web link first, using the full link_target
 	if link_target:match("^https?://") then
 		vim.notify("Opening in browser: " .. link_target, vim.log.levels.INFO)
-		if vim.ui.open then -- Preferred method for Neovim 0.8+
+		if vim.ui.open then
 			vim.ui.open(link_target)
 		else
-			-- Fallback for older Neovim or if vim.ui.open is not configured
 			local cmd
 			if vim.fn.has("macunix") then
 				cmd = { "open", link_target }
 			elseif vim.fn.has("win32") or vim.fn.has("win64") then
-				-- 'explorer' often works well for URLs directly.
-				-- 'start' might need `cmd /c start ""` if the URL has spaces,
-				-- so we add an empty title argument for 'start'.
 				cmd = { "cmd", "/c", "start", "", link_target }
-				-- Alternative for Windows: cmd = {"explorer", link_target}
-			else -- Assume Linux/BSD
+			else
 				cmd = { "xdg-open", link_target }
 			end
 			local job_id = vim.fn.jobstart(cmd, { detach = true })
-			-- jobstart returns a positive job ID on success, or nil if detached immediately
-			-- and the command is likely to succeed quickly.
-			-- It returns 0 or -1 on failure to start.
 			if not (job_id and job_id > 0) and job_id ~= nil then
 				vim.notify("Failed to start browser command for: " .. link_target, vim.log.levels.ERROR)
 			end
 		end
-		return -- We've handled the web link
+		return
 	end
 
-	-- If not a web link, proceed with local file/anchor logic
-	-- Now, split the link_target into path and anchor for local navigation
 	local path, anchor = link_target:match("([^#]*)#?(.*)")
+	local current_bufnr = vim.api.nvim_get_current_buf()
 
 	if path == "" then
-		-- Inline anchor: stay in current buffer
 		if anchor ~= "" then
-			local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", "[ -]?") -- Allow space or hyphen
-			if vim.fn.search(anchor_pattern, "w") == 0 then
-				vim.notify("Anchor #" .. anchor .. " not found in current file.", vim.log.levels.WARN)
+			local anchor_pattern = "\\v^#{1,6}\\s.*\\c" .. vim.fn.escape(anchor:gsub("-", "[ -]?"), "\\")
+			-- MODIFIED SECTION for current file anchor search
+			if not search_markdown_anchor(anchor_pattern, current_bufnr) then
+				vim.notify(
+					"Anchor #" .. anchor .. " not found (or all in code blocks) in current file.",
+					vim.log.levels.WARN
+				)
 			end
 		else
 			vim.notify("Empty local link target.", vim.log.levels.WARN)
 		end
 	else
-		-- Handle local file paths
 		local file_to_open
-		if path:match("^%./") or path:match("^%ऊं/") then -- Starts with ./ or ../
+		if path:match("^%./") or path:match("^%../") then
 			local current_file_path = vim.fn.expand("%:p")
 			if current_file_path == "" then
 				vim.notify("Cannot resolve relative path: current buffer has no name.", vim.log.levels.ERROR)
@@ -66,40 +154,48 @@ vim.keymap.set("n", "gl", function()
 			end
 			local current_dir = vim.fn.fnamemodify(current_file_path, ":h")
 			file_to_open = vim.fn.simplify(current_dir .. "/" .. path)
-		elseif not path:match("^/") and not path:match("^[a-zA-Z]:\\") then -- Not absolute, try relative to current file
+		elseif not path:match("^/") and not path:match("^[a-zA-Z]:\\") then
 			local current_file_path = vim.fn.expand("%:p")
 			if current_file_path ~= "" then
-				local current_dir = vim.fn.fnamodify(current_file_path, ":h")
+				local current_dir = vim.fn.fnamemodify(current_file_path, ":h")
 				local potential_path = vim.fn.simplify(current_dir .. "/" .. path)
 				if vim.fn.filereadable(potential_path) == 1 or vim.fn.isdirectory(potential_path) == 1 then
 					file_to_open = potential_path
 				else
-					file_to_open = path -- Fallback to original path (could be relative to cwd)
+					file_to_open = path
 				end
 			else
-				file_to_open = path -- No current file, assume relative to cwd or absolute
+				file_to_open = path
 			end
 		else
-			-- Absolute path
 			file_to_open = path
 		end
 
-		-- Check if the file exists before trying to open
 		if vim.fn.filereadable(file_to_open) == 1 or vim.fn.isdirectory(file_to_open) == 1 then
 			vim.cmd("edit " .. vim.fn.fnameescape(file_to_open))
+			-- After opening the file, its buffer becomes the current buffer
+			local target_bufnr = vim.api.nvim_get_current_buf()
 
-			-- Jump to anchor if present
 			if anchor ~= "" then
-				local anchor_pattern = "\\v^#{1,6}\\s.*" .. anchor:gsub("-", "[ -]?") -- Allow space or hyphen
-				if vim.fn.search(anchor_pattern, "w") == 0 then
-					vim.notify("Anchor #" .. anchor .. " not found in " .. file_to_open, vim.log.levels.WARN)
+				-- Ensure the filetype is set correctly for Tree-sitter to work,
+				-- especially if it was just opened.
+				vim.cmd("doautocmd BufRead") -- Or more specifically filetype detection
+				vim.api.nvim_command("set filetype=markdown") -- Force if necessary and known
+
+				local anchor_pattern = "\\v^#{1,6}\\s.*\\c" .. vim.fn.escape(anchor:gsub("-", "[ -]?"), "\\")
+				-- MODIFIED SECTION for other file anchor search
+				if not search_markdown_anchor(anchor_pattern, target_bufnr) then
+					vim.notify(
+						"Anchor #" .. anchor .. " not found (or all in code blocks) in " .. file_to_open,
+						vim.log.levels.WARN
+					)
 				end
 			end
 		else
 			vim.notify("File not found: " .. file_to_open, vim.log.levels.ERROR)
 		end
 	end
-end, { desc = "Open markdown link (web links in browser, local in nvim)", noremap = true, silent = true })
+end, { desc = "Open markdown link (skip code blocks for anchors)", noremap = true, silent = true }) -- Updated desc
 
 -- -- >>>>>>>>>>>>>>>>>>>>>>>> Markdown link creator with file generation functionality
 -- Markdown link creator with file generation functionality
