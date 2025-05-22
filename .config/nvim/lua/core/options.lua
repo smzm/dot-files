@@ -47,8 +47,8 @@ opt.numberwidth = 4
 opt.expandtab = true
 opt.smarttab = true
 opt.smartindent = true
-opt.shiftwidth = 2
-opt.tabstop = 2
+opt.shiftwidth = 4
+opt.tabstop = 4
 
 -- Decrease waiting time in key mapped sequences
 opt.timeoutlen = 700

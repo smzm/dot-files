@@ -113,6 +113,7 @@ return {
 				"prisma",
 				"tsx",
 				"jsdoc",
+				"latex",
 				"lua",
 				"markdown",
 				"markdown_inline",
