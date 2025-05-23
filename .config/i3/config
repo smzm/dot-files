@@ -140,9 +140,9 @@ bindsym $mod+y border pixel 4
 #bindsym $mod+n border normal
 
 # start a terminal
-bindsym $mod+Return  exec kitty
-
-
+bindsym $mod+Return  exec kitty ; split horizontal
+# bindsym $mod+Return  exec warp-terminal ; split horizontal
+# bindsym $mod+Return exec warp-terminal
 
 # kill focused window
 bindsym $mod+q kill
@@ -343,8 +343,8 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 #bindsym $mod+Ctrl+m exec pavucontrol
 
 
-bindsym --release $alt+Shift+c exec "xcolor | xclip -selection clipboard"
-bindsym --release $alt+Shift+t exec "ocrdesktop"
+bindsym --release Ctrl+Shift+c exec "xcolor | xclip -selection clipboard"
+bindsym --release Ctrl+Shift+t exec "ocrdesktop"
 ################################################################################################
 
 
