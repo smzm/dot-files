@@ -212,3 +212,5 @@ syncnvim() {
 
   echo "✅ syncnvim complete!"
 }
+
+
