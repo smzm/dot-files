@@ -175,7 +175,7 @@ return {
 			vim.g.molten_virt_text_output = true
 			vim.g.molten_tick_rate = 200
 			vim.g.molten_cover_empty_lines = false
-			vim.g.molten_virt_text_max_lines = 12
+			vim.g.molten_virt_text_max_lines = 8
 
 			-- Configurable delays for running all blocks
 			vim.g.molten_run_all_initial_delay_ms = 3000 -- Delay after the first block (allows for kernel selection)
@@ -200,12 +200,6 @@ return {
 				"n",
 				"<localleader>=",
 				":MoltenEvaluateLine<CR>",
-				{ silent = true, desc = "Run Current Line" }
-			)
-			vim.keymap.set(
-				"n",
-				"<localleader>mb",
-				":MoltenOpenInBrowser<CR>",
 				{ silent = true, desc = "Run Current Line" }
 			)
 
@@ -236,7 +230,7 @@ return {
 			)
 			vim.keymap.set(
 				"n",
-				"<localleader>ms",
+				"<localleader><CR>",
 				":noautocmd MoltenEnterOutput<CR>",
 				{ silent = true, desc = "show/enter output" }
 			)
