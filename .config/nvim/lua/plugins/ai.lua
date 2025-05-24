@@ -32,7 +32,7 @@ return {
 					disable_tools = true,
 					endpoint = "https://openrouter.ai/api/v1",
 					api_key_name = "OPENROUTER_API_KEY",
-					model = "qwen/qwen3-235b-a22b:free",
+					model = "qwen/qwen3-30b-a3b:free",
 				},
 				ollama = {
 					__inherited_from = "openai",

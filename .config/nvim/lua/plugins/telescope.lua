@@ -12,11 +12,11 @@ return {
 			local telescope = require("telescope")
 			local actions = require("telescope.actions")
 			local transform_mod = require("telescope.actions.mt").transform_mod
+			local builtin = require("telescope.builtin") -- Ensure this is required
 
 			local trouble = require("trouble")
 			local trouble_telescope = require("trouble.sources.telescope")
 
-			-- or create your custom action
 			local custom_actions = transform_mod({
 				open_trouble_qflist = function(prompt_bufnr)
 					trouble.toggle("quickfix")
@@ -29,8 +29,8 @@ return {
 					path_display = { "smart" },
 					mappings = {
 						i = {
-							["<C-k>"] = actions.move_selection_previous, -- move to prev result
-							["<C-j>"] = actions.move_selection_next, -- move to next result
+							["<C-k>"] = actions.move_selection_previous,
+							["<C-j>"] = actions.move_selection_next,
 							["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
 							["<C-t>"] = trouble_telescope.open,
 						},
@@ -54,7 +54,87 @@ return {
 				{ desc = "Find string under cursor in cwd" }
 			)
 			keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
-		end,
+
+			-- Your new function and keymap:
+			local find_and_search_in_docs_subdir = function()
+				-- IMPORTANT: Customize this path to your main documents directory
+				-- >>>>>>>>>>>>>>  🧰 YOUR DOCS PATH HERE 🧰 <<<<<<<<<<<<<<<<<<<<<<<<
+				local base_docs_path = "/home/rodd/github/docs" -- Your specific path
+				local base_docs_name = vim.fn.fnamemodify(base_docs_path, ":t") -- Gets the trailing name, e.g., "docs"
+
+				vim.ui.input(
+					{ prompt = "Dir under " .. base_docs_name .. "/ (empty for all " .. base_docs_name .. "): " },
+					function(dir_name)
+						if dir_name == nil then -- User cancelled (e.g., Esc)
+							vim.notify("Search cancelled.", vim.log.levels.INFO)
+							return
+						end
+
+						local search_dirs_for_grep
+						local title_component
+
+						if dir_name == "" then
+							-- User submitted empty input: search in the entire base_docs_path
+							search_dirs_for_grep = { base_docs_path }
+							title_component = "all " .. base_docs_name
+							vim.notify("Searching in all of " .. base_docs_path, vim.log.levels.INFO)
+						else
+							-- User provided a directory name: find that specific subdirectory
+							local potential_paths_list = vim.fn.globpath(base_docs_path, "**/" .. dir_name, true, true)
+
+							if not potential_paths_list or #potential_paths_list == 0 then
+								vim.notify(
+									"No item named '" .. dir_name .. "' found under " .. base_docs_path,
+									vim.log.levels.WARN
+								)
+								return
+							end
+
+							local target_sub_dirs = {}
+							for _, path_str in ipairs(potential_paths_list) do
+								if path_str ~= "" and vim.fn.isdirectory(path_str) == 1 then
+									table.insert(target_sub_dirs, path_str)
+								end
+							end
+
+							if #target_sub_dirs == 0 then
+								vim.notify(
+									"No directory named '" .. dir_name .. "' found under " .. base_docs_path,
+									vim.log.levels.WARN
+								)
+								return
+							end
+
+							search_dirs_for_grep = target_sub_dirs
+							if #target_sub_dirs == 1 then
+								title_component = vim.fn.fnamemodify(target_sub_dirs[1], ":t") -- Actual name of the single dir
+							else
+								title_component = dir_name -- Use the input name if multiple dirs match
+								vim.notify(
+									"Multiple directories matching '"
+										.. dir_name
+										.. "' found. Searching in all of them.",
+									vim.log.levels.INFO
+								)
+							end
+						end
+
+						-- Launch Telescope live_grep with the determined search directories and title
+						builtin.live_grep({
+							prompt_title = "Grep in " .. title_component .. " (under " .. base_docs_name .. ")",
+							search_dirs = search_dirs_for_grep,
+						})
+					end
+				)
+			end
+
+			keymap.set(
+				"n",
+				"<leader>fd",
+				find_and_search_in_docs_subdir,
+				{ desc = "Find text in specific docs sub-directory" }
+			)
+		end, -- This is the end of the config = function()
 	},
 	-- ========================= Trouble ==========================
 	{
