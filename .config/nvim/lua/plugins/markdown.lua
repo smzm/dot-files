@@ -169,11 +169,13 @@ return {
 			vim.g.molten_image_location = "float" -- or "virt", "both"
 			vim.g.molten_output_show_exec_time = true
 			vim.g.molten_auto_open_output = false
-			vim.g.molten_auto_open_html_in_browser = false
+			vim.g.molten_auto_open_html_in_browser = true
 			vim.g.molten_output_show_more = true
 			vim.g.molten_output_virt_lines = true
 			vim.g.molten_virt_text_output = true
 			vim.g.molten_tick_rate = 200
+			vim.g.molten_cover_empty_lines = false
+			vim.g.molten_virt_text_max_lines = 18
 
 			-- Configurable delays for running all blocks
 			vim.g.molten_run_all_initial_delay_ms = 3000 -- Delay after the first block (allows for kernel selection)
