@@ -25,7 +25,7 @@ return {
 
 			telescope.setup({
 				defaults = {
-					prompt_prefix = "   ",
+					prompt_prefix = "   ",
 					path_display = { "smart" },
 					mappings = {
 						i = {
@@ -62,70 +62,71 @@ return {
 				local base_docs_path = "/home/rodd/github/docs" -- Your specific path
 				local base_docs_name = vim.fn.fnamemodify(base_docs_path, ":t") -- Gets the trailing name, e.g., "docs"
 
-				vim.ui.input(
-					{ prompt = "Dir under " .. base_docs_name .. "/ (empty for all " .. base_docs_name .. "): " },
-					function(dir_name)
-						if dir_name == nil then -- User cancelled (e.g., Esc)
-							vim.notify("Search cancelled.", vim.log.levels.INFO)
+				vim.ui.input({
+					prompt = "Dir under " .. base_docs_name .. "/ (empty for all " .. base_docs_name .. "): ",
+					completion = "none", -- Disable autocompletion
+				}, function(dir_name)
+					if dir_name == nil then -- User cancelled (e.g., Esc)
+						vim.notify("Search cancelled.", vim.log.levels.INFO)
+						return
+					end
+
+					-- Trim whitespace from beginning and end of input
+					dir_name = vim.trim(dir_name)
+
+					local search_dirs_for_grep
+					local title_component
+
+					if dir_name == "" then
+						-- User submitted empty input: search in the entire base_docs_path
+						search_dirs_for_grep = { base_docs_path }
+						title_component = "all " .. base_docs_name
+						vim.notify("Searching in all of " .. base_docs_path, vim.log.levels.INFO)
+					else
+						-- User provided a directory name: find that specific subdirectory
+						local potential_paths_list = vim.fn.globpath(base_docs_path, "**/" .. dir_name, true, true)
+
+						if not potential_paths_list or #potential_paths_list == 0 then
+							vim.notify(
+								"No item named '" .. dir_name .. "' found under " .. base_docs_path,
+								vim.log.levels.WARN
+							)
 							return
 						end
 
-						local search_dirs_for_grep
-						local title_component
-
-						if dir_name == "" then
-							-- User submitted empty input: search in the entire base_docs_path
-							search_dirs_for_grep = { base_docs_path }
-							title_component = "all " .. base_docs_name
-							vim.notify("Searching in all of " .. base_docs_path, vim.log.levels.INFO)
-						else
-							-- User provided a directory name: find that specific subdirectory
-							local potential_paths_list = vim.fn.globpath(base_docs_path, "**/" .. dir_name, true, true)
-
-							if not potential_paths_list or #potential_paths_list == 0 then
-								vim.notify(
-									"No item named '" .. dir_name .. "' found under " .. base_docs_path,
-									vim.log.levels.WARN
-								)
-								return
-							end
-
-							local target_sub_dirs = {}
-							for _, path_str in ipairs(potential_paths_list) do
-								if path_str ~= "" and vim.fn.isdirectory(path_str) == 1 then
-									table.insert(target_sub_dirs, path_str)
-								end
-							end
-
-							if #target_sub_dirs == 0 then
-								vim.notify(
-									"No directory named '" .. dir_name .. "' found under " .. base_docs_path,
-									vim.log.levels.WARN
-								)
-								return
-							end
-
-							search_dirs_for_grep = target_sub_dirs
-							if #target_sub_dirs == 1 then
-								title_component = vim.fn.fnamemodify(target_sub_dirs[1], ":t") -- Actual name of the single dir
-							else
-								title_component = dir_name -- Use the input name if multiple dirs match
-								vim.notify(
-									"Multiple directories matching '"
-										.. dir_name
-										.. "' found. Searching in all of them.",
-									vim.log.levels.INFO
-								)
+						local target_sub_dirs = {}
+						for _, path_str in ipairs(potential_paths_list) do
+							if path_str ~= "" and vim.fn.isdirectory(path_str) == 1 then
+								table.insert(target_sub_dirs, path_str)
 							end
 						end
 
-						-- Launch Telescope live_grep with the determined search directories and title
-						builtin.live_grep({
-							prompt_title = "Grep in " .. title_component .. " (under " .. base_docs_name .. ")",
-							search_dirs = search_dirs_for_grep,
-						})
+						if #target_sub_dirs == 0 then
+							vim.notify(
+								"No directory named '" .. dir_name .. "' found under " .. base_docs_path,
+								vim.log.levels.WARN
+							)
+							return
+						end
+
+						search_dirs_for_grep = target_sub_dirs
+						if #target_sub_dirs == 1 then
+							title_component = vim.fn.fnamemodify(target_sub_dirs[1], ":t") -- Actual name of the single dir
+						else
+							title_component = dir_name -- Use the input name if multiple dirs match
+							vim.notify(
+								"Multiple directories matching '" .. dir_name .. "' found. Searching in all of them.",
+								vim.log.levels.INFO
+							)
+						end
 					end
-				)
+
+					-- Launch Telescope live_grep with the determined search directories and title
+					builtin.live_grep({
+						prompt_title = "Grep in " .. title_component .. " (under " .. base_docs_name .. ")",
+						search_dirs = search_dirs_for_grep,
+					})
+				end)
 			end
 
 			keymap.set(
