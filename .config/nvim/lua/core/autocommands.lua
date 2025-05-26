@@ -117,11 +117,25 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end,
 })
 
--- Enable line wrapping for Markdown files
+-- Enable line wrapping for Markdown files and disable for CSV/TSV files
+local augroup = vim.api.nvim_create_augroup("FileTypeSettings", { clear = true })
+
+-- CSV/TSV settings
+vim.api.nvim_create_autocmd({ "FileType", "BufRead", "BufNewFile" }, {
+	group = augroup,
+	pattern = { "csv", "*.tsv", "*.csv" },
+	callback = function()
+		vim.opt_local.wrap = false
+		vim.opt_local.linebreak = false
+	end,
+})
+
+-- Markdown settings
 vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
 	pattern = "markdown",
 	callback = function()
 		vim.opt_local.wrap = true
-		vim.opt_local.linebreak = true
+		vim.opt_local.linebreak = true -- Break at word boundaries
 	end,
 })
