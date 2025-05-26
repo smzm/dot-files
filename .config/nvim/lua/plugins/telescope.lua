@@ -74,6 +74,100 @@ return {
 					-- Trim whitespace from beginning and end of input
 					dir_name = vim.trim(dir_name)
 
+					-- Check if input ends with '/' (directory with auto README.md)
+					if dir_name:match("/$") then
+						-- User provided a directory path ending with '/' like "pandas/"
+						-- Remove the trailing slash for directory search
+						local clean_dir = dir_name:sub(1, -2)
+						local readme_path = clean_dir .. "/README.md"
+
+						local potential_readme_paths = vim.fn.globpath(base_docs_path, "**/" .. readme_path, true, true)
+
+						if not potential_readme_paths or #potential_readme_paths == 0 then
+							vim.notify(
+								"No README.md found in '" .. clean_dir .. "' under " .. base_docs_path,
+								vim.log.levels.WARN
+							)
+							return
+						end
+
+						local target_readme_files = {}
+						for _, path_str in ipairs(potential_readme_paths) do
+							if path_str ~= "" and vim.fn.filereadable(path_str) == 1 then
+								table.insert(target_readme_files, path_str)
+							end
+						end
+
+						if #target_readme_files == 0 then
+							vim.notify(
+								"No readable README.md found in '" .. clean_dir .. "' under " .. base_docs_path,
+								vim.log.levels.WARN
+							)
+							return
+						elseif #target_readme_files == 1 then
+							-- Open the single matching README.md
+							vim.cmd("edit " .. vim.fn.fnameescape(target_readme_files[1]))
+							vim.notify("Opened: " .. target_readme_files[1], vim.log.levels.INFO)
+							return
+						else
+							-- Multiple README.md files found, let user choose
+							vim.notify(
+								"Multiple README.md files found in '" .. clean_dir .. "'. Choose one:",
+								vim.log.levels.INFO
+							)
+							builtin.find_files({
+								prompt_title = "Choose README.md in: " .. clean_dir,
+								search_dirs = { base_docs_path },
+								default_text = "README.md",
+							})
+							return
+						end
+					-- Check if input contains a file path (has '/' and ends with an extension)
+					elseif dir_name:match("/") and dir_name:match("%.[%w]+$") then
+						-- User provided a file path like "pandas/README.md"
+						local potential_file_paths = vim.fn.globpath(base_docs_path, "**/" .. dir_name, true, true)
+
+						if not potential_file_paths or #potential_file_paths == 0 then
+							vim.notify(
+								"No file '" .. dir_name .. "' found under " .. base_docs_path,
+								vim.log.levels.WARN
+							)
+							return
+						end
+
+						local target_files = {}
+						for _, path_str in ipairs(potential_file_paths) do
+							if path_str ~= "" and vim.fn.filereadable(path_str) == 1 then
+								table.insert(target_files, path_str)
+							end
+						end
+
+						if #target_files == 0 then
+							vim.notify(
+								"No readable file '" .. dir_name .. "' found under " .. base_docs_path,
+								vim.log.levels.WARN
+							)
+							return
+						elseif #target_files == 1 then
+							-- Open the single matching file
+							vim.cmd("edit " .. vim.fn.fnameescape(target_files[1]))
+							vim.notify("Opened: " .. target_files[1], vim.log.levels.INFO)
+							return
+						else
+							-- Multiple files found, let user choose
+							vim.notify(
+								"Multiple files matching '" .. dir_name .. "' found. Choose one:",
+								vim.log.levels.INFO
+							)
+							builtin.find_files({
+								prompt_title = "Choose file: " .. dir_name,
+								search_dirs = { base_docs_path },
+								default_text = vim.fn.fnamemodify(dir_name, ":t"), -- Just the filename for search
+							})
+							return
+						end
+					end
+
 					local search_dirs_for_grep
 					local title_component
 
