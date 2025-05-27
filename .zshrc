@@ -151,6 +151,9 @@ alias l="eza -l --icons --git -a"
 alias ll="eza --tree --level=2 --long --icons --git"
 alias ltree="eza --tree --level=2  --icons --git"
 
+# 7z
+alias 7zCompress='7z a -t7z -md=16m'
+alias 7zExtract='7z x -o./'
 
 # Automatically activate or deactivate Python virtualenv in a directory
 function cd() {
