@@ -436,3 +436,32 @@ vim.api.nvim_create_autocmd("FileType", {
 		)
 	end,
 })
+
+-- Function to toggle markdown task checkbox
+local function toggle_markdown_task()
+	local line = vim.api.nvim_get_current_line()
+
+	-- Check if line contains an unchecked task
+	if line:match("^%s*-%s*%[%s*%]") then
+		-- Replace [ ] with [x]
+		local new_line = line:gsub("^(%s*-%s*)%[%s*%]", "%1[x]")
+		vim.api.nvim_set_current_line(new_line)
+	-- Check if line contains a checked task
+	elseif line:match("^%s*-%s*%[x%]") or line:match("^%s*-%s*%[X%]") then
+		-- Replace [x] or [X] with [ ]
+		local new_line = line:gsub("^(%s*-%s*)%[[xX]%]", "%1[]")
+		vim.api.nvim_set_current_line(new_line)
+	end
+end
+
+-- Create keymap only for markdown files
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function()
+		vim.keymap.set("n", "<leader>tt", toggle_markdown_task, {
+			buffer = true,
+			desc = "Toggle markdown task checkbox",
+			silent = true,
+		})
+	end,
+})
