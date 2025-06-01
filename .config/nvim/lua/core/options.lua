@@ -7,6 +7,7 @@ vim.o.signcolumn = "yes"
 -- Disable the status line at bottom
 vim.o.laststatus = 3
 vim.o.statusline = "%{reg_recording()}"
+vim.opt.fileformat = "unix"
 
 -- Cursor highlighting
 opt.cursorline = true

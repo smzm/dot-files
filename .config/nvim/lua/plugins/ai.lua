@@ -25,14 +25,14 @@ return {
 		version = false, -- set this if you want to always pull the latest change
 		opts = {
 			-- https://github.com/yetone/avante.nvim/wiki/Custom-providers#openai-compatible-providers
-			provider = "openrouter",
+			provider = "gemini",
 			vendors = {
 				openrouter = {
 					__inherited_from = "openai",
 					disable_tools = true,
 					endpoint = "https://openrouter.ai/api/v1",
 					api_key_name = "OPENROUTER_API_KEY",
-					model = "qwen/qwen3-30b-a3b:free",
+					model = "deepseek/deepseek-r1-0528-qwen3-8b:free",
 				},
 				ollama = {
 					__inherited_from = "openai",
