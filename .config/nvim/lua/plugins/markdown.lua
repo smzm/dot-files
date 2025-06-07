@@ -16,6 +16,9 @@ return {
 			vim.api.nvim_set_hl(0, "RenderMarkdownCodeInline", { link = "InlineCodeBlock" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownIndent", { link = "Normal" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownQuote", { link = "Label" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownSuccess", { fg = "#10b981" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownWarn", { fg = "#FFA500" })
+			vim.api.nvim_set_hl(0, "RenderMarkdownError", { fg = "#e8546a" })
 			-- ... (other highlight links remain commented or active as you had them) ...
 
 			require("render-markdown").setup({
