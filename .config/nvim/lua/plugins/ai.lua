@@ -26,19 +26,13 @@ return {
 		opts = {
 			-- https://github.com/yetone/avante.nvim/wiki/Custom-providers#openai-compatible-providers
 			provider = "gemini",
-			vendors = {
+			providers = {
 				openrouter = {
 					__inherited_from = "openai",
 					disable_tools = true,
 					endpoint = "https://openrouter.ai/api/v1",
 					api_key_name = "OPENROUTER_API_KEY",
 					model = "deepseek/deepseek-r1-0528-qwen3-8b:free",
-				},
-				ollama = {
-					__inherited_from = "openai",
-					api_key_name = "",
-					endpoint = "http://127.0.0.1:11434/v1",
-					model = "codegemma",
 				},
 			},
 			mappings = {
