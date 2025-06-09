@@ -222,7 +222,6 @@ elif os_answers["interest"] == "WSL":
         "neovim",
         "lsd",
         "aria2",
-        "ack",
         "tldr",
         "unrar",
         "unzip",
@@ -476,7 +475,6 @@ if os_answers["interest"] == "Arch":
         "yazi",
         "trashy",
         "python-jupytext",
-        "python-kaleido-bin",
         "pnglatex",
     ]
 elif os_answers["interest"] == "WSL":
@@ -486,7 +484,6 @@ elif os_answers["interest"] == "WSL":
         "yazi",
         "trashy",
         "python-jupytext",
-        "python-kaleido-bin",
         "pnglatex",
     ]
 
