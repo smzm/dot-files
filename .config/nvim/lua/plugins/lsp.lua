@@ -40,6 +40,7 @@ return { -- >>> LSP
 				tailwindcss = {}, -- Tailwind CSS
 				templ = {}, -- Templ
 				pyright = {}, -- Python : pyright
+				-- ty = {},
 				ruff = {
 					commands = {
 						RuffAutofix = {
@@ -119,7 +120,6 @@ return { -- >>> LSP
 				{ "codespell" },
 				{ "ruff" },
 				-- { "eslint_d" },
-				{ "pylint" },
 				{ "shellcheck" },
 
 				--DAP
@@ -282,11 +282,14 @@ return { -- >>> LSP
 	-- >>> Formatter
 	{
 		"stevearc/conform.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		enabled = true,
 		config = function()
-			local conform = require("conform")
-
-			conform.setup({
+			require("conform").setup({
+				notify_on_error = false,
+				format_on_save = {
+					timeout_ms = 500,
+					lsp_fallback = true,
+				},
 				formatters_by_ft = {
 					javascript = { "prettier" },
 					typescript = { "prettier" },
@@ -298,25 +301,47 @@ return { -- >>> LSP
 					json = { "prettier" },
 					yaml = { "prettier" },
 					toml = { "taplo" },
-					markdown = { "prettier" },
+					markdown = { "prettier", "injected" },
 					graphql = { "prettier" },
 					liquid = { "prettier" },
 					lua = { "stylua" },
-					python = { "isort", "black", "ruff_format" },
+					python = { "isort", "black", "ruff" },
 				},
-				format_on_save = {
-					lsp_fallback = true,
-					async = false,
-					timeout_ms = 1000,
-				},
+				formatters = {},
 			})
-			vim.keymap.set({ "n", "v" }, "<leader>lf", function()
-				conform.format({
-					lsp_fallback = true,
-					async = false,
-					timeout_ms = 1000,
-				})
-			end, { desc = "Format file or range (in visual mode)" })
+			-- Customize the "injected" formatter : For Code Blocks in Markdown
+			require("conform").formatters.injected = {
+				-- Set the options field
+				options = {
+					-- Set to true to ignore errors
+					ignore_errors = false,
+					-- Map of treesitter language to file extension
+					-- A temporary file name with this extension will be generated during formatting
+					-- because some formatters care about the filename.
+					lang_to_ext = {
+						bash = "sh",
+						c_sharp = "cs",
+						elixir = "exs",
+						javascript = "js",
+						julia = "jl",
+						latex = "tex",
+						markdown = "md",
+						python = "py",
+						ruby = "rb",
+						rust = "rs",
+						teal = "tl",
+						r = "r",
+						typescript = "ts",
+					},
+					-- Map of treesitter language to formatters to use
+					-- (defaults to the value from formatters_by_ft)
+					lang_to_formatters = {
+						python = { "isort", "black" },
+						javascript = { "prettier" },
+						typescript = { "prettier" },
+					},
+				},
+			}
 		end,
 	},
 }
