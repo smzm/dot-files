@@ -5,9 +5,9 @@ return {
 		config = function()
 			require("supermaven-nvim").setup({
 				keymaps = {
-					accept_suggestion = "<Tab>",
+					accept_suggestion = "<M-l>",
 					clear_suggestion = "<C-]>",
-					accept_word = "<C-Right>",
+					accept_word = "<C-l>",
 				},
 				-- ignore_filetypes = { md = true },
 				-- color = {
