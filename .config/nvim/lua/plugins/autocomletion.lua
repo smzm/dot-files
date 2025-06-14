@@ -263,6 +263,9 @@ return {
 			},
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer", "dadbod", "emoji", "dictionary" },
+				per_filetype = {
+					codecompanion = { "codecompanion" },
+				},
 				providers = {
 					lsp = {
 						name = "lsp",

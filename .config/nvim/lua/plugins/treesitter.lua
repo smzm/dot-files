@@ -34,7 +34,13 @@ return {
 			{
 				"echasnovski/mini.ai",
 				event = "BufReadPre",
-				opts = {},
+				config = function()
+					local diff = require("mini.diff")
+					diff.setup({
+						-- Disabled by default
+						source = diff.gen_source.none(),
+					})
+				end,
 			},
 			{
 				"andymass/vim-matchup",

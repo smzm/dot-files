@@ -2,6 +2,7 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+		ft = { "markdown", "codecompanion" },
 		opts = {},
 		config = function()
 			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { link = "H1" })
@@ -571,6 +572,11 @@ return {
 				markdown = {
 					url_encode_path = true,
 					template = "![$CURSOR](./$FILE_PATH)",
+				},
+				codecompanion = {
+					prompt_for_file_name = false,
+					template = "[Image]($FILE_PATH)",
+					use_absolute_path = true,
 				},
 			},
 		},
