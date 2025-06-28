@@ -111,10 +111,11 @@ return { -- >>> LSP
 				-- FORMATTERS
 				{ "black" }, -- Python
 				{ "isort" }, -- Python
-				{ "prettierd" }, -- JS and Many More
-				{ "prettier" }, -- JS and Many More
 				{ "shfmt" }, -- Shell Script
 				{ "stylua" }, -- Lua
+				{ "biome" },
+				{ "prettierd" }, -- JS and Many More
+				{ "prettier" }, -- JS and Many More
 
 				-- LINTERS
 				{ "codespell" },
@@ -291,10 +292,10 @@ return { -- >>> LSP
 					lsp_fallback = true,
 				},
 				formatters_by_ft = {
-					javascript = { "prettier" },
-					typescript = { "prettier" },
-					javascriptreact = { "prettier" },
-					typescriptreact = { "prettier" },
+					javascript = { "biome" },
+					typescript = { "biome" },
+					javascriptreact = { "biome" },
+					typescriptreact = { "biome" },
 					svelte = { "prettier" },
 					css = { "prettier" },
 					html = { "prettier" },
