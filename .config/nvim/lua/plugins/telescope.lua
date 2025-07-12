@@ -227,7 +227,7 @@ return {
 				"n",
 				"<leader>fd",
 				find_and_search_in_docs_subdir,
-				{ desc = "Find text in specific docs sub-directory" }
+				{ desc = "✋ Find text in specific 'DOCS' sub-directory" }
 			)
 		end, -- This is the end of the config = function()
 	},
