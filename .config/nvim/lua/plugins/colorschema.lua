@@ -1,6 +1,6 @@
 return {
 	dir = "~/.config/nvim/lua/themes/monoshine", -- local pathk
-	name = "monoshine", -- optional but recommended
+	name = "neoshine", -- optional but recommended
 	lazy = false,
 	priority = 1000, -- make sure it's loaded early
 	config = function()

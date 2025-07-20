@@ -26,7 +26,8 @@ local colors = {
 	gray_1050 = "#070707",
 	black = "#000000",
 	red = "#FF0000",
-	blue = "#0000FF",
+	orange = "#ffc799",
+	green = "#99ffe4",
 }
 
 function theme.setup()
@@ -45,6 +46,9 @@ function theme.setup()
 	local bg_shades_06, bg_shades_07, bg_shades_08, bg_shades_09, bg_shades_10
 	local bg_shades_11, bg_shades_12, bg_shades_13, bg_shades_14, bg_shades_15
 	local bg_shades_16, bg_shades_17, bg_shades_18, bg_shades_19, bg_shades_20
+	local red = colors.red
+	local orange = colors.orange
+	local green = colors.green
 
 	background = colors.gray_1050 -- Darkest background
 	bg_shades_01 = colors.gray_1000
@@ -70,7 +74,7 @@ function theme.setup()
 	foreground = colors.gray_400
 
 	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_shades_02 })
-	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_03 })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_05 })
 
 	-- 👉 Headings
 	vim.api.nvim_set_hl(0, "H1", { fg = bg_shades_01, bg = bg_shades_18, bold = true })
@@ -517,7 +521,7 @@ function theme.setup()
 		Todo = { fg = bg_shades_16, bg = bg_shades_02 },
 		-- @comment.todo
 
-		Type = { fg = bg_shades_08 },
+		Type = { fg = bg_shades_08, bold = true },
 		-- @type
 		-- @type.builtin
 		-- StorageClass
