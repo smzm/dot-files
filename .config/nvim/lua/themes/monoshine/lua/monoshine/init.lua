@@ -564,6 +564,8 @@ function theme.setup()
 
 		-- @markup.heading.1.delimiter.vimdoc = { fg = "" , bg = ""}
 		-- @markup.heading.2.delimiter.vimdoc = { fg = "" , bg = ""}
+
+		SnacksStatusColumnMark = { fg = bg_shades_20 },
 	}
 
 	-- Set highlights using API
