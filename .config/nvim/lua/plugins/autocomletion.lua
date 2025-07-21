@@ -108,7 +108,7 @@ return {
 				},
 				window = {
 					completion = {
-						winhighlight = "NormalNC:CmpWin,FloatBorder:Title,Search:None",
+						-- winhighlight = "NormalNC:CmpWin,FloatBorder:Title,Search:None",
 						col_offset = -3,
 						side_padding = 0,
 					},
