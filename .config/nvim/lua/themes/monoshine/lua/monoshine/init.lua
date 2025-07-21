@@ -316,7 +316,7 @@ function theme.setup()
 		-- LspCodeLensSeparator
 		-- LspInlayHint = { fg = "" , bg = ""}
 
-		LspReferenceRead = { fg = bg_shades_14, bg = "NONE", bold = true },
+		LspReferenceRead = { fg = "NONE", bg = "NONE" },
 		-- LspReferenceTarget = { fg = "" , bg = ""}
 
 		LspReferenceText = { fg = "NONE", bg = "NONE" },
