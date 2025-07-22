@@ -14,7 +14,7 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 "schemes": [
 		{
 			"name": "xcad",
-			"background": "#1A1A1A",
+			"background": "#070707",
 			"black": "#121212",
 			"blue": "#2B4FFF",
 			"brightBlack": "#666666",
