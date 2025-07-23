@@ -15,9 +15,9 @@ set $alt Mod1
 
 # Set Theme colors
 # Class                  border             backgr. text       indic.        child_border
-client.focused           #644ED6            #0E0F19            #d1d1d1       #644ED6   #644ED6
-client.unfocused         #29272E            #0E0F19            #525252       #161616   #161616
-client.focused_inactive  #466060            #0E0F19            #919191       #466060   #466060
+client.focused           #FFFFFF            #0E0F19            #d1d1d1       #808080   #404040
+client.unfocused         #29272E            #0E0F19            #525252       #121212   #121212
+client.focused_inactive  #466060            #0E0F19            #919191       #466060   #121212
 client.urgent    	     #254cd1            #254cd1            #ffffff       #Abc4ef
 #client.focused_inactive #20252e            #a2a3a3            #a2a3a3       #Abc4ef
 #client.placeholder      #000000            #0c0c0c            #ffffff       #000000 
@@ -65,11 +65,11 @@ set_from_resource $term_color15    color15
 # Gaps and Window
 #for_window [class="^.*"] border pixel 0
 gaps outer 0
-gaps inner 10
+gaps inner 7
 
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 5
+default_border pixel 4
 default_floating_border normal
 
 # Hide borders
@@ -230,6 +230,11 @@ bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
+
+bindsym F1 workspace $ws1
+bindsym F2 workspace $ws2
+bindsym F3 workspace $ws3
+bindsym F4 workspace $ws4
 
 # Move focused container to workspace
 bindsym $mod+Ctrl+1 move container to workspace $ws1
