@@ -68,28 +68,6 @@ return {
 					["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 					["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 					["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-					-- When hit enter, automatically add an import at the top of the file
-					["<CR>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							local entry = cmp.get_selected_entry()
-							if not entry then
-								-- If nothing selected, select the first item
-								cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-								entry = cmp.get_selected_entry()
-							end
-							if entry then
-								cmp.confirm({ select = true })
-								local item = entry.completion_item
-								if item.additionalTextEdits then
-									vim.lsp.util.apply_text_edits(item.additionalTextEdits, 0)
-								end
-							else
-								fallback()
-							end
-						else
-							fallback()
-						end
-					end, { "i", "s" }),
 
 					-- ["<Up>"] = cmp.mapping(function(fallback)
 					-- 	fallback() -- Allows Up arrow to fall back without interacting with cmp

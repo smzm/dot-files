@@ -291,7 +291,7 @@ function theme.setup()
 		-- @function
 		["@function.builtin"] = { fg = bg_shades_14, bold = true },
 
-		Identifier = { fg = bg_shades_08 },
+		Identifier = { fg = bg_shades_12 },
 		-- @property
 		-- NvimIdentifier
 		-- NvimIdentifierScope

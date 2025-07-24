@@ -6,6 +6,7 @@ return {
 			height = 100,
 			border = "rounded",
 			title = " Marks ",
+			default_keymap = false,
 			virtual_text = {
 				enabled = false, -- Enable virtual text marks
 				icon = "●", -- Icon to display
