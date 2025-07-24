@@ -29,7 +29,7 @@ return {
 			},
 			{
 				"windwp/nvim-ts-autotag",
-				lazy = true, -- Load on demand (InsertEnter handled by Treesitter config)
+				event = { "BufReadPre", "BufNewFile" },
 				config = function()
 					require("nvim-ts-autotag").setup()
 				end,
@@ -100,7 +100,6 @@ return {
 				end,
 			},
 			indent = { enable = false, disable = { "python" } },
-			autotag = { enable = true },
 			endwise = { enable = true },
 			matchup = {
 				enable = true,
