@@ -1,4 +1,4 @@
--- >>> Auto completion
+-- >>> 12:47:56mpletion
 -- You need to enable capabilities in lsp.lua based on plugin you are using here.
 -- >>> CMP
 -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -68,6 +68,7 @@ return {
 					["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
 					["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
 					["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+					["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 
 					-- ["<Up>"] = cmp.mapping(function(fallback)
 					-- 	fallback() -- Allows Up arrow to fall back without interacting with cmp

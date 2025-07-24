@@ -29,7 +29,15 @@ return {
 			},
 			{
 				"windwp/nvim-ts-autotag",
-				event = "InsertEnter",
+				lazy = true, -- Load on demand (InsertEnter handled by Treesitter config)
+				opts = {
+					enable_close = true, -- Auto close tags
+					enable_rename = true, -- Auto rename pairs of tags
+				},
+
+				config = function(_, opts)
+					require("nvim-ts-autotag").setup(opts)
+				end,
 			},
 			{
 				"echasnovski/mini.ai",
