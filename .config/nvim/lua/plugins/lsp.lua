@@ -258,7 +258,7 @@ return { -- >>> LSP
 					only_current_line = true,
 					highlight_whole_line = true,
 				},
-				update_in_insert = false,
+				update_in_insert = true,
 				underline = false,
 				severity_sort = true,
 				float = {
