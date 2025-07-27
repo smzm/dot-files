@@ -56,5 +56,4 @@ set database "sqlite"
 
 
 # ============================== THEME ===============================
-include "themes/zathura-gruvbox-light"
-
+include "themes/monoshine"
