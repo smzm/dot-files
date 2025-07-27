@@ -465,7 +465,6 @@ if os_answers["interest"] == "Arch":
         "noto-fonts-emoji",
         "pulseaudio-ctl",
         "jmtpfs",
-        # "flat-remix",
         "flatplat-blue-theme",
         "apple_cursor",
         "ttf-poppins",
