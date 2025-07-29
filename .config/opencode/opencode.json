@@ -1,0 +1,52 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "opencode",
+  "share": "manual",
+  "provider": {
+    "Ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama",
+      "models": {
+        "qwen3:8b": {
+          "name": "qwen3-8b(LOCAL)"
+        }
+      },
+      "options": {
+        "baseURL": "http://127.0.0.1:11434/v1"
+      }
+    }
+  },
+  "model": "",
+  "autoupdate": true,
+  "agent": {
+    "code-reviewer": {
+      "description": "Reviews code for best practices and potential issues",
+      "model": "qwen/qwen3-coder:free",
+      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",
+      "tools": {
+        "read": true,
+        "glob": true,
+        "grep": true,
+        "write": false,
+        "edit": false
+      }
+    }
+  },
+  "mode": {
+    "Docs": {
+      "model": "qwen3-8b(LOCAL)",
+      "temperature": 0.3,
+      "prompt": "{file:./prompts/documentation.txt}",
+      "tools": {
+        "bash": false,
+        "write": false,
+        "edit": true,
+        "path": true,
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true
+      }
+    }
+  }
+}

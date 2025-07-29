@@ -849,6 +849,27 @@ else:
 
 subprocess.run("clear", shell=True)
 
+
+# ===== opencode
+opencode_config = [
+    inquirer.List(
+        "interest",
+        message="Install OpenCode and their configurations",
+        choices=["No", "Yes"],
+    ),
+]
+opencode_answer = inquirer.prompt(opencode_config)
+
+if opencode_answer["interest"] == "Yes":
+    rprint("[bold italic] OpenCode Configuration : ")
+    # Installation
+    os.system("curl -fsSL https://opencode.ai/install | bash")
+
+    # OpenCode Configuration
+    os.system(f"yes | cp -rf {dotfiles_path}/.config/opencode ~/.config/opencode")
+
+subprocess.run("clear", shell=True)
+
 # ===== Yazi : filemanager configuration
 yazi_check = (
     subprocess.run(
