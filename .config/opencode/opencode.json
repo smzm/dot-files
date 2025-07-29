@@ -33,16 +33,16 @@
     }
   },
   "mode": {
-    "Docs": {
+    "Debug": {
       "model": "qwen3-8b(LOCAL)",
       "temperature": 0.3,
-      "prompt": "{file:./prompts/documentation.txt}",
+      "prompt": "{file:./prompts/debug.txt}",
       "tools": {
         "bash": false,
         "write": false,
-        "edit": true,
-        "path": true,
+        "edit": false,
         "read": true,
+        "path": true,
         "grep": true,
         "glob": true,
         "list": true
