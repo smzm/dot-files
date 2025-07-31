@@ -376,54 +376,54 @@ while len(not_installed_packages_pacman) > 0:
         break
 
 
-# # ===== Install dnsmasq and 403Online
-# doh_config = [
-#     inquirer.List(
-#         "interest", message="Install dnsmasq and 403.Online", choices=["No", "Yes"]
-#     )
-# ]
-# doh_config_answer = inquirer.prompt(doh_config)
+# ===== Install dnsmasq and 403Online
+doh_config = [
+    inquirer.List(
+        "interest", message="Install dnsmasq and 403.Online", choices=["No", "Yes"]
+    )
+]
+doh_config_answer = inquirer.prompt(doh_config)
 
-# if doh_config_answer["interest"] == "Yes":
-#     subprocess.run("clear", shell=True)
-#     pacman_result = subprocess.run(
-#         "sudo pacman -S dnsmasq --noconfirm",
-#         shell=True,
-#         stdout=subprocess.PIPE,
-#         stderr=subprocess.PIPE,
-#     )
-#     if pacman_result.returncode == 0:
-#         os.system(f"sudo cp -f {dotfiles_path}/etc/dnsmasq.conf /etc/dnsmasq.conf")
+if doh_config_answer["interest"] == "Yes":
+    subprocess.run("clear", shell=True)
+    pacman_result = subprocess.run(
+        "sudo pacman -S dnsmasq --noconfirm",
+        shell=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    if pacman_result.returncode == 0:
+        os.system(f"sudo cp -f {dotfiles_path}/etc/dnsmasq.conf /etc/dnsmasq.conf")
 
-#         if os_q == "WSL":
-#             os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
-#             os.system(
-#                 "sudo systemctl enable systemd-resolved ; sudo systemctl start systemd-resolved"
-#             )
-#             os.system(
-#                 "sudo grep -q '^\[Resolve\]' /etc/systemd/resolved.conf && ! grep -q '^DNS=127.0.0.1:5353' /etc/systemd/resolved.conf && sudo sed -i '/^\[Resolve\]/a DNS=127.0.0.1:5353' /etc/systemd/resolved.conf"
-#             )
-#             os.system(
-#                 "sudo grep -q '^port 5353$' /etc/dnsmasq.conf || sudo sed -i '/#DNS PORT/!b;n;/^port 5353$/b;a port=5353' /etc/dnsmasq.conf"
-#             )
+        if os_q == "WSL":
+            os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
+            os.system(
+                "sudo systemctl enable systemd-resolved ; sudo systemctl start systemd-resolved"
+            )
+            os.system(
+                "sudo grep -q '^\[Resolve\]' /etc/systemd/resolved.conf && ! grep -q '^DNS=127.0.0.1:5353' /etc/systemd/resolved.conf && sudo sed -i '/^\[Resolve\]/a DNS=127.0.0.1:5353' /etc/systemd/resolved.conf"
+            )
+            os.system(
+                "sudo grep -q '^port 5353$' /etc/dnsmasq.conf || sudo sed -i '/#DNS PORT/!b;n;/^port 5353$/b;a port=5353' /etc/dnsmasq.conf"
+            )
 
-#         if os_q == "ARCH":
-#             os.system(
-#                 "sudo systemctl disable systemd-resolved ; sudo systemctl stop systemd-resolved"
-#             )
-#             os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
+        if os_q == "ARCH":
+            os.system(
+                "sudo systemctl disable systemd-resolved ; sudo systemctl stop systemd-resolved"
+            )
+            os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
 
-#             # remove /etc/resolve.conf
-#             os.system("sudo chattr -i /etc/resolv.conf")
-#             os.system("sudo rm -rf /etc/resolv.conf")
-#             os.system(
-#                 "sudo grep -qxF '[main]' /etc/NetworkManager/NetworkManager.conf || echo -e '[main]\ndns=dnsmasq' | sudo tee -a /etc/NetworkManager/NetworkManager.conf"
-#             )
-#             os.system("sudo systemctl restart NetworkManager")
+            # remove /etc/resolve.conf
+            os.system("sudo chattr -i /etc/resolv.conf")
+            os.system("sudo rm -rf /etc/resolv.conf")
+            os.system(
+                "sudo grep -qxF '[main]' /etc/NetworkManager/NetworkManager.conf || echo -e '[main]\ndns=dnsmasq' | sudo tee -a /etc/NetworkManager/NetworkManager.conf"
+            )
+            os.system("sudo systemctl restart NetworkManager")
 
-#         print("\n")
-#     else:
-#         rprint("[red italic] dnsmasq could not installed.\n")
+        print("\n")
+    else:
+        rprint("[red italic] dnsmasq could not installed.\n")
 
 
 # ===== Arch community packages : Paru
