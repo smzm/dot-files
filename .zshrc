@@ -9,6 +9,8 @@ export PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
 
 export TESSDATA_PREFIX=/usr/share/tessdata/
 
+export PATH=/home/rodd/.opencode/bin:$PATH
+
 # bun completions
 [ -s "/home/rodd/.bun/_bun" ] && source "/home/rodd/.bun/_bun"
 
@@ -179,6 +181,17 @@ function cd() {
 }
 
 
+
+# use y instead of yazi to start, and press q to quit, you'll see the CWD changed
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+	rm -f -- "$tmp"
+}
+
+
 syncnvim() {
   if [ -z "$1" ]; then
     echo "Usage: syncnvim \"commit message\""
@@ -215,5 +228,6 @@ syncnvim() {
 
   echo "✅ syncnvim complete!"
 }
+
 
 
