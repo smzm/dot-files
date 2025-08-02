@@ -116,6 +116,7 @@ return { -- >>> LSP
 				{ "biome" },
 				{ "prettierd" }, -- JS and Many More
 				{ "prettier" }, -- JS and Many More
+				{ "latexindent" },
 
 				-- LINTERS
 				{ "codespell" },
@@ -307,6 +308,7 @@ return { -- >>> LSP
 					liquid = { "prettier" },
 					lua = { "stylua" },
 					python = { "isort", "black", "ruff" },
+					tex = { "latexindent" },
 				},
 				formatters = {},
 			})
@@ -340,6 +342,7 @@ return { -- >>> LSP
 						python = { "isort", "black" },
 						javascript = { "prettier" },
 						typescript = { "prettier" },
+						latex = { "latexindent" },
 					},
 				},
 			}
