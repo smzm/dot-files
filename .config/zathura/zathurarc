@@ -54,6 +54,5 @@ map <C-v> toggle_fullscreen
 # set backend to avoid errors
 set database "sqlite"
 
-
 # ============================== THEME ===============================
 include "themes/monoshine"
