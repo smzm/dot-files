@@ -30,6 +30,7 @@ return {
 		config = function()
 			local default_model = "google/gemini-2.0-flash-001"
 			local available_models = {
+				"qwen/qwen3-coder:free",
 				"google/gemini-2.0-flash-001",
 				"google/gemini-2.5-pro-preview-03-25",
 				"anthropic/claude-3.7-sonnet",
