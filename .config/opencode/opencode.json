@@ -17,6 +17,12 @@
     }
   },
   "model": "",
+  "permission": {
+    "edit": "ask",
+    "bash": {
+      "rm": "ask"
+    }
+  },
   "autoupdate": true,
   "agent": {
     "code-reviewer": {
@@ -67,7 +73,7 @@
     "input_clear": "ctrl+c",
     "input_paste": "ctrl+v",
     "input_submit": "enter",
-    "input_newline": "shift+enter,ctrl+j",
+    "input_newline": "shift+enter",
     "messages_page_up": "pgup",
     "messages_page_down": "pgdown",
     "messages_half_page_up": "ctrl+k",
