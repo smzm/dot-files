@@ -156,6 +156,7 @@ return {
 	},
 
 	-- TO CREATE ENV : https://github.com/benlubas/molten-nvim/blob/main/docs/Virtual-Environments.md
+	-- Molten Needed Package  -- : ipykernel pynvim jupyter_client cairosvg plotly kaleido pnglatex pyperclip
 	-- run "mkdir -p ~/.local/share/jupyter/runtime" at beginning to create the runtime directory
 	{
 		"benlubas/molten-nvim",
