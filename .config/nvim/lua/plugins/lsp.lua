@@ -307,7 +307,7 @@ return { -- >>> LSP
 					graphql = { "prettier" },
 					liquid = { "prettier" },
 					lua = { "stylua" },
-					python = { "isort", "black", "ruff" },
+					python = { "isort", "black" },
 					tex = { "latexindent" },
 				},
 				formatters = {},
