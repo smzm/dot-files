@@ -43,8 +43,8 @@ set window-height 1080
 set adjust-open "best-fit"
 
 map <Space> toggle_index
-map K zoom in
-map J zoom out
+map <C-j> zoom out
+map <C-k> zoom in
 map p print
 map w recolor
 # map k 5k

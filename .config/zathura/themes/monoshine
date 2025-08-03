@@ -7,12 +7,6 @@ set render-loading "false"
 set window-width 960
 set window-height 1080
 
-map <Space> toggle_index
-map K zoom in
-map J zoom out
-map p print
-map w recolor
-
 set notification-error-bg       "#060606" # bg
 set notification-error-fg       "#fb4934" # bright:red
 set notification-warning-bg     "#060606" # bg
