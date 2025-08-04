@@ -631,6 +631,8 @@ npm_packages_list = [
     "yaml-language-server",
     "neovim",
     "tree-sitter",
+    "biome",
+    "prettier",
 ]
 npm_package = [
     inquirer.Checkbox(
