@@ -208,17 +208,18 @@ return {
 				":MoltenEvaluateLine<CR>",
 				{ silent = true, desc = "Run Current Line" }
 			)
-			-- For python block has matplotlib visualization <localleader>mp
+			-- For python block has matplotlib visualization <localleader>\\ and then <localleader>mp
 			vim.keymap.set(
 				"n",
 				"<localleader>mp",
 				":MoltenImagePopup<CR>",
 				{ silent = true, desc = "molten image popup" }
 			)
+			-- For python block has matplotlib visualization <localleader>\\ and then <localleader>CR
 			vim.keymap.set(
 				"n",
 				"<localleader><CR>",
-				":noautocmd MoltenEnterOutput<CR>",
+				":noautocmd MoltenEnterOutput<CR> :noautocmd MoltenEnterOutput<CR>",
 				{ silent = true, desc = "show/enter output" }
 			)
 			vim.keymap.set(
