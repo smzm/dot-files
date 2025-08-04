@@ -208,12 +208,18 @@ return {
 				":MoltenEvaluateLine<CR>",
 				{ silent = true, desc = "Run Current Line" }
 			)
-
+			-- For python block has matplotlib visualization <localleader>mp
 			vim.keymap.set(
 				"n",
 				"<localleader>mp",
 				":MoltenImagePopup<CR>",
 				{ silent = true, desc = "molten image popup" }
+			)
+			vim.keymap.set(
+				"n",
+				"<localleader><CR>",
+				":noautocmd MoltenEnterOutput<CR>",
+				{ silent = true, desc = "show/enter output" }
 			)
 			vim.keymap.set(
 				"n",
@@ -233,12 +239,6 @@ return {
 				"<localleader>mu",
 				":MoltenReevaluateAll<CR>", -- This is Molten's own re-evaluate all, might behave differently
 				{ silent = true, desc = "Re-evaluate all (Molten built-in)" }
-			)
-			vim.keymap.set(
-				"n",
-				"<localleader><CR>",
-				":noautocmd MoltenEnterOutput<CR>",
-				{ silent = true, desc = "show/enter output" }
 			)
 
 			vim.keymap.set(
@@ -283,6 +283,9 @@ return {
 				end, 5)
 			end
 
+			---------------------------------------------------------------------
+			-- Run Python cell with \\
+			---------------------------------------------------------------------
 			vim.keymap.set("n", "<localleader>\\", function()
 				-- ... (block finding logic from your previous working version) ...
 				local cursor_line = vim.fn.line(".")
@@ -349,7 +352,7 @@ return {
 			end, { silent = true, desc = "Molten: Run current block" })
 
 			---------------------------------------------------------------------
-			-- NEW: Run all Python code blocks sequentially
+			-- Run all Python code blocks sequentially with <leader>ma
 			---------------------------------------------------------------------
 			local collected_blocks_to_run = {}
 			local current_block_run_idx = 0
@@ -565,7 +568,7 @@ return {
 			-- Examples: 'Normal', '#ff0000'
 			foreground = "Normal",
 			-- Hide the text when the equation is under the cursor.
-			anticonceal = false,
+			anticonceal = true,
 			-- Hide the text when in the Insert Mode.
 			hide_on_insert = true,
 			-- Enable dynamic size for non-inline equations.
