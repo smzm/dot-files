@@ -571,7 +571,7 @@ return {
 			-- Enable dynamic size for non-inline equations.
 			dynamic = true,
 			-- Configure the scale of dynamic-rendered equations.
-			dynamic_scale = 1.0,
+			dynamic_scale = 1,
 			-- Interval between updates (milliseconds).
 			update_interval = 400,
 
@@ -579,7 +579,7 @@ return {
 			-- font, high values may produce aliased images.
 			-- WARNING: This do not affect how the images are displayed, only how many pixels are used to render them.
 			--          See `dynamic_scale` to modify the displayed size.
-			internal_scale = 1.0,
+			internal_scale = 1,
 		},
 	},
 

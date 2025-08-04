@@ -35,7 +35,6 @@ return { -- >>> LSP
 					-- },
 				}, -- Javascript, TypeScript
 				html = {}, -- HTML
-				htmx = {}, -- HTMX
 				cssls = {}, -- CSS
 				tailwindcss = {}, -- Tailwind CSS
 				templ = {}, -- Templ
@@ -113,17 +112,15 @@ return { -- >>> LSP
 				{ "isort" }, -- Python
 				{ "shfmt" }, -- Shell Script
 				{ "stylua" }, -- Lua
-				{ "biome" },
+				{ "biome" }, -- JS and Many More
 				{ "prettierd" }, -- JS and Many More
 				{ "prettier" }, -- JS and Many More
 				{ "latexindent" },
-
 				-- LINTERS
 				{ "codespell" },
 				{ "ruff" },
 				-- { "eslint_d" },
 				{ "shellcheck" },
-
 				--DAP
 				{ "debugpy" },
 			})
@@ -149,7 +146,7 @@ return { -- >>> LSP
 			-- mason_lspconfig.setup({ ensure_installed = servers_to_install })
 			mason_tool_installer.setup({
 				ensure_installed = ensure_installed,
-				auro_update = true,
+				auto_update = true,
 				run_on_start = true,
 				start_delay = 2000,
 			})
@@ -281,6 +278,7 @@ return { -- >>> LSP
 			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e8546a", bg = None })
 		end,
 	},
+
 	-- >>> Formatter
 	{
 		"stevearc/conform.nvim",
@@ -290,7 +288,7 @@ return { -- >>> LSP
 				notify_on_error = false,
 				format_on_save = {
 					timeout_ms = 500,
-					lsp_fallback = true,
+					lsp_fallback = false,
 				},
 				formatters_by_ft = {
 					javascript = { "biome" },

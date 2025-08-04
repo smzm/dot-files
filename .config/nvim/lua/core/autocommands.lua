@@ -87,25 +87,6 @@ autocmd("BufReadPost", {
 	end,
 })
 
--- Auto Save when leaving insert mode
-autocmd({ "InsertLeave", "TermOpen" }, {
-	buffer = bufnr,
-	group = augroup("auto_save", { clear = true }),
-	callback = function()
-		local curbuf = vim.api.nvim_get_current_buf()
-		if not vim.api.nvim_buf_get_option(curbuf, "modified") or vim.fn.getbufvar(curbuf, "&modifiable") == 0 then
-			return
-		end
-
-		vim.cmd([[silent! update]])
-		vim.lsp.buf.format({
-			filter = function(_client)
-				return _client.name == "null-ls"
-			end,
-		})
-	end,
-})
-
 -- When you open a Python file inside a project folder with .venv, it will use that interpreter.
 vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "*.py",
