@@ -229,5 +229,159 @@ syncnvim() {
   echo "✅ syncnvim complete!"
 }
 
+# Comprehensive Arch Linux cleanup function
+cleanup_arch() {
+    echo "🧹 Starting Arch Linux cleanup..."
+    
+    # Color codes for better output
+    local GREEN='\033[0;32m'
+    local YELLOW='\033[1;33m'
+    local RED='\033[0;31m'
+    local NC='\033[0m' # No Color
+    
+    # Function to print colored output
+    print_status() {
+        echo -e "${GREEN}[INFO]${NC} $1"
+    }
+    
+    print_warning() {
+        echo -e "${YELLOW}[WARNING]${NC} $1"
+    }
+    
+    print_error() {
+        echo -e "${RED}[ERROR]${NC} $1"
+    }
+    
+    # Check if running as root (not recommended)
+    if [[ $EUID -eq 0 ]]; then
+        print_warning "Running as root. This is not recommended for regular cleanup."
+    fi
+    
+    # 1. Clean pacman cache
+    print_status "Cleaning pacman cache..."
+    if command -v pacman &> /dev/null; then
+        # Keep only the most recent version of each package
+        sudo pacman -Sc --noconfirm
+        
+        # Optional: Uncomment the next line to remove ALL cached packages
+        # sudo pacman -Scc --noconfirm
+        
+        # Clean orphaned packages
+        print_status "Removing orphaned packages..."
+        local orphans=$(pacman -Qtdq 2>/dev/null)
+        if [[ -n "$orphans" ]]; then
+            sudo pacman -Rns $orphans --noconfirm
+            print_status "Removed orphaned packages: $orphans"
+        else
+            print_status "No orphaned packages found"
+        fi
+    else
+        print_error "Pacman not found"
+    fi
+    
+    # 2. Clean paru cache (if installed)
+    if command -v paru &> /dev/null; then
+        print_status "Cleaning paru cache..."
+        paru -Sc --noconfirm
+        
+        # Clean paru build directory
+        if [[ -d ~/.cache/paru ]]; then
+            print_status "Cleaning paru build cache..."
+            rm -rf ~/.cache/paru/clone/*
+        fi
+    else
+        print_status "Paru not installed, skipping paru cleanup"
+    fi
+    
+    # 3. Clean yay cache (if installed)
+    if command -v yay &> /dev/null; then
+        print_status "Cleaning yay cache..."
+        yay -Sc --noconfirm
+        
+        # Clean yay build directory
+        if [[ -d ~/.cache/yay ]]; then
+            print_status "Cleaning yay build cache..."
+            rm -rf ~/.cache/yay/*
+        fi
+    else
+        print_status "Yay not installed, skipping yay cleanup"
+    fi
+    
+    # 4. Clean temporary files
+    print_status "Cleaning temporary files..."
+    
+    # System temp directories (requires sudo)
+    if [[ -w /tmp ]]; then
+        find /tmp -type f -atime +7 -delete 2>/dev/null || true
+        find /tmp -type d -empty -delete 2>/dev/null || true
+    fi
+    
+    # User temp directories
+    [[ -d ~/.cache ]] && find ~/.cache -type f -atime +30 -delete 2>/dev/null || true
+    [[ -d ~/.tmp ]] && rm -rf ~/.tmp/* 2>/dev/null || true
+    
+    # 5. Clean systemd journal logs
+    print_status "Cleaning systemd journal logs..."
+    sudo journalctl --disk-usage
+    # Keep only last 2 weeks of logs
+    sudo journalctl --vacuum-time=2weeks
+    
+    # 6. Clean thumbnails
+    print_status "Cleaning thumbnails..."
+    [[ -d ~/.cache/thumbnails ]] && rm -rf ~/.cache/thumbnails/* 2>/dev/null || true
+    [[ -d ~/.thumbnails ]] && rm -rf ~/.thumbnails/* 2>/dev/null || true
+    
+    # 7. Clean browser caches (optional - be careful with this)
+    if [[ "$1" == "--deep" ]]; then
+        print_warning "Deep cleaning browser caches (--deep flag detected)..."
+        
+        # Firefox
+        [[ -d ~/.cache/mozilla ]] && rm -rf ~/.cache/mozilla/* 2>/dev/null || true
+        
+        # Chrome/Chromium
+        [[ -d ~/.cache/google-chrome ]] && rm -rf ~/.cache/google-chrome/* 2>/dev/null || true
+        [[ -d ~/.cache/chromium ]] && rm -rf ~/.cache/chromium/* 2>/dev/null || true
+    fi
+    
+    # 8. Clean old log files
+    print_status "Cleaning old log files..."
+    find ~/.local/share/xorg -name "*.log" -mtime +30 -delete 2>/dev/null || true
+    
+    # 9. Clean pip cache
+    if command -v pip &> /dev/null; then
+        print_status "Cleaning pip cache..."
+        pip cache purge 2>/dev/null || true
+    fi
+    
+    # 10. Clean npm cache
+    if command -v npm &> /dev/null; then
+        print_status "Cleaning npm cache..."
+        npm cache clean --force 2>/dev/null || true
+    fi
+    
+    # 11. Clean cargo cache
+    if command -v cargo &> /dev/null && [[ -d ~/.cargo ]]; then
+        print_status "Cleaning cargo cache..."
+        [[ -d ~/.cargo/registry/cache ]] && rm -rf ~/.cargo/registry/cache/* 2>/dev/null || true
+    fi
+    
+    # 12. Show disk space saved
+    print_status "Cleanup completed!"
+    echo -e "${GREEN}💾 Current disk usage:${NC}"
+    df -h / | tail -1
+    
+    # Optional: Show largest directories in home
+    if [[ "$1" == "--analyze" ]]; then
+        echo -e "\n${YELLOW}📊 Largest directories in your home:${NC}"
+        du -ah ~ | sort -rh | head -10
+    fi
+}
 
+# Add an alias for quick access
+alias cleanup='cleanup_arch'
+alias cleanup-deep='cleanup_arch --deep'
+alias cleanup-analyze='cleanup_arch --analyze'
+
+
+export OPENROUTER_API_KEY="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"
 
