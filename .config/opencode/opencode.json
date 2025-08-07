@@ -73,7 +73,7 @@
     "input_clear": "ctrl+c",
     "input_paste": "ctrl+v",
     "input_submit": "enter",
-    "input_newline": "shift+enter",
+    "input_newline": "<leader>enter",
     "messages_page_up": "pgup",
     "messages_page_down": "pgdown",
     "messages_half_page_up": "ctrl+k",
