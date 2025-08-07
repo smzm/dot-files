@@ -381,7 +381,3 @@ cleanup_arch() {
 alias cleanup='cleanup_arch'
 alias cleanup-deep='cleanup_arch --deep'
 alias cleanup-analyze='cleanup_arch --analyze'
-
-
-export OPENROUTER_API_KEY="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"
-
