@@ -306,7 +306,7 @@ function theme.setup()
 
 		Keyword = { fg = bg_shades_14, bold = true },
 		-- @keyword
-		Label = { fg = background, bg = bg_shades_16 },
+		Label = { fg = bg_shades_13 },
 		-- @label
 
 		LineNr = { fg = bg_shades_03 },

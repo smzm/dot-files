@@ -17,130 +17,149 @@ return {
 			})
 		end,
 	},
+	{
+		"NickvanDyke/opencode.nvim",
+		dependencies = { "folke/snacks.nvim" },
+		---@type opencode.Config
+		opts = {
+			-- Your configuration, if any
+		},
+  -- stylua: ignore
+  keys = {
+    { '<localleader>ot', function() require('opencode').toggle() end, desc = 'Toggle embedded opencode', },
+    { '<localleader><leader>', function() require('opencode').ask() end, desc = 'Ask opencode', mode = 'n', },
+    { '<localleader><leader>', function() require('opencode').ask('@selection: ') end, desc = 'Ask opencode about selection', mode = 'v', },
+    { '<localleader>op', function() require('opencode').select_prompt() end, desc = 'Select prompt', mode = { 'n', 'v', }, },
+    { '<localleader>on', function() require('opencode').command('session_new') end, desc = 'New session', },
+    { '<localleader>oy', function() require('opencode').command('messages_copy') end, desc = 'Copy last message', },
+    { '<C-K>',    function() require('opencode').command('messages_half_page_up') end, desc = 'Scroll messages up', },
+    { '<C-J>',    function() require('opencode').command('messages_half_page_down') end, desc = 'Scroll messages down', },
+		},
+	},
 
 	-- -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> code companion
-	{
-		"olimorris/codecompanion.nvim",
-		opts = {},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-			"ravitemer/mcphub.nvim",
-		},
-		config = function()
-			local default_model = "google/gemini-2.0-flash-001"
-			local available_models = {
-				"qwen/qwen3-coder:free",
-				"google/gemini-2.0-flash-001",
-				"google/gemini-2.5-pro-preview-03-25",
-				"anthropic/claude-3.7-sonnet",
-				"anthropic/claude-3.5-sonnet",
-				"openai/gpt-4o-mini",
-			}
-			local current_model = default_model
-
-			local function select_model()
-				vim.ui.select(available_models, {
-					prompt = "Select  Model:",
-				}, function(choice)
-					if choice then
-						current_model = choice
-						vim.notify("Selected model: " .. current_model)
-					end
-				end)
-			end
-
-			require("codecompanion").setup({
-				adapters = {
-					openrouter = function()
-						return require("codecompanion.adapters").extend("openai_compatible", {
-							env = {
-								url = "https://openrouter.ai/api",
-								api_key = "OPENROUTER_API_KEY",
-								chat_url = "/v1/chat/completions",
-							},
-							schema = {
-								model = {
-									default = current_model,
-								},
-							},
-						})
-					end,
-				},
-				strategies = {
-					-- By default, adapters will look in your environment for a *_API_KEY where * is the name of the adapter
-					chat = {
-						tools = {
-							opts = {
-								-- When a tool executes  it can be useful to automatically send its output back to the LLM
-								auto_submit_errors = true, -- Send any errors to the LLM automatically?
-								auto_submit_success = true, -- Send any successful output to the LLM automatically?
-							},
-						},
-						adapter = {
-							name = "gemini",
-							model = "gemini-2.5-flash-preview-04-17",
-						},
-					},
-					inline = {
-						adapter = "gemini",
-						layout = "vertical", -- vertical|horizontal|buffer
-						keymaps = {
-							accept_change = {
-								modes = { n = "ga" },
-								description = "Accept the suggested change",
-							},
-							rejectjchange = {
-								modes = { n = "gr" },
-								description = "Reject the suggested change",
-							},
-						},
-					},
-					cmd = {
-						adapter = "gemini",
-					},
-				},
-				extensions = {
-					mcphub = {
-						callback = "mcphub.extensions.codecompanion",
-						opts = {
-							make_vars = true,
-							make_slash_commands = true,
-							show_result_in_chat = true,
-						},
-					},
-				},
-			})
-
-			vim.keymap.set(
-				{ "n", "v" },
-				"<localleader><leader>",
-				"<cmd>CodeCompanion<cr>",
-				{ noremap = true, silent = true }
-			)
-
-			vim.keymap.set(
-				{ "n", "v" },
-				"<localleader>c",
-				"<cmd>CodeCompanionActions<cr>",
-				{ noremap = true, silent = true }
-			)
-
-			vim.keymap.set(
-				{ "n" },
-				"<LocalLeader>a",
-				"<cmd>CodeCompanionChat Toggle<cr>",
-				{ noremap = true, silent = true }
-			)
-
-			vim.keymap.set("v", "<localleader>a", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
-
-			vim.keymap.set("n", "<localleader>m", select_model, { desc = "Select Gemini Model" })
-
-			-- Expand 'cc' into 'CodeCompanion' in the command line
-			vim.cmd([[cab cc CodeCompanion]])
-		end,
-	},
+	-- {
+	-- 	"olimorris/codecompanion.nvim",
+	-- 	opts = {},
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"ravitemer/mcphub.nvim",
+	-- 	},
+	-- 	config = function()
+	-- 		local default_model = "google/gemini-2.0-flash-001"
+	-- 		local available_models = {
+	-- 			"qwen/qwen3-coder:free",
+	-- 			"google/gemini-2.0-flash-001",
+	-- 			"google/gemini-2.5-pro-preview-03-25",
+	-- 			"anthropic/claude-3.7-sonnet",
+	-- 			"anthropic/claude-3.5-sonnet",
+	-- 			"openai/gpt-4o-mini",
+	-- 		}
+	-- 		local current_model = default_model
+	--
+	-- 		local function select_model()
+	-- 			vim.ui.select(available_models, {
+	-- 				prompt = "Select  Model:",
+	-- 			}, function(choice)
+	-- 				if choice then
+	-- 					current_model = choice
+	-- 					vim.notify("Selected model: " .. current_model)
+	-- 				end
+	-- 			end)
+	-- 		end
+	--
+	-- 		require("codecompanion").setup({
+	-- 			adapters = {
+	-- 				openrouter = function()
+	-- 					return require("codecompanion.adapters").extend("openai_compatible", {
+	-- 						env = {
+	-- 							url = "https://openrouter.ai/api",
+	-- 							api_key = "OPENROUTER_API_KEY",
+	-- 							chat_url = "/v1/chat/completions",
+	-- 						},
+	-- 						schema = {
+	-- 							model = {
+	-- 								default = current_model,
+	-- 							},
+	-- 						},
+	-- 					})
+	-- 				end,
+	-- 			},
+	-- 			strategies = {
+	-- 				-- By default, adapters will look in your environment for a *_API_KEY where * is the name of the adapter
+	-- 				chat = {
+	-- 					tools = {
+	-- 						opts = {
+	-- 							-- When a tool executes  it can be useful to automatically send its output back to the LLM
+	-- 							auto_submit_errors = true, -- Send any errors to the LLM automatically?
+	-- 							auto_submit_success = true, -- Send any successful output to the LLM automatically?
+	-- 						},
+	-- 					},
+	-- 					adapter = {
+	-- 						name = "gemini",
+	-- 						model = "gemini-2.5-flash-preview-04-17",
+	-- 					},
+	-- 				},
+	-- 				inline = {
+	-- 					adapter = "gemini",
+	-- 					layout = "vertical", -- vertical|horizontal|buffer
+	-- 					keymaps = {
+	-- 						accept_change = {
+	-- 							modes = { n = "ga" },
+	-- 							description = "Accept the suggested change",
+	-- 						},
+	-- 						rejectjchange = {
+	-- 							modes = { n = "gr" },
+	-- 							description = "Reject the suggested change",
+	-- 						},
+	-- 					},
+	-- 				},
+	-- 				cmd = {
+	-- 					adapter = "gemini",
+	-- 				},
+	-- 			},
+	-- 			extensions = {
+	-- 				mcphub = {
+	-- 					callback = "mcphub.extensions.codecompanion",
+	-- 					opts = {
+	-- 						make_vars = true,
+	-- 						make_slash_commands = true,
+	-- 						show_result_in_chat = true,
+	-- 					},
+	-- 				},
+	-- 			},
+	-- 		})
+	--
+	-- 		vim.keymap.set(
+	-- 			{ "n", "v" },
+	-- 			"<localleader><leader>",
+	-- 			"<cmd>CodeCompanion<cr>",
+	-- 			{ noremap = true, silent = true }
+	-- 		)
+	--
+	-- 		vim.keymap.set(
+	-- 			{ "n", "v" },
+	-- 			"<localleader>c",
+	-- 			"<cmd>CodeCompanionActions<cr>",
+	-- 			{ noremap = true, silent = true }
+	-- 		)
+	--
+	-- 		vim.keymap.set(
+	-- 			{ "n" },
+	-- 			"<LocalLeader>a",
+	-- 			"<cmd>CodeCompanionChat Toggle<cr>",
+	-- 			{ noremap = true, silent = true }
+	-- 		)
+	--
+	-- 		vim.keymap.set("v", "<localleader>a", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+	--
+	-- 		vim.keymap.set("n", "<localleader>m", select_model, { desc = "Select Gemini Model" })
+	--
+	-- 		-- Expand 'cc' into 'CodeCompanion' in the command line
+	-- 		vim.cmd([[cab cc CodeCompanion]])
+	-- 	end,
+	-- },
 
 	-- -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> avante
 	-- {
