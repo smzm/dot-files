@@ -1,7 +1,14 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  // ==========================================================
+  // THEME CONFIGURATION
+  // ==========================================================
   "theme": "opencode",
+
   "share": "manual",
+  // ==========================================================
+  // MODELS AND PROVIDERS + (opencode auth login)
+  // ==========================================================
   "provider": {
     "Ollama": {
       "npm": "@ai-sdk/openai-compatible",
@@ -17,6 +24,9 @@
     }
   },
   "model": "",
+  // ==========================================================
+  // PERMISSIONS
+  // =========================================================
   "permission": {
     "edit": "ask",
     "bash": {
@@ -24,37 +34,9 @@
     }
   },
   "autoupdate": true,
-  "agent": {
-    "code-reviewer": {
-      "description": "Reviews code for best practices and potential issues",
-      "model": "qwen/qwen3-coder:free",
-      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",
-      "tools": {
-        "read": true,
-        "glob": true,
-        "grep": true,
-        "write": false,
-        "edit": false
-      }
-    }
-  },
-  "mode": {
-    "Debug": {
-      "model": "qwen3-8b(LOCAL)",
-      "temperature": 0.3,
-      "prompt": "{file:./prompts/debug.txt}",
-      "tools": {
-        "bash": false,
-        "write": false,
-        "edit": false,
-        "read": true,
-        "path": true,
-        "grep": true,
-        "glob": true,
-        "list": true
-      }
-    }
-  },
+  // ==========================================================
+  // KEYBINDINGS 
+  // ==========================================================
   "keybinds": {
     "leader": "alt+`",
     "app_help": "<leader>h",
@@ -81,7 +63,6 @@
     "messages_first": "ctrl+g",
     "messages_last": "ctrl+alt+g",
     "messages_copy": "<leader>y",
-
     "app_exit": "ctrl+c,<leader>q"
   }
 }
