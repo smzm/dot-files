@@ -30,7 +30,7 @@ return {
 				win = {
 					position = "right",
 					-- I usually want to `toggle` and then immediately `ask` - seems like a sensible default
-					enter = false,
+					enter = true,
 					width = 75,
 				},
 				env = {
