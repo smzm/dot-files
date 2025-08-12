@@ -377,6 +377,7 @@ set $ws8 8:
 # assign [class="Pcmanfm"] $ws3
 # assign [class="code|Code"] $ws2
 assign [class="hiddify|Hiddify"] $ws5
+assign [class="AmneziaVPN"] $ws3
 # cannot use assign for Spotify
 for_window [class="spotify|Spotify"] move workspace $ws4
 
@@ -431,3 +432,4 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
 
 # Auto mount removable media
 exec --no-startup-id udiskie &
+
