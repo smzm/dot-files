@@ -14,31 +14,6 @@ cd mydotfiles     # always run the script from this directory
 
 and Use `dotfile_installation.py` python file for installing programms and dotfiles.
 
-<br>
-
-### Autostart programs when reboot (Optional)
-
-- Add to the `/etc/systemd/system/vpn.service` :
-
-```
-[Unit]
-Description=vpn
-After=network-online.target
-Wants=network-online.target
-
-
-[Service]
-ExecStart=/home/rodd/Desktop/vpn.sh
-Environment=DISPLAY=:0
-Restart=always
-
-
-[Install]
-WantedBy=multi-user.target
-```
-
-- run `sudo systemctl daemon-reload` and `sudo systemctl enable vpn.service`
-- If your service could not access to the display create `~/.xprofile` and add `xhost +SI:localuser:root` to it to give access the root user to display manager.
 
 <br>
 <br>
