@@ -349,7 +349,7 @@ function theme.setup()
 		-- @diff
 		-- NvimSpacing
 
-		NormalFloat = { fg = bg_shades_14, bg = bg_shades_02 },
+		NormalFloat = { bg = bg_shades_03 },
 
 		NormalNC = { bg = background },
 

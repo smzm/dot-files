@@ -5,7 +5,7 @@ return {
 		config = function()
 			require("supermaven-nvim").setup({
 				keymaps = {
-					accept_suggestion = "<M-l>",
+					accept_suggestion = "<Tab>",
 					clear_suggestion = "<C-]>",
 					accept_word = "<C-l>",
 				},
@@ -47,8 +47,8 @@ return {
     { '<leader>op', function() require('opencode').select_prompt() end, desc = 'Select prompt', mode = { 'n', 'v', }, },
     { '<leader>on', function() require('opencode').command('session_new') end, desc = 'New session', },
     { '<leader>oy', function() require('opencode').command('messages_copy') end, desc = 'Copy last message', },
-    { '<C-k>',    function() require('opencode').command('messages_half_page_up') end, desc = 'Scroll messages up', },
-    { '<C-j>',    function() require('opencode').command('messages_half_page_down') end, desc = 'Scroll messages down', },
+    { '<C-PageDown>',    function() require('opencode').command('messages_half_page_down') end, desc = 'Scroll messages down', },
+    { '<C-PageUp>',    function() require('opencode').command('messages_half_page_up') end, desc = 'Scroll messages up', },
 		},
 	},
 
