@@ -27,10 +27,15 @@ return {
 
 			keymap.set(
 				"n",
-				"<leader>=",
+				"<leader>cx",
 				"<cmd>TodoTelescope  keywords=TODO,FIX,WARNING,HACK,TEST<CR>",
 				{ desc = "Previous todo comment" }
 			)
+			vim.keymap.set("n", "<leader>cd", function()
+				-- This command opens the todo-comments Telescope picker,
+				-- filters for TODO, and restricts search to current file.
+				vim.cmd("TodoTelescope keywords=INFO cwd=" .. vim.fn.expand("%:p:h"))
+			end, { desc = "Show all TODOs in current file with TodoTelescope" })
 
 			keymap.set("n", "]t", function()
 				todo_comments.jump_next()
