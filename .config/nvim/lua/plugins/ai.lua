@@ -19,8 +19,18 @@ return {
 	},
 	{
 		"NickvanDyke/opencode.nvim",
+		-- @buffer 	     Current buffer
+		-- @buffers 	 Open buffers
+		-- @cursor 	     Cursor position
+		-- @selection 	 Selected text
+		-- @visible 	 Visible text
+		-- @diagnostic 	 Current line diagnostics
+		-- @diagnostics  Current buffer diagnostics
+		-- @quickfix     Qickfix list
+		-- @diff     	 Git diff
 		dependencies = { "folke/snacks.nvim" },
 		---@type opencode.Config
+
 		opts = {
 			-- Your configuration, if any
 			terminal = {
