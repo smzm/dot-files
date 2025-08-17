@@ -401,7 +401,7 @@ if doh_config_answer["interest"] == "Yes":
                 "sudo systemctl enable systemd-resolved ; sudo systemctl start systemd-resolved"
             )
             os.system(
-                "sudo grep -q '^\[Resolve\]' /etc/systemd/resolved.conf && ! grep -q '^DNS=127.0.0.1:5353' /etc/systemd/resolved.conf && sudo sed -i '/^\[Resolve\]/a DNS=127.0.0.1:5353' /etc/systemd/resolved.conf"
+                r"sudo grep -q '^\[Resolve\]' /etc/systemd/resolved.conf && ! grep -q '^DNS=127.0.0.1:5353' /etc/systemd/resolved.conf && sudo sed -i '/^\[Resolve\]/a DNS=127.0.0.1:5353' /etc/systemd/resolved.conf"
             )
             os.system(
                 "sudo grep -q '^port 5353$' /etc/dnsmasq.conf || sudo sed -i '/#DNS PORT/!b;n;/^port 5353$/b;a port=5353' /etc/dnsmasq.conf"
