@@ -242,14 +242,14 @@ return {
 				{ silent = true, desc = "Re-evaluate all (Molten built-in)" }
 			)
 
-			vim.keymap.set("n", "<esc>", ":MoltenDelete<CR>", { silent = true, desc = "Delete output" })
-
 			vim.keymap.set(
 				"v",
 				"<localleader>mm",
 				":<C-u>MoltenEvaluateVisual<CR>gv",
 				{ desc = "execute visual selection", buffer = true, silent = true }
 			)
+
+			vim.keymap.set("n", "<esc>", ":MoltenDelete<CR>", { silent = true, desc = "delete output" })
 
 			-- Helper function to check if a line is a Python block start
 			local function is_python_block_start(line_text)
@@ -462,6 +462,7 @@ return {
 			end, { silent = true, desc = "Molten: Run all Python blocks" })
 		end,
 	},
+
 	{ -- show images in nvim!
 		"3rd/image.nvim",
 		enabled = true,
