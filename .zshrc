@@ -6,7 +6,7 @@ export ZSH="$HOME/.oh-my-zsh"
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$HOME/.local/bin:/.local/lib:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin/:$HOME/.npm/bin:$HOME/bin:$PYENV_ROOT/bin:$PATH"
 export PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
-
+export ADW_DISABLE_PORTAL=1
 export TESSDATA_PREFIX=/usr/share/tessdata/
 
 export PATH=/home/rodd/.opencode/bin:$PATH
@@ -381,3 +381,12 @@ cleanup_arch() {
 alias cleanup='cleanup_arch'
 alias cleanup-deep='cleanup_arch --deep'
 alias cleanup-analyze='cleanup_arch --analyze'
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/smr/.dart-cli-completion/zsh-config.zsh ]] && . /home/smr/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
+
+# opencode
+export PATH=/home/smr/.opencode/bin:$PATH

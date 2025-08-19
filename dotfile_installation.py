@@ -107,7 +107,7 @@ if os_answers["interest"] == "Arch":
         "xbindkeys",
         "xorg-xev",
         "xdotool",
-        "nemo",
+        "nautilus",
         "lxappearance",
         "nitrogen",
         "viewnior",
