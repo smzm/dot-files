@@ -215,13 +215,12 @@ return { -- >>> LSP
 			mason_lspconfig.setup({
 				handlers = {
 					function(server_name)
-						local server = servers[server_name] or {}
+						local server = (servers and servers[server_name]) or {}
 						server.capabilities = capabilities
 						lspconfig[server_name].setup(server)
 					end,
 				},
 			})
-
 			-- Keymaps
 			local keymap = vim.keymap
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -327,6 +326,50 @@ return { -- >>> LSP
 			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#606060", bg = bg })
 			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#606060", bg = bg })
 			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e8546a", bg = None })
+		end,
+	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "InsertEnter",
+		config = function(_, opts)
+			local function escape_term_codes(str)
+				return vim.api.nvim_replace_termcodes(str, true, false, true)
+			end
+
+			local function is_float_open(window_id)
+				return window_id and window_id ~= 0 and vim.api.nvim_win_is_valid(window_id)
+			end
+
+			local function scroll_float(mapping)
+				local win_id = _G._LSP_SIG_CFG.winnr
+
+				if is_float_open(win_id) then
+					vim.fn.win_execute(win_id, ":normal! " .. mapping)
+				end
+			end
+
+			local scroll_up_mapping = escape_term_codes("<c-u>")
+			local scroll_down_mapping = escape_term_codes("<c-d>")
+			vim.keymap.set("i", "<c-u>", function()
+				scroll_float(scroll_up_mapping)
+			end, {})
+			vim.keymap.set("i", "<c-d>", function()
+				scroll_float(scroll_down_mapping)
+			end, {})
+
+			require("lsp_signature").setup({
+				bind = true,
+				hint_enable = true,
+				hint_prefix = {
+					above = "↙ ", -- when the hint is on the line above the current line
+					current = "← ", -- when the hint is on the same line
+					below = "↖ ", -- when the hint is on the line below the current line
+				},
+				padding = "  ",
+				handler_opts = {
+					border = "none",
+				},
+			})
 		end,
 	},
 

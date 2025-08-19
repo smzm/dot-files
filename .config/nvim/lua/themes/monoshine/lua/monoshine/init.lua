@@ -46,6 +46,7 @@ function theme.setup()
 	local bg_shades_06, bg_shades_07, bg_shades_08, bg_shades_09, bg_shades_10
 	local bg_shades_11, bg_shades_12, bg_shades_13, bg_shades_14, bg_shades_15
 	local bg_shades_16, bg_shades_17, bg_shades_18, bg_shades_19, bg_shades_20
+	local black = colors.black
 	local red = colors.red
 	local orange = colors.orange
 	local green = colors.green
@@ -274,7 +275,7 @@ function theme.setup()
 		-- @number.float
 		-- NvimFloat
 
-		FloatBorder = { fg = bg_shades_10 },
+		FloatBorder = { fg = bg_shades_06 },
 
 		FloatFooter = { fg = bg_shades_12, bg = bg_shades_02 },
 
@@ -349,7 +350,7 @@ function theme.setup()
 		-- @diff
 		-- NvimSpacing
 
-		NormalFloat = { bg = bg_shades_03 },
+		NormalFloat = { bg = bg_shades_04 },
 
 		NormalNC = { bg = background },
 
