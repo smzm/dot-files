@@ -242,6 +242,8 @@ return {
 				{ silent = true, desc = "Re-evaluate all (Molten built-in)" }
 			)
 
+			vim.keymap.set("n", "<esc>", ":MoltenDelete<CR>", { silent = true, desc = "Delete output" })
+
 			vim.keymap.set(
 				"v",
 				"<localleader>mm",
@@ -460,7 +462,6 @@ return {
 			end, { silent = true, desc = "Molten: Run all Python blocks" })
 		end,
 	},
-
 	{ -- show images in nvim!
 		"3rd/image.nvim",
 		enabled = true,

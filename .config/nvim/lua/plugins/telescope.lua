@@ -59,7 +59,7 @@ return {
 			local find_and_search_in_docs_subdir = function()
 				-- IMPORTANT: Customize this path to your main documents directory
 				-- >>>>>>>>>>>>>>  🧰 YOUR DOCS PATH HERE 🧰 <<<<<<<<<<<<<<<<<<<<<<<<
-				local base_docs_path = "/home/rodd/github/docs" -- Your specific path
+				local base_docs_path = "~/github/docs" -- Your specific path
 				local base_docs_name = vim.fn.fnamemodify(base_docs_path, ":t") -- Gets the trailing name, e.g., "docs"
 
 				vim.ui.input({
