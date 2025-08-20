@@ -249,8 +249,6 @@ return {
 				{ desc = "execute visual selection", buffer = true, silent = true }
 			)
 
-			vim.keymap.set("n", "<esc>", ":MoltenDelete<CR>", { silent = true, desc = "delete output" })
-
 			-- Helper function to check if a line is a Python block start
 			local function is_python_block_start(line_text)
 				return line_text:match("^```python") or line_text:match("^```{python}")
