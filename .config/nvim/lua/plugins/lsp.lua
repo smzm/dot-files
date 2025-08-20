@@ -283,7 +283,7 @@ return { -- >>> LSP
 			-- vim.o.updatetime = 250
 			-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
 
-			-- -- ==> Show diagnostic inline text :
+			-- ==> Show diagnostic inline text :
 			vim.diagnostic.config({
 				signs = {
 					text = {
@@ -306,7 +306,7 @@ return { -- >>> LSP
 					only_current_line = true,
 					highlight_whole_line = true,
 				},
-				update_in_insert = true,
+				update_in_insert = false, -- Don't update diagnostics in insert mode
 				underline = false,
 				severity_sort = true,
 				float = {
@@ -317,6 +317,59 @@ return { -- >>> LSP
 					header = "",
 					prefix = "", -- Could be '■', '▎', 'x'
 				},
+			})
+
+			-- Hide diagnostics in insert mode, show in normal mode
+			vim.api.nvim_create_autocmd("InsertEnter", {
+				group = vim.api.nvim_create_augroup("DiagnosticInsertMode", { clear = true }),
+				callback = function()
+					vim.diagnostic.config({
+						virtual_text = false,
+						virtual_lines = false,
+						signs = false,
+						underline = false,
+						update_in_insert = false,
+					})
+				end,
+			})
+
+			vim.api.nvim_create_autocmd("InsertLeave", {
+				group = vim.api.nvim_create_augroup("DiagnosticNormalMode", { clear = true }),
+				callback = function()
+					vim.diagnostic.config({
+						signs = {
+							text = {
+								[vim.diagnostic.severity.ERROR] = "",
+								[vim.diagnostic.severity.WARN] = "",
+								[vim.diagnostic.severity.HINT] = "󰌶",
+								[vim.diagnostic.severity.INFO] = "",
+							},
+							texthl = {
+								[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+								[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+								[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+								[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+							},
+							numhl = {},
+						},
+						virtual_text = false,
+						virtual_lines = {
+							only_current_line = true,
+							highlight_whole_line = true,
+						},
+						update_in_insert = false,
+						underline = false,
+						severity_sort = true,
+						float = {
+							focusable = true,
+							style = "border",
+							border = "none",
+							source = "always",
+							header = "",
+							prefix = "",
+						},
+					})
+				end,
 			})
 
 			-- Change Color of hints
