@@ -909,7 +909,7 @@ if yazi_check:
         if yazi1 and yazi2:
             rprint("[italic light_pink3] Installing Yazi Plugins ...")
             subprocess.run(
-                "cd ~/.config/yazi/ ; ya pack -a yazi-rs/plugins:full-border imsi32/yatline MasouShizuka/projects DreamMaoMao/fg AnirudhG07/plugins-yazi:copy-file-contents Lil-Dank/lazygit pirafrank/what-size",
+                "cd ~/.config/yazi/ ; ya pkg add yazi-rs/plugins:full-border imsi32/yatline MasouShizuka/projects DreamMaoMao/fg AnirudhG07/plugins-yazi:copy-file-contents Lil-Dank/lazygit pirafrank/what-size",
                 shell=True,
             )
 else:
