@@ -140,6 +140,8 @@ if os_answers["interest"] == "Arch":
         "pulseaudio-bluetooth",
         "alsa-utils",
         "alsa-firmware",
+        "xdg-desktop-portal",
+        "xdg-desktop-portal-gtk",
         "pavucontrol",
         "bluez",
         "bluez-utils",
