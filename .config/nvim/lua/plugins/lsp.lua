@@ -385,6 +385,7 @@ return { -- >>> LSP
 		"ray-x/lsp_signature.nvim",
 		event = "InsertEnter",
 		config = function(_, opts)
+			vim.api.nvim_set_hl(0, "LspSignatureActiveParameter", { fg = "#606060", bg = None })
 			local function escape_term_codes(str)
 				return vim.api.nvim_replace_termcodes(str, true, false, true)
 			end
@@ -412,7 +413,7 @@ return { -- >>> LSP
 
 			require("lsp_signature").setup({
 				bind = true,
-				hint_enable = true,
+				hint_enable = false,
 				hint_prefix = {
 					above = "↙ ", -- when the hint is on the line above the current line
 					current = "← ", -- when the hint is on the same line
