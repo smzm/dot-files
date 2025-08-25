@@ -472,11 +472,11 @@ if os_answers["interest"] == "Arch":
         "ttf-poppins",
         "i3exit",
         "visual-studio-code-bin",
-        "emoji-keyboard-bin",
         "yazi",
         "trashy",
         "python-jupytext",
         "pnglatex",
+        "emote",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
@@ -1645,6 +1645,3 @@ if os_answers["interest"] == "WSL":
 
 # After In Arch:
 # sptlrx with spotify --> [https://github.com/raitonoberu/sptlrx] -- sptlrx -c <cookie> -- check ~/.config/sptlrx/config.yaml -- use spotify app
-# xappearance
-# xfce4 power manager
-# Nvidia --> add to GRUB_CMDLINE_LINUX_DEFAULT in /etc/default/grub : "omodeset i915.modeset=0"
