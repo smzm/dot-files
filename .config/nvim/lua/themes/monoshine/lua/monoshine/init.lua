@@ -549,10 +549,10 @@ function theme.setup()
 		-- WildMenu = { fg = "" , bg = ""}
 		-- WinBar = { fg = "" , bg = ""}
 		-- WinBarNC = { fg = "" , bg = ""}
-		-- WinSeparator = { fg = "" , bg = ""}
 		-- VertSplit
 		-- @diff = { fg = "" , bg = ""}
 		-- @lsp = { fg = "" , bg = ""}
+		WinSeparator = { fg = bg_shades_06, bg = "NONE" },
 
 		["@markup"] = { fg = foreground },
 		["@markup.strong"] = { fg = foreground, bold = true },
