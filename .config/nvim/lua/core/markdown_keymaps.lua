@@ -437,7 +437,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Function to toggle markdown task checkbox
+-- -- >>>>>>>>>>>>>>>>>>>>>>>>  Function to toggle markdown task checkbox
 local function toggle_markdown_task()
 	local line = vim.api.nvim_get_current_line()
 

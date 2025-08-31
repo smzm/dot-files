@@ -17,50 +17,105 @@ return {
 			})
 		end,
 	},
-	{
-		"NickvanDyke/opencode.nvim",
-		-- @buffer 	     Current buffer
-		-- @buffers 	 Open buffers
-		-- @cursor 	     Cursor position
-		-- @selection 	 Selected text
-		-- @visible 	 Visible text
-		-- @diagnostic 	 Current line diagnostics
-		-- @diagnostics  Current buffer diagnostics
-		-- @quickfix     Qickfix list
-		-- @diff     	 Git diff
-		dependencies = { "folke/snacks.nvim" },
-		---@type opencode.Config
 
-		opts = {
-			-- Your configuration, if any
-			terminal = {
-				-- No reason to prefer normal mode - can't scroll TUI like a normal buffer
-				auto_insert = true,
-				auto_close = true,
-				win = {
-					position = "right",
-					-- I usually want to `toggle` and then immediately `ask` - seems like a sensible default
-					enter = true,
-					width = 75,
-				},
-				env = {
-					-- Other themes have visual bugs in embedded terminals: https://github.com/sst/opencode/issues/445
-					OPENCODE_THEME = "system",
-				},
-			},
-		},
-  -- stylua: ignore
-  keys = {
-    { '<leader><leader>', function() require('opencode').toggle() end, desc = 'Toggle embedded opencode', },
-    { '<leader><localleader>', function() require('opencode').ask() end, desc = 'Ask opencode', mode = 'n', },
-    { '<leader><localleader>', function() require('opencode').ask('@selection: ') end, desc = 'Ask opencode about selection', mode = 'v', },
-    { '<leader>op', function() require('opencode').select_prompt() end, desc = 'Select prompt', mode = { 'n', 'v', }, },
-    { '<leader>on', function() require('opencode').command('session_new') end, desc = 'New session', },
-    { '<leader>oy', function() require('opencode').command('messages_copy') end, desc = 'Copy last message', },
-    { '<C-PageDown>',    function() require('opencode').command('messages_half_page_down') end, desc = 'Scroll messages down', },
-    { '<C-PageUp>',    function() require('opencode').command('messages_half_page_up') end, desc = 'Scroll messages up', },
-		},
-	},
+	-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> windsurf
+	-- {
+	-- 	"Exafunction/windsurf.nvim",
+	-- 	dependencies = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"hrsh7th/nvim-cmp",
+	-- 	},
+	-- 	config = function()
+	-- 		require("codeium").setup({
+	-- 			-- Optionally disable cmp source if using virtual text only
+	-- 			enable_cmp_source = false,
+	-- 			virtual_text = {
+	-- 				enabled = true,
+	--
+	-- 				-- These are the defaults
+	--
+	-- 				-- Set to true if you never want completions to be shown automatically.
+	-- 				manual = false,
+	-- 				-- A mapping of filetype to true or false, to enable virtual text.
+	-- 				filetypes = {},
+	-- 				-- Whether to enable virtual text of not for filetypes not specifically listed above.
+	-- 				default_filetype_enabled = true,
+	-- 				-- How long to wait (in ms) before requesting completions after typing stops.
+	-- 				idle_delay = 75,
+	-- 				-- Priority of the virtual text. This usually ensures that the completions appear on top of
+	-- 				-- other plugins that also add virtual text, such as LSP inlay hints, but can be modified if
+	-- 				-- desired.
+	-- 				virtual_text_priority = 65535,
+	-- 				-- Set to false to disable all key bindings for managing completions.
+	-- 				map_keys = true,
+	-- 				-- The key to press when hitting the accept keybinding but no completion is showing.
+	-- 				-- Defaults to \t normally or <c-n> when a popup is showing.
+	-- 				accept_fallback = nil,
+	-- 				-- Key bindings for managing completions in virtual text mode.
+	-- 				key_bindings = {
+	-- 					-- Accept the current completion.
+	-- 					accept = "<Tab>",
+	-- 					-- Accept the next word.
+	-- 					accept_word = false,
+	-- 					-- Accept the next line.
+	-- 					accept_line = false,
+	-- 					-- Clear the virtual text.
+	-- 					clear = false,
+	-- 					-- Cycle to the next completion.
+	-- 					next = "<M-]>",
+	-- 					-- Cycle to the previous completion.
+	-- 					prev = "<M-[>",
+	-- 				},
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- },
+
+	-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> opencode
+	-- {
+	-- 	"NickvanDyke/opencode.nvim",
+	-- 	-- @buffer 	     Current buffer
+	-- 	-- @buffers 	 Open buffers
+	-- 	-- @cursor 	     Cursor position
+	-- 	-- @selection 	 Selected text
+	-- 	-- @visible 	 Visible text
+	-- 	-- @diagnostic 	 Current line diagnostics
+	-- 	-- @diagnostics  Current buffer diagnostics
+	-- 	-- @quickfix     Qickfix list
+	-- 	-- @diff     	 Git diff
+	-- 	dependencies = { "folke/snacks.nvim" },
+	-- 	---@type opencode.Config
+	--
+	-- 	opts = {
+	-- 		-- Your configuration, if any
+	-- 		terminal = {
+	-- 			-- No reason to prefer normal mode - can't scroll TUI like a normal buffer
+	-- 			auto_insert = true,
+	-- 			auto_close = true,
+	-- 			win = {
+	-- 				position = "right",
+	-- 				-- I usually want to `toggle` and then immediately `ask` - seems like a sensible default
+	-- 				enter = true,
+	-- 				width = 75,
+	-- 			},
+	-- 			env = {
+	-- 				-- Other themes have visual bugs in embedded terminals: https://github.com/sst/opencode/issues/445
+	-- 				OPENCODE_THEME = "system",
+	-- 			},
+	-- 		},
+	-- 	},
+	--  -- stylua: ignore
+	--  keys = {
+	--    { '<leader><leader>', function() require('opencode').toggle() end, desc = 'Toggle embedded opencode', },
+	--    { '<leader><localleader>', function() require('opencode').ask() end, desc = 'Ask opencode', mode = 'n', },
+	--    { '<leader><localleader>', function() require('opencode').ask('@selection: ') end, desc = 'Ask opencode about selection', mode = 'v', },
+	--    { '<leader>op', function() require('opencode').select_prompt() end, desc = 'Select prompt', mode = { 'n', 'v', }, },
+	--    { '<leader>on', function() require('opencode').command('session_new') end, desc = 'New session', },
+	--    { '<leader>oy', function() require('opencode').command('messages_copy') end, desc = 'Copy last message', },
+	--    { '<C-PageDown>',    function() require('opencode').command('messages_half_page_down') end, desc = 'Scroll messages down', },
+	--    { '<C-PageUp>',    function() require('opencode').command('messages_half_page_up') end, desc = 'Scroll messages up', },
+	-- 	},
+	-- },
 
 	-- -- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> code companion
 	-- {

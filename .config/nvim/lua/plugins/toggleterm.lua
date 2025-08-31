@@ -49,7 +49,7 @@ return {
 				start_in_insert = true,
 				insert_mappings = true, -- whether or not the open mapping applies in insert mode
 				persist_size = true,
-				direction = "horizontal", -- | 'horizontal' | 'window' | 'float',
+				direction = "float", -- | 'horizontal' | 'window' | 'float',
 				close_on_exit = true, -- close the terminal window when the process exits
 				shell = vim.o.shell, -- change the default shell
 				-- This field is only relevant if direction is set to 'float'
@@ -60,19 +60,48 @@ return {
 					-- not natively supported but implemented in this plugin.
 					border = "curved", -- single/double/shadow/curved
 					width = math.floor(0.8 * vim.fn.winwidth(0)),
-					height = math.floor(0.8 * vim.fn.winheight(0)),
+					height = math.floor(0.9 * vim.fn.winheight(0)),
 					winblend = 4,
 				},
 				winbar = {
 					enabled = true,
 				},
 			})
+			local Terminal = require("toggleterm.terminal").Terminal
+
+			-- utility to get directory of current buffer (resolves symlinks when possible)
+			local function buf_dir()
+				-- %:p:h -> full path of current file's directory
+				local dir = vim.fn.expand("%:p:h")
+				-- if buffer has no name, fall back to current working directory
+				if dir == nil or dir == "" then
+					dir = vim.loop.cwd()
+				end
+				-- try to resolve symlinks
+				local real = vim.uv and vim.uv.fs_realpath and vim.uv.fs_realpath(dir) or dir
+				return real or dir
+			end
+
+			function _cwd_toggle()
+				local dir = buf_dir()
+				-- Option A: create a one-off floating terminal at that dir
+				local term = Terminal:new({
+					direction = "float",
+					dir = dir,
+					hidden = true,
+					-- cmd can be left empty to start the user’s shell
+				})
+				term:toggle()
+			end
 		end,
+
 		keys = {
 			{ "<F12>" },
+			{ "<leader><F12>", "<cmd>lua _cwd_toggle()<CR>", desc = "Open buffer dir in float terminal" },
 			{ "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", desc = "terminal float" },
 			{ "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "horizontal terminal" },
 			{ "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", desc = "vertical terminal" },
+			{ "<leader>tt", "<cmd>ToggleTerm direction=tab<CR>", desc = "tab terminal" },
 			{ "<leader>t1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal #1" },
 			{ "<leader>t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal #2" },
 			{ "<leader>t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal #3" },
