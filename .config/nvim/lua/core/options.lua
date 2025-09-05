@@ -60,7 +60,7 @@ opt.updatetime = 200
 opt.backspace = "indent,eol,start"
 
 -- Disable swapfile on persistant undo
-opt.swapfile = false
+opt.swapfile = true
 
 -- Enable persistent undo
 opt.undofile = true
