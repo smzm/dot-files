@@ -383,10 +383,11 @@ for_window [class="spotify|Spotify"] move workspace $ws4
 
 # Open specific applications in floating mode
 # for_window [title="File Transfer*"] floating enable
-# for_window [class="Galculator"] floating enable border pixel 1
 # for_window [title="i3_help"] floating enable sticky enable border normal
 # for_window [class="Lightdm-settings"] floating enable
-# for_window [class="Skype"] floating enable border normal
+for_window [class="anki|Anki"] floating enable border normal resize set 500 400
+for_window [class="anki|Anki"] move position center
+for_window [class="gnome-calculator"] floating enable sticky enable border normal
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Pavucontrol"] floating enable
 for_window [class="mpv"] floating enable border pixel 4 resize set 2400 1800
