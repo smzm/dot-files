@@ -335,7 +335,15 @@ return { -- >>> LSP
 				-- end
 
 				local win = buf_to_win(diagnostic.bufnr)
-				local sign_column_width = vim.fn.getwininfo(win)[1].textoff
+				if win == 0 then
+					return nil
+				end
+				-- Get window info and check if it exists
+				local win_info = vim.fn.getwininfo(win)
+				if not win_info or #win_info == 0 then
+					return nil
+				end
+				local sign_column_width = win_info[1].textoff
 				local text_area_width = vim.api.nvim_win_get_width(win) - sign_column_width
 				local center_width = 30
 				local left_width = 1
@@ -358,7 +366,7 @@ return { -- >>> LSP
 				end,
 			})
 			-- Set DiagnosticUnderlineError to red color
-			vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { fg = "#e8546a" })
+			vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { fg = "#E38C8C" })
 
 			-- ==> Show diagnostic inline text :
 			local opts = {
