@@ -14,7 +14,6 @@ return { -- >>> LSP
 			-- Useful status updates for LSP
 			{ "j-hui/fidget.nvim", opts = {} },
 			-- Show nvim diagnostics using virtual lines
-			{ "https://git.sr.ht/~whynothugo/lsp_lines.nvim" },
 		},
 		config = function()
 			local servers = {
@@ -181,7 +180,6 @@ return { -- >>> LSP
 			local mason = require("mason")
 			local mason_lspconfig = require("mason-lspconfig")
 			local mason_tool_installer = require("mason-tool-installer")
-			local lsp_lines = require("lsp_lines")
 
 			-- Setup Mason
 			mason.setup({
@@ -201,7 +199,6 @@ return { -- >>> LSP
 				run_on_start = true,
 				start_delay = 2000,
 			})
-			lsp_lines.setup()
 
 			-- used to enable autocompletion (assign to every lsp server config)
 
@@ -269,22 +266,102 @@ return { -- >>> LSP
 
 					opts.desc = "Restart LSP"
 					keymap.set("n", "<leader>lr", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-
-					opts.desc = "Toggle LSP diagnostics on hover"
-					keymap.set("n", "<leader>ls", require("lsp_lines").toggle, opts) -- mapping to restart lsp if necessary
 				end,
 			})
-			-- Configuring Appearance
-			-- ==> Show diagnostic windows on hover :
-			-- vim.diagnostic.config({
-			-- 	virtual_text = true,
-			-- })
-			-- -- Show line diagnostics automatically in hover window
-			-- vim.o.updatetime = 250
-			-- vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]])
+
+			-- INFO: Configuring Appearance of LSP diagnostics
+			local function buf_to_win(bufnr)
+				local current_win = vim.fn.win_getid()
+
+				-- Check if current window has the buffer
+				if vim.fn.winbufnr(current_win) == bufnr then
+					return current_win
+				end
+
+				-- Otherwise, find a visible window with this buffer
+				local win_ids = vim.fn.win_findbuf(bufnr)
+				local current_tabpage = vim.fn.tabpagenr()
+
+				for _, win_id in ipairs(win_ids) do
+					if vim.fn.win_id2tabwin(win_id)[1] == current_tabpage then
+						return win_id
+					end
+				end
+
+				return 0
+			end
+			-- Split a string into multiple lines, each no longer than max_width
+			-- The split will only occur on spaces to preserve readability
+			-- @param str string
+			-- @param max_width integer
+			local function split_line(str, max_width)
+				if #str <= max_width then
+					return { str }
+				end
+
+				local lines = {}
+				local current_line = ""
+
+				for word in string.gmatch(str, "%S+") do
+					-- If adding this word would exceed max_width
+					if #current_line + #word + 1 > max_width then
+						-- Add the current line to our results
+						table.insert(lines, current_line)
+						current_line = word
+					else
+						-- Add word to the current line with a space if needed
+						if current_line ~= "" then
+							current_line = current_line .. " " .. word
+						else
+							current_line = word
+						end
+					end
+				end
+
+				-- Don't forget the last line
+				if current_line ~= "" then
+					table.insert(lines, current_line)
+				end
+
+				return lines
+			end
+
+			---@param diagnostic vim.Diagnostic
+			local function virtual_lines_format(diagnostic)
+				-- Only render hints on the current line
+				-- Note this MUST be paired with an autocmd that hides/shows diagnostics to force a re-render
+				-- if diagnostic.severity == vim.diagnostic.severity.HINT and diagnostic.lnum + 1 ~= vim.fn.line(".") then
+				-- 	return nil
+				-- end
+
+				local win = buf_to_win(diagnostic.bufnr)
+				local sign_column_width = vim.fn.getwininfo(win)[1].textoff
+				local text_area_width = vim.api.nvim_win_get_width(win) - sign_column_width
+				local center_width = 30
+				local left_width = 1
+
+				---@type string[]
+				local lines = {}
+				for msg_line in diagnostic.message:gmatch("([^\n]+)") do
+					local max_width = text_area_width - diagnostic.col - center_width - left_width
+					vim.list_extend(lines, split_line(msg_line, max_width))
+				end
+
+				return table.concat(lines, "\n")
+			end
+
+			-- Re-render diagnostics when the window is resized
+			vim.api.nvim_create_autocmd("VimResized", {
+				callback = function()
+					vim.diagnostic.hide()
+					vim.diagnostic.show()
+				end,
+			})
+			-- Set DiagnosticUnderlineError to red color
+			vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { fg = "#e8546a" })
 
 			-- ==> Show diagnostic inline text :
-			vim.diagnostic.config({
+			local opts = {
 				signs = {
 					text = {
 						[vim.diagnostic.severity.ERROR] = "",
@@ -303,21 +380,22 @@ return { -- >>> LSP
 				},
 				virtual_text = false, -- Because of lsp-line remove the regular virtual text diagnostics to avoid pointless duplication
 				virtual_lines = {
-					only_current_line = true,
-					highlight_whole_line = true,
+					current_line = true,
+					format = virtual_lines_format,
 				},
 				update_in_insert = false, -- Don't update diagnostics in insert mode
-				underline = false,
-				severity_sort = true,
+				underline = true,
+				severity_sort = { reverse = false },
 				float = {
 					focusable = true,
 					style = "border",
 					border = "none",
 					source = "always",
 					header = "",
-					prefix = "", -- Could be '■', '▎', 'x'
+					prefix = " ", -- Could be '■', '▎', 'x'
 				},
-			})
+			}
+			vim.diagnostic.config(opts)
 
 			-- Hide diagnostics in insert mode, show in normal mode
 			vim.api.nvim_create_autocmd("InsertEnter", {
@@ -336,39 +414,7 @@ return { -- >>> LSP
 			vim.api.nvim_create_autocmd("InsertLeave", {
 				group = vim.api.nvim_create_augroup("DiagnosticNormalMode", { clear = true }),
 				callback = function()
-					vim.diagnostic.config({
-						signs = {
-							text = {
-								[vim.diagnostic.severity.ERROR] = "",
-								[vim.diagnostic.severity.WARN] = "",
-								[vim.diagnostic.severity.HINT] = "󰌶",
-								[vim.diagnostic.severity.INFO] = "",
-							},
-							texthl = {
-								[vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
-								[vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
-								[vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
-								[vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
-							},
-							numhl = {},
-						},
-						virtual_text = false,
-						virtual_lines = {
-							only_current_line = true,
-							highlight_whole_line = true,
-						},
-						update_in_insert = false,
-						underline = false,
-						severity_sort = true,
-						float = {
-							focusable = true,
-							style = "border",
-							border = "none",
-							source = "always",
-							header = "",
-							prefix = "",
-						},
-					})
+					vim.diagnostic.config(opts)
 				end,
 			})
 
