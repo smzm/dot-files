@@ -306,7 +306,7 @@ function theme.setup()
 		-- NvimEnvironmentName
 		-- Ignore = { fg = "" , bg = ""}
 
-		Keyword = { fg = bg_shades_14, bold = true },
+		Keyword = { fg = bg_shades_10, bold = true },
 		-- @keyword
 		Label = { fg = bg_shades_13 },
 		-- @label

@@ -2,7 +2,7 @@ return { -- show tree of symbols in the current file
 	"hedyhli/outline.nvim",
 	cmd = "Outline",
 	keys = {
-		{ "<leader>o", ":Outline<cr>", desc = "Toggle outline" },
+		{ "=", ":Outline<cr>", mode = "n", desc = "Toggle outline" },
 	},
 	opts = {
 		outline_items = {
