@@ -109,8 +109,9 @@ function theme.setup()
 		-- @comment.warning
 		-- @comment.note
 		-- @comment.todo
-		-- DiagnosticUnnecessary
 		-- ComplMatchIns = { fg = "" , bg = ""}
+
+		DiagnosticUnnecessary = { fg = bg_shades_08 },
 
 		Conceal = { fg = background, bg = background },
 
@@ -289,7 +290,7 @@ function theme.setup()
 		Folded = { fg = bg_shades_12, bg = bg_shades_02 },
 
 		Function = { fg = bg_shades_14 },
-		-- @function
+		["@function.method"] = { fg = bg_shades_14 },
 		["@function.builtin"] = { fg = bg_shades_14, bold = true },
 
 		Identifier = { fg = bg_shades_12 },
