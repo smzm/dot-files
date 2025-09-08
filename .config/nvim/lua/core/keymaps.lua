@@ -24,6 +24,8 @@ map("n", "<S-j>", "10j", opts)
 map("n", "<S-k>", "10k", opts)
 map("v", "<S-j>", "10j", opts)
 map("v", "<S-k>", "10k", opts)
+map("n", "<S-l>", "10l", opts)
+map("n", "<S-h>", "10h", opts)
 
 -- (;) as (:)
 map("n", ";", ":", opts)
