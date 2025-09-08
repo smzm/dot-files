@@ -179,9 +179,9 @@ function theme.setup()
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
-		Delimiter = { fg = bg_shades_10 },
+		Delimiter = { fg = bg_shades_11 },
 		-- @punctuation
-		NvimParenthesis = { fg = bg_shades_08 },
+		NvimParenthesis = { fg = bg_shades_12 },
 		-- NvimLambda
 		-- NvimNestingParenthesis
 		-- NvimCallingParenthesis
@@ -306,7 +306,7 @@ function theme.setup()
 		-- NvimEnvironmentName
 		-- Ignore = { fg = "" , bg = ""}
 
-		Keyword = { fg = bg_shades_10, bold = true },
+		Keyword = { fg = bg_shades_11, bold = true },
 		-- @keyword
 		Label = { fg = bg_shades_13 },
 		-- @label

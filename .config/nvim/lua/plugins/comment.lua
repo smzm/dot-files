@@ -17,7 +17,7 @@ return {
 	},
 	{
 		"folke/todo-comments.nvim",
-		dependencies = { "nvim-lua/plenary.nvim" },
+		dependencies = { "nvim-lua/plenary.nvim", "ibhagwan/fzf-lua" },
 		opts = {
 			signs = true, -- show icons in the signs column
 			sign_priority = 8, -- sign priority
@@ -107,14 +107,14 @@ return {
 			end, { desc = "Show NOTE comments in current file" })
 
 			keymap.set("n", "<leader>cc", function()
-				vim.cmd("TodoTelescope keywords=INFO,NOTE,DESC cwd=" .. vim.fn.expand("%:p:h"))
+				vim.cmd("TodoTelescope keywords=INFO,NOTE cwd=" .. vim.fn.expand("%:p:h"))
 			end, { desc = "Show INFO NOTE comments in current file" })
 
-			keymap.set("n", "]t", function()
+			keymap.set("n", "]]", function()
 				todo_comments.jump_next()
 			end, { desc = "Next todo comment" })
 
-			keymap.set("n", "[t", function()
+			keymap.set("n", "[[", function()
 				todo_comments.jump_prev()
 			end, { desc = "Previous todo comment" })
 		end,
