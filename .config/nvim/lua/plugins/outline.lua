@@ -40,5 +40,8 @@ return { -- show tree of symbols in the current file
 				filetypes = { "markdown", "quarto" },
 			},
 		},
+		keymaps = {
+			toggle_preview = "P",
+		},
 	},
 }
