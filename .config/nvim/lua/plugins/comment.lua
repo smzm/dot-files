@@ -35,7 +35,6 @@ return {
 				PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
 				INFO = { icon = " ", color = "info" },
 				NOTE = { icon = " ", color = "note" },
-				DESC = { icon = "", color = "desc" },
 				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 			},
 			gui_style = {
@@ -66,8 +65,7 @@ return {
 				warning = { "#FBBF24" },
 				todo = { "#2563EB" },
 				info = { "#D7D7D7" },
-				note = { "#7A7A7A" },
-				desc = { "#2c2c2c" },
+				note = { "#4e4e4e" },
 				hint = { "#10B981" },
 				default = { "#7C3AED" },
 				test = { "#FF00FF" },
@@ -100,9 +98,17 @@ return {
 				{ desc = "Search TODO/FIX/WARN/HACK/TEST" }
 			)
 
-			keymap.set("n", "<leader>cd", function()
+			keymap.set("n", "<leader>ci", function()
+				vim.cmd("TodoTelescope keywords=INFO cwd=" .. vim.fn.expand("%:p:h"))
+			end, { desc = "Show INFO comments in current file" })
+
+			keymap.set("n", "<leader>cn", function()
+				vim.cmd("TodoTelescope keywords=NOTE cwd=" .. vim.fn.expand("%:p:h"))
+			end, { desc = "Show NOTE comments in current file" })
+
+			keymap.set("n", "<leader>cc", function()
 				vim.cmd("TodoTelescope keywords=INFO,NOTE,DESC cwd=" .. vim.fn.expand("%:p:h"))
-			end, { desc = "Show INFO todos in current file" })
+			end, { desc = "Show INFO NOTE comments in current file" })
 
 			keymap.set("n", "]t", function()
 				todo_comments.jump_next()
@@ -116,7 +122,6 @@ return {
 	-- TODO:
 	-- INFO:
 	-- NOTE:
-	-- DESC:
 	-- FIX:
 	-- WARNING:
 	-- HACK:
