@@ -246,8 +246,8 @@ return { -- >>> LSP
 					opts.desc = "See available code actions"
 					keymap.set({ "n", "v" }, "<leader>lc", vim.lsp.buf.code_action, opts) -- see available code actions, in visual mode will apply to selection
 
-					-- opts.desc = "Smart rename"
-					-- keymap.set("n", "<leader>lr", vim.lsp.buf.rename, opts) -- smart rename
+					opts.desc = "Smart rename"
+					keymap.set("n", "<F2>", vim.lsp.buf.rename, opts) -- smart rename
 
 					opts.desc = "Show buffer diagnostics"
 					keymap.set("n", "<leader>lX", "<cmd>Telescope diagnostics bufnr=0<CR>", opts) -- show  diagnostics for file
