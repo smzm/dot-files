@@ -126,6 +126,9 @@ return {
 			})
 		end,
 	},
+	-- Spell check in neovim (dictionary)
+	-- zg → add word
+	-- zw → remove word
 
 	-- =============================================== Blink ===============================================
 	-- {
