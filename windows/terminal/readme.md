@@ -50,8 +50,10 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 	"copyOnSelect": true,
 }
 ```
-```json
+```jsonc
 "profiles": {
+	// ...
+
     	"defaults": {
 			"colorScheme": "xcad",
 			"bellStyle": "none",
@@ -88,6 +90,9 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 			"forceFullRepaint": true,
 			"textAntialiasing": "cleartype"
 		},
+
+	//...
+}
 ```
 
 
