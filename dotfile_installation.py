@@ -1623,25 +1623,5 @@ subprocess.run("clear", shell=True)
 #
 # subprocess.run("clear", shell=True)
 
-# ===== WSLU
-if os_answers["interest"] == "WSL":
-    wslu_config = [
-        inquirer.List(
-            "interest", message="Do you want to use wslu", choices=["No", "Yes"]
-        )
-    ]
-    wslu_config_answer = inquirer.prompt(wslu_config)
-
-    if wslu_config_answer["interest"] == "Yes":
-        subprocess.run("clear", shell=True)
-        os.system("wget https://pkg.wslutiliti.es/public.key")
-        os.system("sudo pacman-key --add public.key")
-        os.system("sudo pacman-key --lsign-key A2861ABFD897DD37")
-        os.system(
-            "sudo sh -c 'echo -e \"\n[wslutilities]\nServer = https://pkg.wslutiliti.es/arch/\" >> /etc/pacman.conf'"
-        )
-        os.system("sudo pacman -Sy --noconfirm && sudo pacman -S wslu --noconfirm")
-
-
 # After In Arch:
 # sptlrx with spotify --> [https://github.com/raitonoberu/sptlrx] -- sptlrx -c <cookie> -- check ~/.config/sptlrx/config.yaml -- use spotify app
