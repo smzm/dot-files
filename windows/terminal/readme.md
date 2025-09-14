@@ -91,7 +91,7 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 			"textAntialiasing": "cleartype"
 		},
 
-	//...
+	// ...
 }
 ```
 
