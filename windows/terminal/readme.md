@@ -118,6 +118,7 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 "profiles": {
     	"defaults": {
 			"colorScheme": "xcad",
+			"bellStyle": "none",
 			"font": {
 				"cellHeight": "1.5",
 				"face": "JetBrainsMono Nerd Font Mono",
