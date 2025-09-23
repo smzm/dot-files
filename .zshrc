@@ -149,9 +149,8 @@ alias lg='lazygit'
 
 
 # Eza
-alias l="eza -l --icons --git -a"
+alias l="eza --tree --level=2  --icons --git"
 alias ll="eza --tree --level=2 --long --icons --git"
-alias ltree="eza --tree --level=2  --icons --git"
 
 # 7z
 alias 7zCompress='7z a -t7z -md=16m'
@@ -200,9 +199,9 @@ syncnvim() {
 
   local COMMIT_MSG="$1"
   local NVIM_SOURCE="$HOME/.config/nvim"
-  local NVIM_DEST="$HOME/github/dot-files/.config/nvim"
+  local NVIM_DEST="$HOME/dot-files/.config/nvim"
   local LOCKFILE="$NVIM_DEST/lazy-lock.json"
-  local DOTFILES_REPO="$HOME/github/dot-files"
+  local DOTFILES_REPO="$HOME/dot-files"
 
   echo "Removing existing $NVIM_DEST..."
   sudo rm -rf "$NVIM_DEST"
@@ -390,3 +389,6 @@ alias cleanup-analyze='cleanup_arch --analyze'
 
 # opencode
 export PATH=/home/smr/.opencode/bin:$PATH
+
+# opencode
+export PATH=/home/smzm/.opencode/bin:$PATH
