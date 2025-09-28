@@ -289,9 +289,9 @@ function theme.setup()
 
 		Folded = { fg = bg_shades_12, bg = bg_shades_02 },
 
-		Function = { fg = bg_shades_14 },
+		Function = { fg = bg_shades_16 },
 		["@function.method"] = { fg = bg_shades_14 },
-		["@function.builtin"] = { fg = bg_shades_14, bold = true },
+		["@function.builtin"] = { fg = bg_shades_16, bold = true },
 
 		Identifier = { fg = bg_shades_12 },
 		-- @property
