@@ -306,7 +306,7 @@ function theme.setup()
 		-- NvimEnvironmentName
 		-- Ignore = { fg = "" , bg = ""}
 
-		Keyword = { fg = bg_shades_11, bold = true },
+		Keyword = { fg = bg_shades_13, bold = true },
 		-- @keyword
 		Label = { fg = bg_shades_13 },
 		-- @label
@@ -444,7 +444,7 @@ function theme.setup()
 		-- SignColumn = { fg = "" , bg = ""}
 		-- SnippetTabstop = { fg = "" , bg = ""}
 
-		Special = { fg = bg_shades_11 },
+		Special = { fg = bg_shades_14 },
 		-- @module.builtin
 		-- @string.regexp
 		-- @string.special
@@ -523,7 +523,7 @@ function theme.setup()
 		Todo = { fg = bg_shades_16, bg = bg_shades_02 },
 		-- @comment.todo
 
-		Type = { fg = bg_shades_08, bold = true },
+		Type = { fg = bg_shades_10, bold = true },
 		-- @type
 		-- @type.builtin
 		-- StorageClass
