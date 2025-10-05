@@ -59,7 +59,7 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 			"bellStyle": "none",
 			"font": {
 				"cellHeight": "2",
-				"face": "JetBrainsMono Nerd Font Mono",
+				"face": "CaskaydiaCove Nerd Font"
 				"size": 12,
 				"weight": "light",
 				"features": {
