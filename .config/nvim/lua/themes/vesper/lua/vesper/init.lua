@@ -182,6 +182,7 @@ function theme.setup()
 		Delimiter = { fg = bg_shades_12 },
 		-- @punctuation
 		NvimParenthesis = { fg = bg_shades_12 },
+		-- NvimLambda
 		-- NvimNestingParenthesis
 		-- NvimCallingParenthesis
 		-- NvimSubscript
@@ -451,15 +452,12 @@ function theme.setup()
 		-- constant.builtin
 		-- @type.builtin
 		-- @attribute.builtin
-		-- @function.builtin
 		-- @constructor
 		-- @punctuation.special
 		-- @markup
-		-- @tag.builtin
 		-- SpecialChar
 		-- SpecialComment
 		-- Debug
-		-- Tag
 		-- NvimRegister
 		-- NvimStringSpecial
 
@@ -509,9 +507,9 @@ function theme.setup()
 		-- TabLineFill = { fg = "" , bg = ""}
 		-- TabLineSel = { fg = "" , bg = ""}
 
-		Tag = { fg = bg_shades_14 },
-		-- @tag
-		-- @tag.builtin
+		Tag = { fg = primary },
+		["@tag"] = { fg = bg_shades_14 },
+		["@tag.builtin"] = { fg = primary },
 		-- TermCursor = { fg = "" , bg = ""}
 
 		Title = { fg = bg_shades_14, bold = true },
