@@ -2,8 +2,8 @@
 
 <br>
 
-### 1. Install `JetBrainsMonoNL Nerd Font`:
-Download latest jetbrains font from [here](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/JetBrainsMono.zip)
+### 1. Install `JetBrainsMonoNL Nerd Font` and `CaskaydiaCove Nerd Font`:
+Download latest jetbrains font and caskaydiaCove from [here](https://github.com/ryanoasis/nerd-fonts/releases)
 
 
 ### 2. Config `settings.json`
@@ -59,7 +59,7 @@ In **windows terminal** go to the settings and select `Open JSON file`.
 			"bellStyle": "none",
 			"font": {
 				"cellHeight": "2",
-				"face": "CaskaydiaCove Nerd Font"
+				"face": "CaskaydiaCove Nerd Font",
 				"size": 12,
 				"weight": "light",
 				"features": {
