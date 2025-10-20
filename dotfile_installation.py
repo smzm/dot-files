@@ -1493,7 +1493,7 @@ if os_answers["interest"] == "Arch":
         if docker_config_answer["interest"] == "Yes":
             subprocess.run("clear", shell=True)
             run(
-                "sudo groupadd docker && sudo usermod -aG docker $(whoami) && newgrp docker",
+                "sudo groupadd -f docker && sudo usermod -aG docker $(whoami) && newgrp docker",
                 shell=True,
                 stdout=DEVNULL,
             )
