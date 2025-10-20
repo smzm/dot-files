@@ -175,6 +175,7 @@ if os_answers["interest"] == "Arch":
         "ocrdesktop",
         "tesseract-data-eng",
         "lazygit",
+        "lazydocker",
         "ripgrep",
         "ffmpeg",
         "ffmpegthumbnailer",
