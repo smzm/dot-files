@@ -193,7 +193,6 @@ if os_answers["interest"] == "Arch":
         "luarocks",
         "python-pillow",
         "python-cairosvg",
-        "python-plotly",
     ]
 
 elif os_answers["interest"] == "WSL":
@@ -237,6 +236,7 @@ elif os_answers["interest"] == "WSL":
         "ruff",
         "uv",
         "lazygit",
+        "lazydocker",
         "ripgrep",
         "ffmpeg",
         "ffmpegthumbnailer",
@@ -253,7 +253,6 @@ elif os_answers["interest"] == "WSL":
         "luarocks",
         "python-pillow",
         "python-cairosvg",
-        "python-plotly",
     ]
 
 
@@ -478,6 +477,7 @@ if os_answers["interest"] == "Arch":
         "python-jupytext",
         "pnglatex",
         "emote",
+        "dtop-bin",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
@@ -487,6 +487,7 @@ elif os_answers["interest"] == "WSL":
         "trashy",
         "python-jupytext",
         "pnglatex",
+        "dtop-bin",
     ]
 
 
