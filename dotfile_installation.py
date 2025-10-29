@@ -474,7 +474,6 @@ if os_answers["interest"] == "Arch":
         "visual-studio-code-bin",
         "yazi",
         "trashy",
-        "python-jupytext",
         "pnglatex",
         "emote",
         "dtop-bin",
@@ -482,10 +481,8 @@ if os_answers["interest"] == "Arch":
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
     aur_list = [
-        "manim",
         "yazi",
         "trashy",
-        "python-jupytext",
         "pnglatex",
         "dtop-bin",
     ]
