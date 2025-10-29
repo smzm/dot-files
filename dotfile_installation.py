@@ -631,7 +631,6 @@ npm_packages_list = [
     "bash-language-server",
     "yaml-language-server",
     "neovim",
-    "tree-sitter",
     "biome",
     "prettier",
 ]
