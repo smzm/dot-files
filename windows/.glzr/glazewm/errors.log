@@ -1,6 +1,0 @@
-[2m2025-08-14T06:46:44.765072Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m An attempt was made to access a socket in a way forbidden by its access permissions. (os error 10013)
-[2m2025-08-14T06:49:38.100903Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m An attempt was made to access a socket in a way forbidden by its access permissions. (os error 10013)
-[2m2025-08-14T07:08:12.798703Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m window_effects.focused_window.transparency.enabled: invalid type: string "true,", expected a boolean at line 79 column 22
-[2m2025-08-14T07:08:16.054660Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m window_effects.focused_window.transparency.enabled: invalid type: string "true,", expected a boolean at line 79 column 22
-[2m2025-08-14T07:18:06.791138Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m window_effects.other_windows.border: Color must start with a `#`. at line 87 column 13
-[2m2025-08-14T07:18:21.300114Z[0m [31mERROR[0m [2mglazewm[0m[2m:[0m window_effects.other_windows.border: Color must start with a `#`. at line 87 column 13
