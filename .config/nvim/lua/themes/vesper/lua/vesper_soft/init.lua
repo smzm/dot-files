@@ -25,9 +25,11 @@ local colors = {
 	gray_1000 = "#090909",
 	gray_1050 = "#070707",
 	black = "#000000",
+	-- primary = "#feb17f",
+	primary = "#CCAA8E",
+	-- secendary = "#99ffe4",
+	secendary = "#9FD4C9",
 	red = "#FF0000",
-	orange = "#ffc799",
-	green = "#99ffe4",
 }
 
 function theme.setup()
@@ -47,11 +49,11 @@ function theme.setup()
 	local bg_shades_11, bg_shades_12, bg_shades_13, bg_shades_14, bg_shades_15
 	local bg_shades_16, bg_shades_17, bg_shades_18, bg_shades_19, bg_shades_20
 	local black = colors.black
+	local primary = colors.primary
+	local secendary = colors.secendary
 	local red = colors.red
-	local orange = colors.orange
-	local green = colors.green
 
-	background = colors.gray_1050 -- Darkest background
+	background = colors.gray_950 -- Darkest background
 	bg_shades_01 = colors.gray_1000
 	bg_shades_02 = colors.gray_950
 	bg_shades_03 = colors.gray_900
@@ -75,7 +77,7 @@ function theme.setup()
 	foreground = colors.gray_400
 
 	vim.api.nvim_set_hl(0, "Indentation", { fg = bg_shades_04 })
-	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_06 })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = bg_shades_05 })
 
 	-- 👉 Headings
 	vim.api.nvim_set_hl(0, "H1", { fg = bg_shades_01, bg = bg_shades_18, bold = true })
@@ -93,7 +95,7 @@ function theme.setup()
 		-- Added = { fg = "" , bg = ""}
 		-- @diff.plus
 
-		Boolean = { fg = foreground },
+		Boolean = { fg = primary },
 		-- @boolean
 
 		Character = { fg = bg_shades_10 },
@@ -103,7 +105,7 @@ function theme.setup()
 		-- @diff.delta
 		-- ColorColumn = { fg = "" , bg = ""}
 
-		Comment = { fg = bg_shades_06, italic = true },
+		Comment = { fg = bg_shades_07, italic = true },
 		-- @comment
 		-- @comment.error
 		-- @comment.warning
@@ -115,7 +117,7 @@ function theme.setup()
 
 		Conceal = { fg = background, bg = background },
 
-		Constant = { fg = bg_shades_07 },
+		Constant = { fg = primary },
 		-- @constant
 		-- @constant.builtin
 		-- Character
@@ -179,7 +181,7 @@ function theme.setup()
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
-		Delimiter = { fg = bg_shades_11 },
+		Delimiter = { fg = bg_shades_12 },
 		-- @punctuation
 		NvimParenthesis = { fg = bg_shades_12 },
 		-- NvimLambda
@@ -289,11 +291,11 @@ function theme.setup()
 
 		Folded = { fg = bg_shades_12, bg = bg_shades_02 },
 
-		Function = { fg = bg_shades_16 },
-		["@function.method"] = { fg = bg_shades_14 },
-		["@function.builtin"] = { fg = bg_shades_14, bold = true },
+		Function = { fg = primary },
+		["@function.method"] = { fg = primary },
+		["@function.builtin"] = { fg = primary },
 
-		Identifier = { fg = bg_shades_12 },
+		Identifier = { fg = bg_shades_14 },
 		-- @property
 		-- NvimIdentifier
 		-- NvimIdentifierScope
@@ -306,12 +308,12 @@ function theme.setup()
 		-- NvimEnvironmentName
 		-- Ignore = { fg = "" , bg = ""}
 
-		Keyword = { fg = bg_shades_13, bold = true },
+		Keyword = { fg = bg_shades_15 },
 		-- @keyword
 		Label = { fg = bg_shades_13 },
 		-- @label
 
-		LineNr = { fg = bg_shades_05 },
+		LineNr = { fg = bg_shades_06 },
 		-- LineNrAbove
 		-- LineNrBelow
 		-- LspCodeLens = { fg = "" , bg = ""}
@@ -355,7 +357,7 @@ function theme.setup()
 
 		NormalNC = { bg = background },
 
-		Number = { fg = foreground },
+		Number = { fg = primary },
 		-- @number
 		-- @number.float
 		-- NvimNumber
@@ -452,26 +454,23 @@ function theme.setup()
 		-- constant.builtin
 		-- @type.builtin
 		-- @attribute.builtin
-		-- @function.builtin
 		-- @constructor
 		-- @punctuation.special
 		-- @markup
-		-- @tag.builtin
 		-- SpecialChar
 		-- SpecialComment
 		-- Debug
-		-- Tag
 		-- NvimRegister
 		-- NvimStringSpecial
 
-		SpecialChar = { fg = bg_shades_09 },
+		SpecialChar = { fg = bg_shades_12 },
 		-- @string.special
 		-- @string.escape
 		-- @character.special
 		-- NvimStringSpecial
 		["@variable"] = { link = "SpecialChar" },
 		["@variable.builtin"] = { link = "SpecialChar" },
-		["@variable.parameter"] = { fg = bg_shades_10 },
+		["@variable.parameter"] = { fg = bg_shades_12 },
 		-- SpecialComment = { fg = "" , bg = ""}
 		-- SpecialKey = { fg = "" , bg = ""}
 		-- SpellBad = { fg = "" , bg = ""}
@@ -494,7 +493,7 @@ function theme.setup()
 		-- StatusLineTermNC = { fg = "" , bg = ""}
 		-- StorageClass = { fg = "" , bg = ""}
 
-		String = { fg = bg_shades_07 },
+		String = { fg = secendary },
 		-- @string
 		-- @string.regexp
 		-- @string.special
@@ -502,7 +501,7 @@ function theme.setup()
 		-- @string.special.url
 		-- NvimString
 
-		Structure = { fg = bg_shades_08 },
+		Structure = { fg = bg_shades_10 },
 		-- @module
 		-- @module.builtin
 		-- Substitute = { fg = "" , bg = ""}
@@ -510,9 +509,9 @@ function theme.setup()
 		-- TabLineFill = { fg = "" , bg = ""}
 		-- TabLineSel = { fg = "" , bg = ""}
 
-		Tag = { fg = bg_shades_14 },
-		-- @tag
-		-- @tag.builtin
+		Tag = { fg = primary },
+		["@tag"] = { fg = bg_shades_14 },
+		["@tag.builtin"] = { fg = primary },
 		-- TermCursor = { fg = "" , bg = ""}
 
 		Title = { fg = bg_shades_14, bold = true },
@@ -523,7 +522,7 @@ function theme.setup()
 		Todo = { fg = bg_shades_16, bg = bg_shades_02 },
 		-- @comment.todo
 
-		Type = { fg = bg_shades_10, bold = true },
+		Type = { fg = primary, bold = false },
 		-- @type
 		-- @type.builtin
 		-- StorageClass

@@ -1,10 +1,10 @@
 return {
-	dir = "~/.config/nvim/lua/themes/vesper", -- local pathk
+	dir = "~/.config/nvim/lua/themes/vesper/", -- local pathk
 	name = "neoshine", -- optional but recommended
 	lazy = false,
 	priority = 1000, -- make sure it's loaded early
 	config = function()
-		vim.cmd.colorscheme("vesper")
+		vim.cmd.colorscheme("vesper_soft")
 	end,
 }
 
