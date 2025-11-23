@@ -1528,39 +1528,6 @@ if os_answers["interest"] == "Arch":
 
 subprocess.run("clear", shell=True)
 
-# ===== Jupyter configuration
-jupyter_check = (
-    subprocess.run(
-        "jupyter notebook --version",
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    ).returncode
-    == 0
-)
-if jupyter_check:
-    rprint(":thumbs_up: [green] jupyter notebook is installed.")
-    jupyter_config = [
-        inquirer.List(
-            "interest",
-            message="Install jupyter notebook configuration",
-            choices=["No", "Yes"],
-        )
-    ]
-    jupyter_config_answer = inquirer.prompt(jupyter_config)
-
-    if jupyter_config_answer["interest"] == "Yes":
-        subprocess.run("clear", shell=True)
-        run("mkdir -p ~/.jupyter/custom/", shell=True, stdout=DEVNULL)
-        run(
-            f"yes | sudo cp -rf {dotfiles_path}/.jupyter/custom/* ~/.jupyter/custom/",
-            shell=True,
-            stdout=DEVNULL,
-        )
-else:
-    rprint("[red italic] jupyter is not installed.\n")
-
-subprocess.run("clear", shell=True)
 
 # ===== Appearance
 # Apple_cursor
