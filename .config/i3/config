@@ -419,7 +419,6 @@ exec --no-startup-id numlockx &
 exec --no-startup-id redshift -l 36.2605:59.6168 -t 6500:5000 -b 1.0:0.9
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id "devmon --no-gui"
-exec xrandr --auto
 exec_always --no-startup-id imwheel
 exec_always --no-startup-id xbindkeys
 exec_always --no-startup-id xset dpms 1200 3600 5400
@@ -428,6 +427,7 @@ exec_always --no-startup-id xset dpms 1200 3600 5400
 exec_always --no-startup-id dunst &
 
 # Start picom composition
+exec xrandr --auto --rate 99
 exec_always --no-startup-id picom --config ~/.config/picom.conf & 
 
 # Start Polybar
