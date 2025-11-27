@@ -162,7 +162,6 @@ if os_answers["interest"] == "Arch":
         "blueman",
         "udisks2",
         "udiskie",
-        "ollama-cuda",
         "yt-dlp",
         "inter-font",
         "obsidian",
