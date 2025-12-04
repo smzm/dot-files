@@ -457,7 +457,6 @@ if os_answers["interest"] == "Arch":
         "cava",
         "ttf-indic-otf",
         "spotify",
-        "sptlrx-bin",
         "i3-scrot",
         "ttf-poppins",
         "apple-fonts",
@@ -1587,5 +1586,3 @@ subprocess.run("clear", shell=True)
 #
 # subprocess.run("clear", shell=True)
 
-# After In Arch:
-# sptlrx with spotify --> [https://github.com/raitonoberu/sptlrx] -- sptlrx -c <cookie> -- check ~/.config/sptlrx/config.yaml -- use spotify app
