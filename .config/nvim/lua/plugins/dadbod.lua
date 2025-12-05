@@ -1,4 +1,5 @@
 return {
+	-- sudo pacman -S postgresql-libs to work with postgres
 	"tpope/vim-dadbod",
 	"kristijanhusak/vim-dadbod-completion",
 	{

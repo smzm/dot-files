@@ -311,7 +311,7 @@ function theme.setup()
 		Label = { fg = bg_shades_13 },
 		-- @label
 
-		LineNr = { fg = bg_shades_04 },
+		LineNr = { fg = bg_shades_05 },
 		-- LineNrAbove
 		-- LineNrBelow
 		-- LspCodeLens = { fg = "" , bg = ""}

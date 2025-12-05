@@ -32,35 +32,82 @@ return {
 		-- @diff     	 Git diff
 		dependencies = { "folke/snacks.nvim" },
 		---@type opencode.Config
-
-		opts = {
-			-- Your configuration, if any
-			terminal = {
-				-- No reason to prefer normal mode - can't scroll TUI like a normal buffer
-				auto_insert = true,
-				auto_close = true,
-				width = 80,
-				win = {
-					position = "float",
-					-- I usually want to `toggle` and then immediately `ask` - seems like a sensible default
-					enter = true,
+		config = function()
+			vim.g.opencode_opts = {
+				terminal = {
+					auto_insert = true,
+					auto_close = true,
+					width = 80,
+					win = {
+						position = "float",
+						enter = true,
+					},
+					env = {
+						OPENCODE_THEME = "system",
+					},
 				},
-				env = {
-					-- Other themes have visual bugs in embedded terminals: https://github.com/sst/opencode/issues/445
-					OPENCODE_THEME = "system",
-				},
+			}
+		end,
+		keys = {
+			{
+				"<leader><leader>",
+				function()
+					require("opencode").toggle()
+				end,
+				desc = "Toggle embedded opencode",
 			},
-		},
-	 -- stylua: ignore
-	 keys = {
-	   { '<leader><leader>', function() require('opencode').toggle() end, desc = 'Toggle embedded opencode', },
-	   { '<leader><localleader>', function() require('opencode').ask() end, desc = 'Ask opencode', mode = 'n', },
-	   { '<leader><localleader>', function() require('opencode').ask('@selection: ') end, desc = 'Ask opencode about selection', mode = 'v', },
-	   { '<leader>op', function() require('opencode').select_prompt() end, desc = 'Select prompt', mode = { 'n', 'v', }, },
-	   { '<leader>on', function() require('opencode').command('session_new') end, desc = 'New session', },
-	   { '<leader>oy', function() require('opencode').command('messages_copy') end, desc = 'Copy last message', },
-	   { '<C-PageDown>',    function() require('opencode').command('messages_half_page_down') end, desc = 'Scroll messages down', },
-	   { '<C-PageUp>',    function() require('opencode').command('messages_half_page_up') end, desc = 'Scroll messages up', },
+			{
+				"<localleader><localleader>",
+				function()
+					require("opencode").ask()
+				end,
+				desc = "Ask opencode",
+				mode = "n",
+			},
+			{
+				"<localleader><localleader>",
+				function()
+					require("opencode").ask("@selection: ")
+				end,
+				desc = "Ask opencode about selection",
+				mode = "v",
+			},
+			{
+				"<localleader>op",
+				function()
+					require("opencode").select_prompt()
+				end,
+				desc = "Select prompt",
+				mode = { "n", "v" },
+			},
+			{
+				"<localleader>on",
+				function()
+					require("opencode").command("session_new")
+				end,
+				desc = "New session",
+			},
+			{
+				"<localleader>oy",
+				function()
+					require("opencode").command("messages_copy")
+				end,
+				desc = "Copy last message",
+			},
+			{
+				"<C-PageDown>",
+				function()
+					require("opencode").command("messages_half_page_down")
+				end,
+				desc = "Scroll messages down",
+			},
+			{
+				"<C-PageUp>",
+				function()
+					require("opencode").command("messages_half_page_up")
+				end,
+				desc = "Scroll messages up",
+			},
 		},
 	},
 

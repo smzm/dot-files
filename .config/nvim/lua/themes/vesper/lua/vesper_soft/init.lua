@@ -25,10 +25,8 @@ local colors = {
 	gray_1000 = "#090909",
 	gray_1050 = "#070707",
 	black = "#000000",
-	-- primary = "#feb17f",
-	primary = "#CCAA8E",
-	-- secendary = "#99ffe4",
-	secendary = "#9FD4C9",
+	primary = "#feb17f",
+	secendary = "#99ffe4",
 	red = "#FF0000",
 }
 

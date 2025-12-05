@@ -27,7 +27,7 @@ return {
 					sign = false,
 					width = "full",
 					border = "thin",
-					left_pad = 5,
+					left_pad = 1,
 				},
 				completions = { blink = { enabled = true } },
 				render_modes = true,
@@ -162,12 +162,12 @@ return {
 		"benlubas/molten-nvim",
 		dev = false,
 		enabled = true,
-		version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
 		build = ":UpdateRemotePlugins",
 		dependencies = {
 			"willothy/wezterm.nvim",
 			"3rd/image.nvim",
 		},
+		filetypes = { "markdown" },
 		init = function()
 			vim.g.molten_image_provider = "image.nvim"
 			vim.g.molten_auto_image_popup = false
@@ -204,7 +204,7 @@ return {
 			vim.keymap.set("n", "<localleader>[", ":MoltenPrev<CR>", { silent = true, desc = "Previous Cell" })
 			vim.keymap.set(
 				"n",
-				"<localleader>=",
+				"<localleader>m<Right>",
 				":MoltenEvaluateLine<CR>",
 				{ silent = true, desc = "Run Current Line" }
 			)
@@ -218,7 +218,7 @@ return {
 			-- For python block has matplotlib visualization <localleader>\\ and then <localleader>CR
 			vim.keymap.set(
 				"n",
-				"<localleader><CR>",
+				"<localleader>mm",
 				":noautocmd MoltenEnterOutput<CR> :noautocmd MoltenEnterOutput<CR>",
 				{ silent = true, desc = "show/enter output" }
 			)
@@ -241,10 +241,9 @@ return {
 				":MoltenReevaluateAll<CR>", -- This is Molten's own re-evaluate all, might behave differently
 				{ silent = true, desc = "Re-evaluate all (Molten built-in)" }
 			)
-
 			vim.keymap.set(
 				"v",
-				"<localleader>mm",
+				"<localleader>mv",
 				":<C-u>MoltenEvaluateVisual<CR>gv",
 				{ desc = "execute visual selection", buffer = true, silent = true }
 			)
@@ -285,72 +284,84 @@ return {
 			end
 
 			---------------------------------------------------------------------
-			-- Run Python cell with \\
+			-- Run Python cell with \+Enter
 			---------------------------------------------------------------------
-			vim.keymap.set("n", "<localleader>\\", function()
-				-- ... (block finding logic from your previous working version) ...
-				local cursor_line = vim.fn.line(".")
-				local cursor_line_text = vim.fn.getline(cursor_line)
-				local current_buf_total_lines = vim.fn.line("$")
-				local code_block_start_line, code_block_end_line
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "markdown",
+				callback = function()
+					vim.keymap.set("n", "<localleader><CR>", function()
+						local cursor_line = vim.fn.line(".")
+						local cursor_line_text = vim.fn.getline(cursor_line)
+						local current_buf_total_lines = vim.fn.line("$")
+						local code_block_start_line, code_block_end_line
 
-				if is_python_block_start(cursor_line_text) then
-					code_block_start_line = cursor_line
-					local search_line = cursor_line + 1
-					while search_line <= current_buf_total_lines do
-						if is_code_block_end(vim.fn.getline(search_line)) then
-							code_block_end_line = search_line
-							break
-						end
-						search_line = search_line + 1
-					end
-				elseif is_code_block_end(cursor_line_text) then
-					code_block_end_line = cursor_line
-					local search_line = cursor_line - 1
-					while search_line >= 1 do
-						if is_python_block_start(vim.fn.getline(search_line)) then
-							code_block_start_line = search_line
-							break
-						end
-						search_line = search_line - 1
-					end
-				else
-					local search_up_line = cursor_line
-					while search_up_line >= 1 do
-						local line_text_up = vim.fn.getline(search_up_line)
-						if is_python_block_start(line_text_up) then
-							code_block_start_line = search_up_line
-							break
-						elseif is_code_block_end(line_text_up) and search_up_line < cursor_line then
-							code_block_start_line = nil
-							break
-						end
-						search_up_line = search_up_line - 1
-					end
-					if code_block_start_line then
-						local search_down_line = math.max(cursor_line, code_block_start_line + 1)
-						while search_down_line <= current_buf_total_lines do
-							local line_text_down = vim.fn.getline(search_down_line)
-							if is_code_block_end(line_text_down) then
-								code_block_end_line = search_down_line
-								break
-							elseif
-								is_python_block_start(line_text_down) and search_down_line > code_block_start_line
-							then
-								code_block_end_line = nil
-								break
+						if is_python_block_start(cursor_line_text) then
+							code_block_start_line = cursor_line
+							local search_line = cursor_line + 1
+							while search_line <= current_buf_total_lines do
+								if is_code_block_end(vim.fn.getline(search_line)) then
+									code_block_end_line = search_line
+									break
+								end
+								search_line = search_line + 1
 							end
-							search_down_line = search_down_line + 1
+						elseif is_code_block_end(cursor_line_text) then
+							code_block_end_line = cursor_line
+							local search_line = cursor_line - 1
+							while search_line >= 1 do
+								if is_python_block_start(vim.fn.getline(search_line)) then
+									code_block_start_line = search_line
+									break
+								end
+								search_line = search_line - 1
+							end
+						else
+							local search_up_line = cursor_line
+							while search_up_line >= 1 do
+								local line_text_up = vim.fn.getline(search_up_line)
+								if is_python_block_start(line_text_up) then
+									code_block_start_line = search_up_line
+									break
+								elseif is_code_block_end(line_text_up) and search_up_line < cursor_line then
+									code_block_start_line = nil
+									break
+								end
+								search_up_line = search_up_line - 1
+							end
+							if code_block_start_line then
+								local search_down_line = math.max(cursor_line, code_block_start_line + 1)
+								while search_down_line <= current_buf_total_lines do
+									local line_text_down = vim.fn.getline(search_down_line)
+									if is_code_block_end(line_text_down) then
+										code_block_end_line = search_down_line
+										break
+									elseif
+										is_python_block_start(line_text_down)
+										and search_down_line > code_block_start_line
+									then
+										code_block_end_line = nil
+										break
+									end
+									search_down_line = search_down_line + 1
+								end
+							end
 						end
-					end
-				end
 
-				if code_block_start_line and code_block_end_line and code_block_start_line < code_block_end_line then
-					highlight_and_run_single_block(code_block_start_line + 1, code_block_end_line - 1)
-				else
-					vim.notify("Molten: Not inside a valid Python code block or block not found.", vim.log.levels.INFO)
-				end
-			end, { silent = true, desc = "Molten: Run current block" })
+						if
+							code_block_start_line
+							and code_block_end_line
+							and code_block_start_line < code_block_end_line
+						then
+							highlight_and_run_single_block(code_block_start_line + 1, code_block_end_line - 1)
+						else
+							vim.notify(
+								"Molten: Not inside a valid Python code block or block not found.",
+								vim.log.levels.INFO
+							)
+						end
+					end, { buffer = true, silent = true, desc = "Molten: Run current block" })
+				end,
+			})
 
 			---------------------------------------------------------------------
 			-- Run all Python code blocks sequentially with <leader>ma
@@ -557,35 +568,35 @@ return {
 		end,
 	},
 
-	-- {
-	-- 	"Thiago4532/mdmath.nvim",
-	-- 	dependencies = {
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 	},
-	-- 	opts = {
-	-- 		-- Filetypes that the plugin will be enabled by default.
-	-- 		filetypes = { "markdown" },
-	-- 		-- Color of the equation, can be a highlight group or a hex color.
-	-- 		-- Examples: 'Normal', '#ff0000'
-	-- 		foreground = "Normal",
-	-- 		-- Hide the text when the equation is under the cursor.
-	-- 		anticonceal = true,
-	-- 		-- Hide the text when in the Insert Mode.
-	-- 		hide_on_insert = true,
-	-- 		-- Enable dynamic size for non-inline equations.
-	-- 		dynamic = true,
-	-- 		-- Configure the scale of dynamic-rendered equations.
-	-- 		dynamic_scale = 1,
-	-- 		-- Interval between updates (milliseconds).
-	-- 		update_interval = 400,
-	--
-	-- 		-- Internal scale of the equation images, increase to prevent blurry images when increasing terminal
-	-- 		-- font, high values may produce aliased images.
-	-- 		-- WARNING: This do not affect how the images are displayed, only how many pixels are used to render them.
-	-- 		--          See `dynamic_scale` to modify the displayed size.
-	-- 		internal_scale = 1,
-	-- 	},
-	-- },
+	{
+		"Thiago4532/mdmath.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			-- Filetypes that the plugin will be enabled by default.
+			filetypes = { "markdown" },
+			-- Color of the equation, can be a highlight group or a hex color.
+			-- Examples: 'Normal', '#ff0000'
+			foreground = "Normal",
+			-- Hide the text when the equation is under the cursor.
+			anticonceal = true,
+			-- Hide the text when in the Insert Mode.
+			hide_on_insert = true,
+			-- Enable dynamic size for non-inline equations.
+			dynamic = true,
+			-- Configure the scale of dynamic-rendered equations.
+			dynamic_scale = 1,
+			-- Interval between updates (milliseconds).
+			update_interval = 400,
+
+			-- Internal scale of the equation images, increase to prevent blurry images when increasing terminal
+			-- font, high values may produce aliased images.
+			-- WARNING: This do not affect how the images are displayed, only how many pixels are used to render them.
+			--          See `dynamic_scale` to modify the displayed size.
+			internal_scale = 1,
+		},
+	},
 
 	{ -- paste an image from the clipboard or drag-and-drop
 		"HakonHarnes/img-clip.nvim",
