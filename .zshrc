@@ -150,8 +150,10 @@ alias ld='lazydocker'
 
 
 # Eza
-alias l="eza --tree --level=2  --icons --git"
-alias ll="eza --tree --level=2 --long --icons --git"
+alias l="eza --tree --level=1  --icons --git --group-directories-first"
+alias ll="eza --tree --level=2  --icons --git --group-directories-first"
+alias lx="eza --tree --level=1 --long --icons --git --group-directories-first"
+alias llx="eza --tree --level=2 --long --icons --git --group-directories-first"
 
 # 7z
 alias 7zCompress='7z a -t7z -md=16m'
@@ -393,3 +395,8 @@ export PATH=/home/smr/.opencode/bin:$PATH
 
 # opencode
 export PATH=/home/smzm/.opencode/bin:$PATH
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/smzm/.lmstudio/bin"
+# End of LM Studio CLI section
+
