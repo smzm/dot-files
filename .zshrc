@@ -400,4 +400,6 @@ export PATH=/home/smzm/.opencode/bin:$PATH
 export PATH="$PATH:/home/smzm/.lmstudio/bin"
 # End of LM Studio CLI section
 
-tmux a -t 0
+if [[ -z "$TMUX" && -z "$NVIM" ]]; then
+    tmux new-session -A -s 0
+fi
