@@ -400,3 +400,4 @@ export PATH=/home/smzm/.opencode/bin:$PATH
 export PATH="$PATH:/home/smzm/.lmstudio/bin"
 # End of LM Studio CLI section
 
+tmux a -t 0
