@@ -163,8 +163,8 @@ return { -- >>> LSP
 				{ "shfmt" }, -- Shell Script
 				{ "stylua" }, -- Lua
 				{ "biome" }, -- JS and Many More
-				{ "prettierd" }, -- JS and Many More
-				{ "prettier" }, -- JS and Many More
+				-- { "prettierd" }, -- JS and Many More
+				-- { "prettier" }, -- JS and Many More
 				{ "latexindent" },
 				-- LINTERS
 				{ "codespell" },
