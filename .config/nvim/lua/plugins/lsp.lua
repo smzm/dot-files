@@ -218,6 +218,16 @@ return { -- >>> LSP
 					end,
 				},
 			})
+
+			-- Install Mojo manually because it's not in mason
+			vim.lsp.config("mojo", {
+				capabilities = capabilities,
+				cmd = { "mojo-lsp-server" },
+				filetypes = { "mojo" },
+				root_markers = { "mojoproject", ".git", "mojo.toml" },
+			})
+			vim.lsp.enable("mojo")
+
 			-- Keymaps
 			local keymap = vim.keymap
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -501,6 +511,7 @@ return { -- >>> LSP
 					css = { "prettier" },
 					html = { "prettier" },
 					json = { "prettier" },
+					jsonc = { "prettier" },
 					yaml = { "prettier" },
 					toml = { "taplo" },
 					markdown = { "prettier", "injected" },
@@ -509,6 +520,7 @@ return { -- >>> LSP
 					lua = { "stylua" },
 					python = { "isort", "black" },
 					tex = { "latexindent" },
+					mojo = { "mojo_format" },
 				},
 				formatters = {},
 			})
@@ -535,6 +547,7 @@ return { -- >>> LSP
 						teal = "tl",
 						r = "r",
 						typescript = "ts",
+						mojo = "mojo",
 					},
 					-- Map of treesitter language to formatters to use
 					-- (defaults to the value from formatters_by_ft)
@@ -543,6 +556,7 @@ return { -- >>> LSP
 						javascript = { "prettier" },
 						typescript = { "prettier" },
 						latex = { "latexindent" },
+						mojo = { "mojo_format" },
 					},
 				},
 			}
