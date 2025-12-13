@@ -193,6 +193,7 @@ if os_answers["interest"] == "Arch":
         "luarocks",
         "python-pillow",
         "python-cairosvg",
+        "vnstat",
     ]
 
 elif os_answers["interest"] == "WSL":
@@ -1328,6 +1329,11 @@ if os_answers["interest"] == "Arch":
             )
             run(
                 "cd ~/.config/polybar/scripts/ ; sudo chmod +xwr *.sh",
+                shell=True,
+                stdout=DEVNULL,
+            )
+            run(
+                "sudo systemctl enable --now vnstat",
                 shell=True,
                 stdout=DEVNULL,
             )
