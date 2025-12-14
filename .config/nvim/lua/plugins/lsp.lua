@@ -160,6 +160,7 @@ return { -- >>> LSP
 				-- FORMATTERS
 				{ "black" }, -- Python
 				{ "isort" }, -- Python
+				{ "rustfmt" }, -- Rust
 				{ "shfmt" }, -- Shell Script
 				{ "stylua" }, -- Lua
 				{ "biome" }, -- JS and Many More
@@ -173,6 +174,7 @@ return { -- >>> LSP
 				{ "shellcheck" },
 				--DAP
 				{ "debugpy" },
+				{ "codelldb" }, -- Rust Debugger
 			})
 
 			-- imports
@@ -520,6 +522,7 @@ return { -- >>> LSP
 					lua = { "stylua" },
 					python = { "isort", "black" },
 					tex = { "latexindent" },
+					rust = { "rustfmt", lsp_format = "fallback" },
 					mojo = { "mojo_format" },
 				},
 				formatters = {},
