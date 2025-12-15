@@ -389,10 +389,6 @@ alias cleanup-analyze='cleanup_arch --analyze'
 [[ -f /home/smr/.dart-cli-completion/zsh-config.zsh ]] && . /home/smr/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
 
-
-# opencode
-export PATH=/home/smr/.opencode/bin:$PATH
-
 # opencode
 export PATH=/home/smzm/.opencode/bin:$PATH
 
@@ -403,3 +399,16 @@ export PATH="$PATH:/home/smzm/.lmstudio/bin"
 if [[ -z "$TMUX" && -z "$NVIM" ]]; then
     tmux new-session -A -s 0
 fi
+
+function bset() { # Default is 70
+    local val=$1
+    
+    # Check if input is a number AND is between 0 and 100
+    if [[ "$val" =~ ^[0-9]+$ ]] && (( val >= 0 && val <= 100 )); then
+        # --noverify makes it faster by skipping the "did it work?" check
+        ddcutil setvcp 10 "$val" --noverify
+    else
+        echo "Error: Please provide a number between 0 and 100."
+    fi
+}
+alias breset='ddcutil setvcp 05 1'
