@@ -194,6 +194,7 @@ if os_answers["interest"] == "Arch":
         "python-pillow",
         "python-cairosvg",
         "vnstat",
+        "ddcutil",  # sudo modprobe i2c-dev
     ]
 
 elif os_answers["interest"] == "WSL":
