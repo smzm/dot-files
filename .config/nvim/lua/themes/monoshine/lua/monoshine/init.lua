@@ -494,7 +494,7 @@ function theme.setup()
 		-- StatusLineTermNC = { fg = "" , bg = ""}
 		-- StorageClass = { fg = "" , bg = ""}
 
-		String = { fg = bg_shades_07 },
+		String = { fg = bg_shades_08 },
 		-- @string
 		-- @string.regexp
 		-- @string.special
