@@ -479,6 +479,7 @@ if os_answers["interest"] == "Arch":
         "pnglatex",
         "emote",
         "dtop-bin",
+        "ab-download-manager-bin",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL

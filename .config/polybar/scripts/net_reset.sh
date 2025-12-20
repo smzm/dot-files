@@ -33,7 +33,7 @@ if [ "$CONFIRM" == "Yes" ]; then
     
     sudo systemctl restart vnstat
     
-    notify-send "Network Manager" "  tCounters reset to ZERO." -u normal
+    notify-send "Network Manager" "  Counters reset to ZERO." -u normal
 
 else
     exit 0

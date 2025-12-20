@@ -1,28 +1,28 @@
 #!/bin/bash
 
 # --- CONFIGURATION ---
-# List all interfaces that might carry internet traffic
-# Based on your ip link: tun0 (VPN), enp5s0 (Ethernet), wlp4s0 (Wi-Fi)
-INTERFACES="tun0 enp5s0 wlp4s0"
+# ONLY monitor physical interfaces to avoid double-counting VPN traffic.
+# The physical interface always sees the data (encrypted or not).
+INTERFACES="enp5s0 wlp4s0"
 LIMIT_MIB=1024
 
 # Colors
 COLOR_SAFE="#757575"    
 COLOR_WARN="#D1D1D1"    
-COLOR_CRIT="#e53935"    
+COLOR_CRIT="#E1E1E1"    
 
 # Variable to store grand total
 TOTAL_USAGE_MIB=0
 
-# Loop through each interface and add up today's usage
+# Loop through physical interfaces only
 for IFACE in $INTERFACES; do
     # Get one-line data for this interface
-    # Suppress errors in case an interface (like tun0) is currently down/missing
+    # Field 6 is the daily total (rx+tx)
     RAW_DATA=$(vnstat -i "$IFACE" --oneline 2>/dev/null)
     
     # If data exists for this interface
     if [ -n "$RAW_DATA" ]; then
-        # Extract string (Field 6) e.g., "49.04 MiB" or "1.20 GiB"
+        # Extract string (Field 6) e.g., "163.77 MiB"
         USAGE_STR=$(echo "$RAW_DATA" | cut -d';' -f6)
         
         VAL=$(echo "$USAGE_STR" | awk '{print $1}')
@@ -36,7 +36,7 @@ for IFACE in $INTERFACES; do
             else print val; 
         }')
         
-        # Add to grand total (using awk for floating point addition)
+        # Add to grand total
         TOTAL_USAGE_MIB=$(awk -v total="$TOTAL_USAGE_MIB" -v part="$MIB_PART" 'BEGIN {print total + part}')
     fi
 done
@@ -56,13 +56,10 @@ else
 fi
 
 # Detect Current Active Interface for Label (Visual only)
-# If tun0 is up, show "VPN", otherwise "NET"
 if ip link show tun0 > /dev/null 2>&1 && ip link show tun0 | grep -q "LOWER_UP"; then
-    # LABEL="VPN"
-    LABEL=""
+    LABEL="直" # VPN Icon (Nerd Font)
 else
-    # LABEL="NET"
-    LABEL=""
+    LABEL="" # Globe Icon
 fi
 
 # Output
