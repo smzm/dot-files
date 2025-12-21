@@ -1,22 +1,22 @@
 return {
 	-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> supermaven
-	-- {
-	-- 	"supermaven-inc/supermaven-nvim",
-	-- 	config = function()
-	-- 		require("supermaven-nvim").setup({
-	-- 			keymaps = {
-	-- 				accept_suggestion = "<M-l>",
-	-- 				clear_suggestion = "<C-]>",
-	-- 				accept_word = "<C-l>",
-	-- 			},
-	-- 			-- ignore_filetypes = { md = true },
-	-- 			-- color = {
-	-- 			-- 	suggestion_color = "#ffffff",
-	-- 			-- 	cterm = 244,
-	-- 			-- },
-	-- 		})
-	-- 	end,
-	-- },
+	{
+		"supermaven-inc/supermaven-nvim",
+		config = function()
+			require("supermaven-nvim").setup({
+				keymaps = {
+					accept_suggestion = "<M-l>",
+					clear_suggestion = "<C-]>",
+					accept_word = "<C-l>",
+				},
+				-- ignore_filetypes = { md = true },
+				-- color = {
+				-- 	suggestion_color = "#ffffff",
+				-- 	cterm = 244,
+				-- },
+			})
+		end,
+	},
 
 	-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> opencode
 	{
