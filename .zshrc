@@ -182,8 +182,6 @@ function cd() {
   fi
 }
 
-
-
 # use y instead of yazi to start, and press q to quit, you'll see the CWD changed
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -384,10 +382,7 @@ alias cleanup='cleanup_arch'
 alias cleanup-deep='cleanup_arch --deep'
 alias cleanup-analyze='cleanup_arch --analyze'
 
-
-if [[ -z "$TMUX" && -z "$NVIM" ]]; then
-    tmux new-session -A -s 0
-fi
+alias tmux="tmux new-session -A -s 0"
 
 function bset() { # Default is 70
     local val=$1
