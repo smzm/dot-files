@@ -179,6 +179,8 @@ function theme.setup()
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
+		DiagnosticUnderlineInfo = { fg = bg_shades_02 },
+
 		Delimiter = { fg = bg_shades_11 },
 		-- @punctuation
 		NvimParenthesis = { fg = bg_shades_12 },
