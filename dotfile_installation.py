@@ -80,6 +80,7 @@ if os_answers["interest"] == "Arch":
         "ruby",
         "python",
         "rust",
+        "rust-analyzer",
         "python-pip",
         "jupyter-notebook",
         "python-ipykernel",
