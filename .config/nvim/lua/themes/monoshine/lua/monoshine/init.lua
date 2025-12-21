@@ -179,7 +179,9 @@ function theme.setup()
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
-		DiagnosticUnderlineInfo = { fg = bg_shades_02 },
+		DiagnosticUnderlineInfo = { fg = nil },
+		DiagnosticUnderlineWarn = { fg = nil },
+		DiagnosticUnderlineHint = { fg = nil },
 
 		Delimiter = { fg = bg_shades_11 },
 		-- @punctuation
