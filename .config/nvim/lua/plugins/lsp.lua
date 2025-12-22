@@ -88,8 +88,8 @@ return { -- >>> LSP
 				cssls = {}, -- CSS
 				tailwindcss = {}, -- Tailwind CSS
 				templ = {}, -- Templ
-				pyright = {}, -- Python : pyright
-				-- ty = {},
+				-- pyright = {}, -- Python : pyright
+				ty = {},
 				ruff = {
 					commands = {
 						RuffAutofix = {
@@ -220,15 +220,6 @@ return { -- >>> LSP
 					end,
 				},
 			})
-
-			-- Install Mojo manually because it's not in mason
-			vim.lsp.config("mojo", {
-				capabilities = capabilities,
-				cmd = { "mojo-lsp-server" },
-				filetypes = { "mojo" },
-				root_markers = { "mojoproject", ".git", "mojo.toml" },
-			})
-			vim.lsp.enable("mojo")
 
 			-- Keymaps
 			local keymap = vim.keymap
@@ -523,7 +514,6 @@ return { -- >>> LSP
 					python = { "isort", "black" },
 					tex = { "latexindent" },
 					rust = { "rustfmt", lsp_format = "fallback" },
-					mojo = { "mojo_format" },
 				},
 				formatters = {},
 			})

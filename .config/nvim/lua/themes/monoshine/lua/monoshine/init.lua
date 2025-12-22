@@ -322,7 +322,7 @@ function theme.setup()
 		-- LspCodeLensSeparator
 		-- LspInlayHint = { fg = "" , bg = ""}
 
-		LspReferenceRead = { fg = "NONE", bg = "NONE" },
+		LspReferenceRead = { fg = bg_shades_16, bg = "NONE" },
 		-- LspReferenceTarget = { fg = "" , bg = ""}
 
 		LspReferenceText = { fg = "NONE", bg = "NONE" },
@@ -330,7 +330,7 @@ function theme.setup()
 		-- VisualNOS
 		-- SnippetTabstop
 
-		LspReferenceWrite = { fg = bg_shades_14, bg = "NONE", bold = true },
+		LspReferenceWrite = { fg = bg_shades_16, bg = "NONE", bold = true },
 		-- LspSignatureActiveParameter = { fg = "" , bg = ""}
 		-- @attribute
 		-- @attribute.builtin
@@ -350,7 +350,7 @@ function theme.setup()
 		-- Whitespace
 		IblWhitespace = { bg = "NONE", fg = "NONE", nocombine = true },
 
-		Normal = { fg = foreground, bg = background },
+		Normal = { fg = red, bg = background },
 		-- Ignore
 		-- @diff
 		-- NvimSpacing
@@ -408,7 +408,7 @@ function theme.setup()
 		-- NvimStringSpecial = { fg = "" , bg = ""}
 		-- NvimDoubleQuotedEscape
 
-		Operator = { fg = bg_shades_12 },
+		Operator = { fg = bg_shades_09 },
 		-- @operator
 		-- NvimAssignment
 		-- NvimOperator
@@ -483,7 +483,7 @@ function theme.setup()
 		-- SpellLocal = { fg = "" , bg = ""}
 		-- SpellRare = { fg = "" , bg = ""}
 
-		Statement = { fg = bg_shades_10 },
+		Statement = { fg = bg_shades_09 },
 		-- Conditional
 		-- Repeat
 		-- Label
@@ -498,7 +498,7 @@ function theme.setup()
 		-- StatusLineTermNC = { fg = "" , bg = ""}
 		-- StorageClass = { fg = "" , bg = ""}
 
-		String = { fg = bg_shades_09 },
+		String = { fg = bg_shades_08 },
 		-- @string
 		-- @string.regexp
 		-- @string.special
