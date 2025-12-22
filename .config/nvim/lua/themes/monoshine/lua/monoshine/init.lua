@@ -350,7 +350,7 @@ function theme.setup()
 		-- Whitespace
 		IblWhitespace = { bg = "NONE", fg = "NONE", nocombine = true },
 
-		Normal = { fg = red, bg = background },
+		Normal = { fg = foreground, bg = background },
 		-- Ignore
 		-- @diff
 		-- NvimSpacing
