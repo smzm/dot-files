@@ -517,7 +517,7 @@ function theme.setup()
 		Tag = { fg = shade_14 },
 		-- @tag
 		-- @tag.builtin
-		-- TermCursor = { fg = "" , bg = ""}
+		TermCursor = { fg = shade_10, bg = shade_01 },
 
 		Title = { fg = shade_14, bold = true },
 		-- @markup.heading
