@@ -143,11 +143,9 @@ alias rml='trash list'
 alias rmr='trash restore'
 alias rmra='trash restore --all'
 alias rmea='trash empty --all'
-alias yt='yt-dlp -f "bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --add-chapters -c'
-alias ytcookie='yt-dlp --cookies-from-browser chrome -f "bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" --merge-output-format mp4 --add-chapters -c'
 alias lg='lazygit'
 alias ld='lazydocker'
-
+alias ytdownload='yt-dlp --newline --ignore-config --no-playlist --embed-subs --embed-chapters --embed-metadata --embed-thumbnail --embed-subs  -o %(title).200s.%(ext)s'
 
 # Eza
 alias l="eza --tree --level=1  --icons --git --group-directories-first"
@@ -396,3 +394,4 @@ function bset() { # Default is 70
     fi
 }
 alias breset='ddcutil setvcp 05 1'
+
