@@ -872,7 +872,7 @@ if opencode_answer["interest"] == "Yes":
     os.system("curl -fsSL https://opencode.ai/install | bash")
 
     # OpenCode Configuration
-    os.system(f"yes | cp -rf {dotfiles_path}/.config/opencode ~/.config/opencode")
+    # os.system(f"yes | cp -rf {dotfiles_path}/.config/opencode ~/.config/opencode")
 
 subprocess.run("clear", shell=True)
 
