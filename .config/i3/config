@@ -404,6 +404,9 @@ for_window [class="code|Code"] border pixel 4
 for_window [class="dev.warp.Warp"] border pixel 4
 for_window [class="Windscribe"] floating enable move workspace $ws5
 for_window [class="com-abdownloadmanager-desktop-AppKt"] floating enable
+for_window [class="matplotlib|Matplotlib"] floating enable
+
+
 
 
 # switch to workspace with urgent window automatically
