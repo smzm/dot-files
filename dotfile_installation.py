@@ -99,6 +99,7 @@ if os_answers["interest"] == "Arch":
         "peco",
         "lostfiles",
         "github-cli",
+        "gnome-calculator",
         "tree-sitter-cli",
         "tldr",
         "kitty",
