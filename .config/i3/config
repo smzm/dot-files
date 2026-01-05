@@ -378,8 +378,7 @@ set $ws8 8:
 # assign [class="code|Code"] $ws2
 assign [class="hiddify|Hiddify"] $ws5
 assign [class="throne|Throne"] $ws5
-
-assign [class="AmneziaVPN"] $ws3
+assign [class="AmneziaVPN"] $ws5
 # cannot use assign for Spotify
 for_window [class="spotify|Spotify"] move workspace $ws4
 
@@ -405,6 +404,7 @@ for_window [class="dev.warp.Warp"] border pixel 4
 for_window [class="Windscribe"] floating enable move workspace $ws5
 for_window [class="com-abdownloadmanager-desktop-AppKt"] floating enable
 for_window [class="matplotlib|Matplotlib"] floating enable
+for_window [class="org.gnome.Nautilus"] floating enable
 
 
 
@@ -431,8 +431,8 @@ exec_always --no-startup-id xset dpms 1200 3600 5400
 exec_always --no-startup-id dunst &
 
 # Start picom composition
-exec xrandr --auto  
-# exec xrandr --output HDMI-2 --mode 3440x1440 --rate 99
+#exec xrandr --auto  
+exec xrandr --output HDMI-2 --mode 3440x1440 --rate 99
 exec_always --no-startup-id picom --config ~/.config/picom.conf & 
 
 # Start Polybar
@@ -441,3 +441,4 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
 # Auto mount removable media
 exec --no-startup-id udiskie &
 
+exec windscribe-cli connect "dullahan" wstunnel:443 &
