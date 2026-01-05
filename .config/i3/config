@@ -399,7 +399,7 @@ for_window [class="code|Code"] border pixel 4
 for_window [class="dev.warp.Warp"] border pixel 4
 for_window [class="com-abdownloadmanager-desktop-AppKt"] floating enable
 for_window [class="matplotlib|Matplotlib"] floating enable
-for_window [class="org.gnome.Nautilus"] floating enable resize set 920 1300 ,move position center
+for_window [class="org.gnome.Nautilus"] floating enable, border normal, resize set 920 1300 ,move position center
 for_window [class="libreoffice"] floating enable
 
 # switch to workspace with urgent window automatically
