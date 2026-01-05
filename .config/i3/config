@@ -372,19 +372,18 @@ set $ws8 8:
 #############################
 
 # Open applications on specific workspaces
-# for_window [class="Windscribe"] floating enable move workspace $ws5
-assign [class="hiddify|Hiddify"] $ws5
-assign [class="throne|Throne"] $ws5
-assign [class="AmneziaVPN"] $ws5
+for_window [class="Windscribe"] floating enable
+assign [class="hiddify|Hiddify"] floating enable
+assign [class="throne|Throne"] floating enable
+assign [class="AmneziaVPN"] floating enable
 # cannot use assign for Spotify
-for_window [class="spotify|Spotify"] move workspace $ws4
+for_window [class="spotify|Spotify"] floating enable
 
 # Open specific applications in floating mode
 # for_window [title="File Transfer*"] floating enable
 # for_window [title="i3_help"] floating enable sticky enable border normal
 # for_window [class="Lightdm-settings"] floating enable
-for_window [class="anki|Anki"] floating enable border normal resize set 500 400
-for_window [class="anki|Anki"] move position center
+for_window [class="anki|Anki"] floating enable border normal resize set 500 400, move position center
 for_window [class="gnome-calculator"] floating enable sticky enable border normal
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Pavucontrol"] floating enable
@@ -400,7 +399,7 @@ for_window [class="code|Code"] border pixel 4
 for_window [class="dev.warp.Warp"] border pixel 4
 for_window [class="com-abdownloadmanager-desktop-AppKt"] floating enable
 for_window [class="matplotlib|Matplotlib"] floating enable
-for_window [class="org.gnome.Nautilus"] floating enable
+for_window [class="org.gnome.Nautilus"] floating enable resize set 920 1300 ,move position center
 for_window [class="libreoffice"] floating enable
 
 # switch to workspace with urgent window automatically
@@ -434,3 +433,4 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
 
 # Auto mount removable media
 exec --no-startup-id udiskie &
+
