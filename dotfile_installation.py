@@ -110,8 +110,10 @@ if os_answers["interest"] == "Arch":
         "xorg-xev",
         "xdotool",
         "nautilus",
+        "deepin-gtk-theme",
+        "deepin-icon-theme",
         "lxappearance",
-        "nitrogen",
+        "bun",
         "viewnior",
         "gtk3",
         "ntfs-3g",
@@ -463,16 +465,16 @@ if os_answers["interest"] == "Arch":
         "pacman-contrib",
         "cava",
         "ttf-indic-otf",
-        "spotify",
+        "nitrogen",
         "i3-scrot",
         "ttf-poppins",
         "apple-fonts",
         "ttf-font-awesome",
         "ttf-estedad-variable",
+        "ttf-exo-2",
         "noto-fonts-emoji",
         "pulseaudio-ctl",
         "jmtpfs",
-        "flatplat-blue-theme",
         "apple_cursor",
         "ttf-poppins",
         "i3exit",
@@ -1598,4 +1600,3 @@ subprocess.run("clear", shell=True)
 #
 #
 # subprocess.run("clear", shell=True)
-
