@@ -373,9 +373,9 @@ set $ws8 8:
 
 # Open applications on specific workspaces
 for_window [class="Windscribe"] floating enable
-assign [class="hiddify|Hiddify"] floating enable
-assign [class="throne|Throne"] floating enable
-assign [class="AmneziaVPN"] floating enable
+for_window [class="hiddify|Hiddify"] floating enable
+for_window [class="throne|Throne"] floating enable
+for_window [class="AmneziaVPN"] floating enable
 # cannot use assign for Spotify
 for_window [class="spotify|Spotify"] floating enable
 
@@ -433,4 +433,3 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
 
 # Auto mount removable media
 exec --no-startup-id udiskie &
-
