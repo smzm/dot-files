@@ -188,7 +188,6 @@ bindsym $mod+s layout stacking
 bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
-
 # workspace back and forth (with/without active container)
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
@@ -387,7 +386,7 @@ for_window [class="anki|Anki"] floating enable border normal resize set 500 400,
 for_window [class="gnome-calculator"] floating enable sticky enable border normal
 for_window [class="Nitrogen"] floating enable sticky enable border normal
 for_window [class="Pavucontrol"] floating enable
-for_window [class="mpv"] border pixel 4 resize set 2400 1800
+# for_window [class="mpv"] border pixel 4 resize set 2400 1800
 for_window [class="telegram-desktop|TelegramDesktop"] floating enable border pixel 4
 for_window [class="viewnior|Viewnior"] floating enable
 for_window [class="Qtconfig-qt4"] floating enable sticky enable border normal
@@ -399,7 +398,7 @@ for_window [class="code|Code"] border pixel 4
 for_window [class="dev.warp.Warp"] border pixel 4
 for_window [class="com-abdownloadmanager-desktop-AppKt"] floating enable
 for_window [class="matplotlib|Matplotlib"] floating enable
-for_window [class="org.gnome.Nautilus"] floating enable, border normal, resize set 920 1300 ,move position center
+# for_window [class="org.gnome.Nautilus"] floating enable, border normal, resize set 1620 1300 ,move position center
 for_window [class="libreoffice"] floating enable
 
 # switch to workspace with urgent window automatically
@@ -433,3 +432,5 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
 
 # Auto mount removable media
 exec --no-startup-id udiskie &
+
+# exec --no-startup-id ~/.config/Windscribe/windscribe-connect.sh &

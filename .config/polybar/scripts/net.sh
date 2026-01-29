@@ -7,9 +7,7 @@ INTERFACES="enp5s0 wlp4s0"
 LIMIT_MIB=1024
 
 # Colors
-COLOR_SAFE="#757575"    
-COLOR_WARN="#D1D1D1"    
-COLOR_CRIT="#E1E1E1"    
+COLOR="#959595"    
 
 # Variable to store grand total
 TOTAL_USAGE_MIB=0
@@ -41,20 +39,6 @@ for IFACE in $INTERFACES; do
     fi
 done
 
-# Calculate Percentage of Limit
-PERCENT=$(awk -v usage="$TOTAL_USAGE_MIB" -v limit="$LIMIT_MIB" 'BEGIN { 
-    printf "%.0f", (usage/limit)*100 
-}')
-
-# Determine Color
-if [ "$PERCENT" -ge 90 ]; then
-    COLOR="$COLOR_CRIT"
-elif [ "$PERCENT" -ge 75 ]; then
-    COLOR="$COLOR_WARN"
-else
-    COLOR="$COLOR_SAFE"
-fi
-
 # Detect Current Active Interface for Label (Visual only)
 if ip link show tun0 > /dev/null 2>&1 && ip link show tun0 | grep -q "LOWER_UP"; then
     LABEL="直" # VPN Icon (Nerd Font)
@@ -64,4 +48,4 @@ fi
 
 # Output
 DISPLAY_MIB=$(printf "%.0f" "$TOTAL_USAGE_MIB")
-echo "%{F$COLOR}${LABEL} ${DISPLAY_MIB} MiB ($PERCENT%)%{F-}"
+echo "%{F$COLOR}${LABEL} ${DISPLAY_MIB} MiB"
