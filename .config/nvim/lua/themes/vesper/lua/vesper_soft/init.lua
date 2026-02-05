@@ -21,10 +21,11 @@ local colors = {
 	gray_800 = "#262626",
 	gray_850 = "#1A1A1A",
 	gray_900 = "#151515",
-	gray_950 = "#0D0D0D",
+	gray_950 = "#101010",
 	gray_1000 = "#090909",
 	gray_1050 = "#070707",
 	black = "#000000",
+	primary_light = "#ffdec4",
 	primary = "#feb17f",
 	secendary = "#99ffe4",
 	red = "#FF0000",
@@ -47,6 +48,7 @@ function theme.setup()
 	local bg_shades_11, bg_shades_12, bg_shades_13, bg_shades_14, bg_shades_15
 	local bg_shades_16, bg_shades_17, bg_shades_18, bg_shades_19, bg_shades_20
 	local black = colors.black
+	local primary_light = colors.primary_light
 	local primary = colors.primary
 	local secendary = colors.secendary
 	local red = colors.red
@@ -85,8 +87,8 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "H3", { fg = bg_shades_02, bg = bg_shades_07, bold = true })
 	vim.api.nvim_set_hl(0, "H4", { fg = bg_shades_10, bg = bg_shades_03, bold = true })
 	vim.api.nvim_set_hl(0, "ReversedH3", { fg = bg_shades_07, bg = bg_shades_01, bold = true })
-	vim.api.nvim_set_hl(0, "CodeBlock", { bg = colors.black })
-	vim.api.nvim_set_hl(0, "CodeBorder", { fg = bg_shades_06, bg = colors.black })
+	vim.api.nvim_set_hl(0, "CodeBlock", { bg = bg_shades_01 })
+	vim.api.nvim_set_hl(0, "CodeBorder", { fg = bg_shades_06, bg = bg_shades_01 })
 	vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = bg_shades_11, bg = bg_shades_04 })
 
 	local highlights = {
@@ -290,8 +292,8 @@ function theme.setup()
 		Folded = { fg = bg_shades_12, bg = bg_shades_02 },
 
 		Function = { fg = primary },
-		["@function.method"] = { fg = primary },
-		["@function.builtin"] = { fg = primary },
+		["@function.method"] = { fg = primary_light },
+		["@function.builtin"] = { fg = primary_light },
 
 		Identifier = { fg = bg_shades_14 },
 		-- @property
@@ -466,7 +468,7 @@ function theme.setup()
 		-- @string.escape
 		-- @character.special
 		-- NvimStringSpecial
-		["@variable"] = { link = "SpecialChar" },
+		["@variable"] = { fg = bg_shades_14 },
 		["@variable.builtin"] = { link = "SpecialChar" },
 		["@variable.parameter"] = { fg = bg_shades_12 },
 		-- SpecialComment = { fg = "" , bg = ""}
@@ -476,7 +478,7 @@ function theme.setup()
 		-- SpellLocal = { fg = "" , bg = ""}
 		-- SpellRare = { fg = "" , bg = ""}
 
-		Statement = { fg = bg_shades_10 },
+		Statement = { fg = bg_shades_12 },
 		-- Conditional
 		-- Repeat
 		-- Label
