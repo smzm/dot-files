@@ -100,7 +100,6 @@ if os_answers["interest"] == "Arch":
         "lostfiles",
         "github-cli",
         "gnome-calculator",
-        "tree-sitter-cli",
         "tldr",
         "kitty",
         "zathura",
@@ -198,6 +197,8 @@ if os_answers["interest"] == "Arch":
         "luarocks",
         "python-pillow",
         "python-cairosvg",
+        "python-pyperclip",
+        "rust-analyzer",
         "vnstat",
         "ddcutil",  # sudo modprobe i2c-dev
     ]
@@ -262,6 +263,8 @@ elif os_answers["interest"] == "WSL":
         "luarocks",
         "python-pillow",
         "python-cairosvg",
+        "python-pyperclip",
+        "rust-analyzer",
     ]
 
 
@@ -608,6 +611,136 @@ while len(not_installed_packages_aur) > 0:
 
 subprocess.run("clear", shell=True)
 
+# ===== Cargo pacakges
+
+subprocess.run("clear", shell=True)
+cargo_result1 = subprocess.run(
+    "cargo version", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+)
+
+cargo_packages_list = ["tree-sitter-cli"]
+
+cargo_package = [
+    inquirer.Checkbox(
+        "interest",
+        message="Install cargo packages [SELECT WITH SPACE]",
+        choices=["ALL ⬇️", *cargo_packages_list],
+    ),
+]
+cargo_package_answers = inquirer.prompt(cargo_package)
+
+
+not_installed_packages_cargo = []
+installed_packages_cargo = []
+if "ALL ⬇️" in cargo_package_answers["interest"]:
+    rprint("[bold blue] Installing all cargo packages :")
+    rprint(Columns(cargo_packages_list, equal=True, expand=True))
+
+    for package in cargo_packages_list:
+        rprint(f"\n[yellow italic] installing {package}...")
+        cargo_result = subprocess.run(
+            f"cargo install --locked {package}",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        # if cargo package installed successfuly
+        if cargo_result.returncode == 0:
+            rprint(f"[bold green] {package} : [italic] installed.")
+            installed_packages_cargo.append(package)
+        # if cargo package not installed successfuly
+        else:
+            not_installed_packages_cargo.append(package)
+            cargo_stderr = cargo_result.stderr.decode().strip()
+            # Problem  : package does not exist
+            if re.search(r"code E404", cargo_stderr):
+                rprint(
+                    f"[bold white] {package} : [red italic] NOT INSTALLED. couldn't find this package !"
+                )
+            else:
+                rprint(
+                    f"[bold white] {package} : [red italic] NOT INSTALLED. There was a problem in installing this package !"
+                )
+
+    print("\n")
+else:
+    rprint("[italic salmon1] Installing selected packages :")
+    rprint(Columns(cargo_package_answers["interest"], equal=True, expand=True))
+
+    for package in cargo_package_answers["interest"]:
+        rprint(f"\n[yellow italic] installing {package}...")
+        cargo_result = subprocess.run(
+            f"cargo install --locked {package}",
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+        # if cargo package installed successfuly
+        if cargo_result.returncode == 0:
+            rprint(f"[bold green] {package} : [italic] installed.")
+            installed_packages_cargo.append(package)
+        # if cargo package not installed successfuly
+        else:
+            not_installed_packages_cargo.append(package)
+            cargo_stderr = cargo_result.stderr.decode().strip()
+            # Problem  : package does not exist
+            if re.search(r"code E404", cargo_stderr):
+                rprint(
+                    f"[bold white] {package} : [red italic] NOT INSTALLED. couldn't find this package !"
+                )
+            else:
+                rprint(
+                    f"[bold white] {package} : [red italic] NOT INSTALLED. There was a problem in installing this package !"
+                )
+
+
+# If there is any not installed packae then ask for try again
+while len(not_installed_packages_cargo) > 0:
+    print("\n")
+    not_installed_cargo_q = [
+        inquirer.List(
+            "interest",
+            message="Do you want to try again and install cargo packges was not installed successfully",
+            choices=["No", "Yes"],
+        )
+    ]
+    not_installed_cargo_answer = inquirer.prompt(not_installed_cargo_q)
+    if not_installed_cargo_answer["interest"] == "Yes":
+        rprint("[italic salmon1] Installing selected packages :")
+        rprint(Columns(not_installed_packages_cargo, equal=True, expand=True))
+
+        for package in not_installed_packages_cargo:
+            rprint(f"\n[yellow italic] installing {package}...")
+            cargo_result = subprocess.run(
+                f"cargo install --locked {package}",
+                shell=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+
+            # if cargo package installed successfuly
+            if cargo_result.returncode == 0:
+                rprint(f"[bold green] {package} : [italic] installed.")
+                installed_packages_cargo.append(package)
+                not_installed_packages_cargo.remove(package)
+            else:
+                cargo_stderr = cargo_result.stderr.decode().strip()
+                # Problem  : package does not exist
+                if re.search(r"code E404", cargo_stderr):
+                    rprint(
+                        f"[bold white] {package} : [red italic] NOT INSTALLED. couldn't find this package !"
+                    )
+                else:
+                    rprint(
+                        f"[bold white] {package} : [red italic] NOT INSTALLED. There was a problem in installing this package !"
+                    )
+
+    # If there isn't not installed package, break the while and go on
+    else:
+        break
+
+
+
 
 # ===== Node configuration
 npm_result1 = subprocess.run(
@@ -627,6 +760,8 @@ if npm_result1.returncode == 0:
         rprint(":thumbs_up: [bold green] npm is installed and configured.")
 
 
+subprocess.run("clear", shell=True)
+
 # ===== Npm packages
 npm_packages_list = [
     "pyright",
@@ -634,8 +769,6 @@ npm_packages_list = [
     "vscode-langservers-extracted",
     "typescript",
     "typescript-language-server",
-    "awk-language-server",
-    "dockerfile-language-server-nodejs",
     "emmet-ls",
     "bash-language-server",
     "yaml-language-server",

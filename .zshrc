@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$HOME/.local/bin:/.local/lib:/usr/local/bin:/home/linuxbrew/.linuxbrew/bin/:$HOME/.npm/bin:$HOME/bin:$PYENV_ROOT/bin:/home/smzm/.opencode/bin:/home/smzm/.lmstudio/bin:$PATH"
+export PATH="$HOME/.local/bin:/.local/lib:/usr/local/bin:$HOME/.cargo/bin:/home/linuxbrew/.linuxbrew/bin/:$HOME/.npm/bin:$HOME/bin:$PYENV_ROOT/bin:/home/smzm/.opencode/bin:/home/smzm/.lmstudio/bin:$PATH"
 export PATH="`ruby -e 'puts Gem.user_dir'`/bin:$PATH"
 export ADW_DISABLE_PORTAL=1
 export TESSDATA_PREFIX=/usr/share/tessdata/
@@ -395,3 +395,6 @@ function bset() { # Default is 70
 }
 alias breset='ddcutil setvcp 05 1'
 
+
+# opencode
+export PATH=/home/smr/.opencode/bin:$PATH
