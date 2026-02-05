@@ -1,10 +1,11 @@
 return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
 		ft = { "markdown", "codecompanion" },
 		opts = {},
 		config = function()
+			-- Highlight groups
 			vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { link = "H1" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { link = "H2" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownH3Bg", { link = "H3" })
@@ -20,7 +21,14 @@ return {
 			vim.api.nvim_set_hl(0, "RenderMarkdownSuccess", { fg = "#10b981" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownWarn", { fg = "#FFA500" })
 			vim.api.nvim_set_hl(0, "RenderMarkdownError", { fg = "#e8546a" })
-			-- ... (other highlight links remain commented or active as you had them) ...
+
+			-- Enable treesitter for markdown
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "markdown",
+				callback = function()
+					vim.treesitter.start()
+				end,
+			})
 
 			require("render-markdown").setup({
 				code = {
@@ -32,18 +40,22 @@ return {
 				completions = { blink = { enabled = true } },
 				render_modes = true,
 
+				-- FIX: Remove background and foreground from heading config
 				heading = {
 					width = { "full", "full", "full" },
 					min_width = 50,
 					border = false,
 					sign = true,
-					background = {
-						"RenderMarkdownH1Bg",
-					},
-					foreground = {
-						"RenderMarkdownH1",
-					},
+					-- These should be nil or omitted entirely
+					-- background = "RenderMarkdownH1Bg",  -- REMOVE THIS
+					-- foreground = "RenderMarkdownH1",     -- REMOVE THIS
 				},
+
+				-- Disable LaTeX if you don't need it (removes warning)
+				latex = {
+					enabled = false,
+				},
+
 				checkbox = {
 					checked = { scope_highlight = "@markup.strikethrough", icon = "✔ " },
 					custom = {
@@ -119,7 +131,6 @@ return {
 			})
 		end,
 	},
-
 	{
 		"Kicamon/markdown-table-mode.nvim",
 		config = function()
@@ -566,36 +577,6 @@ return {
 
 			vim.keymap.set("n", "<leader>ic", clear_all_images, { desc = "image [c]lear" })
 		end,
-	},
-
-	{
-		"Thiago4532/mdmath.nvim",
-		dependencies = {
-			"nvim-treesitter/nvim-treesitter",
-		},
-		opts = {
-			-- Filetypes that the plugin will be enabled by default.
-			filetypes = { "markdown" },
-			-- Color of the equation, can be a highlight group or a hex color.
-			-- Examples: 'Normal', '#ff0000'
-			foreground = "Normal",
-			-- Hide the text when the equation is under the cursor.
-			anticonceal = true,
-			-- Hide the text when in the Insert Mode.
-			hide_on_insert = true,
-			-- Enable dynamic size for non-inline equations.
-			dynamic = true,
-			-- Configure the scale of dynamic-rendered equations.
-			dynamic_scale = 1,
-			-- Interval between updates (milliseconds).
-			update_interval = 400,
-
-			-- Internal scale of the equation images, increase to prevent blurry images when increasing terminal
-			-- font, high values may produce aliased images.
-			-- WARNING: This do not affect how the images are displayed, only how many pixels are used to render them.
-			--          See `dynamic_scale` to modify the displayed size.
-			internal_scale = 1,
-		},
 	},
 
 	{ -- paste an image from the clipboard or drag-and-drop
