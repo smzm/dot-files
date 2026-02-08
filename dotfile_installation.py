@@ -486,7 +486,7 @@ if os_answers["interest"] == "Arch":
         "yazi",
         "trashy",
         "pnglatex",
-        "emote",
+        "x11-emoji-picker",
         "dtop-bin",
         "ab-download-manager-bin",
     ]
