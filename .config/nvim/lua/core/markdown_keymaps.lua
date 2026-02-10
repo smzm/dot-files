@@ -258,14 +258,25 @@ local function toggle_markdown_task()
 	end
 end
 
--- Create keymap only for markdown files
+-- Create keymaps only for markdown files to insert code blocks
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "markdown",
 	callback = function()
-		vim.keymap.set("n", "<leader>tt", toggle_markdown_task, {
-			buffer = true,
-			desc = "Toggle markdown task checkbox",
-			silent = true,
-		})
+		vim.keymap.set("n", "<leader>cb", function()
+			local row = vim.api.nvim_win_get_cursor(0)[1]
+
+			-- Insert code block BELOW current line
+			vim.api.nvim_buf_set_lines(0, row, row, false, {
+				"```",
+				"",
+				"```",
+			})
+
+			-- Move cursor to end of first ```
+			vim.api.nvim_win_set_cursor(0, { row + 1, 3 })
+
+			-- Enter insert mode after the ```
+			vim.cmd("startinsert!")
+		end, { buffer = true, desc = "Insert code block" })
 	end,
 })

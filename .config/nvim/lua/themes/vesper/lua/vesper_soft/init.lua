@@ -29,6 +29,7 @@ local colors = {
 	primary = "#feb17f",
 	secendary = "#99ffe4",
 	red = "#FF0000",
+	light_red = "#E38C8C",
 }
 
 function theme.setup()
@@ -52,6 +53,7 @@ function theme.setup()
 	local primary = colors.primary
 	local secendary = colors.secendary
 	local red = colors.red
+	local light_red = colors.light_red
 
 	background = colors.gray_950 -- Darkest background
 	bg_shades_01 = colors.gray_1000
@@ -168,11 +170,11 @@ function theme.setup()
 		--  DiagnosticVirtualTextOk
 		--  DiagnosticVirtualLinesOk
 		--  DiagnosticSignOk
-		--  DiagnosticUnderlineError = { fg = "" , bg = ""}
-		--  DiagnosticUnderlineHint = { fg = "" , bg = ""}
-		--  DiagnosticUnderlineInfo = { fg = "" , bg = ""}
-		--  DiagnosticUnderlineOk = { fg = "" , bg = ""}
-		--  DiagnosticUnderlineWarn = { fg = "" , bg = ""}
+		DiagnosticUnderlineError = { undercurl = true, sp = light_red },
+		DiagnosticUnderlineHint = { underline = true, sp = bg_shades_06 },
+		-- DiagnosticUnderlineInfo = { fg = "" , bg = ""}
+		-- DiagnosticUnderlineOk = { fg = "" , bg = ""}
+		-- DiagnosticUnderlineWarn = { fg = "" , bg = ""}
 		--  DiagnosticWarn = { fg = "" , bg = ""}
 		--  DiagnosticFloatingWarn
 		--  DiagnosticVirtualTextWarn

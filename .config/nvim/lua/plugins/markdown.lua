@@ -258,6 +258,7 @@ return {
 				":<C-u>MoltenEvaluateVisual<CR>gv",
 				{ desc = "execute visual selection", buffer = true, silent = true }
 			)
+			vim.keymap.set("n", "<localleader>md", ":MoltenDelete<CR>", { silent = true, desc = "molten delete cell" })
 
 			-- Helper function to check if a line is a Python block start
 			local function is_python_block_start(line_text)

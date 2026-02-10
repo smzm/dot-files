@@ -369,8 +369,6 @@ return { -- >>> LSP
 					vim.diagnostic.show()
 				end,
 			})
-			-- Set DiagnosticUnderlineError to red color
-			vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { fg = "#E38C8C" })
 
 			-- ==> Show diagnostic inline text :
 			local opts = {
