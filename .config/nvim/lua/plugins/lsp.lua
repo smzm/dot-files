@@ -332,11 +332,46 @@ return { -- >>> LSP
 
 			---@param diagnostic vim.Diagnostic
 			local function virtual_lines_format(diagnostic)
-				-- Only render hints on the current line
-				-- Note this MUST be paired with an autocmd that hides/shows diagnostics to force a re-render
-				-- if diagnostic.severity == vim.diagnostic.severity.HINT and diagnostic.lnum + 1 ~= vim.fn.line(".") then
+				-- -- Only render hints on the current line
+				-- local win = buf_to_win(diagnostic.bufnr)
+				-- if win == 0 then
 				-- 	return nil
 				-- end
+				-- -- Get window info and check if it exists
+				-- local win_info = vim.fn.getwininfo(win)
+				-- if not win_info or #win_info == 0 then
+				-- 	return nil
+				-- end
+				-- local sign_column_width = win_info[1].textoff
+				-- local text_area_width = vim.api.nvim_win_get_width(win) - sign_column_width
+				-- local center_width = 30
+				-- local left_width = 1
+				--
+				-- 		---@type string[]
+				-- 		local lines = {}
+				-- 		for msg_line in diagnostic.message:gmatch("([^\n]+)") do
+				-- 			local max_width = text_area_width - diagnostic.col - center_width - left_width
+				-- 			vim.list_extend(lines, split_line(msg_line, max_width))
+				-- 		end
+				--
+				-- 		return table.concat(lines, "\n")
+
+				-- Only show diagnostic if cursor is on the exact word/position
+				local cursor_line = vim.fn.line(".") - 1 -- Convert to 0-indexed
+				local cursor_col = vim.fn.col(".") - 1 -- Convert to 0-indexed
+
+				-- Check if cursor is on the diagnostic line
+				if diagnostic.lnum ~= cursor_line then
+					return nil
+				end
+
+				-- Check if cursor is within the diagnostic range
+				local diagnostic_start = diagnostic.col
+				local diagnostic_end = diagnostic.end_col or (diagnostic_start + 1)
+
+				if cursor_col < diagnostic_start or cursor_col >= diagnostic_end then
+					return nil
+				end
 
 				local win = buf_to_win(diagnostic.bufnr)
 				if win == 0 then
@@ -364,6 +399,15 @@ return { -- >>> LSP
 
 			-- Re-render diagnostics when the window is resized
 			vim.api.nvim_create_autocmd("VimResized", {
+				callback = function()
+					vim.diagnostic.hide()
+					vim.diagnostic.show()
+				end,
+			})
+
+			-- Re-render diagnostics when cursor moves to update virtual lines
+			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+				group = vim.api.nvim_create_augroup("DiagnosticCursorMove", { clear = true }),
 				callback = function()
 					vim.diagnostic.hide()
 					vim.diagnostic.show()

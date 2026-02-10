@@ -177,9 +177,9 @@ function theme.setup()
 		-- DiagnosticUnderlineWarn = { fg = "" , bg = ""}
 		--  DiagnosticWarn = { fg = "" , bg = ""}
 		--  DiagnosticFloatingWarn
-		DiagnosticVirtualTextWarn = { fg = light_red },
-		DiagnosticVirtualLinesWarn = { fg = light_red },
-		DiagnosticSignWarn = { fg = light_red },
+		DiagnosticVirtualTextWarn = { fg = primary_light },
+		DiagnosticVirtualLinesWarn = { fg = primary_light },
+		DiagnosticSignWarn = { fg = primary_light },
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
