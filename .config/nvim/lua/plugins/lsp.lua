@@ -427,14 +427,6 @@ return { -- >>> LSP
 					vim.diagnostic.config(opts)
 				end,
 			})
-
-			-- Change Color of hints
-			vim.api.nvim_set_hl(0, "DiagnosticWarn", { fg = "#606060", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticHint", { fg = "#606060", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticInfo", { fg = "#606060", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { fg = "#606060", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { fg = "#606060", bg = bg })
-			vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { fg = "#e8546a", bg = None })
 		end,
 	},
 	{

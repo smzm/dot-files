@@ -156,8 +156,8 @@ function theme.setup()
 		--  @comment.error
 		--  DiagnosticHint = { fg = "" , bg = ""}
 		--  DiagnosticFloatingHint
-		--  DiagnosticVirtualTextHint
-		--  DiagnosticVirtualLinesHint
+		DiagnosticVirtualTextHint = { fg = bg_shades_10 },
+		DiagnosticVirtualLinesHint = { fg = bg_shades_10 },
 		--  DiagnosticSignHint
 		--  DiagnosticInfo = { fg = "" , bg = ""}
 		--  DiagnosticFloatingInfo
@@ -177,9 +177,9 @@ function theme.setup()
 		-- DiagnosticUnderlineWarn = { fg = "" , bg = ""}
 		--  DiagnosticWarn = { fg = "" , bg = ""}
 		--  DiagnosticFloatingWarn
-		--  DiagnosticVirtualTextWarn
-		--  DiagnosticVirtualLinesWarn
-		--  DiagnosticSignWarn
+		DiagnosticVirtualTextWarn = { fg = light_red },
+		DiagnosticVirtualLinesWarn = { fg = light_red },
+		DiagnosticSignWarn = { fg = light_red },
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
