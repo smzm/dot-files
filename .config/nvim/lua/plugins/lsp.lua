@@ -273,8 +273,117 @@ return { -- >>> LSP
 				end,
 			})
 
+			-- INFO: Configuring Appearance of LSP diagnostics
+			local function buf_to_win(bufnr)
+				local current_win = vim.fn.win_getid()
+
+				-- Check if current window has the buffer
+				if vim.fn.winbufnr(current_win) == bufnr then
+					return current_win
+				end
+
+				-- Otherwise, find a visible window with this buffer
+				local win_ids = vim.fn.win_findbuf(bufnr)
+				local current_tabpage = vim.fn.tabpagenr()
+
+				for _, win_id in ipairs(win_ids) do
+					if vim.fn.win_id2tabwin(win_id)[1] == current_tabpage then
+						return win_id
+					end
+				end
+
+				return 0
+			end
+			-- Split a string into multiple lines, each no longer than max_width
+			-- The split will only occur on spaces to preserve readability
+			-- @param str string
+			-- @param max_width integer
+			local function split_line(str, max_width)
+				if #str <= max_width then
+					return { str }
+				end
+
+				local lines = {}
+				local current_line = ""
+
+				for word in string.gmatch(str, "%S+") do
+					-- If adding this word would exceed max_width
+					if #current_line + #word + 1 > max_width then
+						-- Add the current line to our results
+						table.insert(lines, current_line)
+						current_line = word
+					else
+						-- Add word to the current line with a space if needed
+						if current_line ~= "" then
+							current_line = current_line .. " " .. word
+						else
+							current_line = word
+						end
+					end
+				end
+
+				-- Don't forget the last line
+				if current_line ~= "" then
+					table.insert(lines, current_line)
+				end
+
+				return lines
+			end
+
+			---@param diagnostic vim.Diagnostic
+			local function virtual_lines_format(diagnostic)
+				-- Only show diagnostic if cursor is on the exact word/position
+				local cursor_line = vim.fn.line(".") - 1 -- Convert to 0-indexed
+				local cursor_col = vim.fn.col(".") - 1 -- Convert to 0-indexed
+
+				-- Check if cursor is on the diagnostic line
+				if diagnostic.lnum ~= cursor_line then
+					return nil
+				end
+
+				-- Check if cursor is within the diagnostic range
+				local diagnostic_start = diagnostic.col
+				local diagnostic_end = diagnostic.end_col or (diagnostic_start + 1)
+
+				if cursor_col < diagnostic_start or cursor_col >= diagnostic_end then
+					return nil
+				end
+
+				local win = buf_to_win(diagnostic.bufnr)
+				if win == 0 then
+					return nil
+				end
+				-- Get window info and check if it exists
+				local win_info = vim.fn.getwininfo(win)
+				if not win_info or #win_info == 0 then
+					return nil
+				end
+				local sign_column_width = win_info[1].textoff
+				local text_area_width = vim.api.nvim_win_get_width(win) - sign_column_width
+				local center_width = 30
+				local left_width = 1
+
+				---@type string[]
+				local lines = {}
+				for msg_line in diagnostic.message:gmatch("([^\n]+)") do
+					local max_width = text_area_width - diagnostic.col - center_width - left_width
+					vim.list_extend(lines, split_line(msg_line, max_width))
+				end
+
+				return table.concat(lines, "\n")
+			end
+
 			-- Re-render diagnostics when the window is resized
 			vim.api.nvim_create_autocmd("VimResized", {
+				callback = function()
+					vim.diagnostic.hide()
+					vim.diagnostic.show()
+				end,
+			})
+
+			-- Re-render diagnostics when cursor moves to update virtual lines
+			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+				group = vim.api.nvim_create_augroup("DiagnosticCursorMove", { clear = true }),
 				callback = function()
 					vim.diagnostic.hide()
 					vim.diagnostic.show()
