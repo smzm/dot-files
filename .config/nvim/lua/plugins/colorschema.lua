@@ -3,7 +3,7 @@ return {
 	lazy = false,
 	priority = 1000, -- make sure it's loaded early
 	config = function()
-		vim.cmd.colorscheme("vesper_soft")
+		vim.cmd.colorscheme("vesper")
 	end,
 }
 
