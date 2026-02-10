@@ -271,6 +271,7 @@ return { -- >>> LSP
 					opts.desc = "Restart LSP"
 					keymap.set("n", "<leader>lr", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 
+					-- Show Lsp Diagnostics with virtual lines using ALt+e
 					keymap.set("n", "<M-e>", function()
 						local current_line = vim.api.nvim_win_get_cursor(0)[1]
 						local diagnostics = vim.diagnostic.get(0, { lnum = current_line - 1 })
