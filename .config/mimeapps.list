@@ -1,9 +1,6 @@
 [Default Applications]
-text/html=google-chrome.desktop
+text/plain=nvim.desktop
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
-x-scheme-handler/http=google-chrome.desktop
-x-scheme-handler/https=google-chrome.desktop
-x-scheme-handler/about=google-chrome.desktop
 
 image/bmp=viewnior.desktop;
 image/gif=viewnior.desktop;
