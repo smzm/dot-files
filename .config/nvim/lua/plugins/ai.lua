@@ -33,17 +33,22 @@ return {
 		dependencies = { { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } } },
 		config = function()
 			vim.g.opencode_opts = {
-				terminal = {
-					auto_insert = true,
-					auto_close = true,
-					width = 80,
-					win = {
-						position = "float",
-						enter = true,
+				provider = {
+					enabled = "terminal",
+					terminal = {
+						width = math.floor(vim.o.columns * 0.45),
 					},
-					env = {
-						OPENCODE_THEME = "system",
+					snacks = {
+						auto_insert = true,
+						auto_close = true,
+						win = {
+							position = "float",
+							enter = true,
+						},
 					},
+					-- env = {
+					-- 	OPENCODE_THEME = "system",
+					-- },
 				},
 			}
 		end,
