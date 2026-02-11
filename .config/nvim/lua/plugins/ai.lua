@@ -54,6 +54,7 @@ return {
 					require("opencode").toggle()
 				end,
 				desc = "Toggle embedded opencode",
+				mode = { "n", "t" },
 			},
 			{
 				"<localleader><localleader>",
