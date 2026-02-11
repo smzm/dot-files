@@ -34,21 +34,20 @@ return {
 		config = function()
 			vim.g.opencode_opts = {
 				provider = {
-					enabled = "terminal",
+					enabled = "snacks",
 					terminal = {
-						width = math.floor(vim.o.columns * 0.45),
+						split = "right",
+						width = math.floor(vim.o.columns * 0.70),
 					},
 					snacks = {
 						auto_insert = true,
 						auto_close = true,
 						win = {
 							position = "float",
+							width = math.floor(vim.o.columns * 0.85),
 							enter = true,
 						},
 					},
-					-- env = {
-					-- 	OPENCODE_THEME = "system",
-					-- },
 				},
 			}
 		end,
