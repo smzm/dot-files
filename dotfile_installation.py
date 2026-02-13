@@ -265,6 +265,8 @@ elif os_answers["interest"] == "WSL":
         "python-cairosvg",
         "python-pyperclip",
         "rust-analyzer",
+        "yt-dlp",
+        "bun",
     ]
 
 
