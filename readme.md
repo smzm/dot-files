@@ -73,7 +73,7 @@ python dotfile_installation.py
 
 - ### 7. Setting default user in `Arch`
 
-  To setting default user in windows command shell got to the arch direcctory and run : `Arch.exe config --default-user <username>`
+  To setting default user in windows command shell got to the arch direcctory and run : `wsl --manage archlinux --set-default-user <username>`
 
 - ### 8. Config Windows Terminal [optional]
 
