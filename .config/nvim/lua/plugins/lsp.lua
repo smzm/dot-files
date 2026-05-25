@@ -160,7 +160,7 @@ return { -- >>> LSP
 				-- FORMATTERS
 				{ "black" }, -- Python
 				{ "isort" }, -- Python
-				{ "rustfmt" }, -- Rust
+				-- { "rustfmt" }, -- Rust
 				{ "shfmt" }, -- Shell Script
 				{ "stylua" }, -- Lua
 				{ "biome" }, -- JS and Many More

@@ -55,7 +55,7 @@ function theme.setup()
 	local red = colors.red
 	local light_red = colors.light_red
 
-	background = colors.gray_950 -- Darkest background
+	background = colors.gray_1000 -- Darkest background
 	bg_shades_01 = colors.gray_1000
 	bg_shades_02 = colors.gray_950
 	bg_shades_03 = colors.gray_900
