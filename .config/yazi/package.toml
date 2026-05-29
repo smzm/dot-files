@@ -1,0 +1,37 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "c2c16c8"
+hash = "7b625412411be411153886894d9acaf"
+
+[[plugin.deps]]
+use = "imsi32/yatline"
+rev = "c5d4b48"
+hash = "e6e98d12b1648d1894c2b560d85eeaa7"
+
+[[plugin.deps]]
+use = "MasouShizuka/projects"
+rev = "198c2ba"
+hash = "5eeb4f0919ce6be5d941a9290c131d7d"
+
+[[plugin.deps]]
+use = "DreamMaoMao/fg"
+rev = "b9fb819"
+hash = "7d62f2eae04f77d13a21917c169b151b"
+
+[[plugin.deps]]
+use = "AnirudhG07/plugins-yazi:copy-file-contents"
+rev = "71545f4"
+hash = "f8530ee84fee95dbcc26bb1d8d8019c7"
+
+[[plugin.deps]]
+use = "Lil-Dank/lazygit"
+rev = "e73fd74"
+hash = "6ea5f37c7f219671ec504cb8311f889d"
+
+[[plugin.deps]]
+use = "pirafrank/what-size"
+rev = "179ebf6"
+hash = "57056b9728006881d580ccabe8154a9c"
+
+[flavor]
+deps = []
