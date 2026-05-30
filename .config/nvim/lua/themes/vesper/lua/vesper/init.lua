@@ -174,12 +174,12 @@ function theme.setup()
 		DiagnosticUnderlineHint = { underline = true, sp = bg_shades_06 },
 		-- DiagnosticUnderlineInfo = { fg = "" , bg = ""}
 		-- DiagnosticUnderlineOk = { fg = "" , bg = ""}
-		-- DiagnosticUnderlineWarn = { fg = "" , bg = ""}
 		--  DiagnosticWarn = { fg = "" , bg = ""}
 		--  DiagnosticFloatingWarn
-		DiagnosticVirtualTextWarn = { fg = primary_light },
-		DiagnosticVirtualLinesWarn = { fg = primary_light },
-		DiagnosticSignWarn = { fg = primary_light },
+		DiagnosticUnderlineWarn = { undercurl = false, sp = bg_shades_05 },
+		-- DiagnosticVirtualTextWarn = { fg = bg_shades_06 },
+		DiagnosticVirtualLinesWarn = { fg = bg_shades_08 },
+		DiagnosticSignWarn = { fg = bg_shades_08 },
 		--  @comment.warning
 		--  Directory = { fg = "" , bg = ""}
 
