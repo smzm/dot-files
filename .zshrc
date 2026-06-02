@@ -382,19 +382,46 @@ alias cleanup-analyze='cleanup_arch --analyze'
 
 alias tmux="tmux new-session -A -s 0"
 
-function bset() { # Default is 70
+# Set brightness (0-100)
+function brightness-set() {
     local val=$1
-    
-    # Check if input is a number AND is between 0 and 100
+
     if [[ "$val" =~ ^[0-9]+$ ]] && (( val >= 0 && val <= 100 )); then
-        # --noverify makes it faster by skipping the "did it work?" check
         ddcutil setvcp 10 "$val" --noverify
     else
-        echo "Error: Please provide a number between 0 and 100."
+        echo "Usage: brightness-set <0-100>"
+        return 1
     fi
 }
-alias breset='ddcutil setvcp 05 1'
 
+# Set contrast (0-100)
+function contrast-set() {
+    local val=$1
 
-# opencode
-export PATH=/home/smr/.opencode/bin:$PATH
+    if [[ "$val" =~ ^[0-9]+$ ]] && (( val >= 0 && val <= 100 )); then
+        ddcutil setvcp 12 "$val" --noverify
+    else
+        echo "Usage: contrast-set <0-100>"
+        return 1
+    fi
+}
+
+# Show current brightness
+function brightness-status() {
+    ddcutil getvcp 10
+}
+
+# Show current contrast
+function contrast-status() {
+    ddcutil getvcp 12
+}
+
+# Reset brightness to monitor default
+function brightness-reset() {
+    ddcutil setvcp 04 1
+}
+
+# Reset contrast to monitor default
+function contrast-reset() {
+    ddcutil setvcp 05 1
+}
