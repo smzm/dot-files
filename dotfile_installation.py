@@ -171,6 +171,7 @@ if os_answers["interest"] == "Arch":
         "obsidian",
         "docker",
         "docker-compose",
+        "docker-buildx",
         "telegram-desktop",
         "uv",
         "ruff",
