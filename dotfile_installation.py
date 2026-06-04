@@ -492,6 +492,7 @@ if os_answers["interest"] == "Arch":
         "x11-emoji-picker",
         "dtop-bin",
         "ab-download-manager-bin",
+        "tuxedo-bin",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
@@ -500,6 +501,7 @@ elif os_answers["interest"] == "WSL":
         "trashy",
         "pnglatex",
         "dtop-bin",
+        "tuxedo-bin",
     ]
 
 

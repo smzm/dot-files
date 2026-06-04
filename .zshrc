@@ -157,6 +157,9 @@ alias llx="eza --tree --level=2 --long --icons --git --group-directories-first"
 alias 7zCompress='7z a -t7z -md=16m'
 alias 7zExtract='7z x -o./'
 
+# Tuxedo
+alias lt="tuxedo ~/.todo.txt" 
+
 # Automatically activate or deactivate Python virtualenv in a directory
 function cd() {
   builtin cd "$@" || return  # Always fail fast if cd fails
