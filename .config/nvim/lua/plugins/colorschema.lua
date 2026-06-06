@@ -1,9 +1,9 @@
 return {
-	dir = "~/.config/nvim/lua/themes/vesper/", -- local pathk
+	dir = "~/.config/nvim/lua/themes/open/", -- local pathk
 	lazy = false,
 	priority = 1000, -- make sure it's loaded early
 	config = function()
-		vim.cmd.colorscheme("vesper")
+		vim.cmd.colorscheme("open")
 	end,
 }
 
