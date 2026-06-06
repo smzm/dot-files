@@ -310,6 +310,7 @@ function theme.setup()
 		["@lsp.type.macro"] = { fg = gray_shades_16 },
 		["@lsp.type.struct"] = { fg = gray_shades_16 },
 		["@lsp.type.enum"] = { fg = gray_shades_16 },
+		["@lsp.type.interface"] = { fg = lavender },
 
 		Identifier = { fg = gray_shades_14 },
 		-- @property
