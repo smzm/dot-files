@@ -86,9 +86,11 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = gray_shades_05 })
 	vim.api.nvim_set_hl(0, "NvimParenthesis_1", { fg = blue })
 	vim.api.nvim_set_hl(0, "NvimParenthesis_2", { fg = gray_shades_19 })
-	vim.api.nvim_set_hl(0, "NvimParenthesis_3", { fg = gray_shades_15 })
-	vim.api.nvim_set_hl(0, "NvimParenthesis_4", { fg = gray_shades_12 })
-	vim.api.nvim_set_hl(0, "NvimParenthesis_5", { fg = lavender })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_3", { fg = gray_shades_17 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_4", { fg = gray_shades_15 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_5", { fg = gray_shades_13 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_6", { fg = gray_shades_11 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_7", { fg = gray_shades_09 })
 
 	-- -- 👉 Headings
 	-- vim.api.nvim_set_hl(0, "H1", { fg = gray_shades_01, bg = gray_shades_18, bold = true })
@@ -306,6 +308,8 @@ function theme.setup()
 		["@function.method"] = { fg = gray_shades_16 },
 		["@function.builtin"] = { fg = gray_shades_16 },
 		["@lsp.type.macro"] = { fg = gray_shades_16 },
+		["@lsp.type.struct"] = { fg = gray_shades_16 },
+		["@lsp.type.enum"] = { fg = gray_shades_16 },
 
 		Identifier = { fg = gray_shades_14 },
 		-- @property
@@ -535,8 +539,6 @@ function theme.setup()
 		-- @comment.todo
 
 		Type = { fg = gray_shades_13, bold = false },
-		["@lsp.type.struct"] = { fg = gray_shades_16 },
-		["@lsp.type.enum"] = { fg = lavender },
 		-- @type
 		-- @type.builtin
 		-- StorageClass
