@@ -335,7 +335,7 @@ function theme.setup()
 		-- LineNrBelow
 		-- LspCodeLens = { fg = "" , bg = ""}
 		-- LspCodeLensSeparator
-		-- LspInlayHint = { fg = "" , bg = ""}
+		LspInlayHint = { fg = gray_shades_07, bg = gray_shades_03 },
 
 		LspReferenceRead = { fg = "NONE", bg = "NONE" },
 		-- LspReferenceTarget = { fg = "" , bg = ""}

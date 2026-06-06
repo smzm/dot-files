@@ -153,6 +153,19 @@ return { -- >>> LSP
 						},
 					},
 				},
+				rust_analyzer = {
+					settings = {
+						["rust-analyzer"] = {
+							inlayHints = {
+								enable = true,
+								typeHints = false,
+								parameterHints = false,
+								chainingHints = false,
+								maxLength = 50,
+							},
+						},
+					},
+				},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -270,6 +283,14 @@ return { -- >>> LSP
 
 					opts.desc = "Restart LSP"
 					keymap.set("n", "<leader>lr", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+					opts.desc = "Enable Inlay Hints"
+					keymap.set(
+						"n",
+						"<M-i>",
+						":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
+						opts
+					) -- mapping to restart lsp if necessary
 
 					-- Show Lsp Diagnostics with virtual lines using ALt+e
 					keymap.set("n", "<M-e>", function()
