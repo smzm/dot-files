@@ -82,9 +82,14 @@ function theme.setup()
 	gray_shades_20 = colors.gray_050 -- Lightest shade
 	foreground = colors.gray_400
 
-	-- vim.api.nvim_set_hl(0, "Indentation", { fg = gray_shades_04 })
-	-- vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = gray_shades_05 })
-	--
+	vim.api.nvim_set_hl(0, "Indentation", { fg = gray_shades_04 })
+	vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = gray_shades_05 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_1", { fg = blue })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_2", { fg = gray_shades_19 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_3", { fg = gray_shades_15 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_4", { fg = gray_shades_12 })
+	vim.api.nvim_set_hl(0, "NvimParenthesis_5", { fg = lavender })
+
 	-- -- 👉 Headings
 	-- vim.api.nvim_set_hl(0, "H1", { fg = gray_shades_01, bg = gray_shades_18, bold = true })
 	-- vim.api.nvim_set_hl(0, "ReversedH1", { fg = gray_shades_17, bg = gray_shades_01, bold = true })
@@ -508,7 +513,7 @@ function theme.setup()
 		-- @string.special.url
 		-- NvimString
 
-		Structure = { fg = gray_shades_14 },
+		Structure = { fg = gray_shades_17 },
 		-- @module
 		-- @module.builtin
 		-- Substitute = { fg = "" , bg = ""}
