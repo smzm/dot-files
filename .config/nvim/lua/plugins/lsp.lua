@@ -153,19 +153,6 @@ return { -- >>> LSP
 						},
 					},
 				},
-				rust_analyzer = {
-					settings = {
-						["rust-analyzer"] = {
-							inlayHints = {
-								enable = true,
-								typeHints = false,
-								parameterHints = false,
-								chainingHints = false,
-								maxLength = 50,
-							},
-						},
-					},
-				},
 			}
 
 			local ensure_installed = vim.tbl_keys(servers or {})
