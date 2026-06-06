@@ -118,7 +118,7 @@ function theme.setup()
 		-- @diff.delta
 		-- ColorColumn = { fg = "" , bg = ""}
 
-		Comment = { fg = gray_shades_07, italic = true },
+		Comment = { fg = gray_shades_08, italic = true },
 		-- @comment
 		-- @comment.error
 		-- @comment.warning
