@@ -93,16 +93,16 @@ function theme.setup()
 	vim.api.nvim_set_hl(0, "NvimParenthesis_7", { fg = gray_shades_09 })
 
 	-- -- 👉 Headings
-	-- vim.api.nvim_set_hl(0, "H1", { fg = gray_shades_01, bg = gray_shades_18, bold = true })
-	-- vim.api.nvim_set_hl(0, "ReversedH1", { fg = gray_shades_17, bg = gray_shades_01, bold = true })
-	-- vim.api.nvim_set_hl(0, "H2", { fg = gray_shades_01, bg = gray_shades_13, bold = true })
+	vim.api.nvim_set_hl(0, "H1", { fg = gray_shades_16, bg = gray_shades_11, bold = true })
+	vim.api.nvim_set_hl(0, "H2", { fg = gray_shades_13, bg = gray_shades_06, bold = true })
+	vim.api.nvim_set_hl(0, "H3", { fg = gray_shades_16, bg = gray_shades_03, bold = true })
+	vim.api.nvim_set_hl(0, "H4", { fg = gray_shades_12, bg = gray_shades_03, bold = true })
 	-- vim.api.nvim_set_hl(0, "ReversedH2", { fg = gray_shades_12, bg = gray_shades_01, bold = true })
-	-- vim.api.nvim_set_hl(0, "H3", { fg = gray_shades_02, bg = gray_shades_07, bold = true })
-	-- vim.api.nvim_set_hl(0, "H4", { fg = gray_shades_10, bg = gray_shades_03, bold = true })
+	-- vim.api.nvim_set_hl(0, "ReversedH1", { fg = gray_shades_17, bg = gray_shades_01, bold = true })
 	-- vim.api.nvim_set_hl(0, "ReversedH3", { fg = gray_shades_07, bg = gray_shades_01, bold = true })
-	-- vim.api.nvim_set_hl(0, "CodeBlock", { bg = gray_shades_01 })
-	-- vim.api.nvim_set_hl(0, "CodeBorder", { fg = gray_shades_06, bg = gray_shades_01 })
-	-- vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = gray_shades_11, bg = gray_shades_04 })
+	vim.api.nvim_set_hl(0, "CodeBlock", { bg = gray_shades_04 })
+	vim.api.nvim_set_hl(0, "CodeBorder", { fg = gray_shades_06, bg = gray_shades_04 })
+	vim.api.nvim_set_hl(0, "InlineCodeBlock", { fg = gray_shades_11, bg = gray_shades_04 })
 
 	local highlights = {
 		-- Added = { fg = "" , bg = ""}
