@@ -120,6 +120,7 @@ return { -- >>> LSP
 				docker_compose_language_service = {}, --Docker-Compose
 				jsonls = {}, -- JSON
 				taplo = {}, -- TOML
+				-- rust_analyzer = {}, -- rust_analyzer going to be installed by rustaceanvim
 				lua_ls = { -- Lua
 					settings = {
 						Lua = {
