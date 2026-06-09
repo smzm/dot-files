@@ -275,7 +275,7 @@ return { -- >>> LSP
 					opts.desc = "Enable Inlay Hints"
 					keymap.set(
 						"n",
-						"<M-i>",
+						"<M-r>",
 						":lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>",
 						opts
 					) -- mapping to restart lsp if necessary

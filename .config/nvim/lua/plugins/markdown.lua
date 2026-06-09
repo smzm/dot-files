@@ -2,7 +2,7 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
-		ft = { "markdown", "codecompanion" },
+		ft = { "markdown", "codecompanion", "Avante", "copilot-chat", "opencode_output" },
 		opts = {},
 		config = function()
 			-- Highlight groups
