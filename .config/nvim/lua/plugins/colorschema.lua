@@ -29,17 +29,8 @@ return {
 			vim.cmd([[highlight LspReferenceWrite ctermfg=NONE gui=NONE guifg=NONE guibg=#3d375e]])
 			vim.cmd([[highlight MatchParen ctermfg=NONE gui=NONE guifg=NONE guibg=#3d375e]])
 			vim.cmd([[highlight NormalFloat ctermfg=NONE gui=NONE guifg=#3d375e guibg=NONE]])
+			vim.cmd([[highlight WinSeparator ctermfg=NONE gui=NONE guifg=#3d375e guibg=NONE]])
+			vim.cmd([[highlight CursorLine ctermfg=NONE gui=NONE guifg=NONE guibg=#1E1D2C]])
 		end,
 	},
 }
-
--- ======================== Tokyo Night Theme ==========================
--- return {
--- 	"folke/tokyonight.nvim",
--- 	lazy = false,
--- 	priority = 1000,
--- 	opts = {},
--- 	config = function(plugin)
--- 	vim.cmd([[colorscheme tokyonight-night]])
--- 	end,
--- }
