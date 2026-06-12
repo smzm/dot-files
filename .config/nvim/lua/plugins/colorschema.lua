@@ -29,6 +29,7 @@ return {
 			vim.cmd([[highlight LspReferenceWrite ctermfg=NONE gui=NONE guifg=NONE guibg=#3d375e]])
 			vim.cmd([[highlight MatchParen gui=NONE guifg=NONE guibg=#3d375e]])
 			vim.cmd([[highlight CursorLine gui=NONE guifg=NONE guibg=#1E1D2C]])
+			vim.cmd([[highlight WinSeparator ctermfg=NONE gui=NONE guifg=#a277ff]])
 
 			-- Markdown
 			vim.cmd([[highlight CodeBlock gui=NONE guibg=#111015]])
