@@ -15,7 +15,7 @@ set $alt Mod1
 
 # Set Theme colors
 # Class                  border             backgr. text       indic.        child_border
-client.focused           #FFFFFF            #0E0F19            #d1d1d1       #808080   #404040
+client.focused           #FFFFFF            #0E0F19            #d1d1d1       #808080   #34296F
 client.unfocused         #29272E            #0E0F19            #525252       #121212   #121212
 client.focused_inactive  #466060            #0E0F19            #919191       #466060   #121212
 client.urgent    	     #254cd1            #254cd1            #ffffff       #Abc4ef
@@ -434,3 +434,5 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
 exec --no-startup-id udiskie &
 
 # exec --no-startup-id ~/.config/Windscribe/windscribe-connect.sh &
+exec_always --no-startup-id feh --bg-fill /mnt/DEV/Backup/Wallpaper/black-background-3840x2160-abstract-textures-minimalist-decor-27582.jpg
+
