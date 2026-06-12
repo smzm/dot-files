@@ -21,16 +21,19 @@ return {
 			vim.cmd([[highlight StatusLine  gui=NONE guifg=NONE guibg=NONE]])
 			vim.cmd([[highlight StatusLineNC  gui=NONE guifg=NONE guibg=NONE]])
 			vim.cmd([[highlight Visual ctermfg=NONE ctermbg=15 gui=NONE guifg=NONE guibg=#3d375e]])
-			vim.cmd([[highlight Structure ctermfg=NONE ctermbg=15 gui=NONE guifg=#DEDEDE]])
-			vim.cmd([[highlight Indentation ctermfg=NONE ctermbg=15 gui=NONE guifg=#1F1E27]])
-			vim.cmd([[highlight IndentBlanklineContextChar ctermfg=NONE ctermbg=15 gui=NONE guifg=#2B2A35]])
+			vim.cmd([[highlight Structure ctermfg=NONE ctermbg=15 gui=NONE guifg=#DEDEDE guibg=NONE]])
+			vim.cmd([[highlight Indentation ctermfg=NONE ctermbg=15 gui=NONE guifg=#1F1E27 guibg=NONE]])
+			vim.cmd([[highlight IndentBlanklineContextChar ctermfg=NONE ctermbg=15 gui=NONE guifg=#2B2A35 guibg=NONE]])
 			vim.cmd([[highlight LspReferenceRead ctermfg=NONE gui=NONE guifg=NONE guibg=NONE]])
 			vim.cmd([[highlight LspReferenceText ctermfg=NONE gui=NONE guifg=NONE guibg=#232133]])
 			vim.cmd([[highlight LspReferenceWrite ctermfg=NONE gui=NONE guifg=NONE guibg=#3d375e]])
-			vim.cmd([[highlight MatchParen ctermfg=NONE gui=NONE guifg=NONE guibg=#3d375e]])
-			vim.cmd([[highlight NormalFloat ctermfg=NONE gui=NONE guifg=#3d375e guibg=NONE]])
-			vim.cmd([[highlight WinSeparator ctermfg=NONE gui=NONE guifg=#3d375e guibg=NONE]])
-			vim.cmd([[highlight CursorLine ctermfg=NONE gui=NONE guifg=NONE guibg=#1E1D2C]])
+			vim.cmd([[highlight MatchParen gui=NONE guifg=NONE guibg=#3d375e]])
+			vim.cmd([[highlight CursorLine gui=NONE guifg=NONE guibg=#1E1D2C]])
+
+			-- Markdown
+			vim.cmd([[highlight CodeBlock gui=NONE guibg=#111015]])
+			vim.cmd([[highlight CodeBorder gui=NONE guibg=#111015]])
+			vim.cmd([[highlight InlineCodeBlock gui=NONE guibg=#111015]])
 		end,
 	},
 }

@@ -42,7 +42,7 @@ return {
 					FloatBorder = {
 						-- guifg = <VALUE-HERE>,
 						-- guibg = <VALUE-HERE>,
-						link = "FloatBorder",
+						link = "NonText",
 					},
 				},
 				shade_filetypes = {},
