@@ -477,7 +477,6 @@ if os_answers["interest"] == "Arch":
         "ttf-poppins",
         "apple-fonts",
         "ttf-font-awesome",
-        "ttf-estedad-variable",
         "ttf-exo-2",
         "noto-fonts-emoji",
         "pulseaudio-ctl",
