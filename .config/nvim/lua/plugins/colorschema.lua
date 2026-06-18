@@ -18,6 +18,7 @@ return {
 			vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
 			vim.cmd([[colorscheme aura-dark]])
 			-- Hilights for the cursor and visual selection
+			vim.cmd([[highlight Normal gui=NONE guibg=NONE]])
 			vim.cmd([[highlight StatusLine  gui=NONE guifg=NONE guibg=NONE]])
 			vim.cmd([[highlight StatusLineNC  gui=NONE guifg=NONE guibg=NONE]])
 			vim.cmd([[highlight Visual ctermfg=NONE ctermbg=15 gui=NONE guifg=NONE guibg=#3d375e]])
