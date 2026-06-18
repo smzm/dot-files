@@ -2,7 +2,7 @@
 
 
 # ===========================================================
-# To Allow user to restart vnstat and manage its database without password add these line to visude
+# To Allow user to restart vnstat and manage its database without password add these line to visudo
 # your_username ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop vnstat
 # your_username ALL=(ALL) NOPASSWD: /usr/bin/systemctl start vnstat
 # your_username ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart vnstat
