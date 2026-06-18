@@ -8,12 +8,11 @@
 
 ```shell
 sudo pacman -S python python-pip git --noconfirm --needed
-git clone https://github.com/smzm/mydotfiles.git
-cd mydotfiles     # always run the script from this directory
+git clone https://github.com/smzm/dot-files.git
+cd dot-files     # always run the script from this directory
 ```
 
 and Use `dotfile_installation.py` python file for installing programms and dotfiles.
-
 
 <br>
 <br>
@@ -22,7 +21,6 @@ and Use `dotfile_installation.py` python file for installing programms and dotfi
 
 - [WSL installation guide for yuk7/ArchWSL](https://learn.microsoft.com/en-us/windows/wsl/install-manual)
 - ### 1. Install ArchWsl
-
   - Update wsl in windows : `wsl.exe --update`
   - Download [yuk7/ArchWSL](https://github.com/yuk7/ArchWSL) installer zip, pick a folder and run `arch.exe` in that folder.
 
@@ -55,13 +53,13 @@ su <username> ; cd ~
 
 ```shell
 sudo pacman -S python python-pip git --noconfirm --needed
-git clone https://github.com/smzm/mydotfiles.git
+git clone https://github.com/smzm/dot-files.git
 ```
 
 - ### 5. Install through `dotfile_installation.py`
 
 ```bash
-cd mydotfiles   # You must first change directory to 'mydotfiles' and then run the python code to work properly.
+cd dot-files   # You must first change directory to 'dot-files' and then run the python code to work properly.
 python dotfile_installation.py
 ```
 
