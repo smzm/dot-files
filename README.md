@@ -84,3 +84,7 @@ python dotfile_installation.py
 - ### 6. Config Windows Terminal [optional]
 
   Config you windows terminal settings like [this](./windowsTerminal/readme.md)
+
+## Installing in Arch Linux :
+
+- [Use this doc for installing Arch linux](./arch-installation.md)
