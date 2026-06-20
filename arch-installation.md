@@ -427,14 +427,6 @@ ls /boot/efi/EFI/
 sudo pacman -S ntfs-3g
 ```
 
-To mount a ntfs partitioon permanently use `/etc/fstab` :
-
-```
-# To get UUID of partition use `sudo blkid` command
-# To get access read and write partition add user id and group id with `id` command
-UUID=1254B9CE54B9B4B7		/mnt/Dev	ntfs-3g   uid=1000,groupid=984  0 0
-```
-
 <br>
 
 ### 10. exit
