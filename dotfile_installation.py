@@ -109,9 +109,7 @@ if os_answers["interest"] == "Arch":
         "xbindkeys",
         "xorg-xev",
         "xdotool",
-        "nautilus",
-        "deepin-gtk-theme",
-        "deepin-icon-theme",
+        "nemo",
         "lxappearance",
         "bun",
         "viewnior",
@@ -444,17 +442,17 @@ if doh_config_answer["interest"] == "Yes":
         rprint("[red italic] dnsmasq could not installed.\n")
 
 
-# ===== Arch community packages : Paru
-paru_check = run("paru --version", shell=True, stdout=PIPE, stderr=STDOUT)
-if paru_check.returncode == 0:
-    rprint(":thumbs_up: [bold light_pink3] paru is installed.")
-# If paru was not installed
+# ===== Arch community packages : yay
+yay_check = run("yay --version", shell=True, stdout=PIPE, stderr=STDOUT)
+if yay_check.returncode == 0:
+    rprint(":thumbs_up: [bold light_pink3] yay is installed.")
+# If yay was not installed
 else:
-    rprint("[italic yellow] Installing paru...")
+    rprint("[italic yellow] Installing yay...")
     os.system("sudo pacman -S --needed base-devel")
-    os.system("cd ~ ; git clone https://aur.archlinux.org/paru.git")
-    os.system("cd ~/paru ; makepkg -si")
-    os.system("cd ~ ; rm -rf paru")
+    os.system("cd ~ ; git clone https://aur.archlinux.org/yay.git")
+    os.system("cd ~/yay ; makepkg -si")
+    os.system("cd ~ ; rm -rf yay")
 
 
 # ===== Install aur packages
@@ -491,6 +489,7 @@ if os_answers["interest"] == "Arch":
         "x11-emoji-picker",
         "dtop-bin",
         "ab-download-manager-bin",
+        "orchis-theme",
         "tuxedo-bin",
     ]
 elif os_answers["interest"] == "WSL":
@@ -522,7 +521,7 @@ if "ALL ⬇️" in aur_packages_answers["interest"]:
     for package in aur_list:
         rprint(f"\n[yellow italic] installing {package}...")
         aur_result = subprocess.run(
-            f"paru -S {package} --noconfirm --needed",
+            f"yay -S {package} --noconfirm --needed",
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -545,7 +544,7 @@ else:
     for package in aur_packages_answers["interest"]:
         rprint(f"\n[yellow italic] installing {package}...")
         aur_result = subprocess.run(
-            f"paru -S {package} --noconfirm",
+            f"yay -S {package} --noconfirm",
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -587,7 +586,7 @@ while len(not_installed_packages_aur) > 0:
         for package in not_installed_packages_aur:
             rprint(f"\n[yellow italic] installing {package} :")
             aur_result = subprocess.run(
-                f"paru -S {package} --noconfirm",
+                f"yay -S {package} --noconfirm",
                 shell=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
