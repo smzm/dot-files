@@ -766,6 +766,12 @@ _At the end, generate `grub.cfg` again with :_ `grub-mkconfig -o /boot/grub/grub
 
 - [NVIDIA/Troubleshooting](https://wiki.archlinux.org/title/NVIDIA/Troubleshooting)
 
+- To use the Intel media engine (Quick Sync) for video encoding/decoding :
+
+```bash
+sudo pacman -S intel-media-driver libva-utils
+```
+
 <br>
 
 ### Install i3
