@@ -407,7 +407,6 @@ for_window [urgent=latest] focus
 # Autostart applications
 exec --no-startup-id blueman-applet
 exec_always "setxkbmap -model pc104 -layout us,ir, -variant ,, -option grp:alt_shift_toggle"
-exec --no-startup-id nitrogen --restore;
 exec --no-startup-id nm-applet
 exec --no-startup-id xautolock -time 20 -locker blurlock
 exec --no-startup-id unclutter
@@ -417,7 +416,12 @@ exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id "devmon --no-gui"
 exec_always --no-startup-id imwheel
 exec_always --no-startup-id xbindkeys
-exec_always --no-startup-id xset dpms 1200 3600 5400
+
+# Display power (turn off screen after 20 min)
+exec_always --no-startup-id xset dpms 1200 1200 1200
+
+# Lock before suspend (suspending pc is controlled by /etc/systemd/logind.conf)
+exec --no-startup-id xss-lock -- i3lock -c 000000 &
 
 # Start dunst (Notification Manager)
 exec_always --no-startup-id dunst &
@@ -434,5 +438,5 @@ exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
 exec --no-startup-id udiskie &
 
 # exec --no-startup-id ~/.config/Windscribe/windscribe-connect.sh &
-exec_always --no-startup-id feh --bg-fill /mnt/DEV/Backup/Wallpaper/black-background-3840x2160-abstract-textures-minimalist-decor-27582.jpg
+exec_always --no-startup-id feh --bg-fill /mnt/DEV/Backup/Wallpaper/grad.jpg
 

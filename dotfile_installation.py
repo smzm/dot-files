@@ -25,36 +25,6 @@ os_answers = inquirer.prompt(os_q)
 subprocess.run("clear", shell=True)
 
 
-# ===== Update pacman mirrorlist
-reflector_q = [
-    inquirer.List(
-        "interest",
-        message="Do you want to update pacman mirrorlist",
-        choices=["No", "Yes"],
-    )
-]
-reflector_answer = inquirer.prompt(reflector_q)
-if reflector_answer["interest"] == "Yes":
-    country_q = [
-        inquirer.Text(
-            "interest",
-            message="Which country or countries, you prefer to use in pacman mirrorlist",
-        )
-    ]
-    country_answer = inquirer.prompt(country_q)
-    subprocess.run(
-        "sudo pacman -S reflector rsync curl --noconfirm --needed", shell=True
-    )
-    subprocess.run(
-        "sudo cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak", shell=True
-    )
-    rprint(f"\n[italic yellow] Rating mirrors in {country_answer['interest']}...\n")
-    subprocess.run(
-        f"sudo reflector -c '{country_answer['interest']}' --sort rate --save /etc/pacman.d/mirrorlist",
-        shell=True,
-    )
-
-
 # ===== Update pacman packages
 subprocess.run("sudo pacman -Syu --noconfirm", shell=True)
 
@@ -390,56 +360,6 @@ while len(not_installed_packages_pacman) > 0:
     # If there isn't not installed package break the while and go on
     else:
         break
-
-
-# ===== Install dnsmasq and 403Online
-doh_config = [
-    inquirer.List(
-        "interest", message="Install dnsmasq and 403.Online", choices=["No", "Yes"]
-    )
-]
-doh_config_answer = inquirer.prompt(doh_config)
-
-if doh_config_answer["interest"] == "Yes":
-    subprocess.run("clear", shell=True)
-    pacman_result = subprocess.run(
-        "sudo pacman -S dnsmasq --noconfirm",
-        shell=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-    )
-    if pacman_result.returncode == 0:
-        os.system(f"sudo cp -f {dotfiles_path}/etc/dnsmasq.conf /etc/dnsmasq.conf")
-
-        if os_q == "WSL":
-            os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
-            os.system(
-                "sudo systemctl enable systemd-resolved ; sudo systemctl start systemd-resolved"
-            )
-            os.system(
-                r"sudo grep -q '^\[Resolve\]' /etc/systemd/resolved.conf && ! grep -q '^DNS=127.0.0.1:5353' /etc/systemd/resolved.conf && sudo sed -i '/^\[Resolve\]/a DNS=127.0.0.1:5353' /etc/systemd/resolved.conf"
-            )
-            os.system(
-                "sudo grep -q '^port 5353$' /etc/dnsmasq.conf || sudo sed -i '/#DNS PORT/!b;n;/^port 5353$/b;a port=5353' /etc/dnsmasq.conf"
-            )
-
-        if os_q == "ARCH":
-            os.system(
-                "sudo systemctl disable systemd-resolved ; sudo systemctl stop systemd-resolved"
-            )
-            os.system("sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq")
-
-            # remove /etc/resolve.conf
-            os.system("sudo chattr -i /etc/resolv.conf")
-            os.system("sudo rm -rf /etc/resolv.conf")
-            os.system(
-                "sudo grep -qxF '[main]' /etc/NetworkManager/NetworkManager.conf || echo -e '[main]\ndns=dnsmasq' | sudo tee -a /etc/NetworkManager/NetworkManager.conf"
-            )
-            os.system("sudo systemctl restart NetworkManager")
-
-        print("\n")
-    else:
-        rprint("[red italic] dnsmasq could not installed.\n")
 
 
 # ===== Arch community packages : yay
@@ -1099,12 +1019,13 @@ else:
 subprocess.run("clear", shell=True)
 
 
+
 # ===== Font and language Configuration
 if os_answers["interest"] == "Arch":
     font_config = [
         inquirer.List(
             "interest",
-            message="Install font and language configurations",
+            message="Install Power management and Font and Language configurations",
             choices=["No", "Yes"],
         ),
     ]
@@ -1112,11 +1033,14 @@ if os_answers["interest"] == "Arch":
     if font_config_answer["interest"] == "Yes":
         os.system(f"sudo cp {dotfiles_path}/etc/local.conf /etc/fonts/local.conf")
         os.system(f"sudo cp {dotfiles_path}/etc/00-keyboard.conf /etc/X11/xorg.conf.d/")
+        os.system(f"sudo cp {dotfiles_path}/etc/logind.conf /etc/systemd/logind.conf")
         # Install feather font
         os.system("mkdir -p $HOME/.fonts")
         os.system(f"yes | cp -rf {dotfiles_path}/.fonts/* $HOME/.fonts/")
         os.system("fc-cache -fv")
 
+
+subprocess.run("clear", shell=True)
 
 # ===== Tmux configuration
 tmux_check = (
