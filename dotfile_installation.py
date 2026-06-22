@@ -49,7 +49,7 @@ if os_answers["interest"] == "Arch":
         "yarn",
         "ruby",
         "python",
-        "rust",
+        "rustup",
         "rust-analyzer",
         "python-pip",
         "jupyter-notebook",
@@ -69,6 +69,7 @@ if os_answers["interest"] == "Arch":
         "peco",
         "lostfiles",
         "github-cli",
+        "opencode",
         "gnome-calculator",
         "tldr",
         "kitty",
@@ -87,6 +88,7 @@ if os_answers["interest"] == "Arch":
         "ntfs-3g",
         "exfat-utils",
         "i3-gaps",
+        "xss-lock",
         "python-i3ipc",
         "arandr",
         "rofi",
@@ -188,6 +190,7 @@ elif os_answers["interest"] == "WSL":
         "npm",
         "yarn",
         "git",
+        "opencode",
         "tk",
         "wget",
         "binutils",
@@ -561,6 +564,9 @@ if "ALL ⬇️" in cargo_package_answers["interest"]:
 
     for package in cargo_packages_list:
         rprint(f"\n[yellow italic] installing {package}...")
+
+        os.system(f"rustup default stable")
+
         cargo_result = subprocess.run(
             f"cargo install --locked {package}",
             shell=True,
@@ -916,26 +922,6 @@ else:
 
 subprocess.run("clear", shell=True)
 
-
-# ===== opencode
-opencode_config = [
-    inquirer.List(
-        "interest",
-        message="Install OpenCode and their configurations",
-        choices=["No", "Yes"],
-    ),
-]
-opencode_answer = inquirer.prompt(opencode_config)
-
-if opencode_answer["interest"] == "Yes":
-    rprint("[bold italic] OpenCode Configuration : ")
-    # Installation
-    os.system("curl -fsSL https://opencode.ai/install | bash")
-
-    # OpenCode Configuration
-    # os.system(f"yes | cp -rf {dotfiles_path}/.config/opencode ~/.config/opencode")
-
-subprocess.run("clear", shell=True)
 
 # ===== Yazi : filemanager configuration
 yazi_check = (

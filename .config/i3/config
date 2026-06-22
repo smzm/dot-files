@@ -421,7 +421,6 @@ exec_always --no-startup-id xbindkeys
 exec_always --no-startup-id xset dpms 1200 1200 1200
 
 # Lock before suspend (suspending pc is controlled by /etc/systemd/logind.conf)
-exec --no-startup-id xss-lock -- i3lock -c 000000 &
 
 # Start dunst (Notification Manager)
 exec_always --no-startup-id dunst &
