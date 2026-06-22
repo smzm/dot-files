@@ -1,0 +1,30 @@
+#!/bin/bash
+# i3-save-session - Saves all workspaces using i3-resurrect + notification
+
+set -euo pipefail
+
+echo "=== Saving i3 session with i3-resurrect ==="
+
+workspaces=(
+  "1:"
+  "2:"
+  "3:"
+  "4:"
+  "5:"
+  "6:"
+  "7:"
+  "8:"
+)
+
+for ws in "${workspaces[@]}"; do
+  echo "Saving workspace → $ws"
+  i3-resurrect save -w "$ws"
+done
+
+echo "✅ All workspaces saved successfully!"
+
+# Send desktop notification
+notify-send -u normal -i dialog-information \
+  "i3 Session" \
+  "✅ All workspaces saved successfully!" \
+  -t 3000

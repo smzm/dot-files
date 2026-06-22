@@ -153,8 +153,6 @@ bindsym $mod+space exec --no-startup-id rofi -show drun -dpi 220
 # start command launcher : Rofi Command Runner
 bindsym $mod+Shift+space exec --no-startup-id rofi -show run -dpi 220
 
-# launch categorized menu
-bindsym $mod+z exec --no-startup-id morc_menu
 
 # Change focus with h,j,k,l
 bindsym $mod+h focus left
@@ -336,6 +334,10 @@ bindsym Ctrl+Shift+k exec "pulseaudio-ctl up 5"
 bindsym Ctrl+Shift+j exec "pulseaudio-ctl down 5"
 bindsym Ctrl+Shift+m exec "pulseaudio-ctl mute"
 
+
+bindsym $alt+Ctrl+s exec ~/.local/bin/i3-save-session
+bindsym $alt+Ctrl+r exec ~/.local/bin/i3-restore-session
+
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
@@ -421,6 +423,7 @@ exec_always --no-startup-id xbindkeys
 exec_always --no-startup-id xset dpms 1200 1200 1200
 
 # Lock before suspend (suspending pc is controlled by /etc/systemd/logind.conf)
+# exec --no-startup-id xss-lock -- i3lock -c 000000 &
 
 # Start dunst (Notification Manager)
 exec_always --no-startup-id dunst &

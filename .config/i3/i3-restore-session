@@ -1,0 +1,37 @@
+#!/bin/bash
+# i3-restore-session - Restores all workspaces using i3-resurrect + returns to original workspace
+
+set -euo pipefail
+
+echo "=== Restoring i3 session with i3-resurrect ==="
+
+# Remember current focused workspace
+CURRENT_WS=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused==true).name')
+
+workspaces=(
+  "1:"
+  "2:"
+  "3:"
+  "4:"
+  "5:"
+  "6:"
+  "7:"
+  "8:"
+)
+
+for ws in "${workspaces[@]}"; do
+  echo "Restoring workspace → $ws"
+  i3-resurrect restore -w "$ws" || echo "Warning: Failed to restore $ws"
+done
+
+# Return to the original workspace after restoring all
+echo "Returning to original workspace → $CURRENT_WS"
+i3-msg "workspace ${CURRENT_WS}" >/dev/null
+
+echo "✅ Session restore completed!"
+
+# Send desktop notification
+notify-send -u normal -i dialog-information \
+  "i3 Session" \
+  "✅ Session restore completed!" \
+  -t 4000

@@ -226,6 +226,7 @@ PACKAGES = [
     {"name": "cava",                    "env": "arch", "aur": False,  "description": "Console-based Audio Visualizer with support for multiple backends"},
     {"name": "ttf-indic-otf",           "env": "arch", "aur": True,  "description": "Indic Opentype Fonts collection"},
     {"name": "i3-scrot",                "env": "arch", "aur": True,  "description": "simple screenshot script using scrot"},
+    {"name": "i3-resurrect",            "env": "arch", "aur": True,  "description": "A simple but flexible solution to saving and restoring i3 workspace layouts"},
     {"name": "ttf-poppins",             "env": "arch", "aur": True,  "description": "Poppins font by ITFoundry"},
     {"name": "apple-fonts",             "env": "arch", "aur": True,  "description": "Apple system fonts: SF Pro, SF Mono, NY, etc."},
     {"name": "ttf-font-awesome",        "env": "arch", "aur": True,  "description": "Icon font used widely in status bars and UIs"},
@@ -664,6 +665,9 @@ def main():
                             f"{DOTFILES}/.config/i3", "~/.config/")
         if cmd_ok("i3 --version") and ask("xres", "Copy .Xresources?"):
             run_silent(f"yes | cp -rf {DOTFILES}/.Xresources ~/")
+            run_silent(f"mkdir -p ~/.local/bin")
+            run_silent(f"yes | cp -f {DOTFILES}/config/i3/i3-restore-session ~/.local/bin/")
+            run_silent(f"yes | cp -f {DOTFILES}/config/i3/i3-save-session ~/.local/bin/")
         config_if_installed("picom --version", "Picom", "picom",
                             f"{DOTFILES}/.config/picom.conf", "~/.config/")
         config_if_installed("rofi -v", "Rofi", "rofi",
