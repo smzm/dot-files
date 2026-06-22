@@ -633,12 +633,12 @@ def main():
             a = inquirer.prompt([inquirer.List(key, message=msg, choices=["Yes", "No"])])
             return bool(a and a[key] == "Yes")
         def config_if_installed(check_cmd, name, key, src, dest):
-            section(name)
             if cmd_ok(check_cmd):
                 if ask(key, f"Install {name} config?"):
                     copy_config(src, dest)
             else:
                 rprint(f"[red] {name} not installed.[/red]")
+
         section("Fonts, Keyboard & Power")
         if ask("font", "Install font, keyboard & power configs?"):
             run_silent(f"sudo cp {DOTFILES}/etc/local.conf /etc/fonts/local.conf")
@@ -646,8 +646,12 @@ def main():
             run_silent(f"sudo cp {DOTFILES}/etc/logind.conf /etc/systemd/logind.conf")
             run_silent(f"mkdir -p $HOME/.fonts && yes | cp -rf {DOTFILES}/.fonts/* $HOME/.fonts/")
             _stream_install("fc-cache -fv")
+
+        section("Kitty")
         config_if_installed("kitty --version", "Kitty", "kitty",
                             f"{DOTFILES}/.config/kitty/*", "~/.config/kitty/")
+
+        section("Zathura")
         config_if_installed("zathura --version", "Zathura", "zathura",
                             f"{DOTFILES}/.config/zathura/*", "~/.config/zathura/")
         section("mpv")
@@ -657,19 +661,29 @@ def main():
                 run_silent(f"yes | cp -rf {DOTFILES}/.xbindkeysrc ~/")
         else:
             rprint("[red] mpv not installed.[/red]")
+
         section("GTK 3")
         if ask("gtk", "Install GTK 3 config?"):
             copy_config(f"{DOTFILES}/.config/gtk-3.0", "~/.config/")
             run_silent(f"yes | cp -rf {DOTFILES}/.config/mimeapps.list ~/.config/")
+
+
+        section("i3")
         config_if_installed("i3 --version", "i3", "i3",
                             f"{DOTFILES}/.config/i3", "~/.config/")
+        run_silent(f"mkdir -p ~/.local/bin")
+        run_silent(f"yes | cp -f {DOTFILES}/config/i3/i3-restore-session ~/.local/bin/")
+        run_silent(f"yes | cp -f {DOTFILES}/config/i3/i3-save-session ~/.local/bin/")
+
         if cmd_ok("i3 --version") and ask("xres", "Copy .Xresources?"):
             run_silent(f"yes | cp -rf {DOTFILES}/.Xresources ~/")
-            run_silent(f"mkdir -p ~/.local/bin")
-            run_silent(f"yes | cp -f {DOTFILES}/config/i3/i3-restore-session ~/.local/bin/")
-            run_silent(f"yes | cp -f {DOTFILES}/config/i3/i3-save-session ~/.local/bin/")
+
+
+        section("Picom")
         config_if_installed("picom --version", "Picom", "picom",
                             f"{DOTFILES}/.config/picom.conf", "~/.config/")
+
+        section("Rofi")
         config_if_installed("rofi -v", "Rofi", "rofi",
                             f"{DOTFILES}/.config/rofi", "~/.config/")
         section("Polybar")
@@ -680,26 +694,37 @@ def main():
                 _stream_install("sudo systemctl enable --now vnstat")
         else:
             rprint("[red] polybar not installed.[/red]")
+
+
+        section("Dunst")
         config_if_installed("dunst -v", "Dunst", "dunst",
                             f"{DOTFILES}/.config/dunst", "~/.config/")
+
+        section("Conky")
         config_if_installed("conky -v", "Conky", "conky",
                             f"{DOTFILES}/.config/conky", "~/.config/")
+
+        section("Imwheel")
         config_if_installed("imwheel -v", "Imwheel", "imwheel",
                             f"{DOTFILES}/.imwheelrc", "~/")
+
         section("Scrot")
         if cmd_ok("scrot -v"):
             if ask("scrot", "Create screenshots directory?"):
                 run_silent("mkdir -p $HOME/.screenshots")
+
         section("Docker")
         if cmd_ok("sudo docker --version"):
             if ask("docker", "Configure Docker (no-sudo)?"):
                 _stream_install("sudo groupadd -f docker && sudo usermod -aG docker $(whoami) && newgrp docker")
         else:
             rprint("[red] docker not installed.[/red]")
+
         section("pacman.conf")
         if ask("pac", "Enable Color & ParallelDownloads in pacman.conf?"):
             run_silent("sudo sed -i -e 's/^#Color/Color/g' /etc/pacman.conf")
             run_silent("sudo sed -i 's/^#ParallelDownloads.*/ParallelDownloads=5/g' /etc/pacman.conf")
+
         section("Apple Cursor")
         if ask("cur", "Install macOS Monterey cursor?"):
             _stream_install(
