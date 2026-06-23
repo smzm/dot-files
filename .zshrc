@@ -428,3 +428,33 @@ function brightness-reset() {
 function contrast-reset() {
     ddcutil setvcp 05 1
 }
+
+# To transcrive a video to txt 
+# 1. Install `yay -S whisper.cpp-cuda`
+# 2. mkdir -p ~/.local/share/whisper.cpp/models ; cd ~/.local/share/whisper.cpp/models
+# 3. wget https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo.bin
+transcribe() {
+    local video="$1"
+
+    if [[ -z "$video" || ! -f "$video" ]]; then
+        echo "Usage: transcribe <video-file>"
+        return 1
+    fi
+
+    local dir="${video:h}"
+    local base="${video:t:r}"
+
+    ffmpeg -i "$video" \
+        -ar 16000 \
+        -ac 1 \
+        -c:a pcm_s16le \
+        "$dir/$base.wav" || return 1
+
+    whisper-cli \
+        -m ~/.local/share/whisper.cpp/models/ggml-large-v3-turbo.bin \
+        -f "$dir/$base.wav" \
+        -otxt \
+        -of "$dir/$base"
+
+    rm -f "$dir/$base.wav"
+}
