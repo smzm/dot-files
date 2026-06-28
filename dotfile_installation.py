@@ -86,6 +86,7 @@ if os_answers["interest"] == "Arch":
         "viewnior",
         "gtk3",
         "ntfs-3g",
+        "ntfsprogs",
         "exfat-utils",
         "i3-gaps",
         "xss-lock",
