@@ -154,8 +154,10 @@ alias lx="eza --tree --level=1 --long --icons --git --group-directories-first"
 alias llx="eza --tree --level=2 --long --icons --git --group-directories-first"
 
 # 7z
-alias 7zCompress='7z a -t7z -md=16m'
-alias 7zExtract='7z x -o./'
+# Create an encrypted 7z archive
+alias encrypt7z='7z a -t7z -mx=9 -mhe=on -p'
+# Extract an encrypted 7z archive
+alias extract7z='7z x'
 
 # Tuxedo
 alias lt="tuxedo ~/.todo.txt" 
