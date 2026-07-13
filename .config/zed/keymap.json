@@ -1,0 +1,49 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "shift shift": "file_finder::Toggle",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-e": "editor::Hover",
+      "alt-x": "diagnostics::Deploy",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore",
+      "] [": ["workspace::SendKeystrokes", "{"],
+      "0 9": ["workspace::SendKeystrokes", "("],
+      "; ;": ["workspace::SendKeystrokes", ":"],
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "backspace": ["workspace::SendKeystrokes", "d i w h escape"],
+      ";": ["workspace::SendKeystrokes", ":"],
+      "shift-l": "pane::ActivateNextItem",
+      "shift-h": "pane::ActivatePreviousItem",
+      "alt-k": "editor::MoveLineUp",
+      "alt-j": "editor::MoveLineDown",
+      "tab": "project_panel::ToggleFocus",
+    },
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "tab": "project_panel::ToggleFocus",
+    },
+  },
+]

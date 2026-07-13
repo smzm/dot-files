@@ -1,0 +1,128 @@
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "cli_default_open_behavior": "existing_window",
+  "proxy": "",
+  "zoomed_padding": true,
+  "active_pane_modifiers": {
+    "border_size": 0.0,
+    "inactive_opacity": 1.0,
+  },
+  "use_system_window_tabs": false,
+  "tabs": {
+    "file_icons": true,
+    "git_status": false,
+  },
+  "title_bar": {
+    "button_layout": "platform_default",
+    "show_menus": false,
+    "show_user_menu": true,
+    "show_sign_in": true,
+    "show_onboarding_banner": true,
+    "show_project_items": true,
+    "show_branch_name": true,
+    "show_branch_status_icon": false,
+  },
+  "terminal": {
+    "toolbar": {
+      "breadcrumbs": false,
+    },
+    "copy_on_select": true,
+    "option_as_meta": false,
+    "font_weight": 300.0,
+    "font_size": 15.0,
+    "show_count_badge": false,
+    "button": true,
+  },
+  "status_bar": {
+    "line_endings_button": false,
+    "cursor_position_button": false,
+    "active_language_button": true,
+  },
+  "project_panel": {
+    "hide_hidden": false,
+    "hide_root": true,
+    "git_status_indicator": false,
+    "diagnostic_badges": true,
+    "bold_folder_labels": false,
+    "indent_size": 20.0,
+    "hide_gitignore": false,
+    "button": true,
+  },
+  "inline_code_actions": false,
+  "diagnostics": {
+    "button": true,
+    "inline": {
+      "enabled": false,
+    },
+  },
+  "inlay_hints": {
+    "show_background": true,
+    "enabled": false,
+  },
+  "indent_guides": {
+    "background_coloring": "disabled",
+    "coloring": "fixed",
+    "active_line_width": 1,
+    "line_width": 1,
+  },
+  "preferred_line_length": 110,
+  "show_wrap_guides": true,
+  "soft_wrap": "none",
+  "vim": {
+    "use_smartcase_find": true,
+  },
+  "toolbar": {
+    "code_actions": true,
+    "agent_review": true,
+    "selections_menu": true,
+    "breadcrumbs": true,
+  },
+  "minimap": {
+    "thumb": "hover",
+    "show": "auto",
+  },
+  "gutter": {
+    "min_line_number_digits": 4,
+    "line_numbers": true,
+  },
+  "autoscroll_on_clicks": true,
+  "sticky_scroll": {
+    "enabled": true,
+  },
+  "ui_font_weight": 400.0,
+  "ui_font_family": "Exo",
+  "buffer_line_height": "comfortable",
+  "telemetry": {
+    "diagnostics": true,
+    "metrics": false,
+    "anthropic_retention": false,
+  },
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Warm Charmed Icons",
+    "dark": "Warm Charmed Icons",
+  },
+  "autosave": "on_focus_change",
+  "format_on_save": "on",
+  "buffer_font_weight": 300.0,
+  "buffer_font_family": ".ZedMono",
+  "session": {
+    "trust_all_worktrees": true,
+  },
+  "vim_mode": true,
+  "multi_cursor_modifier": "cmd_or_ctrl",
+  "ui_font_size": 16.0,
+  "buffer_font_size": 15.0,
+  // "cursor_blink": false,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Gruvbox Dark Hard",
+  },
+}
