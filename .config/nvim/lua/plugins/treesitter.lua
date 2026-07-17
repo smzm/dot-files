@@ -110,8 +110,8 @@ return {
 		event = "VeryLazy", -- Load on very lazy events
 		config = function()
 			-- Custom highlight settings for sticky scroll
-			-- vim.api.nvim_set_hl(0, "TreesitterContext", { link = "ReversedH1" })
-			-- vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "Keyword" })
+			vim.api.nvim_set_hl(0, "TreesitterContext", { link = "HighlightedBG" })
+			vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "HighlightedBG" })
 			-- vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { link = "Keyword" })
 			-- vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Keyword" })
 			-- vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { link = "Keyword" })
@@ -124,7 +124,7 @@ return {
 				line_numbers = true,
 				multiline_threshold = 20, -- Maximum number of lines to show for a single context
 				trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-				mode = "topline", -- Line used to calculate context. Choices: 'cursor', 'topline'
+				mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
 				-- Separator between context and content. Should be a single character string, like '-'.
 				-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
 				separator = nil,
