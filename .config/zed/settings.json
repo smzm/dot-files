@@ -6,17 +6,33 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "language_models": {
+    "opencode": {
+      "show_zen_models": false,
+      "show_go_models": false
+    }
+  },
+  "agent": {
+    "default_profile": "ask",
+    "default_model": {
+      "provider": "opencode",
+      "model": "free/big-pickle",
+      "enable_thinking": false
+    },
+    "favorite_models": [],
+    "model_parameters": []
+  },
   "cli_default_open_behavior": "existing_window",
   "proxy": "",
   "zoomed_padding": true,
   "active_pane_modifiers": {
     "border_size": 0.0,
-    "inactive_opacity": 1.0,
+    "inactive_opacity": 1.0
   },
   "use_system_window_tabs": false,
   "tabs": {
     "file_icons": true,
-    "git_status": false,
+    "git_status": false
   },
   "title_bar": {
     "button_layout": "platform_default",
@@ -26,23 +42,23 @@
     "show_onboarding_banner": true,
     "show_project_items": true,
     "show_branch_name": true,
-    "show_branch_status_icon": false,
+    "show_branch_status_icon": false
   },
   "terminal": {
     "toolbar": {
-      "breadcrumbs": false,
+      "breadcrumbs": false
     },
     "copy_on_select": true,
     "option_as_meta": false,
     "font_weight": 300.0,
     "font_size": 15.0,
     "show_count_badge": false,
-    "button": true,
+    "button": true
   },
   "status_bar": {
     "line_endings_button": false,
     "cursor_position_button": false,
-    "active_language_button": true,
+    "active_language_button": true
   },
   "project_panel": {
     "hide_hidden": false,
@@ -52,48 +68,48 @@
     "bold_folder_labels": false,
     "indent_size": 20.0,
     "hide_gitignore": false,
-    "button": true,
+    "button": true
   },
   "inline_code_actions": false,
   "diagnostics": {
     "button": true,
     "inline": {
-      "enabled": false,
-    },
+      "enabled": false
+    }
   },
   "inlay_hints": {
     "show_background": true,
-    "enabled": false,
+    "enabled": false
   },
   "indent_guides": {
     "background_coloring": "disabled",
     "coloring": "fixed",
     "active_line_width": 1,
-    "line_width": 1,
+    "line_width": 1
   },
   "preferred_line_length": 110,
   "show_wrap_guides": true,
   "soft_wrap": "none",
   "vim": {
-    "use_smartcase_find": true,
+    "use_smartcase_find": true
   },
   "toolbar": {
     "code_actions": true,
     "agent_review": true,
     "selections_menu": true,
-    "breadcrumbs": true,
+    "breadcrumbs": true
   },
   "minimap": {
     "thumb": "hover",
-    "show": "auto",
+    "show": "auto"
   },
   "gutter": {
     "min_line_number_digits": 4,
-    "line_numbers": true,
+    "line_numbers": true
   },
   "autoscroll_on_clicks": true,
   "sticky_scroll": {
-    "enabled": true,
+    "enabled": true
   },
   "ui_font_weight": 400.0,
   "ui_font_family": "Exo",
@@ -101,12 +117,12 @@
   "telemetry": {
     "diagnostics": true,
     "metrics": false,
-    "anthropic_retention": false,
+    "anthropic_retention": false
   },
   "icon_theme": {
-    "mode": "dark",
+    "mode": "light",
     "light": "Warm Charmed Icons",
-    "dark": "Warm Charmed Icons",
+    "dark": "Warm Charmed Icons"
   },
   "autosave": "on_focus_change",
   "format_on_save": "on",
@@ -123,6 +139,6 @@
   "theme": {
     "mode": "dark",
     "light": "One Light",
-    "dark": "Gruvbox Dark Hard",
+    "dark": "Aura Dark",
   },
 }
