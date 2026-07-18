@@ -7,17 +7,25 @@
 // from the command palette.
 [
   {
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-j": "workspace::ActivatePaneDown",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-l": "workspace::ActivatePaneRight"
+    }
+  },
+  {
     "context": "Workspace",
     "bindings": {
       "shift shift": "file_finder::Toggle",
-    },
+    }
   },
   {
     "context": "Editor",
     "bindings": {
       "alt-e": "editor::Hover",
       "alt-x": "diagnostics::Deploy",
-    },
+    }
   },
   {
     "context": "Editor && vim_mode == insert",
@@ -26,7 +34,7 @@
       "] [": ["workspace::SendKeystrokes", "{"],
       "0 9": ["workspace::SendKeystrokes", "("],
       "; ;": ["workspace::SendKeystrokes", ":"],
-    },
+    }
   },
   {
     "context": "Editor && vim_mode == normal",
@@ -38,12 +46,10 @@
       "alt-k": "editor::MoveLineUp",
       "alt-j": "editor::MoveLineDown",
       "tab": "project_panel::ToggleFocus",
-    },
-  },
-  {
-    "context": "ProjectPanel",
-    "bindings": {
-      "tab": "project_panel::ToggleFocus",
-    },
-  },
+      "=": "outline_panel::Toggle",
+      "shift-j": ["workspace::SendKeystrokes", "1 0 j"],
+      "shift-k": ["workspace::SendKeystrokes", "1 0 k"],
+      "ctrl+o": "outline_panel::Toggle",
+    }
+  }
 ]
