@@ -11,21 +11,21 @@
       "ctrl-h": "workspace::ActivatePaneLeft",
       "ctrl-j": "workspace::ActivatePaneDown",
       "ctrl-k": "workspace::ActivatePaneUp",
-      "ctrl-l": "workspace::ActivatePaneRight"
-    }
+      "ctrl-l": "workspace::ActivatePaneRight",
+    },
   },
   {
     "context": "Workspace",
     "bindings": {
       "shift shift": "file_finder::Toggle",
-    }
+    },
   },
   {
     "context": "Editor",
     "bindings": {
       "alt-e": "editor::Hover",
       "alt-x": "diagnostics::Deploy",
-    }
+    },
   },
   {
     "context": "Editor && vim_mode == insert",
@@ -34,7 +34,7 @@
       "] [": ["workspace::SendKeystrokes", "{"],
       "0 9": ["workspace::SendKeystrokes", "("],
       "; ;": ["workspace::SendKeystrokes", ":"],
-    }
+    },
   },
   {
     "context": "Editor && vim_mode == normal",
@@ -50,6 +50,13 @@
       "shift-j": ["workspace::SendKeystrokes", "1 0 j"],
       "shift-k": ["workspace::SendKeystrokes", "1 0 k"],
       "ctrl+o": "outline_panel::Toggle",
-    }
-  }
+      "x": ["workspace::SendKeystrokes", "\" _ x"],
+    },
+  },
+  {
+    "context": "Editor && vim_mode == visual",
+    "bindings": {
+      "x": ["workspace::SendKeystrokes", "\" _ x"],
+    },
+  },
 ]
