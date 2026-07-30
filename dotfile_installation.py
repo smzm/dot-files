@@ -261,7 +261,6 @@ if "ALL ⬇️" in pacman_packages_answers["interest"]:
     rprint("[bold blue] Installing all packages :")
     rprint(Columns(pacman_list, equal=True, expand=True))
     for package in pacman_list:
-
         rprint(f"\n[yellow italic] installing {package}...")
         pacman_result = subprocess.run(
             f"sudo pacman -S {package} --noconfirm",
@@ -385,36 +384,24 @@ subprocess.run("clear", shell=True)
 if os_answers["interest"] == "Arch":
     # ===== Install aur packages : Arch
     aur_list = [
-        #'xbindkeys_config-gtk2',
-        #'clipit',
-        # "udevil",
         "tailwindcss",
         "tailwindcss-language-server",
         "picom",
         "polybar",
-        "pacman-contrib",
-        "cava",
-        "ttf-indic-otf",
         "i3-scrot",
+        "i3exit",
+        "pacman-contrib",
+        "ttf-indic-otf",
         "ttf-poppins",
-        "apple-fonts",
         "ttf-font-awesome",
-        "ttf-exo-2",
+        "ttf-poppins",
         "noto-fonts-emoji",
         "pulseaudio-ctl",
         "jmtpfs",
-        "apple_cursor",
-        "ttf-poppins",
-        "i3exit",
         "visual-studio-code-bin",
         "yazi",
-        "trashy",
-        "pnglatex",
         "x11-emoji-picker",
-        "dtop-bin",
-        "ab-download-manager-bin",
         "orchis-theme",
-        "tuxedo-bin",
     ]
 elif os_answers["interest"] == "WSL":
     # ===== Install aur packages : WSL
@@ -668,8 +655,6 @@ while len(not_installed_packages_cargo) > 0:
     # If there isn't not installed package, break the while and go on
     else:
         break
-
-
 
 
 # ===== Node configuration
@@ -1004,7 +989,6 @@ else:
     rprint(":thumbs_down: [red italic] Newsboat is not installed.\n")
 
 subprocess.run("clear", shell=True)
-
 
 
 # ===== Font and language Configuration
