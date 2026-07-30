@@ -54,6 +54,9 @@ if os_answers["interest"] == "Arch":
         "python-pip",
         "jupyter-notebook",
         "python-ipykernel",
+        "python-pillow",
+        "python-cairosvg",
+        "python-pyperclip",
         "pyenv",
         "neovim",
         "xclip",
@@ -163,17 +166,12 @@ if os_answers["interest"] == "Arch":
         "fzf",
         "zoxide",
         "imagemagick",
-        "bat",
         "newsboat",
         "eza",
         "playerctl",
-        "luarocks",
-        "python-pillow",
-        "python-cairosvg",
-        "python-pyperclip",
-        "rust-analyzer",
         "vnstat",
         "ddcutil",  # sudo modprobe i2c-dev
+        "zed",
     ]
 
 elif os_answers["interest"] == "WSL":
