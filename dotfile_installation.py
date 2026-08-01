@@ -384,7 +384,7 @@ if os_answers["interest"] == "Arch":
     aur_list = [
         "tailwindcss",
         "tailwindcss-language-server",
-        "picom",
+        # "picom",
         "polybar",
         "i3-scrot",
         "i3exit",
