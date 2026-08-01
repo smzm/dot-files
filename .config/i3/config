@@ -430,8 +430,8 @@ exec_always --no-startup-id dunst &
 
 # Start picom composition
 #exec xrandr --auto  
-exec xrandr --output HDMI-2 --mode 3440x1440 --rate 99
-exec_always --no-startup-id picom --config ~/.config/picom.conf & 
+exec xrandr --output HDMI-2 --mode 3440x1440 --rate 60
+# exec_always --no-startup-id picom --config ~/.config/picom.conf & 
 
 # Start Polybar
 exec_always --no-startup-id  $HOME/.config/polybar/launch.sh &
