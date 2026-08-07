@@ -25,6 +25,8 @@ return {
 			vim.cmd([[highlight Structure ctermfg=NONE ctermbg=15 gui=NONE guifg=#DEDEDE guibg=NONE]])
 			vim.cmd([[highlight Indentation ctermfg=NONE ctermbg=15 gui=NONE guifg=#1F1E27 guibg=NONE]])
 			vim.cmd([[highlight IndentBlanklineContextChar ctermfg=NONE ctermbg=15 gui=NONE guifg=#2B2A35 guibg=NONE]])
+			vim.cmd([[highlight NormalFloat gui=NONE guibg=#0E0F14]])
+			vim.cmd([[highlight FloatBorder gui=NONE guibg=#0E0F14 guifg=#595A61]])
 			vim.cmd([[highlight LspReferenceRead ctermfg=NONE gui=NONE guifg=NONE guibg=NONE]])
 			vim.cmd([[highlight LspReferenceText ctermfg=NONE gui=NONE guifg=NONE guibg=#232133]])
 			vim.cmd([[highlight LspReferenceWrite ctermfg=NONE gui=NONE guifg=NONE guibg=#3d375e]])
