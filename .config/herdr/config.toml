@@ -1,0 +1,21 @@
+onboarding = false
+[keys]
+prefix = "`"
+
+new_tab = "prefix+n"
+create_workspace = "prefix+shift+n"
+
+close_tab = "prefix+q"
+close_workspace = "prefix+shift+q"
+
+rename_tab = "prefix+r"
+rename_workspace = "prefix+shift+r"
+
+reload_config = "prefix+shift+u"
+next_workspace = "prefix+tab"
+previous_workspace = "prefix+shift+tab"
+[theme]
+name = "tokyo-night"
+auto_switch = false
+[ui.toast]
+delivery = "herdr"
