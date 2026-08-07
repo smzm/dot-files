@@ -1,68 +1,30 @@
 {
-  "$schema": "https://opencode.ai/config.json",
-  // ==========================================================
-  // THEME CONFIGURATION
-  // ==========================================================
-  "theme": "opencode",
-
-  "share": "manual",
-  // ==========================================================
-  // MODELS AND PROVIDERS + (opencode auth login)
-  // ==========================================================
-  "provider": {
-    "Ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ollama",
-      "models": {
-        "qwen3:8b": {
-          "name": "qwen3-8b(LOCAL)"
+    "$schema": "https://opencode.ai/config.json",
+    "provider": {
+        "qwen": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "QwenAI",
+            "options": {
+                "baseURL": "https://qwen.aikit.club/v1",
+                "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM0ODJiYTI3LTEwZjAtNDM5Ny04MWEyLTQ1YWU0ZjczZDc5ZCIsImxhc3RfcGFzc3dvcmRfY2hhbmdlIjoxNzgzNTAyMjU0LCJleHAiOjE3ODgwNzE0Njh9.hl0LDsbxBylZjrVj85_1nR0flOSqKwWSDrZ2Z1lEI4k"
+            },
+            "models": {
+                "qwen3.7-plus": {
+                    "name": "Qwen 3.7 Plus"
+                },
+                "qwen3.7-max": {
+                    "name": "Qwen 3.7 Max"
+                }
+            }
         }
-      },
-      "options": {
-        "baseURL": "http://127.0.0.1:11434/v1"
-      }
-    }
-  },
-  "model": "",
-  // ==========================================================
-  // PERMISSIONS
-  // =========================================================
-  "permission": {
-    "edit": "ask",
-    "bash": {
-      "rm": "ask"
-    }
-  },
-  "autoupdate": true,
-  // ==========================================================
-  // KEYBINDINGS 
-  // ==========================================================
-  "keybinds": {
-    "leader": "alt+`",
-    "app_help": "<leader>h",
-    "switch_mode": "tab",
-    "editor_open": "<leader>e",
-    "session_new": "<leader>n",
-    "session_list": "<leader>l",
-    "session_share": "<leader>s",
-    "session_unshare": "<leader>u",
-    "session_interrupt": "esc",
-    "session_compact": "<leader>c",
-    "tool_details": "<leader>d",
-    "model_list": "<leader>m",
-    "theme_list": "<leader>t",
-    "project_init": "<leader>i",
-    "input_clear": "ctrl+c",
-    "input_paste": "ctrl+v",
-    "input_submit": "enter",
-    "input_newline": "<leader>enter",
-    "messages_page_up": "pgup",
-    "messages_page_down": "pgdown",
-    "messages_half_page_up": "ctrl+k",
-    "messages_half_page_down": "ctrl+j",
-    "messages_first": "ctrl+g",
-    "messages_last": "ctrl+alt+g",
-    "messages_copy": "<leader>y",
-    "app_exit": "ctrl+c,<leader>q"
-  }
+    },
+    "mcp": {
+        "playwright": {
+            "type": "local",
+            "command": ["npx", "@playwright/mcp@latest"],
+            "enabled": true
+        }
+    },
+    "formatter": true,
+    "lsp": true
 }
