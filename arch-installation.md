@@ -1122,7 +1122,7 @@ sudo pacman -S bind              # DNS server, but I install it because of dig u
 <br>
 
 ### Mount NTFS partition
-- Copy your fonts directories in `/usr/share/fonts`.
+
 - Use `lsblk -f` to find UUID of your partition .
 - Then in `/etc/fstab` add :
 
@@ -1134,6 +1134,7 @@ UUID=YOUR-UUID  /mnt/[name]  ntfs3  uid=1000,gid=1000,force  0  0
 
 ### Install fonts
 
+- Copy your fonts directories in `/usr/share/fonts`.
 - Copy fonts in `~/.fonts` directory and then run:
 
 ```bash
