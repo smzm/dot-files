@@ -16,6 +16,7 @@ plugins=(
     colored-man-pages
     history-substring-search
     command-not-found
+    scd
 )
 
 source "$ZSH/oh-my-zsh.sh"
