@@ -1,5 +1,5 @@
 configuration {
-  display-drun: "  :";
+  display-drun: "󰀻 :";
   display-window: "Windows: ";
   drun-display-format: "{icon} {name}";
   modi: "window,run,drun";
@@ -32,7 +32,7 @@ configuration {
   background-color: @bg;
 
   border: 0;
-  margin: 0;
+  margin: 1;
   padding: 0;
   spacing: 0;
 }
@@ -40,12 +40,13 @@ configuration {
 window {
   width: 30%;
   padding: 12;
+  border-radius: 16px;
 }
 
 element {
   padding: 8;
   text-color: @fg;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 element selected {
