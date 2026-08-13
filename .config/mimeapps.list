@@ -20,17 +20,6 @@ text/x-python=nvim.desktop
 application/javascript=nvim.desktop
 application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
 
-image/bmp=viewnior.desktop;
-image/gif=viewnior.desktop;
-image/jpeg=viewnior.desktop;
-image/jpeg2000=viewnior.desktop;
-image/png=viewnior.desktop
-image/svg=viewnior.desktop;
-image/x-portable-anymap=viewnior.desktop;
-image/x-portable-bitmap=viewnior.desktop;
-image/x-portable-graymap=viewnior.desktop;
-image/x-portable-pixmap=viewnior.desktop;
-
 video/dv=mpv.desktop;
 video/mp2t=mpv.desktop;
 video/mp4=mpv.desktop;
@@ -39,7 +28,6 @@ video/mpeg=mpv.desktop;
 video/msvideo=mpv.desktop;
 video/quicktime=mpv.desktop;
 video/vnd.rn-realvideo=mpv.desktop;
-video/webm=mpv.desktop;google-chrome.desktop;
 video/x-anim=mpv.desktop;
 video/x-avi=mpv.desktop;
 video/x-flc=mpv.desktop;

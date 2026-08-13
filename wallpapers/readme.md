@@ -1,2 +1,0 @@
-- [Aesthetic background with gradient neon led light effect](https://www.freepik.com/free-photo/aesthetic-background-with-gradient-neon-led-light-effect_17106396.htm#page=7&query=4k%20wallpaper&position=35&from_view=search&track=ais)
-- [macOS Monterey](https://wallpapershome.com/download-wallpapers/macbook/macos-monterey-dark-wwdc-2021-5k-23425.html)
