@@ -462,6 +462,39 @@ build_open_meteo_url() {
 # Fetching
 # ---------------------------------------------------------------------------
 
+# Wait until actual HTTPS connectivity is available.
+#
+# On each Waybar invocation, give the network up to 5 minutes to become
+# available. If it still isn't available after 5 minutes, return failure
+# without producing an error. main() will then simply exit and Waybar will
+# try again on its next configured interval.
+wait_for_network() {
+    local test_url="https://www.google.com/generate_204"
+    local timeout_seconds=300
+    local start_time
+    local current_time
+
+    start_time="$(date +%s)"
+
+    while true; do
+        if curl -fsS \
+            --connect-timeout 3 \
+            --max-time 5 \
+            -o /dev/null \
+            "$test_url" >/dev/null 2>&1; then
+            return 0
+        fi
+
+        current_time="$(date +%s)"
+
+        if (( current_time - start_time >= timeout_seconds )); then
+            return 1
+        fi
+
+        sleep 2
+    done
+}
+
 # Sets HTTP_CODE and RAW_JSON_FILE (caller must rm the file when done).
 http_get_json() {
     local url="$1"
@@ -593,7 +626,13 @@ normalize_from_owm() {
         DAILY_TMIN+=("$dtmin")
         DAILY_TMAX+=("$dtmax")
         DAILY_POP+=("$dpop")
-        DAILY_ICON+=("$(decode_icon_owm_fa "$dcode" 1)")
+        # Nerd Font icon (not Font Awesome) for the daily rows: the JBN_ICONS
+        # set is already proven to render correctly since it's what the
+        # hourly icon row above uses. FA_ICONS/FA_FONT is kept only for the
+        # header icon; some FA glyphs (e.g. cloud-sun) were coming up as
+        # missing-glyph "tofu" boxes on systems without a full/matching
+        # Font Awesome install, which also threw off that row's alignment.
+        DAILY_ICON+=("$(decode_icon_owm_jbn "$dcode" 1)")
     done < <(jq -r '.daily[] | [.dt, .temp_min, .temp_max, .pop, .code] | @tsv' <<< "$interm")
 
     MINUTELY_TS=(); MINUTELY_PRECIP=()
@@ -721,7 +760,8 @@ normalize_from_meteo() {
         DAILY_TMIN+=("$dtmin")
         DAILY_TMAX+=("$dtmax")
         DAILY_POP+=("$pop_frac")
-        DAILY_ICON+=("$(decode_icon_wmo_fa "$dcode" 1)")
+        # See the OWM branch above for why this is JBN (Nerd Font), not FA.
+        DAILY_ICON+=("$(decode_icon_wmo_jbn "$dcode" 1)")
     done < <(jq -r '[.daily_time, .daily_code, .daily_tmin, .daily_tmax, .daily_pop] | transpose[] | @tsv' <<< "$interm")
 
     MINUTELY_TS=(); MINUTELY_PRECIP=()
@@ -842,7 +882,10 @@ render_daily_bar() {
 }
 
 big_daily_icon() {
-    printf '<span font_family="%s" size="13pt" rise="-2pt">%s</span>' "$FA_FONT" "$1"
+    # Nerd Font icon, not Font Awesome -- see the comment on DAILY_ICON
+    # assignment below for why. 16pt roughly matches the old 13pt FA
+    # rendering's visual weight against the 14pt row text.
+    printf '<span font_family="%s" size="16pt">%s</span>' "$NERD_FONT" "$1"
 }
 
 render_daily_rows() {
@@ -998,7 +1041,7 @@ make_tooltip() {
 }
 
 # ---------------------------------------------------------------------------
-# Debug / fixture data (WEATHER_DEBUG_OWM=1), mirrors build_test_owm_data()
+# Debug / fixture data (WEATHER_DEBUG_DEBUG_OWM=1), mirrors build_test_owm_data()
 # ---------------------------------------------------------------------------
 
 build_test_owm_data() {
@@ -1052,7 +1095,7 @@ build_test_owm_data() {
         DAILY_TMIN+=("${daily_tmin[i]}")
         DAILY_TMAX+=("${daily_tmax[i]}")
         DAILY_POP+=("${daily_pop[i]}")
-        DAILY_ICON+=("${FA_ICONS[${daily_status[i]}]}")
+        DAILY_ICON+=("${JBN_ICONS[${daily_status[i]}]}")
     done
 
     ALERTS_TITLE=("National Weather Service: Wind Advisory" "National Weather Service: Flood Watch")
@@ -1082,13 +1125,14 @@ debug_dump_test_tooltip() {
 
 # One-off manual alignment check for the daily-row icons, ported from
 # __align_test__render_daily_rows(). Not wired into normal output; run with
-# WEATHER_DEBUG_ALIGN=1 to print it as plain text. Use this to recalibrate
-# FA_ICONS padding whenever the installed Font Awesome version changes.
+# WEATHER_DEBUG_ALIGN=1 to print it as plain text. Use this to spot any
+# Nerd Font icon that renders as a missing-glyph box on your system, and to
+# recalibrate spacing if you ever swap the icon set back to FA_ICONS.
 debug_align_test_daily_rows() {
     local -a names=(sun moon cloud cloud-bolt snowflake wind tornado temperature-low temperature-high smog cloud-sun-rain cloud-sun cloud-showers-water cloud-showers-heavy cloud-rain cloud-moon-rain cloud-moon)
     local name
     for name in "${names[@]}"; do
-        span_text "AAA $(big_daily_icon "${FA_ICONS[$name]}") BBB | $name" "14pt" "$MONO_FONT"
+        span_text "AAA $(big_daily_icon "${JBN_ICONS[$name]}") BBB | $name" "14pt" "$MONO_FONT"
         printf '\n'
     done
 }
@@ -1119,6 +1163,14 @@ main() {
     fi
 
     validate_config
+
+    # If the network is not available within 5 minutes, don't generate an
+    # error or call the weather API. Just leave this Waybar invocation
+    # quietly and let Waybar run the script again at the next interval.
+    if ! wait_for_network; then
+        return 0
+    fi
+
     fetch_weather
 
     local backend="${CFG[backend],,}"
