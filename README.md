@@ -6,9 +6,9 @@ The repository also contains configuration and installation instructions for **A
 
 ---
 
-## Installation
+# Installation
 
-### Arch Linux
+## Arch Linux
 
 Clone the repository:
 
@@ -28,9 +28,9 @@ The installer handles package installation and configuration deployment.
 
 ---
 
-# Arch Linux on WSL
+## Arch Linux on WSL
 
-## 1. Install Arch Linux
+### 1. Install Arch Linux
 
 First, update WSL from Windows:
 
@@ -52,7 +52,7 @@ wsl -d archlinux
 
 ---
 
-## 2. Set Arch Linux as the Default WSL Distribution
+### 2. Set Arch Linux as the Default WSL Distribution
 
 From a Windows shell:
 
@@ -68,7 +68,7 @@ wsl --list --verbose
 
 ---
 
-## 3. Initialize Pacman
+### 3. Initialize Pacman
 
 Inside Arch Linux, initialize and populate the Pacman keyring:
 
@@ -91,7 +91,7 @@ sudo pacman -Syyu --noconfirm
 
 ---
 
-## 4. Create a User
+### 4. Create a User
 
 Install `sudo`:
 
@@ -128,7 +128,7 @@ su - <username>
 
 ---
 
-## 5. Set the Default WSL User
+### 5. Set the Default WSL User
 
 From a Windows shell, set your newly created user as the default WSL user:
 
@@ -138,7 +138,7 @@ wsl --manage archlinux --set-default-user <username>
 
 ---
 
-## 6. Install the Dotfiles
+### 6. Install the Dotfiles
 
 Install the required base packages:
 
@@ -163,7 +163,7 @@ The installer will let you select the sections and packages you want to install.
 
 ---
 
-# Windows Terminal
+## Windows Terminal
 
 If you are using Arch Linux through WSL, you can optionally configure Windows Terminal to match the setup.
 
@@ -176,6 +176,6 @@ windowsTerminal/readme.md
 ---
 
 
-## License
+# License
 
 Use, modify, and adapt anything here as you like.
