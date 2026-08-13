@@ -1,0 +1,13 @@
+[Unit]
+Description=Windscribe VPN
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/opt/windscribe/Windscribe
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

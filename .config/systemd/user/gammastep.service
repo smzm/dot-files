@@ -1,0 +1,11 @@
+[Unit]
+Description=Gammastep
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/gammastep -l 36.2605:59.6168 -t 6500:5000 -b 1.0:0.9
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target
