@@ -169,8 +169,8 @@ PACKAGES=(
     "xdg-desktop-portal-gtk|pacman|arch|2|GTK XDG desktop portal backend||"
 
     "hyprpicker|pacman|arch|2|Color picker for Hyprland and Wayland||"
-    "hyprpaper|pacman|arch|2|Fast Wayland wallpaper utility||command:systemctl --user enable --now hyprpaper.service"
-    "hyprpolkitagent|pacman|arch|2|Polkit authentication agent for Hyprland||command:systemctl --user enable --now hyprpolkitagent.service"
+    "hyprpaper|pacman|arch|2|Fast Wayland wallpaper utility||"
+    "hyprpolkitagent|pacman|arch|2|Polkit authentication agent for Hyprland||"
     "hypridle|pacman|arch|2|Idle management daemon for Hyprland||"
     "wlogout|pacman|arch|2|Wayland logout and power menu||"
 
