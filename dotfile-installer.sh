@@ -213,7 +213,7 @@ PACKAGES=(
     "zathura|pacman|arch|3|Minimalist document viewer|config:.config/zathura=>~/.config/zathura|"
     "zathura-pdf-mupdf|pacman|arch|3|PDF backend for Zathura||"
 
-    "gammastep|pacman|arch|3|Screen color temperature and brightness adjustment|config:.config/systemd/user/gammastep.service=>~/.config/systemd/user/gammastep.service|command:systemctl --user daemon-reload && systemctl --user enable --now gammastep.service"
+    "gammastep|pacman|arch|3|Screen color temperature and brightness adjustment||"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -255,7 +255,7 @@ PACKAGES=(
 
     "woff2-font-awesome|aur|arch|5|Font Awesome WOFF2 icon font||"
     "inter-font|pacman|arch|5|Inter UI font||"
-    "fontconfig|None|arch|5|Font aliases and settings|config:.config/fontconfig=>~/.config/fontconfig|command:fc-cache -f"
+    # "fontconfig|None|arch|5|Font aliases and settings|config:.config/fontconfig=>~/.config/fontconfig|command:fc-cache -f"
 
 
     # ═════════════════════════════════════════════════════════════

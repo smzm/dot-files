@@ -462,21 +462,26 @@ build_open_meteo_url() {
 # Fetching
 # ---------------------------------------------------------------------------
 
-# Wait until actual HTTPS connectivity is available.
+# Wait (with a cap) until actual HTTPS connectivity is available.
+# This is intentionally done before the weather API request so that Waybar
+# does not permanently show a network error when the network/VPN is still
+# coming up during boot.
 #
-# On each Waybar invocation, give the network up to 5 minutes to become
-# available. If it still isn't available after 5 minutes, return failure
-# without producing an error. main() will then simply exit and Waybar will
-# try again on its next configured interval.
+# This used to loop forever, which meant that if the VPN never came up (or
+# came up much later than expected) this module would just hang and never
+# render anything at all. Now it caps the wait at NETWORK_WAIT_MAX_SECS: if
+# connectivity shows up within that window we return immediately (0), and if
+# not we give up and return 1 so the caller can proceed anyway -- the normal
+# fetch_weather -> fail_waybar path will render a "weather net" error, and
+# waybar's own polling interval will naturally retry (and succeed once the
+# VPN is actually connected) on the next run.
 wait_for_network() {
     local test_url="https://www.google.com/generate_204"
-    local timeout_seconds=300
-    local start_time
-    local current_time
+    local -r NETWORK_WAIT_MAX_SECS=120
+    local -r NETWORK_WAIT_INTERVAL_SECS=2
+    local waited=0
 
-    start_time="$(date +%s)"
-
-    while true; do
+    while (( waited < NETWORK_WAIT_MAX_SECS )); do
         if curl -fsS \
             --connect-timeout 3 \
             --max-time 5 \
@@ -485,14 +490,11 @@ wait_for_network() {
             return 0
         fi
 
-        current_time="$(date +%s)"
-
-        if (( current_time - start_time >= timeout_seconds )); then
-            return 1
-        fi
-
-        sleep 2
+        sleep "$NETWORK_WAIT_INTERVAL_SECS"
+        waited=$(( waited + NETWORK_WAIT_INTERVAL_SECS ))
     done
+
+    return 1
 }
 
 # Sets HTTP_CODE and RAW_JSON_FILE (caller must rm the file when done).
@@ -1041,7 +1043,7 @@ make_tooltip() {
 }
 
 # ---------------------------------------------------------------------------
-# Debug / fixture data (WEATHER_DEBUG_DEBUG_OWM=1), mirrors build_test_owm_data()
+# Debug / fixture data (WEATHER_DEBUG_OWM=1), mirrors build_test_owm_data()
 # ---------------------------------------------------------------------------
 
 build_test_owm_data() {
@@ -1163,14 +1165,7 @@ main() {
     fi
 
     validate_config
-
-    # If the network is not available within 5 minutes, don't generate an
-    # error or call the weather API. Just leave this Waybar invocation
-    # quietly and let Waybar run the script again at the next interval.
-    if ! wait_for_network; then
-        return 0
-    fi
-
+    wait_for_network
     fetch_weather
 
     local backend="${CFG[backend],,}"
