@@ -1,20 +1,52 @@
 {
-    "layer": "top",
-    "modules-left": ["hyprland/workspaces", "group/media"],
-    "modules-center": ["clock"],
+    "position": "bottom",
+    "height": 37,
+    "margin-bottom": 0,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 2,
+
+    "modules-left": ["hyprland/workspaces", "custom/lyrics"],
+    "modules-center": ["clock", "custom/weather"],
     "modules-right": [
         "keyboard-state",
-        "hyprland/submap",
+        "hyprland/language",
         "group/volume",
+        "bluetooth",
         "cpu",
         "memory",
-        "bluetooth",
-        "network",
-        "hyprland/language",
-        "tray"
+        "custom/gpu-temp",
+        "custom/iplocation",
+        "custom/network-usage",
+        "tray",
+        "custom/power"
     ],
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "on-scroll-up": "hyprctl dispatch \"hl.dsp.focus({ workspace = 'e+1' })\"",
+        "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({ workspace = 'e-1' })\"",
+        "all-outputs": true,
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 5
+        }
+    },
     "hyprland/window": {
-        "max-length": 50
+        "format": "  {}",
+        "max-length": 50,
+        "separate-outputs": true,
+        "rewrite": {
+            "(.*) — Mozilla Firefox": "󰈹  $1",
+            "(.*) - fish": "  $1",
+            "(.*) - zsh": "  $1",
+            "(.*) - nvim": "  $1",
+            "nvim": "  nvim",
+            "kitty": "  kitty",
+            "": "  desktop"
+        }
     },
     "hyprland/submap": {
         "format": "{icon} {submap}",
@@ -30,44 +62,22 @@
         "format-en": "US",
         "format-fa": "FA",
         "tooltip": true,
-        "tooltip-format": "{long}"
+        "tooltip-format": "{long}",
+        "on-click": "hyprctl switchxkblayout mosart-semi.-mi-wireless-combo next"
     },
     "tray": {
         "icon-size": 15,
         "spacing": 10
     },
-    "bluetooth": {
-        "format": "",
-        "format-disabled": "", // an empty format will hide the module
-        "format-connected": " {num_connections}",
-        "tooltip-format": "{controller_alias}\t{controller_address}",
-        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "blueman-manager"
-    },
-    "cpu": {
-        "interval": 10,
-        "format": " {}%",
-        "max-length": 10,
-        "on-click": "exec kitty --title=htop -e htop"
-    },
-    "memory": {
-        "interval": 30,
-        "format": " {percentage}%",
-        "tooltip-format": "{used:0.1f}G/{total:0.1f}G used",
-        "on-click": "exec kitty --title=htop -e htop"
-    },
+
     "network": {
-        "format": "",
-        "format-wifi": "",
-        "format-ethernet": "",
-        "format-disconnected": "󰤭", //An empty format will hide the module.
-        "tooltip-format": "{ifname} via {gwaddr} 󰊗",
-        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
-        "tooltip-format-ethernet": "{ifname} ",
-        "tooltip-format-disconnected": "󰖪",
-        "max-length": 50,
-        "on-click": "exec nmrs"
+        "format-wifi": "󰤨  {essid} ({signalStrength}%)",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "󰤭  offline",
+        "tooltip-format-wifi": "󰤨  {essid}\nSignal: {signalStrength}%\nFreq: {frequency}MHz\nIP: {ipaddr}",
+        "tooltip-format-ethernet": "󰈀  {ifname}\nIP: {ipaddr}",
+        "on-click": "nmrs",
+        "interval": 10
     },
     "keyboard-state": {
         "numlock": false,
@@ -80,14 +90,20 @@
         }
     },
     "clock": {
-        "format": "󰥔 {:%a, %d. %b %I:%M %p}",
+        "format": "󰥔  {:%a, %d. %b | %I:%M %p}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
+            "mode": "month",
+            "weeks-pos": "right",
+            "on-scroll": 1,
             "format": {
-                "today": "<span color='#75f1fa'><b>{}</b></span>"
+                "months": "<span color='#cdd6f4'><b>{}</b></span>",
+                "days": "<span color='#cdd6f4'>{}</span>",
+                "weeks": "<span color='#89b4fa'>W{}</span>",
+                "weekdays": "<span color='#a6e3a1'><b>{}</b></span>",
+                "today": "<span color='#f38ba8'><b>{}</b></span>"
             }
-        },
-        "on-click": "exec chromium --app=https://calendar.google.com"
+        }
     },
     "pulseaudio": {
         "format": "{volume}% {icon}",
@@ -108,6 +124,67 @@
         "orientation": "horizontal",
         "modules": ["pulseaudio", "pulseaudio/slider"]
     },
+
+    "bluetooth": {
+        "format": "󰂯 {status}",
+        "format-connected": "󰂱  {device_alias}",
+        "format-connected-battery": "󰂱  {device_alias} ({device_battery_percentage}%)",
+        "format-disabled": "󰂲  off",
+        "tooltip-format": "{controller_alias}\n{num_connections} connected",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "blueman-manager",
+        "interval": 10
+    },
+    "cpu": {
+        "interval": 10,
+        "format": "󰻠 {usage}%",
+        "tooltip-format": "CPU: {usage}%\nLoad: {load}",
+        "on-click": "kitty -- btop",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+    "temperature": {
+        "critical-threshold": 80,
+        "interval": 5,
+        "format": "{icon} {temperatureC}°C",
+        "format-critical": "󰸁  {temperatureC}°C",
+        "tooltip-format": "Temperature: {temperatureC}°C",
+        "format-icons": ["󱃃", "󰔏", "󱃂"]
+    },
+
+    "memory": {
+        "interval": 10,
+        "format": "󰍛 {percentage}%",
+        "tooltip-format": "RAM: {used:0.1f}G / {total:0.1f}G\nSwap: {swapUsed:0.1f}G / {swapTotal:0.1f}G",
+        "on-click": "kitty -- btop",
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+    "custom/bluelight": {
+        "format": "{}",
+        "exec": "~/.config/waybar/custom_modules/bluelight-toggle.sh --status",
+        "on-click": "~/.config/waybar/custom_modules/bluelight-toggle.sh&& pkill -RTMIN+8 waybar",
+        "signal": 8,
+        "tooltip": "Toggle blue light filter",
+        "interval": 10
+    },
+    "custom/gpu-temp": {
+        "exec": "~/.config/waybar/custom_modules/gpu-temp.sh",
+        "interval": 10,
+        "return-type": "json",
+        "on-click": "kitty --title nvidia-smi nvidia-smi"
+    },
+    "custom/power": {
+        "format": "󰐥",
+        "tooltip": "Power menu",
+        "on-click": "~/.config/waybar/custom_modules/power_menu.sh"
+    },
+
     "group/media": {
         "orientation": "horizontal",
         "modules": [
@@ -133,5 +210,41 @@
         "escape": true,
         "interval": 1,
         "tooltip": false
+    },
+    "custom/iplocation": {
+        "exec": "~/.config/waybar/custom_modules/geo_ip_location.sh",
+        "return-type": "json",
+        "interval": 60,
+        "tooltip": true
+    },
+    "custom/weather": {
+        "exec": "~/.config/waybar/custom_modules/weather.sh",
+        "return-type": "json",
+        "interval": 900,
+        "tooltip": true,
+        "format": "{}"
+    },
+    "custom/network-usage": {
+        "exec": "~/.config/waybar/custom_modules/net-usage-counter.sh",
+        "return-type": "json",
+        "interval": 25,
+        "tooltip": true
+    },
+
+    "custom/lyrics": {
+        "return-type": "json",
+        "format": "{icon} {0}",
+        "hide-empty-text": true,
+        "exec-if": "which waybar-lyric",
+        "exec": "waybar-lyric --quiet",
+        "on-click": "waybar-lyric play-pause",
+        "format-icons": {
+            "playing": "",
+            "paused": "",
+            "lyric": "",
+            "music": "󰝚",
+            "no_lyric": "",
+            "getting": ""
+        }
     }
 }

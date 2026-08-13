@@ -71,6 +71,25 @@ HEADER_SIZE="12pt"
 HEADER_ICON_SIZE="12pt"
 DAILY_SIZE="12pt"
 
+# Width-unit model for manual centering (see center_pad_units / the daily
+# row block below). GTK tooltips ignore CSS text-align and this script's
+# markup has no per-line alignment control, so "centering" a line inside a
+# wider tooltip has to be done by padding it with non-breaking spaces.
+#
+# Because this is a monospace font, a fixed-width glyph's pixel advance
+# scales ~linearly with point size, so "pt-units" (character_count * pt)
+# are comparable across rows rendered at different sizes. The constant
+# below is calibrated from the hourly block, which is built from three
+# rows that are all internally consistent at 576 units (64 cells @ 9pt ==
+# 32 cells @ 18pt) and is normally the widest thing in the tooltip.
+#
+# If your installed Nerd Font's icon glyphs are wider/narrower than a
+# plain monospace cell, the daily rows may drift slightly off-center --
+# nudge this number up/down until they line up, the same way
+# WEATHER_DEBUG_ALIGN is used to recalibrate FA_ICONS padding.
+TOOLTIP_TARGET_UNITS=576
+DAILY_ROW_PT=14
+
 # Non-breaking space (U+00A0, UTF-8 encoded). An ordinary space is a valid
 # Pango line-break point; every tooltip row below that mixes text fields on
 # one line uses NBSP as its separator/padding instead of " " so GTK can
@@ -240,6 +259,22 @@ nbsp_repeat() {
     local n="$1" out="" i
     for ((i = 0; i < n; i++)); do out+="$NBSP"; done
     printf '%s' "$out"
+}
+
+# Given a number of pt-units still needed ($1) and the point size the
+# surrounding span will render at ($2), return an NBSP string that pads
+# out roughly that many pt-units (rounded down to whole NBSP characters).
+# Used to center a shorter/narrower line under a wider one -- see
+# TOOLTIP_TARGET_UNITS above for the reasoning.
+center_pad_units() {
+    local units="$1" pt="$2" n
+    if (( units <= 0 || pt <= 0 )); then
+        printf ''
+        return
+    fi
+    n=$(( units / pt ))
+    (( n < 0 )) && n=0
+    nbsp_repeat "$n"
 }
 
 # ---------------------------------------------------------------------------
@@ -776,20 +811,31 @@ compute_daily_minmax() {
 render_daily_bar() {
     # NBSP for the "off" steps instead of a plain space, for the same
     # anti-wrap reason as the hourly cells above.
+    #
+    # Bars are LEFT-ANCHORED: every row starts filling from column 0, and
+    # only the fill LENGTH varies, scaled to how wide that day's min/max
+    # spread is relative to the week's overall spread (dlow/dhigh). This
+    # was previously a "floating" bar whose start column also moved based
+    # on where day_min sat within the week range, which made same-width
+    # ranges start at different x positions from row to row. Anchoring
+    # the start keeps every row's bar beginning in the same column.
     local day_min="$1" day_max="$2" dlow="$3" dhigh="$4" steps="${5:-18}"
     awk -v day_min="$day_min" -v day_max="$day_max" -v dlow="$dlow" -v dhigh="$dhigh" -v steps="$steps" '
     BEGIN {
         delta = dhigh - dlow
-        incr = (delta != 0) ? delta / steps : 1
-        startc = int((day_min - dlow) / incr)
-        stopc = int((day_max - dlow) / incr)
-        if (startc < 0) startc = 0
-        if (startc > steps - 1) startc = steps - 1
-        if (stopc < 0) stopc = 0
-        if (stopc > steps - 1) stopc = steps - 1
+        proportion = (delta != 0) ? (day_max - day_min) / delta : 1
+        fillc = int(proportion * steps + 0.5)
+        if (fillc < 1) fillc = 1
+        if (fillc > steps) fillc = steps
         out = ""
         for (i = 0; i < steps; i++) {
-            out = out (i >= startc && i <= stopc) ? "\xe2\x94\x80" : "\xc2\xa0"
+            # NOTE: the parens around the ternary are load-bearing. Without
+            # them, "out X ? A : B" parses as "(out X) ? A : B" -- string
+            # concatenation binds tighter than ?: in awk, so the whole
+            # expression collapses to a truthiness test and *replaces*
+            # out each iteration instead of appending to it. That silently
+            # turned this 18-character bar into a single leftover glyph.
+            out = out ((i < fillc) ? "\xe2\x94\x80" : "\xc2\xa0")
         }
         printf "%s", out
     }'
@@ -805,6 +851,7 @@ render_daily_rows() {
     local rows=() n=${#DAILY_DATE[@]} i
     (( n > 8 )) && n=8
     local dt pop lt ht bar line nb
+    local char_count units pad_units pad_left pad_right
     nb="$NBSP"
     for ((i = 0; i < n; i++)); do
         dt="${DAILY_DATE[i]}"
@@ -813,6 +860,23 @@ render_daily_rows() {
         ht="$(format_temp "${DAILY_TMAX[i]}")"
         bar="$(render_daily_bar "${DAILY_TMIN[i]}" "${DAILY_TMAX[i]}" "$dlow" "$dhigh")"
         line="${dt// /$nb}${nb}$(big_daily_icon "${DAILY_ICON[i]}")${nb}${pop}${nb}${lt}${nb}${bar}${nb}${ht}"
+
+        # Center this row under the (usually wider) hourly block above by
+        # padding both sides with NBSP. Everything on the line is DAILY_ROW_PT
+        # except the icon glyph, which we treat as one plain column too --
+        # close enough in practice; see TOOLTIP_TARGET_UNITS for tuning.
+        char_count=$(( ${#dt} + 1 + 1 + 1 + ${#pop} + 1 + ${#lt} + 1 + ${#bar} + 1 + ${#ht} ))
+        units=$(( char_count * DAILY_ROW_PT ))
+        pad_units=$(( TOOLTIP_TARGET_UNITS - units ))
+        if (( pad_units > 0 )); then
+            pad_left=$(( pad_units / 2 ))
+            pad_right=$(( pad_units - pad_left ))
+        else
+            pad_left=0
+            pad_right=0
+        fi
+        line="$(center_pad_units "$pad_left" "$DAILY_ROW_PT")${line}$(center_pad_units "$pad_right" "$DAILY_ROW_PT")"
+
         rows+=("$(span_text "$line" "14pt" "$MONO_FONT")")
     done
     printf '%s\n' "${rows[@]}"

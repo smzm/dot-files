@@ -24,7 +24,6 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
     output   = "",
-    mode     = "preferred",
     position = "auto",
     mode     = "3440x1440@60",
     scale    = "1.25",
@@ -39,7 +38,6 @@ hl.monitor({
 local terminal    = "kitty"
 local fileManager = "nautilus"
 local browser     = "zen-browser"
-local notion      = browser .. " https://notion.so"
 local menu        = "rofi -show drun -show-icons -dpi 150"
 local runner      = "rofi -show run -dpi 150"
 local colorPicker = "hyprpicker"
@@ -54,16 +52,16 @@ local colorPicker = "hyprpicker"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function () 
-  hl.exec_cmd("hyprpaper")
-  hl.exec_cmd("hypersunset")
-  hl.exec_cmd("hyprpolkitagent")
-  hl.exec_cmd("waybar")
-  hl.exec_cmd("nm-applet")
-  hl.exec_cmd("/opt/windscribe/Windscribe")
-  hl.exec_cmd("playerctld daemon")
-  hl.exec_cmd("clipse -listen")
-  hl.exec_cmd("udiskie --no-tray")
-  hl.exec_cmd("swaync")
+    hl.exec_cmd("waybar")
+  -- hl.exec_cmd("hyprpaper")
+  -- hl.exec_cmd("hyprpolkitagent")
+  -- -- hl.exec_cmd("nm-applet")
+  -- hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:5000 -b 1.0:0.9")
+  -- hl.exec_cmd("/opt/windscribe/Windscribe")
+  -- hl.exec_cmd("playerctld daemon")
+  -- hl.exec_cmd("clipse -listen")
+  -- hl.exec_cmd("udiskie --no-tray")
+  -- hl.exec_cmd("dunst")
 end)
 
 
@@ -295,7 +293,7 @@ hl.bind(secondMod .. " + space", hl.dsp.exec_cmd(runner))
 hl.bind(secondMod .. " + C", hl.dsp.exec_cmd(colorPicker))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(terminal .. " --class clipse -e 'clipse'"))
 
-local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(secondMod .. " + Q", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
@@ -365,8 +363,11 @@ hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 hl.bind("Pause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 
--- Screenshot
-hl.bind("Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
+-- Full screen screenshot
+hl.bind("Print", hl.dsp.exec_cmd("grim - | swappy -f -"))
+
+-- Area screenshot
+hl.bind(secondMod .. " + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
@@ -421,7 +422,6 @@ hl.window_rule({
 hl.window_rule({
     name  = "move-windscribe",
     match = { class = "Windscribe" },   -- recognize with "hyprctl clients" 
-    float = on,
     workspace = 5,
     float = true,
 })
@@ -445,6 +445,22 @@ hl.window_rule({
 hl.window_rule({
     name = "telegram",
     match = { class = "org.telegram.desktop" },
+    float = true,
+    center = true,
+})
+
+
+hl.window_rule({
+    name = "blueman-manager",
+    match = { class = "blueman-manager" },
+    float = true,
+    center = true,
+})
+
+
+hl.window_rule({
+    name = "network-manager-editor",
+    match = { class = "nm-connection-editor" },
     float = true,
     center = true,
 })
