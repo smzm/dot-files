@@ -271,7 +271,7 @@ PACKAGES=(
 
     "zsh|pacman|arch,wsl|6|ZSH shell||command:chsh -s \"$(command -v zsh)\""
 
-    "zsh-theme-powerlevel10k|aur|arch,wsl|6|Powerlevel10k theme for Zsh||"
+    "zsh-theme-powerlevel10k|aur|arch,wsl|6|Powerlevel10k theme for Zsh|config:.p10k.zsh=>~/.p10k.zsh|"
 
     "oh-my-zsh|None|arch,wsl|6|Zsh configuration framework||command:if [[ ! -d \"\$HOME/.oh-my-zsh\" ]]; then RUNZSH=no CHSH=no sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\"; fi"
 
