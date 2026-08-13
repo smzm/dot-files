@@ -1,90 +1,181 @@
-# . FILES
+# My Arch Linux Dotfiles
 
-<br>
+Personal **Arch Linux dotfiles and installation setup**, focused on a keyboard-driven Wayland desktop using **Hyprland**, **Waybar**, **Neovim**, and other command-line tools.
 
-![image](https://user-images.githubusercontent.com/39596095/219023272-8f32a8fa-8c46-4070-8a99-3ade69911b55.png)
+The repository also contains configuration and installation instructions for **Arch Linux on WSL**.
 
-## Installing in `Arch` :
+---
 
-```shell
-sudo pacman -S python python-pip git --noconfirm --needed
-git clone https://github.com/smzm/dot-files.git
-cd dot-files     # always run the script from this directory
-```
+## Installation
 
-and Use `dotfile_installation.py` python file for installing programms and dotfiles.
+### Arch Linux
 
-<br>
-<br>
-
-# Installing in `WSL` :
-
-- ### 1. Install ArchWsl
-  - Update wsl in windows : `wsl.exe --update`
-  - Run the following command in a Windows shell:
+Clone the repository:
 
 ```bash
- wsl --install archlinux
+git clone https://github.com/smzm/dot-files.git
+cd dot-files
 ```
 
-- ### 2. Setting ArchLinux as default WSL
+Run the installer:
 
-  Just run `wsl --set-default Arch` in windows command shell.
+```bash
+./dotfile-installer.sh
+```
 
-- ### 2. Refresh Pacman GPG keys:
+The installer handles package installation and configuration deployment.
+
+
+---
+
+# Arch Linux on WSL
+
+## 1. Install Arch Linux
+
+First, update WSL from Windows:
+
+```powershell
+wsl.exe --update
+```
+
+Then install Arch Linux:
+
+```powershell
+wsl --install archlinux
+```
+
+Start Arch Linux:
+
+```powershell
+wsl -d archlinux
+```
+
+---
+
+## 2. Set Arch Linux as the Default WSL Distribution
+
+From a Windows shell:
+
+```powershell
+wsl --set-default Arch
+```
+
+You can verify the installed distributions with:
+
+```powershell
+wsl --list --verbose
+```
+
+---
+
+## 3. Initialize Pacman
+
+Inside Arch Linux, initialize and populate the Pacman keyring:
 
 ```bash
 sudo pacman-key --init
 sudo pacman-key --populate
-# sudo pacman-key --refresh-keys
-sudo pacman -Sy archlinux-keyring
-pacman -Syyu --noconfirm
 ```
 
-- ### 3. Add user
+Update the Arch Linux keyring:
+
+```bash
+sudo pacman -Sy archlinux-keyring
+```
+
+Then update the system:
+
+```bash
+sudo pacman -Syyu --noconfirm
+```
+
+---
+
+## 4. Create a User
+
+Install `sudo`:
 
 ```bash
 pacman -S sudo
 ```
 
-```shell
+Create the `sudo` group:
+
+```bash
 groupadd sudo
+```
+
+Enable sudo access for the `wheel` group:
+
+```bash
 sed -i '/^#.*%wheel ALL=(ALL:ALL) ALL/s/^#//' /etc/sudoers
 ```
 
-```shell
+Create your user:
+
+```bash
 useradd -m -G wheel,sudo -s /bin/bash <username>
 passwd <username>
-su <username> ; cd ~
 ```
 
-> Change `<username>` too whatever you want.
+Switch to the new user:
 
-- ### 4. Setting default user in `Arch`
+```bash
+su - <username>
+```
 
-  To setting default user in windows command shell got to the arch direcctory and run : `wsl --manage archlinux --set-default-user <username>`
+> Replace `<username>` with the username you want to use.
 
-- ### 5. Installing
+---
 
-```shell
-sudo pacman -S python python-pip git --noconfirm --needed
+## 5. Set the Default WSL User
+
+From a Windows shell, set your newly created user as the default WSL user:
+
+```powershell
+wsl --manage archlinux --set-default-user <username>
+```
+
+---
+
+## 6. Install the Dotfiles
+
+Install the required base packages:
+
+```bash
+sudo pacman -S git --noconfirm --needed
+```
+
+Clone the repository:
+
+```bash
 git clone https://github.com/smzm/dot-files.git
 cd dot-files
 ```
 
-- After running `dotfile_installation.py` you will encounter with an `NameError` about `inquirer` and `rich` package. to resolve the issue :
+Run the installer:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install inquirer rich
-python dotfile_installation.py
+./install.sh
 ```
 
-- ### 6. Config Windows Terminal [optional]
+The installer will let you select the sections and packages you want to install.
 
-  Config you windows terminal settings like [this](./windowsTerminal/readme.md)
+---
 
-## Installing in Arch Linux :
+# Windows Terminal
 
-- [Use this doc for installing Arch linux](./arch-installation.md)
+If you are using Arch Linux through WSL, you can optionally configure Windows Terminal to match the setup.
+
+See:
+
+```text
+windowsTerminal/readme.md
+```
+
+---
+
+
+## License
+
+Use, modify, and adapt anything here as you like.

@@ -1,23 +1,5 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "provider": {
-        "qwen": {
-            "npm": "@ai-sdk/openai-compatible",
-            "name": "QwenAI",
-            "options": {
-                "baseURL": "https://qwen.aikit.club/v1",
-                "apiKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjM0ODJiYTI3LTEwZjAtNDM5Ny04MWEyLTQ1YWU0ZjczZDc5ZCIsImxhc3RfcGFzc3dvcmRfY2hhbmdlIjoxNzgzNTAyMjU0LCJleHAiOjE3ODgwNzE0Njh9.hl0LDsbxBylZjrVj85_1nR0flOSqKwWSDrZ2Z1lEI4k"
-            },
-            "models": {
-                "qwen3.7-plus": {
-                    "name": "Qwen 3.7 Plus"
-                },
-                "qwen3.7-max": {
-                    "name": "Qwen 3.7 Max"
-                }
-            }
-        }
-    },
     "mcp": {
         "playwright": {
             "type": "local",

@@ -43,14 +43,8 @@
 # CONFIG:
 #   config:SOURCE=>DESTINATION
 #
-# Example:
-#   config:.config/hypr=>~/.config/hyprland
-#
 # COMMAND:
 #   command:SHELL COMMAND
-#
-# Example:
-#   command:systemctl --user enable --now pipewire.service
 #
 # ================================================================
 # Safety
@@ -175,7 +169,7 @@ PACKAGES=(
     "xdg-desktop-portal-gtk|pacman|arch|2|GTK XDG desktop portal backend||"
 
     "hyprpicker|pacman|arch|2|Color picker for Hyprland and Wayland||"
-    "hyprpaper|pacman|arch|2|Fast Wayland wallpaper utility||command:systemctl --user enable --now hyprpaper.service|"
+    "hyprpaper|pacman|arch|2|Fast Wayland wallpaper utility||command:systemctl --user enable --now hyprpaper.service"
     "hyprpolkitagent|pacman|arch|2|Polkit authentication agent for Hyprland||command:systemctl --user enable --now hyprpolkitagent.service"
     "hypridle|pacman|arch|2|Idle management daemon for Hyprland||"
     "wlogout|pacman|arch|2|Wayland logout and power menu||"
@@ -366,10 +360,6 @@ PACKAGES=(
     "bash-language-server|npm|arch,wsl|8|Bash language server||"
     "yaml-language-server|npm|arch,wsl|8|YAML language server||"
 
-    # Node.js provider for Neovim.
-    #
-    # Same package name as the pacman Neovim package is intentional.
-    # The manager is different, so the installer treats them separately.
     "neovim|npm|arch,wsl|8|Neovim Node.js provider||"
 
     "biome|npm|arch,wsl|8|JavaScript and TypeScript formatter and linter||"
@@ -404,6 +394,7 @@ PACKAGES=(
 
     "mimeapps.list|None|arch|9|MIME type associations|config:.config/mimeapps.list=>~/.config/mimeapps.list"
 
+    "spotify|aur|arch|9|Spotify client|config:applications/spotify.desktop=>~/.local/share/applications/spotify.desktop|command:update-desktop-database ~/.local/share/applications"
 
 )
 
@@ -419,6 +410,8 @@ FAILED=()
 CURRENT_SECTION_INSTALLED=()
 CURRENT_SECTION_SKIPPED=()
 CURRENT_SECTION_FAILED=()
+
+SELECTED_PACKAGES=()
 
 
 # ================================================================
@@ -783,33 +776,25 @@ install_package() {
 # ================================================================
 
 copy_config() {
+
     local config="$1"
 
     [[ -z "$config" ]] && return 0
 
-    # Remove "config:"
     config="${config#config:}"
 
     local operation
     local source
     local destination
 
-    # ------------------------------------------------------------
-    # Process every SOURCE=>DESTINATION pair
-    # ------------------------------------------------------------
-
     IFS=';' read -ra operations <<< "$config"
 
     for operation in "${operations[@]}"; do
 
-        # Ignore empty entries.
         [[ -z "$operation" ]] && continue
 
-        # --------------------------------------------------------
-        # Validate syntax
-        # --------------------------------------------------------
-
         if [[ "$operation" != *"=>"* ]]; then
+
             error "Invalid config syntax:"
             error "  $operation"
             error "Expected:"
@@ -821,69 +806,45 @@ copy_config() {
         source="${operation%%=>*}"
         destination="${operation#*=>}"
 
-        # --------------------------------------------------------
-        # Validate source/destination
-        # --------------------------------------------------------
-
         if [[ -z "$source" || -z "$destination" ]]; then
+
             error "Invalid config operation:"
             error "  $operation"
 
             return 1
         fi
 
-        # --------------------------------------------------------
-        # Expand ~
-        # --------------------------------------------------------
-
         source="$(expand_path "$source")"
         destination="$(expand_path "$destination")"
-
-        # --------------------------------------------------------
-        # Relative source paths are relative to dotfiles directory.
-        # --------------------------------------------------------
 
         if [[ "$source" != /* ]]; then
             source="$DOTFILES_DIR/$source"
         fi
 
-        # --------------------------------------------------------
-        # Verify source exists
-        # --------------------------------------------------------
-
         if [[ ! -e "$source" ]]; then
+
             error "Configuration source does not exist:"
             error "  $source"
 
             return 1
         fi
 
-        # --------------------------------------------------------
-        # Display operation
-        # --------------------------------------------------------
-
         info "Copying configuration:"
         echo -e "  ${DIM}$source${RESET}"
         echo -e "  ${GREEN}→${RESET} ${DIM}$destination${RESET}"
 
-        # --------------------------------------------------------
-        # Create destination parent
-        # --------------------------------------------------------
-
         if ! mkdir -p "$(dirname "$destination")"; then
+
             error "Failed to create destination directory:"
             error "  $(dirname "$destination")"
 
             return 1
         fi
 
-        # --------------------------------------------------------
-        # Copy directory
-        # --------------------------------------------------------
-
         if [[ -d "$source" ]]; then
 
             if ! mkdir -p "$destination"; then
+
                 error "Failed to create destination:"
                 error "  $destination"
 
@@ -891,27 +852,24 @@ copy_config() {
             fi
 
             if ! cp -a "$source/." "$destination/"; then
+
                 error "Failed to copy:"
                 error "  $source"
                 error "  → $destination"
 
                 return 1
             fi
-
-        # --------------------------------------------------------
-        # Copy file
-        # --------------------------------------------------------
 
         else
 
             if ! cp -a "$source" "$destination"; then
+
                 error "Failed to copy:"
                 error "  $source"
                 error "  → $destination"
 
                 return 1
             fi
-
         fi
 
     done
@@ -922,20 +880,6 @@ copy_config() {
 
 # ================================================================
 # Run command
-# ================================================================
-#
-# IMPORTANT:
-#
-# This executes only the command supplied by the PACKAGES entry.
-#
-# It does NOT call installer functions such as:
-#
-#   copy_config
-#   expand_path
-#   process_package
-#
-# Configuration is handled separately by process_package().
-#
 # ================================================================
 
 run_command() {
@@ -977,13 +921,6 @@ parse_package() {
 
 # ================================================================
 # Package identifier
-#
-# NAME alone is NOT enough because:
-#
-#   neovim|pacman|...
-#   neovim|npm|...
-#
-# are two different installations.
 # ================================================================
 
 package_id() {
@@ -1009,8 +946,6 @@ platform_matches() {
 
 # ================================================================
 # Find package entry
-#
-# Searches by manager + name so duplicate package names are safe.
 # ================================================================
 
 find_package_entry() {
@@ -1033,6 +968,296 @@ find_package_entry() {
     done
 
     return 1
+}
+
+
+# ================================================================
+# Package selection menu
+#
+# Selection examples:
+#
+#   0       = install all
+#   a       = install all
+#   1       = install package 1
+#   1 3 5   = install packages 1, 3 and 5
+#   1-5     = install packages 1 through 5
+#   1 3-5 8 = mixed selection
+#   q       = go back
+# ================================================================
+
+select_section_packages() {
+
+    local section_number="$1"
+    local section_name="${SECTION_NAMES[$((section_number - 1))]}"
+
+    local section_entries=()
+
+    local entry
+
+    # ------------------------------------------------------------
+    # Collect packages for this section and platform.
+    # ------------------------------------------------------------
+
+    for entry in "${PACKAGES[@]}"; do
+
+        parse_package "$entry"
+
+        if [[ "$PKG_SECTION" != "$section_number" ]]; then
+            continue
+        fi
+
+        if ! platform_matches "$PKG_PLATFORM"; then
+            continue
+        fi
+
+        section_entries+=("$entry")
+    done
+
+
+    # ------------------------------------------------------------
+    # Nothing available.
+    # ------------------------------------------------------------
+
+    if ((${#section_entries[@]} == 0)); then
+
+        warning "No packages are available for this section on platform: $PLATFORM"
+
+        echo
+        read -r -p "Press ENTER to continue..."
+
+        return 1
+    fi
+
+
+    while true; do
+
+        clear
+
+        print_section_header "$section_number" "$section_name"
+
+        echo -e "${BOLD}Available packages:${RESET}"
+        echo
+
+
+        # --------------------------------------------------------
+        # Display packages.
+        # --------------------------------------------------------
+
+        local i=1
+
+        for entry in "${section_entries[@]}"; do
+
+            parse_package "$entry"
+
+            local status=""
+
+            if [[ "$PKG_MANAGER" == "None" ]]; then
+
+                status="${DIM}[configuration]${RESET}"
+
+            elif package_installed "$PKG_NAME" "$PKG_MANAGER"; then
+
+                status="${GREEN}[installed]${RESET}"
+            fi
+
+
+            printf "  ${CYAN}%2d)${RESET} %-30s ${DIM}%s${RESET} %b\n" \
+                "$i" \
+                "$PKG_NAME" \
+                "$PKG_DESCRIPTION" \
+                "$status"
+
+            ((i++))
+        done
+
+
+        echo
+        echo -e "${BOLD}Selection:${RESET}"
+        echo
+        echo -e "  ${CYAN}0${RESET}       Install ALL packages"
+        echo -e "  ${CYAN}1 3 5${RESET}   Install selected packages"
+        echo -e "  ${CYAN}1-5${RESET}     Install a range"
+        echo -e "  ${CYAN}a${RESET}       Install ALL packages"
+        echo -e "  ${CYAN}q${RESET}       Go back"
+        echo
+
+
+        local selection
+
+        read -r -p "Select packages: " selection
+
+
+        # --------------------------------------------------------
+        # Go back.
+        # --------------------------------------------------------
+
+        if [[ "$selection" =~ ^[Qq]$ ]]; then
+            return 1
+        fi
+
+
+        # --------------------------------------------------------
+        # Install all.
+        # --------------------------------------------------------
+
+        if [[ "$selection" == "0" || "$selection" =~ ^[Aa]$ ]]; then
+
+            SELECTED_PACKAGES=("${section_entries[@]}")
+
+            return 0
+        fi
+
+
+        # --------------------------------------------------------
+        # Normalize commas.
+        #
+        # 1,3,5 -> 1 3 5
+        # --------------------------------------------------------
+
+        selection="${selection//,/ }"
+
+
+        # --------------------------------------------------------
+        # Split input into tokens.
+        # --------------------------------------------------------
+
+        local tokens=()
+
+        read -ra tokens <<< "$selection"
+
+
+        local selected_indexes=()
+
+        local token
+        local number
+        local start
+        local end
+        local n
+
+        local valid=1
+
+
+        # --------------------------------------------------------
+        # Parse each token.
+        # --------------------------------------------------------
+
+        for token in "${tokens[@]}"; do
+
+            # ----------------------------------------------------
+            # Single number.
+            # ----------------------------------------------------
+
+            if [[ "$token" =~ ^[0-9]+$ ]]; then
+
+                number="$token"
+
+                if ((number < 1 || number > ${#section_entries[@]})); then
+
+                    warning "Invalid package number: $number"
+
+                    valid=0
+
+                    break
+                fi
+
+                selected_indexes+=("$number")
+
+                continue
+            fi
+
+
+            # ----------------------------------------------------
+            # Range.
+            # ----------------------------------------------------
+
+            if [[ "$token" =~ ^([0-9]+)-([0-9]+)$ ]]; then
+
+                start="${BASH_REMATCH[1]}"
+                end="${BASH_REMATCH[2]}"
+
+
+                if (
+                    (start < 1) ||
+                    (end > ${#section_entries[@]}) ||
+                    (start > end)
+                ); then
+
+                    warning "Invalid package range: $token"
+
+                    valid=0
+
+                    break
+                fi
+
+
+                for ((n = start; n <= end; n++)); do
+                    selected_indexes+=("$n")
+                done
+
+                continue
+            fi
+
+
+            # ----------------------------------------------------
+            # Invalid token.
+            # ----------------------------------------------------
+
+            warning "Invalid selection: $token"
+
+            valid=0
+
+            break
+        done
+
+
+        # --------------------------------------------------------
+        # Invalid selection.
+        # --------------------------------------------------------
+
+        if ((valid == 0 || ${#selected_indexes[@]} == 0)); then
+
+            echo
+            read -r -p "Press ENTER to try again..."
+
+            continue
+        fi
+
+
+        # --------------------------------------------------------
+        # Remove duplicate indexes.
+        # --------------------------------------------------------
+
+        local unique_indexes=()
+        local seen=" "
+        local index
+
+        for index in "${selected_indexes[@]}"; do
+
+            if [[ "$seen" != *" $index "* ]]; then
+
+                unique_indexes+=("$index")
+
+                seen+=" $index "
+            fi
+        done
+
+
+        # --------------------------------------------------------
+        # Build selected package entries.
+        # --------------------------------------------------------
+
+        SELECTED_PACKAGES=()
+
+        for index in "${unique_indexes[@]}"; do
+
+            SELECTED_PACKAGES+=(
+                "${section_entries[$((index - 1))]}"
+            )
+        done
+
+
+        return 0
+    done
 }
 
 
@@ -1133,8 +1358,7 @@ process_package() {
         fi
 
 
-        # Commands are intentionally run for an already-installed
-        # package as well.
+        # Commands intentionally run for already-installed packages.
 
         if [[ -n "$PKG_COMMAND" ]]; then
 
@@ -1362,21 +1586,7 @@ section_summary() {
 
 
 # ================================================================
-# Install section
-#
-# IMPORTANT:
-# There is NO second package database.
-#
-# PACKAGES itself contains:
-#
-#   name
-#   manager
-#   platform
-#   section
-#   description
-#   config
-#   command
-#
+# Install selected packages from a section
 # ================================================================
 
 install_section() {
@@ -1386,28 +1596,38 @@ install_section() {
 
     reset_section_results
 
+
+    # ------------------------------------------------------------
+    # Package selection.
+    # ------------------------------------------------------------
+
+    if ! select_section_packages "$section_number"; then
+        return 0
+    fi
+
+
+    # ------------------------------------------------------------
+    # Install selected packages.
+    # ------------------------------------------------------------
+
+    clear
+
     print_section_header "$section_number" "$section_name"
+
+    echo -e "${BOLD}Installing selected packages...${RESET}"
+    echo
+
 
     local entry
 
-    for entry in "${PACKAGES[@]}"; do
-
-        parse_package "$entry"
-
-        if [[ "$PKG_SECTION" != "$section_number" ]]; then
-            continue
-        fi
-
-        if ! platform_matches "$PKG_PLATFORM"; then
-            continue
-        fi
+    for entry in "${SELECTED_PACKAGES[@]}"; do
 
         process_package "$entry"
     done
 
 
     # ------------------------------------------------------------
-    # Retry
+    # Retry failed packages.
     # ------------------------------------------------------------
 
     if ((${#CURRENT_SECTION_FAILED[@]} > 0)); then
@@ -1415,6 +1635,10 @@ install_section() {
         retry_failed_packages || true
     fi
 
+
+    # ------------------------------------------------------------
+    # Section summary.
+    # ------------------------------------------------------------
 
     section_summary "$section_name"
 
