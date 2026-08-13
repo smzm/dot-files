@@ -1,25 +1,20 @@
-### 0. Before you start
+## 0. Before you start
 
 - First, download the Arch Linux installation ISO from the [Arch Linux website](https://www.archlinux.org/download/).
 - Among the variety of files, choose the ISO `archlinux-xxxx.xx.xx-x86_64.iso` and signature `archlinux-xxxx.xx.xx-x86_64.iso.sig` files
-
-- When the ISO is downloaded, you need to check its signature to make sure it has not been compromised: <br>
+- When the ISO is downloaded, you need to check its signature to make sure it has not been compromised;
   `gpg --keyserver-options auto-key-retrieve --verify /path/to/archlinux.iso.sig` <br>
   If you see `“Good signature from …“`, this means everything is alright.
-
 - Next, you need to write it to your USB flash drive. Open the Linux terminal and use the following command: <br>
   `dd bs=4M if=path/to/archlinux-version-x86_64.iso of=/dev/sdx conv=fsync oflag=direct status=progress` - **_Restore the USB drive :_** After you have used the bootable USB flash drive, you need to restore it back to its normal not-bootable state
-  `sudo wipefs --all /dev/sdX` <br>
+  `sudo wipefs --all /dev/sdX`br
   After that create a new partition on it: <br>
   `fdisk /dev/sdX`
-
 - #### Dual boot `Windows` + `Arch`
 - If you want to install Windows11 and Arch in dual boot, first install windows.
 - **After installing windows you need to go to the boot setup in your system and disable `secure boot` and `RAID` in nvme configuration part and then run arch installer**
 
-<br>
-
-### 1. Network Connectivity
+## 1. Network Connectivity
 
 ```bash
 ping google.com
@@ -39,8 +34,9 @@ wifi-menu -o wlp9s0
 ```
 
 <br>
+<br>
 
-### 2. Set `timedatectl`
+## 2. Set `timedatectl`
 
 [more information](https://www.tecmint.com/set-time-timezone-and-synchronize-time-using-timedatectl-command/)
 
@@ -53,8 +49,9 @@ timedatectl set-timezone Asia/Tehran
 ```
 
 <br>
+<br>
 
-### 3. Partition Hard drive
+## 3. Partition Hard drive
 
 List the available partitions and disks: :
 
@@ -80,17 +77,17 @@ To standard installation you need 4 partition :
 - `Root` => `Size: [30G]` ==> `Type: [linux file system]`
 - `home` => `Size: [...]` ==> `Type: [linux file system]`
 - `swap` => `Size: [moe than half of ram size]` ==> `Type: [swap]`
-  > **You can skip creating swap partition and create swap file later**
+    > **You can skip creating swap partition and create swap file later**
 
 <br>
+<br>
 
-### 4. Make file system
+## 4. Make file system
 
 - In dual boot _windows_ and _arch_ mode, windows create 4 partition. The first partition which is EFI SYSTEM is important in installing arch linux and don't format or change it at all.
 
 ```bash
 mkfs.fat -F32 /dev/nvme0n1p[boot]
-
 mkfs.ext4 /dev/nvme0n1p[root]
 # mkfs.ext4 /dev/nvme0n1p[home]
 ```
@@ -102,14 +99,14 @@ swapon /dev/nvme0n1p[swap]
 ```
 
 <br>
+<br>
 
-### 5. Mounting
+## 5. Mounting
 
 We have created necessary partitions and formatted them. Now, we need to mount them in order to install Arch Linux base system.
 
 ```bash
 mount /dev/nvme0n1p[root] /mnt
-
 # If there is seperated home partition
 mkdir /mnt/home
 mount /dev/nvme0n1p[home] /mnt/home
@@ -121,10 +118,8 @@ mount /dev/nvme0n1p[home] /mnt/home
 # Mount arch boot partition
 mkdir -p /mnt/boot/efi
 mount /dev/nvme0n1p[boot] /mnt/boot/efi
-
 # FOR DUAL BOOT : Mount first partition(EFI~100Mb) created by windows
-mkdir -p /mnt/boot/efi
-mount /dev/nvme0n1p1 /mnt/boot/efi
+mount --mkdir /dev/nvme0n1p1 /mnt/boot/efi
 ```
 
 Check mounting points whether they were created successfully:
@@ -132,8 +127,6 @@ Check mounting points whether they were created successfully:
 ```bash
 lsblk
 ```
-
-<br>
 
 ### Set the fastest mirror list available for you :
 
@@ -158,24 +151,27 @@ reflector -c 'United States, France' -a 12 -f 5 --protocol https --sort rate --s
 - `-f` pick n fastest mirrors
 
 <br>
+<br>
 
-### 6. Install Arch
+## 6. Install Arch
 
 ```bash
 pacstrap -i /mnt base base-devel linux linux-firmware vim
 ```
 
 <br>
+<br>
 
-### 7. Generating fstab file
+## 7. Generating fstab file
 
 ```bash
 genfstab -U -p /mnt >> /mnt/etc/fstab
 ```
 
 <br>
+<br>
 
-### 8. Arch Linux basic Configuration
+## 8. Arch Linux basic Configuration
 
 - ### chroot (change root) to your system that is mounted to `/mnt`:
 
@@ -184,7 +180,7 @@ arch-chroot /mnt
 ```
 
 - ### Configure the system language:
-  Uncomment `en_US.UTF-8 UTF-8`, as well as other needed localisations.
+    Uncomment `en_US.UTF-8 UTF-8`, as well as other needed localisations.
 
 ```bash
  vim /etc/locale.gen
@@ -211,7 +207,7 @@ LANG=en_US.UTF-8
 Save and close the file.
 
 - ### System timezone
-  List out the available timezones using command:
+    List out the available timezones using command:
 
 ```bash
 ls /usr/share/zoneinfo/
@@ -250,31 +246,29 @@ date
 If the time is incorrect, go back and make sure you have set the timezone correctly.
 
 - ### Set Password
-  Set `root` user password with command:
+    Set `root` user password with command:
 
 ```bash
 passwd
 ```
 
 - ### Network configuration
-  A hostname is the computer’s name. for example `archPC`
-  Edit `/etc/hostname` file and add `archPC` to :
+    A hostname is the computer's name. for example `archPC`
+    Edit `/etc/hostname` file and add `archPC` to :
 
 ```bash
-vim /etc/hostname   # Enter a name like archPC
+vim /etc/hostname # Enter a name like archPC
 ```
 
 Save and close the file.
-
-<br>
 
 Then, edit `/etc/hosts` file and set the hostname as well.Be mindful that you need to set the same hostname in the both files.
 in `etc/hosts`
 
 ```
-127.0.0.1	localhost
-#::1		localhost   				# ipv6 could show your original IP address when connecting to VPNs
-127.0.1.1	archPC.localdomain	localhost       #  archpc :--> hostname
+127.0.0.1 localhost
+#::1 localhost # ipv6 could show your original IP address when connecting to VPNs
+127.0.1.1 archPC.localdomain localhost # archpc :--> hostname
 ```
 
 To disable `IPv6` create `/etc/sysctl.d/ipv6.conf ` and Add these line to :
@@ -291,14 +285,11 @@ sudo sysctl --system
 ```
 
 if you have IPv6 hots in `/etc/hosts` comment that lines : `sed -i 's/^[[:space:]]*::/#::/' /etc/hosts`
-
 for check it's disabled :
 
 ```bash
 cat /proc/sys/net/ipv6/conf/all/disable_ipv6
 ```
-
-<br>
 
 Then make Network connections persistent using commands:
 
@@ -314,17 +305,18 @@ systemctl enable NetworkManager
 ```
 
 <br>
+<br>
 
-### 9. Grub installation
+## 9. Grub installation
 
 ```
-/dev/nvme0n1p[boot] 	                                --> mount to /boot
+/dev/nvme0n1p[boot] --> mount to /boot
 /dev/nvme0n1p1 (EFI-First Partition created by windows) --> mount to /boot/efi
 ```
 
 Check if everything is mounted correctly : `lsblk`
 
-## Install grub
+### Install grub
 
 To install the boot loader, run command below :
 
@@ -337,18 +329,14 @@ if you don't want to add other os to the grub, just mount boot partition and ins
 ### For Adding Other OS to the grub automatically (better):
 
 - #### Add automatically with `os-prober` :
-  `pacman -S os-prober` is utility if you have more than one OS on your machine. It will **automate** the process of adding other operating systems to grub menu for easy dual booting.
-
-**If your purpose is dual boot with `os-prober` , go to the `/etc/default/grub` and at the last line uncomment the :**
-`GRUB_DISABLE_OS_PROBER="false"` and mount boot partition to efi directory :
-
+    `pacman -S os-prober` is utility if you have more than one OS on your machine. It will **automate** the process of adding other operating systems to grub menu for easy dual booting.
+    **If your purpose is dual boot with `os-prober` , go to the `/etc/default/grub` and at the last line uncomment the :**
+    `GRUB_DISABLE_OS_PROBER="false"` and mount boot partition to efi directory :
 - First run :
 
 ```
-grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
+grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi --recheck --removable
 ```
-
-> you can add `--recheck --removable` to the command
 
 - Then run command below to install grub.
 
@@ -356,22 +344,17 @@ grub-install --target=x86_64-efi --bootloader-id=GRUB --efi-directory=/boot/efi
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-<br>
-
 You need change grub priority in BIOS setup to make it work properly.
 
-<br>
-
 - #### Add manually with customizing `/etc/grub.d/40_custom`:
-  For adding windows [**_manually_**](https://wiki.archlinux.org/title/GRUB#Windows_installed_in_UEFI/GPT_mode) to the grub, go to the `/etc/grub.d/40_custom` and add this codes to the end of the file. at the end your file is like this:
+    For adding windows [**_manually_**](https://wiki.archlinux.org/title/GRUB#Windows_installed_in_UEFI/GPT_mode) to the grub, go to the `/etc/grub.d/40_custom` and add this codes to the end of the file. at the end your file is like this:
 
 ```
 #!/bin/sh
 exec tail -n +3 $0
-# This file provides an easy way to add custom menu entries.  Simply type the
-# menu entries you want to add after this comment.  Be careful not to change
+# This file provides an easy way to add custom menu entries. Simply type the
+# menu entries you want to add after this comment. Be careful not to change
 # the 'exec tail' line above.
-
 if [ "${grub_platform}" == "efi" ]; then
   menuentry "Windows 11" {
     insmod part_gpt
@@ -408,9 +391,7 @@ search --fs-uuid --set=root 5EBD-11D6
 ```
 
 After Changing file, you need to run :
-
 `grub-install` and then `grub -o /boot/grub/grub.cfg` to install grub.
-
 Now, For checking process you should see `windows 11` menuentry in `/boot/grub/grub.cfg` file.
 
 ##### To check what OS grub detected :
@@ -420,13 +401,13 @@ ls /boot/efi/EFI/
 ```
 
 - _after installing arch linux completely you can use GUI app for customizing grub menu with `sudo pacman -S grub-customizer`_
-
 - Install `ntfs-3g` for recognize NTFS partitions:
 
 ```bash
 sudo pacman -S ntfs-3g
 ```
 
+<br>
 <br>
 
 ### 10. exit
@@ -438,8 +419,17 @@ reboot
 ```
 
 <br>
+<br>
 
-- ## Enable NTP service to adjust time automatically
+## 11. Post installation
+
+### Update your system
+
+```bash
+pacman -Syu
+```
+
+### Enable NTP service to adjust time automatically
 
 ```bash
 pacman -Syu ntp
@@ -450,19 +440,20 @@ systemctl enable ntpd.service
 systemctl start ntpd.service
 ```
 
-- ###### Change time format to RTC (for dual boot users with windows) :
+```bash
+timedatectl set-ntp true
+```
+
+- ##### Change time format to RTC (for dual boot users with windows) :
 
 ```bash
 timedatectl set-local-rtc 1 --adjust-system-clock
 ```
 
-<br>
-
-## Creating Swap File instead of Swap partition
+### Creating Swap File instead of Swap partition
 
 **_Note : hibernation work better with Swap partition_**
 Alternatively, you can create a Linux Swap File after the installation. The modern Linux Kernel allows Swapping to a swap file instead of a swap partition. A swap file has an advantage over a swap partition that you can change the size of your swap any time easily by changing a swap file size.
-
 Create a Swap file of 8 Gigabyte or whatever your RAM size is:
 
 ```bash
@@ -473,14 +464,14 @@ Change its access rules, format and enable it:
 
 ```bash
 chmod 600 /swapfile
-mkswap /swapfile	# format the file to swap.
-swapon /swapfile	# enable the swap
+mkswap /swapfile # format the file to swap.
+swapon /swapfile # enable the swap
 ```
 
 Also, add this Swap file to the `/etc/fstab`:
 
 ```bash
-/swapfile	none	swap	sw	0 0
+/swapfile none swap sw 0 0
 ```
 
 And check if the Swap file is working:
@@ -492,7 +483,6 @@ free -m
 #### Remove a Linux Swap File
 
 In case you need to remove a Linux swap file for any reason, you need to follow these steps.
-
 First, deactivate the swap.
 
 ```bash
@@ -500,17 +490,13 @@ sudo swapoff -v /swapfile
 ```
 
 If you created the entry in the `/etc/fstab` file, remove it. To remind you, it is the line: `/swapfile swap swap defaults 0 0` entry.
-
 Finally, delete the actual Linux Swap File.
-
 `sudo rm /swapfile`
 
 #### Adjust the Swappiness value
 
 Swappiness is a property of the Linux Kernel to define how often the swap space will be used.
-
 Normally, the default swappiness value is `60`. The smaller this value, the more of your RAM will be used.
-
 To verify the swappiness value, run this command:
 
 ```bash
@@ -529,18 +515,6 @@ And add the following (10 is the most commonly recommended value):
 vm.swappiness=10
 ```
 
-<br>
-
-## Post Installation
-
-### Update your system
-
-```bash
-pacman -Syu
-```
-
-<br>
-
 ### Configure Package manager
 
 It is always a good idea to keep an updated mirrorlist.To do so ,go to Pacman Mirrorlist Generator page and select your nearest mirror:
@@ -553,7 +527,7 @@ pacman -Syy
 ```
 
 - #### Add some color to the package manager:
-  Uncomment `color` in `etc/pacman.conf` :
+    Uncomment `color` in `etc/pacman.conf` :
 
 ```bash
 ...
@@ -573,14 +547,14 @@ passwd [username]
 First set EDITOR to your favorite
 
 ```bash
-echo  export EDITOR=vim >> ~/.bashrc
+echo export EDITOR=vim >> ~/.bashrc
 ```
 
 ```bash
 source ~/.bashrc
 ```
 
-Next, add the new user ‘<username>’ to the sudoers group to perform administrative tasks.
+Next, add the new user '<username>' to the sudoers group to perform administrative tasks.
 To do so, run:
 
 ```bash
@@ -593,115 +567,125 @@ Find and uncomment the following line:
 %wheel ALL=(ALL:ALL) ALL
 ```
 
-This means the new users that are belongs to Wheel group can perform administrative tasks using sudo command. Remember we have added the new user ‘<username>’ to the Wheel group while we create him.
+This means the new users that are belongs to Wheel group can perform administrative tasks using sudo command. Remember we have added the new user '<username>' to the Wheel group while we create him.
+
+<br>
+<br>
+
+## 12. Install Wayland compositor and Hyprland
+
+### Install Wayland and Hyprland
+
+```bash
+pacman -S hyprland xorg-xwayland wayland wl-clipboard
+```
+
+> **Note:** `xorg-xwayland` provides compatibility for X11 applications under Wayland.
+
+Also install the XDG Desktop Portal and Qt Wayland support for proper desktop integration:
+
+```bash
+pacman -S xdg-desktop-portal-hyprland xdg-desktop-portal-gtk qt5-wayland qt6-wayland
+```
 
 <br>
 
-## Install X window system
+### Seat management (required for Wayland)
 
-### Install X server
+Wayland compositors require a seat manager to start. You have two options:
+
+**Option A: polkit (recommended with systemd)**
 
 ```bash
-pacman -S xorg xorg-apps xorg-xinit xdotool xclip xsel
+pacman -S polkit
 ```
+
+**Option B: seatd (lightweight alternative)**
+
+```bash
+pacman -S seatd
+systemctl enable seatd.service
+usermod -a -G seat [username]
+```
+
+> **Important:** If you do not install `polkit` or enable `seatd`, Hyprland will fail to start.
+
+<br>
+
+### Install a graphical Polkit authentication agent
+
+For GUI apps that need elevated privileges (e.g., file managers, package managers):
+
+```bash
+pacman -S polkit-gnome
+```
+
+You will autostart this later in your Hyprland config.
 
 <br>
 
 ### Install A Display Manager
 
-#### LightDM
+#### SDDM
 
-- ###### Install LightDM and LightDM greeter
-  LightDM is a cross-platform X display manager.Also a greeter is a GUI that prompts the user for credentials, lets the user select a session, and so on.
-
-```bash
-pacman -S lightdm
-pacman -S lightdm-gtk-greeter
-```
-
-- ###### Set default LightDM greeter
-  To set a default greeter for your Arch LightDM, edit the file : **`/etc/lightdm/lightdm.conf`.**
-  the line in the file we look something like this:
+- ###### Install SDDM
+    SDDM is a modern display manager that works well with Wayland and Hyprland. Install `sddm` >= 0.20.0 to prevent known shutdown bugs.
 
 ```bash
-...
-[Seat:*]
-...
-greeter-session=lightdm-yourgreeter-greeter
-...
-
+pacman -S sddm
 ```
 
-- ###### Start and Enable LightDM
-  On Arch, LightDM service is controlled by systemd.
+- ###### Start and Enable SDDM
+    On Arch, SDDM service is controlled by systemd.
 
 ```bash
-systemctl enable lightdm.service
+systemctl enable sddm.service
 ```
 
-- ###### Enable LightDM autologin
-  to autologin feature to work with your LightDM, edit the configuration file `/etc/lightdm/lightdm.conf` to ensure the following line are uncommented
+- ###### Enable SDDM autologin
+    To enable autologin, create the config directory and edit the autologin file:
 
 ```bash
-...
-[Seat:*]
-autologin-user=username
-autologin-session=i3
+mkdir -p /etc/sddm.conf.d
+vim /etc/sddm.conf.d/autologin.conf
 ```
 
-After setting this, now add the user to autologin system group:
+Add the following:
 
-```bash
-groupadd -r autologin
-gpasswd -a <username> autologin
+```ini
+[Autologin]
+User=username
+Session=hyprland
 ```
 
-you can set session in lightdm and `.dmrc` session :
-so in `etc/lightdm/lightdm.conf`
+> Replace `username` with your actual username.
 
-```
-autologin-session=i3
-```
-
-and then in `/etc/lightdm/lightdm.conf` :
-
-```
-[Seat:*]
-greeter-session=<lightdm-gtk-greeter>
-autologin-user=<username>
-autologin-session=<i3>
-```
-
-and in `~/.dmrc`:
-
-```
-[Desktop]
-Session=i3
-```
-
-install `lightdm-autologin-greeter-git` :
-
-```bash
-lightdm-autologin-greeter-git
-```
+**Alternative display managers for Hyprland:** `greetd` (with `tuigreet` or `regreet`) and `ly` also work well.
 
 <br>
 
-### Install audio drivers
+### Install audio drivers (PipeWire)
+
+PipeWire is the modern audio server standard for Wayland. It replaces PulseAudio and provides better Bluetooth and screen-sharing support.
 
 ```bash
-sudo pacman -S pulseaudio pulseaudio-alsa pulseaudio-equalizer pulseaudio-jack pulseaudio-bluetooth
+sudo pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber
 sudo pacman -S alsa-utils alsa-firmware
 ```
 
 ```bash
-sudo pacman -S pavucontrol
+sudo pacman -S pavucontrol helvum
 ```
 
+Enable and start the PipeWire services:
+
 ```bash
-# used in i3 config
-yay -S pulseaudio-ctl
+systemctl --user enable --now pipewire.socket
+systemctl --user enable --now pipewire-pulse.socket
+systemctl --user enable --now wireplumber.service
 ```
+
+> **Note:** `pavucontrol` works with PipeWire via the PulseAudio compatibility layer. `helvum` is a native PipeWire patchbay GUI.
 
 <br>
 
@@ -713,28 +697,19 @@ You can check graphic card with :
 lspci | grep -E "VGA|3D"
 ```
 
-**if you don’t have dedicated graphics card** : `pacman -S xf86-video-intel
-`
+**if you don't have dedicated graphics card** : On Wayland, Mesa provides everything needed out of the box. No additional X11 video driver is required.
 
 **Nvidia** driver installation:
 
 ```bash
-sudo  pacman -Syyu
+sudo pacman -Syyu
 ```
 
 ```bash
 pacman -S nvidia-open nvidia-settings cuda cudnn mesa-utils
 ```
 
-##### Automatic configuration
-
-The NVIDIA package includes an automatic configuration tool to create an Xorg server configuration file (xorg.conf) and can be run by:
-
-```bash
-nvidia-xconfig
-```
-
-##### Enable proper NVIDIA DRM driver
+##### Enable proper NVIDIA DRM driver (required for Wayland)
 
 - Edit `/etc/default/grub` with root privileges and find the `GRUB_CMDLINE_LINUX_DEFAULT` line and append `nvidia-drm.modeset=1` inside the quotes, for example:
 
@@ -748,24 +723,20 @@ GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia-drm.modeset=1"
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+> **Warning:** Using an NVIDIA GPU with Hyprland is unsupported by upstream. Many users have had success, but if something is broken then you are on your own. Make sure your NVIDIA driver supports GBM (driver >= 495).
+
 ##### Kernel problem troubleshooting
 
 - **If you encounter load kernel problem with nvidia graphic card :** <br>
-  Dissable Intel IBT in your grub configuration to prevent an issue with NVIDIA graphics cards  
+  Disable Intel IBT in your grub configuration to prevent an issue with NVIDIA graphics cards
   In `etc/default/grub`:
-
-  ```
-  ...
-  GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 ibt=off quiet"
-  ...
-  ```
-
-_At the end, generate `grub.cfg` again with :_ `grub-mkconfig -o /boot/grub/grub.cfg`
-
-<br>
-
+    ```
+    ...
+    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 ibt=off quiet"
+    ...
+    ```
+    _At the end, generate `grub.cfg` again with :_ `grub-mkconfig -o /boot/grub/grub.cfg`
 - [NVIDIA/Troubleshooting](https://wiki.archlinux.org/title/NVIDIA/Troubleshooting)
-
 - To use the Intel media engine (Quick Sync) for video encoding/decoding :
 
 ```bash
@@ -774,26 +745,64 @@ sudo pacman -S intel-media-driver libva-utils
 
 <br>
 
-### Install i3
+### Install Hyprland
 
 ```bash
-pacman -S i3 dmenu kitty firefox
+pacman -S hyprland kitty firefox wofi waybar
 ```
+
+Install the Hyprland ecosystem tools (optional but recommended):
 
 ```bash
-cp /etc/X11/xinit/xinitrc ~/.xinitrc
+pacman -S hyprpaper hypridle hyprlock
 ```
 
-and delete last line and add below script to the file `vim ~/.xinitrc` :
+Hyprland uses a Lua-based configuration since v0.55. The config file is located at `~/.config/hypr/hyprland.lua`. If no config exists, Hyprland auto-generates one on first launch.
 
-```bash
-# twm &
-# xclock ...
-# xterm -geometry ...
-# xterm -geometry ...
+A minimal starter `~/.config/hypr/hyprland.lua` looks like this:
 
-exec i3
+```lua
+-- Monitor configuration
+hl.monitor({ output = "eDP-1", mode = "preferred", position = "0x0", scale = "1" })
+
+-- Input settings
+hl.input({
+	kb_layout = "us",
+	touchpad = { natural_scroll = true },
+})
+
+-- General appearance
+hl.config({
+	general = {
+		gaps_in = 5,
+		gaps_out = 20,
+		border_size = 2,
+	},
+	decoration = {
+		rounding = 10,
+	},
+})
+
+-- Autostart applications
+hl.on("hyprland.start", function()
+	hl.exec_cmd("waybar")
+	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
+end)
+
+-- Keybindings
+hl.bind("SUPER + RETURN", hl.dsp.exec_cmd("kitty"))
+hl.bind("SUPER + Q", hl.dsp.window.close())
+hl.bind("SUPER + M", hl.dsp.exit())
+hl.bind("SUPER + R", hl.dsp.exec_cmd("wofi --show drun"))
+hl.bind("SUPER + L", hl.dsp.exec_cmd("hyprlock"))
+
+-- Mouse bindings
+hl.bind("SUPER + mouse:272", hl.dsp.window.drag())
+hl.bind("SUPER + mouse:273", hl.dsp.window.resize())
 ```
+
+> **Note:** The old `hyprland.conf` format still works for backward compatibility, but new features are Lua-only and `.conf` support will be removed in a future release.
 
 #### Enable Dark theme for GTK
 
@@ -807,20 +816,12 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 
 ```bash
 sudo pacman -S bluez bluez-utils blueman
-
 sudo systemctl start bluetooth.service
 sudo systemctl enable bluetooth.service
 ```
 
 - **Setting up auto connection :**
-  To make your headset auto connect you need to enable PulseAudio's switch-on-connect module. Do this by adding the following lines to `/etc/pulse/default.pa`:
-
-```
-# Automatically switch to newly-connected devices
-load-module module-switch-on-connect
-```
-
-Make sure that your bluetooth audio device is trusted, otherwise repeated pairing will fail.
+  With PipeWire/WirePlumber, Bluetooth audio devices are usually handled automatically. Make sure that your bluetooth audio device is trusted, otherwise repeated pairing will fail.
 
 <br>
 
@@ -830,7 +831,6 @@ Make sure that your bluetooth audio device is trusted, otherwise repeated pairin
 sudo pacman -S cups
 sudo systemctl enable cups.service
 sudo systemctl start cups.service
-
 sudo pacman -S system-config-printer
 yay -S brother-mfc7360n
 yay -S brscan4
@@ -851,22 +851,21 @@ sudo pacman -S wavpack libdv libmad gst-libav libdvdnav fuse-exfat libvorbis faa
 - Edit `/etc/default/grub` and add `resume` as well as `resume_offset`<--(for swap file) kernel parameters :
 
 ```bash
-sudo blkid 	# copy UUID of swap partition. or if your swap file located on root use UUID of root partition
+sudo blkid # copy UUID of swap partition. or if your swap file located on root use UUID of root partition
 ```
 
 ```
 GRUB_CMDLINE_LINUX_DEFAULT="
-	...
-	resume=UUID=75972c96-f909-4419-aba4-80c1b74bd605
-	resume_offset=1492992		# Just for swap file
-	...
+...
+resume=UUID=75972c96-f909-4419-aba4-80c1b74bd605
+resume_offset=1492992 # Just for swap file
+...
 "
 ```
 
 > `resume_offset` is the offset of the swapfile from the partition start. The offset is the first entry in the `physical_offset` column of the output of `filefrag -v /swapfile`
 
 - Update grub: `grub-mkconfig -o /boot/grub/grub.cfg`
-
 - Add the `resume` module hook to `/etc/mkinitcpio.conf`:
 
 ```
@@ -880,8 +879,10 @@ HOOKS="base udev resume autodetect ...
 
 ### Install Touchpad drivers
 
+On Wayland, compositors use `libinput` directly. X11 input drivers are not needed.
+
 ```bash
-pacman -S xf86-input-{keyboard,synaptics,mouse,libinput}
+pacman -S libinput
 ```
 
 <br>
@@ -909,7 +910,6 @@ yay -S jmtpfs
 ```bash
 # Icon Theme
 yay -S flat-remix
-
 # GTK Theme
 yay -S flatplat-blue-theme
 ```
@@ -921,7 +921,6 @@ yay -S apple_cursor
 ```
 
 Edit cursor in `lxappearance`.
-
 Download from release page `macOSMonterey` and then :
 
 ```bash
@@ -938,10 +937,11 @@ gtk-cursor-theme-name=macOSMonterey
 ```
 
 <br>
+<br>
 
----
+## 13. Usable snippets
 
-## Encrypted DNS :
+### Encrypted DNS :
 
 #### DNSCRYPT-proxy
 
@@ -965,21 +965,15 @@ server_names = [
   'scaleway-fr',
   'v.dnscrypt.uk-ipv4',
 ]
-
 # If you want you can change the address of port
 listen_addresses = ['127.0.0.1:53000', '[::1]:53000']
-
 # I don't use ipv6
 ipv6_servers = false
-
 # Enabling dnssec
 require_dnssec = true
-
 # set the response for blocked queries:
 blocked_query_response = 'refused'
-
 dnscrypt_ephemeral_keys = true # optional
-
 # block the ipv6 here too
 block_ipv6 = true
 ```
@@ -1049,7 +1043,7 @@ sudo systemctl enable dnscrypt-proxy
 
 <br>
 
-### [OPTIONAL] dnsmasq : Configure `dnsmasq` as a local DNS cache
+#### [OPTIONAL] dnsmasq : Configure `dnsmasq` as a local DNS cache
 
 ```bash
 sudo pacman -S dnsmasq
@@ -1085,38 +1079,35 @@ systemctl enable dnsmasq
 ### Bunch of useful utilities:
 
 ```bash
-sudo pacman -S dbus              # Message bus used by many applications
-sudo pacman -S intel-ucode       # Microcode update files for Intel CPUs
-sudo pacman -S fuse2             # Interface for programs to export a filesystem to the Linux kernel
-sudo pacman -S lshw              # Provides detailed information on the hardware of the machine
-sudo pacman -S powertop          # A tool to diagnose issues with power consumption and power management
-sudo pacman -S inxi              # Full featured CLI system information tool
-sudo pacman -S acpi              # Client for battery, power, and thermal readings
-
-sudo pacman -S base-devel        # Basic tools to build Arch Linux packages
-sudo pacman -S git               # Distributed version control system
-sudo pacman -S zip               # Compressor/archiver for creating and modifying zipfiles
-sudo pacman -S unzip             # For extracting and viewing files in .zip archives
-sudo pacman -S htop              # Interactive CLI process viewer
-sudo pacman -S tree              # A directory listing program
-
-sudo pacman -S dialog            # A tool to display dialog boxes from shell scripts
-sudo pacman -S reflector         # Script to retrieve and filter the latest Pacman mirror list
-sudo pacman -S bash-completion   # Programmable completion for the bash shell
-
-sudo pacman -S iw                # CLI configuration utility for wireless devices
-sudo pacman -S wpa_supplicant    # A utility providing key negotiation for WPA wireless networks
-sudo pacman -S tcpdump           # Powerful command-line packet analyzer
-sudo pacman -S mtr               # Combines the functionality of traceroute and ping into one tool
-sudo pacman -S net-tools         # Configuration tools for Linux networking
-sudo pacman -S conntrack-tools   # Userspace tools to interact with the Netfilter tracking system
-sudo pacman -S ethtool           # Utility for controlling network drivers and hardware
-sudo pacman -S wget              # Network utility to retrieve files from the Web
-sudo pacman -S rsync             # File copying tool for remote and local files
-sudo pacman -S socat             # Multipurpose socket relay
-sudo pacman -S openbsd-netcat    # Netcat program. OpenBSD variant.
-sudo pacman -S axel              # Light command line download accelerator
-sudo pacman -S bind              # DNS server, but I install it because of dig utility
+sudo pacman -S dbus # Message bus used by many applications
+sudo pacman -S intel-ucode # Microcode update files for Intel CPUs
+sudo pacman -S fuse2 # Interface for programs to export a filesystem to the Linux kernel
+sudo pacman -S lshw # Provides detailed information on the hardware of the machine
+sudo pacman -S powertop # A tool to diagnose issues with power consumption and power management
+sudo pacman -S inxi # Full featured CLI system information tool
+sudo pacman -S acpi # Client for battery, power, and thermal readings
+sudo pacman -S base-devel # Basic tools to build Arch Linux packages
+sudo pacman -S git # Distributed version control system
+sudo pacman -S zip # Compressor/archiver for creating and modifying zipfiles
+sudo pacman -S unzip # For extracting and viewing files in .zip archives
+sudo pacman -S htop # Interactive CLI process viewer
+sudo pacman -S tree # A directory listing program
+sudo pacman -S dialog # A tool to display dialog boxes from shell scripts
+sudo pacman -S reflector # Script to retrieve and filter the latest Pacman mirror list
+sudo pacman -S bash-completion # Programmable completion for the bash shell
+sudo pacman -S iw # CLI configuration utility for wireless devices
+sudo pacman -S wpa_supplicant # A utility providing key negotiation for WPA wireless networks
+sudo pacman -S tcpdump # Powerful command-line packet analyzer
+sudo pacman -S mtr # Combines the functionality of traceroute and ping into one tool
+sudo pacman -S net-tools # Configuration tools for Linux networking
+sudo pacman -S conntrack-tools # Userspace tools to interact with the Netfilter tracking system
+sudo pacman -S ethtool # Utility for controlling network drivers and hardware
+sudo pacman -S wget # Network utility to retrieve files from the Web
+sudo pacman -S rsync # File copying tool for remote and local files
+sudo pacman -S socat # Multipurpose socket relay
+sudo pacman -S openbsd-netcat # Netcat program. OpenBSD variant.
+sudo pacman -S axel # Light command line download accelerator
+sudo pacman -S bind # DNS server, but I install it because of dig utility
 ```
 
 <br>
@@ -1127,7 +1118,7 @@ sudo pacman -S bind              # DNS server, but I install it because of dig u
 - Then in `/etc/fstab` add :
 
 ```
-UUID=YOUR-UUID  /mnt/[name]  ntfs3  uid=1000,gid=1000,force  0  0
+UUID=YOUR-UUID /mnt/[name] ntfs3 uid=1000,gid=1000,force 0 0
 ```
 
 <br>
@@ -1161,7 +1152,6 @@ sudo pacman -S pass pass-otp zbar
 
 ```bash
 gpg --full-gen-key
-
 # 1) RSA
 # 2) 4096 bits
 # 3) 0 -> to not expire
@@ -1177,8 +1167,6 @@ gpg --list-keys
 
 ```bash
 pass init <YOURKEYID:is_usually_the_last_8–16_chars_of_your_GPG_key>
-
-
 # pass has built-in git support. Initialize:
 # pass git init
 # Then you can version and sync passwords:
@@ -1201,7 +1189,6 @@ pass insert email/gmail
 
 ```bash
 pass email/gmail
-
 # Copy password to clipboard for 45s:
 pass -c email/gmail
 ```
@@ -1210,7 +1197,6 @@ pass -c email/gmail
 
 ```bash
 pass edit email/gmail
-
 pass rm email/gmail
 ```
 
@@ -1240,42 +1226,41 @@ passmenu
 ```
 
 - **pass otp :**
-  - To add an otp, first you need URI. you can get it from QR-Code :
+    - To add an otp, first you need URI. you can get it from QR-Code :
 
-  ```bash
-  zbarimg -q qrcode.png
-  ```
+    ```bash
+    zbarimg -q qrcode.png
+    ```
 
-  - Then you can add it to pass otp :
+    - Then you can add it to pass otp :
 
-  ```bash
-  pass otp add myGmailOtp
-  ```
+    ```bash
+    pass otp add myGmailOtp
+    ```
 
-  - To see and check the otp URI :
+    - To see and check the otp URI :
 
-  ```bash
-  pass myGmailOtp
-  ```
+    ```bash
+    pass myGmailOtp
+    ```
 
-  - To get otp code :
+    - To get otp code :
 
-  ```bash
-  pass otp myGmailOtp
-  ```
+    ```bash
+    pass otp myGmailOtp
+    ```
 
 #### To export keys and pass :
 
-- 1. Password store directory :
+-   1. Password store directory :
 
 ```bash
 ~/.password-store/
-
 # Copy your password store
 # tar czf pass-backup.tar.gz ~/.password-store
 ```
 
-- 2. Export your GPG keys :
+-   2. Export your GPG keys :
 
 ```bash
 gpg --output public.gpg --armor --export <gpg_key_email_address_or_id>
@@ -1295,13 +1280,10 @@ gpg --import my-private.key
 
 ```bash
 # gpg --list-keys
-
 gpg --edit-key YOURKEYID
-
 trust
-# 5 = ultimate trust (safe if it’s your own key).
+# 5 = ultimate trust (safe if it's your own key).
 # 4 = full trust.
-
 save
 ```
 
@@ -1316,6 +1298,8 @@ tar xzf pass-backup.tar.gz -C ~
 ```bash
 pass init YOURKEYID
 ```
+
+<br>
 
 ### Create a clean GPT partition
 
@@ -1353,24 +1337,24 @@ sudo parted -a optimal /dev/sdb -- mkpart primary 0% 100%
 
 - For **NTFS** partition :
 
-  ```bash
-  sudo pacman -S ntfsprogs
-  ```
+    ```bash
+    sudo pacman -S ntfsprogs
+    ```
 
-  - Format the partition :
+    - Format the partition :
 
-  ```bash
-  mkfs.ntfs -f /dev/sdb1
-  ```
+    ```bash
+    mkfs.ntfs -f /dev/sdb1
+    ```
 
 - For **exFAT** partition :
 
-  ```bash
-  sudo pacman -S exfatprogs
-  ```
+    ```bash
+    sudo pacman -S exfatprogs
+    ```
 
-  - Format the partition :
+    - Format the partition :
 
-  ```bash
-  sudo mkfs.exfat -n USB /dev/sdb1
-  ```
+    ```bash
+    sudo mkfs.exfat -n USB /dev/sdb1
+    ```
