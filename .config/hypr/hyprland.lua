@@ -53,6 +53,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("hyprpolkitagent")
 	hl.exec_cmd("nm-applet")
+	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4500 -b 1.0:0.9")
 end)
 
 -------------------------------
