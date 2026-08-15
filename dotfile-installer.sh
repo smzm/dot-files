@@ -170,6 +170,7 @@ PACKAGES=(
 
     "hyprpicker|pacman|arch|2|Color picker for Hyprland and Wayland||"
     "hyprpaper|pacman|arch|2|Fast Wayland wallpaper utility||"
+    "waypaper|aur|arch|2|GUI wallpaper manager for Wayland and Xorg Linux systems|| "
     "hyprpolkitagent|pacman|arch|2|Polkit authentication agent for Hyprland||"
     "hypridle|pacman|arch|2|Idle management daemon for Hyprland||"
     "wlogout|pacman|arch|2|Wayland logout and power menu||"
@@ -255,7 +256,7 @@ PACKAGES=(
 
     "otf-font-awesome|pacman|arch|5|Font Awesome WOFF2 icon font||"
     "inter-font|pacman|arch|5|Inter UI font||"
-    # "fontconfig|None|arch|5|Font aliases and settings|config:.config/fontconfig=>~/.config/fontconfig|command:fc-cache -f"
+    "fontconfig|None|arch|5|Font aliases and settings|config:.config/fontconfig=>~/.config/fontconfig|command:fc-cache -f"
 
 
     # ═════════════════════════════════════════════════════════════
