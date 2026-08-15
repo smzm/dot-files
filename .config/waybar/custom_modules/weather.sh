@@ -477,7 +477,7 @@ build_open_meteo_url() {
 # VPN is actually connected) on the next run.
 wait_for_network() {
     local test_url="https://www.google.com/generate_204"
-    local -r NETWORK_WAIT_MAX_SECS=120
+    local -r NETWORK_WAIT_MAX_SECS=180 # 3 min
     local -r NETWORK_WAIT_INTERVAL_SECS=2
     local waited=0
 
