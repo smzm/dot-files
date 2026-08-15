@@ -49,11 +49,11 @@ local colorPicker = "hyprpicker"
 --
 hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar")
-	-- hl.exec_cmd("hyprpaper")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("hyprpolkitagent")
 	hl.exec_cmd("nm-applet")
 	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4500 -b 1.0:0.9")
+	hl.exec_cmd("hyprpaper")
 end)
 
 -------------------------------
@@ -128,10 +128,11 @@ hl.config({
 		},
 
 		blur = {
-			enabled = false,
+			enabled = true,
 			size = 3,
-			passes = 1,
+			passes = 6,
 			vibrancy = 0.1696,
+			popups = true,
 		},
 	},
 
@@ -416,6 +417,17 @@ hl.window_rule({
 --     no_anim = true,
 -- })
 -- overlayLayerRule:set_enabled(false)
+
+hl.layer_rule({
+	name = "blur-waybar",
+	match = {
+		namespace = "waybar",
+	},
+	blur = true,
+	ignore_alpha = 0.2,
+
+	blur_popups = true,
+})
 
 -- Hyprland-run windowrule
 hl.window_rule({

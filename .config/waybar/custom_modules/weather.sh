@@ -96,6 +96,13 @@ DAILY_ROW_PT=14
 # never wrap mid-row, regardless of tooltip width.
 NBSP=$'\xc2\xa0'
 
+# Shared retry timing for both the pre-flight connectivity wait
+# (wait_for_network) and the actual weather-API fetch retry loop
+# (fetch_weather). Kept as one pair of constants so both stages back off
+# on the same cadence and share the same overall time budget.
+RETRY_MAX_SECS=180 # 3 min
+RETRY_INTERVAL_SECS=2
+
 declare -A WMO_DESCRIPTIONS=(
     [0]="clear sky"
     [1]="mainly clear"
@@ -469,7 +476,7 @@ build_open_meteo_url() {
 #
 # This used to loop forever, which meant that if the VPN never came up (or
 # came up much later than expected) this module would just hang and never
-# render anything at all. Now it caps the wait at NETWORK_WAIT_MAX_SECS: if
+# render anything at all. Now it caps the wait at RETRY_MAX_SECS: if
 # connectivity shows up within that window we return immediately (0), and if
 # not we give up and return 1 so the caller can proceed anyway -- the normal
 # fetch_weather -> fail_waybar path will render a "weather net" error, and
@@ -477,11 +484,9 @@ build_open_meteo_url() {
 # VPN is actually connected) on the next run.
 wait_for_network() {
     local test_url="https://www.google.com/generate_204"
-    local -r NETWORK_WAIT_MAX_SECS=180 # 3 min
-    local -r NETWORK_WAIT_INTERVAL_SECS=2
     local waited=0
 
-    while (( waited < NETWORK_WAIT_MAX_SECS )); do
+    while (( waited < RETRY_MAX_SECS )); do
         if curl -fsS \
             --connect-timeout 3 \
             --max-time 5 \
@@ -490,14 +495,20 @@ wait_for_network() {
             return 0
         fi
 
-        sleep "$NETWORK_WAIT_INTERVAL_SECS"
-        waited=$(( waited + NETWORK_WAIT_INTERVAL_SECS ))
+        sleep "$RETRY_INTERVAL_SECS"
+        waited=$(( waited + RETRY_INTERVAL_SECS ))
     done
 
     return 1
 }
 
-# Sets HTTP_CODE and RAW_JSON_FILE (caller must rm the file when done).
+# Single-attempt HTTP GET. On success, sets HTTP_CODE and RAW_JSON_FILE
+# (caller must rm the file when done) and returns 0. On failure (curl-level
+# network error), sets FETCH_ERR_MSG, cleans up its own temp files, and
+# returns 1 -- it does NOT call fail_waybar itself, so callers can retry
+# before giving up. HTTP-level errors (4xx/5xx) are NOT a failure from this
+# function's point of view: HTTP_CODE/RAW_JSON_FILE are still set and it
+# returns 0, leaving the status-code check to the caller (see fetch_weather).
 http_get_json() {
     local url="$1"
     local body_file err_file
@@ -509,15 +520,59 @@ http_get_json() {
     local curl_exit=$?
 
     if (( curl_exit != 0 )); then
-        local err_msg
-        err_msg="$(cat "$err_file")"
+        FETCH_ERR_MSG="$(cat "$err_file")"
         rm -f "$body_file" "$err_file"
-        fail_waybar "weather net" "Network error: $err_msg" "network-error"
+        return 1
     fi
     rm -f "$err_file"
 
     HTTP_CODE="$http_code"
     RAW_JSON_FILE="$body_file"
+    return 0
+}
+
+# Retries http_get_json against $1 for up to RETRY_MAX_SECS, backing off
+# RETRY_INTERVAL_SECS between attempts. Treats both curl-level network
+# errors and HTTP >=400 responses as retryable, EXCEPT an OWM 401 (bad/
+# missing appid), which is a config problem that waiting won't fix, so
+# that one fails immediately instead of burning the full retry budget.
+# On success, HTTP_CODE and RAW_JSON_FILE are set as by http_get_json and
+# this function returns normally. On exhausting the retry budget, it calls
+# fail_waybar itself (mirroring http_get_json's old behavior) with the most
+# recent error.
+fetch_with_retry() {
+    local url="$1" backend="$2"
+    local waited=0
+    local last_err="" last_http_code="" last_body=""
+
+    while true; do
+        if http_get_json "$url"; then
+            if (( HTTP_CODE < 400 )); then
+                return 0
+            fi
+
+            last_http_code="$HTTP_CODE"
+            last_body="$(cat "$RAW_JSON_FILE")"
+            rm -f "$RAW_JSON_FILE"
+
+            if [[ "$backend" == "owm" && "$HTTP_CODE" == "401" ]]; then
+                fail_waybar "weather auth" "OpenWeather 401: check appid and One Call access" "auth-error"
+            fi
+        else
+            last_err="$FETCH_ERR_MSG"
+        fi
+
+        if (( waited >= RETRY_MAX_SECS )); then
+            if [[ -n "$last_http_code" ]]; then
+                fail_waybar "weather err" "HTTP $last_http_code: $last_body" "http-error"
+            else
+                fail_waybar "weather net" "Network error: $last_err" "network-error"
+            fi
+        fi
+
+        sleep "$RETRY_INTERVAL_SECS"
+        waited=$(( waited + RETRY_INTERVAL_SECS ))
+    done
 }
 
 fetch_weather() {
@@ -530,17 +585,7 @@ fetch_weather() {
         *)     fail_waybar "weather err" "Unsupported backend '$backend'" ;;
     esac
 
-    http_get_json "$url"
-
-    if (( HTTP_CODE >= 400 )); then
-        local body
-        body="$(cat "$RAW_JSON_FILE")"
-        rm -f "$RAW_JSON_FILE"
-        if [[ "$backend" == "owm" && "$HTTP_CODE" == "401" ]]; then
-            fail_waybar "weather auth" "OpenWeather 401: check appid and One Call access" "auth-error"
-        fi
-        fail_waybar "weather err" "HTTP $HTTP_CODE: $body" "http-error"
-    fi
+    fetch_with_retry "$url" "$backend"
 
     if ! jq -e . "$RAW_JSON_FILE" >/dev/null 2>&1; then
         rm -f "$RAW_JSON_FILE"
