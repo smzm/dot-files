@@ -253,7 +253,7 @@ PACKAGES=(
     "ttf-firacode-nerd|pacman|arch|5|FiraCode Nerd Font with programming symbols||"
     "ttf-jetbrains-mono-nerd|pacman|arch|5|JetBrains Mono Nerd Font||"
 
-    "woff2-font-awesome|aur|arch|5|Font Awesome WOFF2 icon font||"
+    "otf-font-awesome|pacman|arch|5|Font Awesome WOFF2 icon font||"
     "inter-font|pacman|arch|5|Inter UI font||"
     # "fontconfig|None|arch|5|Font aliases and settings|config:.config/fontconfig=>~/.config/fontconfig|command:fc-cache -f"
 
