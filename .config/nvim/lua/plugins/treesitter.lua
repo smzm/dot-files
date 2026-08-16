@@ -110,8 +110,8 @@ return {
 		event = "VeryLazy", -- Load on very lazy events
 		config = function()
 			-- Custom highlight settings for sticky scroll
-			vim.api.nvim_set_hl(0, "TreesitterContext", { link = "HighlightedBG" })
-			vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "HighlightedBG" })
+			vim.api.nvim_set_hl(0, "TreesitterContext", { link = "Normal" })
+			vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", { link = "Normal" })
 			-- vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { link = "Keyword" })
 			-- vim.api.nvim_set_hl(0, "TreesitterContextBottom", { link = "Keyword" })
 			-- vim.api.nvim_set_hl(0, "TreesitterContextLineNumberBottom", { link = "Keyword" })

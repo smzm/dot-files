@@ -28,19 +28,18 @@ return {
 					alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
 					-- signs = false, -- configure signs for some keywords individually
 				},
-				TODO = { icon = " ", color = "todo" },
+				TODO = { icon = " ", color = "info" },
 				HACK = { icon = " ", color = "warning" },
 				WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
 				PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-				INFO = { icon = " ", color = "info" },
-				NOTE = { icon = " ", color = "note" },
+				NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
 				TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
 			},
 			gui_style = {
 				fg = "NONE", -- The gui style to use for the fg highlight group.
 				bg = "BOLD", -- The gui style to use for the bg highlight group.
 			},
-			merge_keywords = false, -- when true, custom keywords will be merged with the defaults
+			merge_keywords = true, -- when true, custom keywords will be merged with the defaults
 			-- highlighting of the line containing the todo comment
 			-- * before: highlights before the keyword (typically comment characters)
 			-- * keyword: highlights of the keyword
@@ -52,7 +51,7 @@ return {
 				before = "", -- "fg" or "bg" or empty
 				keyword = "wide", -- "fg", "bg", "wide", "wide_bg", "wide_fg" or empty. (wide and wide_bg is the same as bg, but will also highlight surrounding characters, wide_fg acts accordingly but with fg)
 				after = "fg", -- "fg" or "bg" or empty
-				pattern = [[.*<(KEYWORDS)\s*]], -- pattern or table of patterns, used for highlighting (vim regex)
+				pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlighting (vim regex)
 				comments_only = true, -- uses treesitter to match keywords in comments only
 				max_line_len = 400, -- ignore lines longer than this
 				exclude = {}, -- list of file types to exclude highlighting
@@ -61,13 +60,11 @@ return {
 			-- list of highlight groups or use the hex color if hl not found as a fallback
 			colors = {
 				error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-				warning = { "#FBBF24" },
-				todo = { "#2563EB" },
-				info = { "#D7D7D7" },
-				note = { "#4e4e4e" },
-				hint = { "#10B981" },
-				default = { "#7C3AED" },
-				test = { "#FF00FF" },
+				warning = { "DiagnosticWarn", "WarningMsg", "#FBBF24" },
+				info = { "DiagnosticInfo", "#2563EB" },
+				hint = { "DiagnosticHint", "#10B981" },
+				default = { "Identifier", "#7C3AED" },
+				test = { "Identifier", "#FF00FF" },
 			},
 			search = {
 				command = "rg",
@@ -80,7 +77,7 @@ return {
 				},
 				-- regex that will be used to match keywords.
 				-- don't replace the (KEYWORDS) placeholder
-				pattern = [[\b(KEYWORDS)]], -- ripgrep regex
+				pattern = [[\b(KEYWORDS):]], -- ripgrep regex
 				-- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
 			},
 		},

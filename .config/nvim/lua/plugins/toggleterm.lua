@@ -2,113 +2,249 @@ return {
 	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
+
 		config = function()
+			-- =========================================================
+			-- Environment
+			-- =========================================================
+
 			vim.env.IN_TOGGLETERM = "true"
 
-			function _G.set_terminal_keymaps()
-				local opts = { noremap = true }
-				vim.api.nvim_buf_set_keymap(0, "t", "<esc>", [[<C-\><C-n>]], opts)
-				vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
-				vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
-				vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
-				vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+			-- =========================================================
+			-- Terminal keymaps
+			-- =========================================================
+
+			local function set_terminal_keymaps()
+				local opts = {
+					noremap = true,
+					silent = true,
+					buffer = true,
+				}
+
+				vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
+				vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], opts)
+				vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], opts)
+				vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], opts)
+				vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], opts)
 			end
 
-			vim.cmd("autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()")
+			vim.api.nvim_create_autocmd("TermOpen", {
+				pattern = "term://*toggleterm#*",
+				callback = set_terminal_keymaps,
+			})
+
+			-- =========================================================
+			-- ToggleTerm setup
+			-- =========================================================
 
 			require("toggleterm").setup({
-				-- size can be a number or function which is passed the current terminal
 				size = function(term)
 					if term.direction == "horizontal" then
 						return 15
 					elseif term.direction == "vertical" then
-						return vim.o.columns * 0.4
+						return math.floor(vim.o.columns * 0.4)
 					end
+
+					return 20
 				end,
+
 				open_mapping = [[<F12>]],
-				---@diagnostic disable-next-line: unused-local
-				on_open = function(term) end,
-				---@diagnostic disable-next-line: unused-local
-				on_close = function(term) end,
-				highlights = {
-					-- highlights which map to a highlight group name and a table of it's values
-					-- NOTE: this is only a subset of values, any group placed here will be set for the terminal window split
-					Normal = {
-						link = "Normal",
-					},
-					NormalFloat = {
-						link = "Normal",
-					},
-					FloatBorder = {
-						-- guifg = <VALUE-HERE>,
-						-- guibg = <VALUE-HERE>,
-						link = "NonText",
-					},
-				},
-				shade_filetypes = {},
-				shade_terminals = false,
-				shading_factor = 1, -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+
 				start_in_insert = true,
-				insert_mappings = true, -- whether or not the open mapping applies in insert mode
+				insert_mappings = true,
+
 				persist_mode = false,
 				persist_size = true,
-				direction = "float", -- | 'horizontal' | 'window' | 'float',
-				close_on_exit = true, -- close the terminal window when the process exits
-				shell = vim.o.shell, -- change the default shell
-				-- This field is only relevant if direction is set to 'float'
+
+				direction = "float",
+
+				close_on_exit = true,
+
+				shell = vim.o.shell,
+
+				highlights = {
+					Normal = {
+						guibg = "#15141b",
+						guifg = "NONE",
+					},
+
+					NormalFloat = {
+						guibg = "#15141b",
+						guifg = "NONE",
+					},
+
+					FloatBorder = {
+						guibg = "#15141b",
+						guifg = "#6e6a7c",
+					},
+				},
+
+				shade_filetypes = {},
+				shade_terminals = false,
+				shading_factor = 1,
+
 				float_opts = {
-					-- The border key is *almost* the same as 'nvim_win_open'
-					-- see :h nvim_win_open for details on borders however
-					-- the 'curved' border is a custom border type
-					-- not natively supported but implemented in this plugin.
-					border = "curved", -- single/double/shadow/curved
-					width = math.floor(0.8 * vim.fn.winwidth(0)),
-					height = math.floor(0.9 * vim.fn.winheight(0)),
+					border = "curved",
+
+					width = math.floor(0.8 * vim.o.columns),
+					height = math.floor(0.9 * vim.o.lines),
+
 					winblend = 4,
 				},
+
 				winbar = {
 					enabled = true,
 				},
 			})
+
+			-- =========================================================
+			-- Terminal objects
+			-- =========================================================
+
 			local Terminal = require("toggleterm.terminal").Terminal
 
-			-- utility to get directory of current buffer (resolves symlinks when possible)
+			-- ---------------------------------------------------------
+			-- Terminal 1: Normal shell
+			-- ---------------------------------------------------------
+
+			local shell = Terminal:new({
+				direction = "float",
+
+				-- Keep the terminal/process alive when hidden.
+				close_on_exit = false,
+			})
+
+			-- ---------------------------------------------------------
+			-- Terminal 2: OpenCode
+			-- ---------------------------------------------------------
+
+			local opencode = Terminal:new({
+				cmd = "opencode",
+				direction = "float",
+
+				-- Keep OpenCode alive when the window is hidden.
+				close_on_exit = false,
+			})
+
+			-- ---------------------------------------------------------
+			-- Terminal 3: OMP
+			-- ---------------------------------------------------------
+
+			local omp = Terminal:new({
+				cmd = "omp",
+				direction = "float",
+
+				-- Keep OMP alive when the window is hidden.
+				close_on_exit = false,
+			})
+
+			-- =========================================================
+			-- Named terminal keymaps
+			--
+			-- Your localleader is '\'
+			--
+			-- \1 -> shell
+			-- \2 -> OpenCode
+			-- \3 -> OMP
+			-- =========================================================
+
+			vim.keymap.set("n", "<localleader>t", function()
+				shell:toggle()
+			end, {
+				desc = "Shell terminal",
+			})
+
+			vim.keymap.set("n", "<localleader>o", function()
+				opencode:toggle()
+			end, {
+				desc = "OpenCode terminal",
+			})
+
+			vim.keymap.set("n", "<localleader>p", function()
+				omp:toggle()
+			end, {
+				desc = "OMP terminal",
+			})
+
+			-- =========================================================
+			-- Current buffer directory terminal
+			-- =========================================================
+
 			local function buf_dir()
-				-- %:p:h -> full path of current file's directory
 				local dir = vim.fn.expand("%:p:h")
-				-- if buffer has no name, fall back to current working directory
-				if dir == nil or dir == "" then
-					dir = vim.loop.cwd()
+
+				-- Unnamed buffer -> current working directory
+				if dir == nil or dir == "" or dir == "." then
+					dir = vim.uv.cwd()
 				end
-				-- try to resolve symlinks
-				local real = vim.uv and vim.uv.fs_realpath and vim.uv.fs_realpath(dir) or dir
+
+				-- Resolve symlinks when possible
+				local real = vim.uv.fs_realpath(dir)
+
 				return real or dir
 			end
 
-			function _cwd_toggle()
-				local dir = buf_dir()
-				-- Option A: create a one-off floating terminal at that dir
-				local term = Terminal:new({
-					direction = "float",
-					dir = dir,
-					hidden = true,
-					-- cmd can be left empty to start the user’s shell
-				})
-				term:toggle()
-			end
-		end,
+			local cwd_terminal
 
-		keys = {
-			{ "<F12>" },
-			{ "<leader><F12>", "<cmd>lua _cwd_toggle()<CR>", desc = "Open buffer dir in float terminal" },
-			{ "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", desc = "terminal float" },
-			{ "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", desc = "horizontal terminal" },
-			{ "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", desc = "vertical terminal" },
-			{ "<leader>tt", "<cmd>ToggleTerm direction=tab<CR>", desc = "tab terminal" },
-			{ "<leader>t1", "<cmd>1ToggleTerm<CR>", desc = "Toggle terminal #1" },
-			{ "<leader>t2", "<cmd>2ToggleTerm<CR>", desc = "Toggle terminal #2" },
-			{ "<leader>t3", "<cmd>3ToggleTerm<CR>", desc = "Toggle terminal #3" },
-			{ "<leader>t4", "<cmd>4ToggleTerm<CR>", desc = "Toggle terminal #4" },
-		},
+			local function cwd_toggle()
+				local dir = buf_dir()
+
+				if not cwd_terminal then
+					cwd_terminal = Terminal:new({
+						direction = "float",
+						dir = dir,
+						close_on_exit = false,
+					})
+				else
+					cwd_terminal.dir = dir
+				end
+
+				cwd_terminal:toggle()
+			end
+
+			vim.keymap.set("n", "<leader><F12>", cwd_toggle, {
+				desc = "Open buffer directory terminal",
+			})
+
+			-- =========================================================
+			-- Generic ToggleTerm terminals
+			-- =========================================================
+
+			vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", {
+				desc = "Terminal float",
+			})
+
+			vim.keymap.set("n", "<leader>th", "<cmd>ToggleTerm direction=horizontal<CR>", {
+				desc = "Terminal horizontal",
+			})
+
+			vim.keymap.set("n", "<leader>tv", "<cmd>ToggleTerm direction=vertical<CR>", {
+				desc = "Terminal vertical",
+			})
+
+			vim.keymap.set("n", "<leader>tt", "<cmd>ToggleTerm direction=tab<CR>", {
+				desc = "Terminal tab",
+			})
+
+			-- =========================================================
+			-- Numbered generic ToggleTerm terminals
+			-- =========================================================
+
+			vim.keymap.set("n", "<leader>t1", "<cmd>1ToggleTerm<CR>", {
+				desc = "Toggle terminal #1",
+			})
+
+			vim.keymap.set("n", "<leader>t2", "<cmd>2ToggleTerm<CR>", {
+				desc = "Toggle terminal #2",
+			})
+
+			vim.keymap.set("n", "<leader>t3", "<cmd>3ToggleTerm<CR>", {
+				desc = "Toggle terminal #3",
+			})
+
+			vim.keymap.set("n", "<leader>t4", "<cmd>4ToggleTerm<CR>", {
+				desc = "Toggle terminal #4",
+			})
+		end,
 	},
 }
