@@ -113,15 +113,7 @@ alias ld='lazydocker'
 # Downloads
 alias aria='aria2c -x16 -c -k1M -j10 -m16'
 
-alias ytdownload='yt-dlp \
-    --newline \
-    --ignore-config \
-    --no-playlist \
-    --embed-subs \
-    --embed-chapters \
-    --embed-metadata \
-    --embed-thumbnail \
-    -o "%(title).200s.%(ext)s"'
+alias ytdownload='yt-dlp --newline --ignore-config --no-playlist --embed-subs --embed-chapters --embed-metadata --embed-thumbnail -o "%(title).200s.%(ext)s"'
 
 
 # ============================================================
