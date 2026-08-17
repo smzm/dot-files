@@ -306,7 +306,7 @@ PACKAGES=(
     "yt-dlp|pacman|arch,wsl|7|Media downloader||"
     "lf|pacman|arch,wsl|7|Terminal file manager||"
 
-    "lazygit|pacman|arch,wsl|7|Terminal UI for Git||"
+    "lazygit|pacman|arch,wsl|7|Terminal UI for Git|config:.config/lazygit=>~/.config/lazygit|"
     "lazydocker|pacman|arch,wsl|7|Terminal UI for Docker||"
 
     "github-cli|pacman|arch,wsl|7|GitHub command-line interface||command:gh auth login"
