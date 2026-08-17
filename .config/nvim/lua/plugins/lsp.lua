@@ -398,6 +398,7 @@ return { -- >>> LSP
 
 					-- Show diagnostics for the current line in a popup or Show LSP hover/documentation instead.
 					-- Diagnostics remain completely hidden until this mapping is pressed.
+
 					opts.desc = "Show diagnostic or documentation"
 					keymap.set("n", "<M-e>", function()
 						local line = vim.api.nvim_win_get_cursor(0)[1] - 1
