@@ -1,5 +1,4 @@
 return {
-	{ "sindrets/diffview.nvim" },
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
