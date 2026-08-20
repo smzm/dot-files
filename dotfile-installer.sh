@@ -216,6 +216,9 @@ PACKAGES=(
 
     "gammastep|pacman|arch|3|Screen color temperature and brightness adjustment||"
 
+    "gnome-keyring|pacman|arch|3|Stores passwords and encryption keys||"
+    "libsecret|pacman|arch|3|Library for storing and retrieving passwords and other secrets||"
+
 
     # ═════════════════════════════════════════════════════════════
     # Waybar

@@ -54,6 +54,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("nm-applet")
 	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4500 -b 1.0:0.9")
 	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 end)
 
 -------------------------------
@@ -67,6 +68,7 @@ hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "wayland")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -130,7 +132,7 @@ hl.config({
 		blur = {
 			enabled = true,
 			size = 3,
-			passes = 6,
+			passes = 5,
 			vibrancy = 0.1696,
 			popups = true,
 		},
@@ -261,7 +263,7 @@ hl.device({
 
 hl.config({
 	binds = {
-		drag_threshold = 100, -- Fire a drag event only after dragging for more than 100px
+		drag_threshold = 50, -- Fire a drag event only after dragging for more than 50px
 	},
 })
 
