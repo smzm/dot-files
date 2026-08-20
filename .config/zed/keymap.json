@@ -1,3 +1,4 @@
+
 // Zed keymap
 //
 // For information on binding keys, see the Zed
@@ -51,6 +52,14 @@
       "shift-k": ["workspace::SendKeystrokes", "1 0 k"],
       "ctrl+o": "outline_panel::Toggle",
       "x": ["workspace::SendKeystrokes", "\" _ x"],
+      "\\": "agent::Toggle",
+      "F12": "terminal_panel::Toggle",
+    },
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "F12": "terminal_panel::Toggle",
     },
   },
   {
