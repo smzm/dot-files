@@ -285,12 +285,21 @@ hl.bind(secondMod .. " + C", hl.dsp.exec_cmd(colorPicker))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(terminal .. " --class clipse -e 'clipse'"))
 
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + G", hl.dsp.group.toggle())
+hl.bind(mainMod .. " + Tab", hl.dsp.group.next())
+hl.bind(secondMod .. " + Tab", hl.dsp.group.prev())
+hl.bind(mainMod .. " + ALT" .. " + " .. "G", hl.dsp.group.lock())
+hl.bind(mainMod .. " + ALT" .. " + " .. "left", hl.dsp.window.move({ direction = "left", group_aware = true }))
+hl.bind(mainMod .. " + ALT" .. " + " .. "right", hl.dsp.window.move({ direction = "right", group_aware = true }))
+hl.bind(mainMod .. " + ALT" .. " + " .. "up", hl.dsp.window.move({ direction = "up", group_aware = true }))
+hl.bind(mainMod .. " + ALT" .. " + " .. "down", hl.dsp.window.move({ direction = "down", group_aware = true }))
+
 hl.bind(
 	secondMod .. " + Q",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
-hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
+hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(secondMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 
