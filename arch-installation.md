@@ -1043,35 +1043,34 @@ sudo systemctl enable dnscrypt-proxy
 
 <br>
 
-#### [OPTIONAL] dnsmasq : Configure `dnsmasq` as a local DNS cache
+### dnsmasq : Configure `dnsmasq` 
 
 ```bash
 sudo pacman -S dnsmasq
 ```
+Then : 
 
-Configure `Dnsmasq` in `vim /etc/dnsmasq.conf` uncomment lines and change to this :
+```bash
+sudo mkdir -p /etc/NetworkManager/conf.d
+sudo nano /etc/NetworkManager/conf.d/dns.conf
+```
+Put : 
+
+```INI
+[main]
+dns=dnsmasq
+```
+Then configure dnsmasq to cloudflare DNS in `/etc/NetworkManager/dnsmasq.d/cloudflare.conf` :
 
 ```
 no-resolv
-server=::1#53
-server=127.0.0.1#53
-listen-address=::1,127.0.0.1
+server=1.1.1.1
+server=1.0.0.1
 ```
-
-If you want enable DNS SECURE un comment these two line :
+Then, Restart NetworkManager:  : 
 
 ```
-conf-file=/usr/share/dnsmasq/trust-anchors.conf
-dnssec
-```
-
-and in dnscrypt-proxy config file in `/etc/dnscrypt-proxy/dnscrypt-proxy.toml` uncomment `require-dnssec=true` to just select a dns resolver has DNSSEC extension.
-
-- Start service and add it to the boot time
-
-```bash
-systemctl start dnsmasq
-systemctl enable dnsmasq
+sudo systemctl restart NetworkManager
 ```
 
 <br>
