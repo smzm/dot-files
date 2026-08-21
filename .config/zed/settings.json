@@ -6,6 +6,15 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "opencode": {
+      "default_config_options": {
+        "effort": "medium",
+        "model": "opencode/x-preview-f-free",
+      },
+      "type": "registry",
+    },
+  },
   "edit_predictions": {
     "provider": "codestral",
   },
@@ -19,8 +28,8 @@
     "thinking_display": "always_collapsed",
     "default_profile": "write",
     "default_model": {
-      "provider": "opencode",
-      "model": "free/big-pickle",
+      "provider": "lmstudio",
+      "model": "qwen3.8-27b-heretic-abliterated-uncensored",
       "enable_thinking": false,
     },
     "favorite_models": [],
@@ -144,5 +153,20 @@
     "mode": "dark",
     "light": "One Light",
     "dark": "Aura Dark",
+  },
+  "auto_install_extensions": {
+    "aura-theme": true,
+    "charmed-icons": true,
+    "git-firefly": true,
+    "env": true,
+    "lua": true,
+    "rust-analyzer": true,
+    "toml": true,
+    "html": true,
+    "dockerfile": true,
+    "rainbow-csv": true,
+    "sql": true,
+    "make": true,
+    "mcp-server-playwright": true,
   },
 }
