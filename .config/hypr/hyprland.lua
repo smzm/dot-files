@@ -113,7 +113,34 @@ hl.config({
 
 		layout = "dwindle",
 	},
+	group = {
+		col = {
+			border_active = { colors = { "rgb(3A1AEA)", "rgb(4FB4CD)" } },
+			border_inactive = "rgba(595959aa)",
+			border_locked_active = "rgb(a277ff)",
+			border_locked_inactive = "rgb(29263c)",
+		},
 
+		groupbar = {
+			enabled = true,
+
+			font_size = 11,
+			font_family = "FiraCode Nerd Font",
+
+			text_color = "rgb(d4d4d4)",
+
+			col = {
+				active = "rgb(3A1AEA)",
+				inactive = "rgb(312289)",
+				locked_active = "rgb(a277ff)",
+				locked_inactive = "rgb(29263c)",
+			},
+
+			height = 20,
+			indicator_height = 3,
+			rounding = 2,
+		},
+	},
 	decoration = {
 		rounding = 12,
 		rounding_power = 2,
@@ -293,6 +320,10 @@ hl.bind(mainMod .. " + ALT" .. " + " .. "left", hl.dsp.window.move({ direction =
 hl.bind(mainMod .. " + ALT" .. " + " .. "right", hl.dsp.window.move({ direction = "right", group_aware = true }))
 hl.bind(mainMod .. " + ALT" .. " + " .. "up", hl.dsp.window.move({ direction = "up", group_aware = true }))
 hl.bind(mainMod .. " + ALT" .. " + " .. "down", hl.dsp.window.move({ direction = "down", group_aware = true }))
+hl.bind(mainMod .. " + ALT" .. " + " .. "h", hl.dsp.window.move({ direction = "left", group_aware = true }))
+hl.bind(mainMod .. " + ALT" .. " + " .. "l", hl.dsp.window.move({ direction = "right", group_aware = true }))
+hl.bind(mainMod .. " + ALT" .. " + " .. "k", hl.dsp.window.move({ direction = "up", group_aware = true }))
+hl.bind(mainMod .. " + ALT" .. " + " .. "j", hl.dsp.window.move({ direction = "down", group_aware = true }))
 
 hl.bind(
 	secondMod .. " + Q",
