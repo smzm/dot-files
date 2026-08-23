@@ -284,7 +284,7 @@ PACKAGES=(
     # Section 7
     # ═════════════════════════════════════════════════════════════
 
-    "yazi|aur|arch,wsl|7|Terminal file manager|config:.config/yazi=>~/.config/yazi|command:cd \"$HOME/.config/yazi\" && ya pkg add yazi-rs/plugins:full-border imsi32/yatline MasouShizuka/projects DreamoMaoMao/fg AnirudhG07/plugins-yazi:copy-file-contents Lil-Dank/lazygit pirafrank/what-size"
+    "yazi|aur|arch,wsl|7|Terminal file manager|config:.config/yazi=>~/.config/yazi|command:cd \"$HOME/.config/yazi\" && ya pkg add yazi-rs/plugins:full-border"
 
     "mediainfo|pacman|arch,wsl|7|Media metadata inspector||"
     "imagemagick|pacman|arch,wsl|7|Image manipulation toolkit||"
