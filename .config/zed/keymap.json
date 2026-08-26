@@ -1,4 +1,3 @@
-
 // Zed keymap
 //
 // For information on binding keys, see the Zed
@@ -54,18 +53,50 @@
       "x": ["workspace::SendKeystrokes", "\" _ x"],
       "\\": "agent::Toggle",
       "F12": "terminal_panel::Toggle",
+      "s": "vim::HelixJumpToWord",
     },
   },
   {
     "context": "Terminal",
     "bindings": {
       "F12": "terminal_panel::Toggle",
+      "alt-enter": "workspace::NewTerminal",
+      "alt-h": "pane::ActivatePreviousItem",
+      "alt-l": "pane::ActivateNextItem",
     },
   },
   {
     "context": "Editor && vim_mode == visual",
     "bindings": {
       "x": ["workspace::SendKeystrokes", "\" _ x"],
+      "alt-k": "editor::MoveLineUp",
+      "alt-j": "editor::MoveLineDown",
+    },
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "tab": "project_panel::ToggleFocus",
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": ["project_panel::Trash", { "skip_prompt": false }],
+      "x": "project_panel::Cut",
+      "y": "project_panel::Copy",
+      "Y": "workspace::CopyPath",
+      "p": "project_panel::Paste",
+      "u": "project_panel::Undo",
+      "ctrl-r": "project_panel::Redo",
+      "escape": "menu::Cancel",
+    },
+  },
+  {
+    "context": "AgentPanel > Editor",
+    "bindings": {
+      "pageup": "agent::ScrollOutputToPreviousMessage",
+      "pagedown": "agent::ScrollOutputToNextMessage",
+      "alt-tab": "multi_workspace::NextThread",
+      "tab": "agent::CycleModeSelector",
     },
   },
 ]
