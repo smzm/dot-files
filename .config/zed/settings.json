@@ -6,34 +6,184 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "show_edit_predictions": false,
+  "agent": {
+    "inline_assistant_model": {
+      "provider": "zed.dev",
+      "model": "gpt-5.6-sol",
+      "enable_thinking": false,
+    },
+    "default_model": {
+      "effort": "medium",
+      "provider": "zed.dev",
+      "model": "gpt-5.6-luna",
+      "enable_thinking": true,
+    },
+    "favorite_models": [
+      {
+        "provider": "zed.dev",
+        "model": "gpt-5.6-sol",
+        "enable_thinking": true,
+        "effort": "medium"
+      },
+      {
+        "provider": "OrcaRouter",
+        "model": "z-ai/glm-5.3-flash-free",
+        "enable_thinking": true,
+        "effort": "medium"
+      },
+      {
+        "provider": "zed.dev",
+        "model": "gpt-5.6-luna",
+        "enable_thinking": true,
+        "effort": "medium"
+      },
+      {
+        "provider": "zed.dev",
+        "model": "claude-sonnet-5",
+        "enable_thinking": true,
+        "effort": "high"
+      },
+      {
+        "provider": "zed.dev",
+        "model": "claude-opus-5",
+        "enable_thinking": true,
+        "effort": "high"
+      },
+      {
+        "provider": "codeCraftApi",
+        "model": "gpt-5.6-sol",
+        "enable_thinking": true,
+        "effort": "medium"
+      },
+      {
+        "provider": "codeCraftApi",
+        "model": "qwen3.8-max",
+        "enable_thinking": true,
+        "effort": "medium"
+      }
+    ],
+    "model_parameters": [],
+  },
+  "language_models": {
+    "opencode": {
+      "show_zen_models": true,
+      "show_go_models": false,
+    },
+    "openai_compatible": {
+      "codeCraftApi": {
+        "api_url": "https://codecraftapi.com/v1",
+        "available_models": [
+          {
+            "name": "gpt-5.6-sol",
+            "max_tokens": 100000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 100000,
+            "reasoning_effort": "medium",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "qwen3.8-max",
+            "max_tokens": 1000000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 1000000,
+            "reasoning_effort": "medium",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          }
+        ]
+      },
+      "OrcaRouter": {
+        "api_url": "https://api.orcarouter.ai/v1",
+        "available_models": [
+          {
+            "name": "z-ai/glm-5.3-flash-free",
+            "max_tokens": 1000000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 1000000,
+            "reasoning_effort": "medium",
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false,
+            },
+          },
+          {
+            "name": "deepseek/deepseek-v4-flash-free",
+            "max_tokens": 1000000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 1000000,
+            "reasoning_effort": "medium",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false,
+            },
+          },
+          {
+            "name": "orcarouter/free",
+            "max_tokens": 1000000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 1000000,
+            "reasoning_effort": "medium",
+            "capabilities": {
+              "tools": true,
+              "images": true,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false,
+            },
+          },
+        ],
+      },
+    },
+  },
   "agent_servers": {
     "opencode": {
       "default_config_options": {
+        "mode": "build",
         "effort": "medium",
-        "model": "opencode/x-preview-f-free",
+        "model": "opencode/muse-spark-1.3-contributor-free",
       },
       "type": "registry",
     },
   },
+
   "edit_predictions": {
+    "allow_data_collection": "no",
+    "disabled_globs": [".env"],
+    "mode": "eager",
+    "codestral": {
+      "model": "codestral-latest",
+      "max_tokens": 150,
+      "prediction_debounce": 250,
+    },
     "provider": "codestral",
-  },
-  "language_models": {
-    "opencode": {
-      "show_zen_models": false,
-      "show_go_models": false,
-    },
-  },
-  "agent": {
-    "thinking_display": "always_collapsed",
-    "default_profile": "write",
-    "default_model": {
-      "provider": "lmstudio",
-      "model": "qwen3.8-27b-heretic-abliterated-uncensored",
-      "enable_thinking": false,
-    },
-    "favorite_models": [],
-    "model_parameters": [],
   },
   "cli_default_open_behavior": "existing_window",
   "proxy": "",
@@ -140,7 +290,7 @@
   "autosave": "on_focus_change",
   "format_on_save": "on",
   "buffer_font_weight": 300.0,
-  "buffer_font_family": ".ZedMono",
+  "buffer_font_family": "SF Mono",
   "session": {
     "trust_all_worktrees": true,
   },
@@ -148,14 +298,23 @@
   "multi_cursor_modifier": "cmd_or_ctrl",
   "ui_font_size": 16.0,
   "buffer_font_size": 15.0,
-  // "cursor_blink": false,
+  "lsp": {
+    "basedpyright": {
+      "settings": {
+        "basedpyright.analysis": {
+          "diagnosticMode": "openFilesOnly",
+          "typeCheckingMode": "basic",
+        },
+      },
+    },
+  },
   "theme": {
     "mode": "dark",
-    "light": "One Light",
-    "dark": "Aura Dark",
+    "light": "Gruvbox Light Hard",
+    "dark": "Catppuccin Frappé (Blur) [Heavy]",
   },
   "auto_install_extensions": {
-    "aura-theme": true,
+    "catppuccin-blur": true,
     "charmed-icons": true,
     "git-firefly": true,
     "env": true,
