@@ -522,3 +522,12 @@ hl.window_rule({
 	float = true,
 	center = true,
 })
+
+hl.window_rule({
+	match = {
+		class = "^zen",
+		initial_title = "Picture-in-Picture",
+	},
+	float = true,
+	size = "600 338",
+})
