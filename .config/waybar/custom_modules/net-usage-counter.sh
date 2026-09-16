@@ -37,10 +37,11 @@ LIMIT_GB=100
 # Persistent state file
 STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/waybar"
 STATE_FILE="$STATE_DIR/net-usage.state"
+LOCK_FILE="$STATE_DIR/net-usage.lock"
 
 # Icons
 ICON_VPN="󰇚"
-ICON_NET=""
+ICON_NET=""
 
 # ============================================================
 # RESET
@@ -58,6 +59,37 @@ fi
 # ============================================================
 
 mkdir -p "$STATE_DIR"
+
+# ============================================================
+# LOCK
+#
+# Prevent two concurrent runs from both reading the same
+# on-disk state and each writing back an overlapping delta,
+# which would double-count the same traffic window.
+# ============================================================
+
+exec {LOCK_FD}>"$LOCK_FILE"
+if ! flock -w 5 "$LOCK_FD"; then
+    # Could not get the lock in time; better to emit nothing
+    # useful than to race the other instance and corrupt state.
+    echo '{"text":"…","tooltip":"net-usage: waiting on lock","class":"network-usage","percentage":0}'
+    exit 0
+fi
+
+# ============================================================
+# HELPER: is a value a valid non-negative integer?
+#
+# sysfs reads can transiently come back empty or garbled while
+# an interface is being brought up/down (suspend/resume, driver
+# reload, dongle replug). Treating a bad read as 0 would trigger
+# the "counter reset" path and wrongly count the next full
+# counter value as new traffic. So: reject anything that isn't
+# a clean integer and skip the update for that interface this run.
+# ============================================================
+
+is_uint() {
+    [[ "$1" =~ ^[0-9]+$ ]]
+}
 
 # ============================================================
 # CURRENT DATE
@@ -175,6 +207,19 @@ for IFACE in $INTERFACES; do
 
     RX=$(<"$RX_FILE")
     TX=$(<"$TX_FILE")
+
+    # --------------------------------------------------------
+    # Guard against transient/garbled sysfs reads.
+    #
+    # If either value isn't a clean non-negative integer, skip
+    # this interface entirely for this run rather than risk
+    # miscounting. Old kernel-counter snapshot and totals are
+    # left untouched and will be re-checked next run.
+    # --------------------------------------------------------
+
+    if ! is_uint "$RX" || ! is_uint "$TX"; then
+        continue
+    fi
 
     OLD_RX_VALUE="${OLD_RX[$IFACE]:-}"
     OLD_TX_VALUE="${OLD_TX[$IFACE]:-}"

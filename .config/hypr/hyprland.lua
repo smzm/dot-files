@@ -55,6 +55,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4500 -b 1.0:0.9")
 	hl.exec_cmd("hyprpaper")
 	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
+	hl.exec_cmd("clipse -listen")
 end)
 
 -------------------------------
