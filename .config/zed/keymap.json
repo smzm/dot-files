@@ -80,6 +80,7 @@
       "alt-j": "editor::MoveLineDown",
       "shift-j": ["workspace::SendKeystrokes", "1 0 j"],
       "shift-k": ["workspace::SendKeystrokes", "1 0 k"],
+      "ctrl-\\": "agent::AddSelectionToThread",
     },
   },
   {
