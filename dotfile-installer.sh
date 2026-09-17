@@ -344,7 +344,7 @@ PACKAGES=(
     "bun|pacman|arch,wsl|8|JavaScript runtime and package manager||"
     "yarn|pacman|arch,wsl|8|JavaScript package manager||"
 
-    "rustup|pacman|arch,wsl|8|Rust toolchain installer||"
+    "rustup|pacman|arch,wsl|8|Rust toolchain installer||command:rustup install stable"
     "rust-analyzer|pacman|arch,wsl|8|Rust language server||"
     "lldb|pacman|arch,wsl|8|LLVM debugger||"
 
