@@ -626,36 +626,34 @@ You will autostart this later in your Hyprland config.
 
 ### Install A Display Manager
 
-#### SDDM
+#### ly or SDDM
 
-- ###### Install SDDM
-    SDDM is a modern display manager that works well with Wayland and Hyprland. Install `sddm` >= 0.20.0 to prevent known shutdown bugs.
-
-```bash
-pacman -S sddm
-```
-
-- ###### Start and Enable SDDM
-    On Arch, SDDM service is controlled by systemd.
+- ###### Install ly
+    ly is a minimal display manager that works well with Wayland and Hyprland.
 
 ```bash
-systemctl enable sddm.service
+pacman -S ly
 ```
 
-- ###### Enable SDDM autologin
+- ###### Start and Enable ly : 
+
+```bash
+systemctl enable ly@tty2.service
+```
+
+- ###### Enable autologin
     To enable autologin, create the config directory and edit the autologin file:
 
 ```bash
-mkdir -p /etc/sddm.conf.d
-vim /etc/sddm.conf.d/autologin.conf
+vim /etc/ly/config.conf
 ```
 
 Add the following:
 
-```ini
-[Autologin]
-User=username
-Session=hyprland
+```
+
+auto_login_session = hyprland
+auto_login_user = <username>
 ```
 
 > Replace `username` with your actual username.

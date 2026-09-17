@@ -162,7 +162,7 @@ PACKAGES=(
 
     "ly|pacman|arch|2|Lightweight terminal display manager||"
 
-    "hyprland|pacman|arch|2|Dynamic tiling Wayland compositor|config:.config/hypr=>~/.config/hyprland|"
+    "hyprland|pacman|arch|2|Dynamic tiling Wayland compositor|config:.config/hypr=>~/.config/hypr|"
 
     "xdg-desktop-portal|pacman|arch|2|Desktop integration portal framework||"
     "xdg-desktop-portal-hyprland|pacman|arch|2|XDG desktop portal backend for Hyprland||"
@@ -173,7 +173,7 @@ PACKAGES=(
     "waypaper|aur|arch|2|GUI wallpaper manager for Wayland and Xorg Linux systems|| "
     "hyprpolkitagent|pacman|arch|2|Polkit authentication agent for Hyprland||"
     "hypridle|pacman|arch|2|Idle management daemon for Hyprland||"
-    "wlogout|pacman|arch|2|Wayland logout and power menu||"
+    "wlogout|yay|arch|2|Wayland logout and power menu||"
 
     "qt5-wayland|pacman|arch|2|Wayland platform plugin for Qt5||"
     "qt6-wayland|pacman|arch|2|Wayland platform plugin for Qt6||"
@@ -192,7 +192,7 @@ PACKAGES=(
     "gnome-themes-extra|pacman|arch|3|Additional GNOME and GTK themes||"
 
     "wl-clipboard|pacman|arch|3|Wayland clipboard command-line utilities||"
-    "clipse|pacman|arch|3|TUI clipboard manager for Wayland|config:.config/systemd/user/clipse.service=>~/.config/systemd/user/clipse.service|command:systemctl --user daemon-reload && systemctl --user enable --now clipse.service"
+    "clipse|yay|arch|3|TUI clipboard manager for Wayland|config:.config/systemd/user/clipse.service=>~/.config/systemd/user/clipse.service|command:systemctl --user daemon-reload && systemctl --user enable --now clipse.service"
 
     "grim|pacman|arch|3|Screenshot utility for Wayland||"
     "slurp|pacman|arch|3|Interactive Wayland region selector||"
@@ -267,7 +267,7 @@ PACKAGES=(
     # Section 6
     # ═════════════════════════════════════════════════════════════
 
-    "zsh|pacman|arch,wsl|6|ZSH shell||command:chsh -s \"$(command -v zsh)\""
+    "zsh|pacman|arch,wsl|6|ZSH shell|config:.zshrc=>~/.zshrc|command:chsh -s /usr/bin/zsh"
 
     "zsh-theme-powerlevel10k|aur|arch,wsl|6|Powerlevel10k theme for Zsh|config:.p10k.zsh=>~/.p10k.zsh|"
 
