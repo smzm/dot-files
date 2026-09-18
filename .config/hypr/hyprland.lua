@@ -66,10 +66,12 @@ end)
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-hl.env("LIBVA_DRIVER_NAME", "nvidia")
-hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "wayland")
+hl.env("GDK_BACKEND", "wayland,x11,*")
+hl.env("MOZ_ENABLE_WAYLAND", "1")
+hl.env("OZONE_PLATFORM", "wayland")
 
 -----------------------
 ----- PERMISSIONS -----
