@@ -173,7 +173,7 @@ PACKAGES=(
     "waypaper|aur|arch|2|GUI wallpaper manager for Wayland and Xorg Linux systems|| "
     "hyprpolkitagent|pacman|arch|2|Polkit authentication agent for Hyprland||"
     "hypridle|pacman|arch|2|Idle management daemon for Hyprland||"
-    "wlogout|yay|arch|2|Wayland logout and power menu||"
+    "wlogout|aur|arch|2|Wayland logout and power menu||"
 
     "qt5-wayland|pacman|arch|2|Wayland platform plugin for Qt5||"
     "qt6-wayland|pacman|arch|2|Wayland platform plugin for Qt6||"
@@ -192,7 +192,7 @@ PACKAGES=(
     "gnome-themes-extra|pacman|arch|3|Additional GNOME and GTK themes||"
 
     "wl-clipboard|pacman|arch|3|Wayland clipboard command-line utilities||"
-    "clipse|yay|arch|3|TUI clipboard manager for Wayland|config:.config/systemd/user/clipse.service=>~/.config/systemd/user/clipse.service|command:systemctl --user daemon-reload && systemctl --user enable --now clipse.service"
+    "clipse|aur|arch|3|TUI clipboard manager for Wayland|config:.config/systemd/user/clipse.service=>~/.config/systemd/user/clipse.service|command:systemctl --user daemon-reload && systemctl --user enable --now clipse.service"
 
     "grim|pacman|arch|3|Screenshot utility for Wayland||"
     "slurp|pacman|arch|3|Interactive Wayland region selector||"
