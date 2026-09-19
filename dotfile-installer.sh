@@ -133,7 +133,7 @@ PACKAGES=(
     "1|pipewire-alsa|pacman|ALSA support through PipeWire||"
     "1|pipewire-jack|pacman|JACK compatibility through PipeWire||"
 
-    "1|wireplumber|pacman|PipeWire session and policy manager||command:systemctl --user enable --now wireplumber.service"
+    "1|wireplumber|pacman|PipeWire session and policy manager|config:.config/wireplumber=>~/.config/wireplumber|command:systemctl --user enable --now wireplumber.service"
 
     "1|pavucontrol|pacman|GTK volume and audio device controller||"
 

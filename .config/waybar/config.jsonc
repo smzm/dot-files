@@ -12,6 +12,7 @@
     "modules-right": [
         "keyboard-state",
         "hyprland/language",
+        "custom/brightness",
         "group/volume",
         "bluetooth",
         "cpu",
@@ -246,5 +247,16 @@
             "no_lyric": "",
             "getting": ""
         }
+    },
+    "custom/brightness": {
+        "exec": "~/.config/waybar/custom_modules/brightness.sh show",
+        "on-scroll-up": "~/.config/waybar/custom_modules/brightness.sh up",
+        "on-scroll-down": "~/.config/waybar/custom_modules/brightness.sh down",
+        "on-click": "~/.config/waybar/custom_modules/brightness.sh reset",
+        "format": "󰃟 {}%",
+        "interval": "once",
+        "signal": 9,
+        "tooltip": true,
+        "tooltip-format": "Scroll to change brightness - Click to reset to 55%"
     }
 }
