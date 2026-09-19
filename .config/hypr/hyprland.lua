@@ -98,10 +98,10 @@ hl.env("OZONE_PLATFORM", "wayland")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
 	general = {
-		gaps_in = 5,
-		gaps_out = 10,
+		gaps_in = 4,
+		gaps_out = 8,
 
-		border_size = 5,
+		border_size = 4,
 
 		col = {
 			active_border = { colors = { "rgb(312289)", "rgb(6615B2)" }, angle = 45 },
@@ -127,7 +127,7 @@ hl.config({
 		groupbar = {
 			enabled = true,
 
-			font_size = 11,
+			font_size = 12,
 			font_family = "FiraCode Nerd Font",
 
 			text_color = "rgb(d4d4d4)",
@@ -140,17 +140,19 @@ hl.config({
 			},
 
 			height = 20,
-			indicator_height = 3,
+			indicator_height = 5,
 			rounding = 2,
 		},
 	},
 	decoration = {
-		rounding = 12,
-		rounding_power = 2,
+		rounding = 10,
+		rounding_power = 10,
 
 		-- Change transparency of focused and unfocused windows
 		active_opacity = 1.0,
 		inactive_opacity = 1.0,
+		dim_inactive = true,
+		dim_strength = 0.10,
 
 		shadow = {
 			enabled = true,
@@ -197,8 +199,8 @@ hl.animation({ leaf = "layersOut", enabled = true, speed = 1.5, bezier = "linear
 hl.animation({ leaf = "fadeLayersIn", enabled = true, speed = 1.79, bezier = "almostLinear" })
 hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 1.39, bezier = "almostLinear" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 0.71, bezier = "almostLinear", style = "fade" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.44, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
 
 -- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
@@ -332,6 +334,8 @@ hl.bind(
 	secondMod .. " + Q",
 	hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'")
 )
+
+hl.bind(mainMod .. " + escape", hl.dsp.exec_cmd("wlogout"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + E", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
@@ -532,5 +536,10 @@ hl.window_rule({
 		initial_title = "Picture-in-Picture",
 	},
 	float = true,
-	size = "600 338",
+	pin = true,
+	size = "540 304",
+	move = {
+		"monitor_w - 540 - 10",
+		"monitor_h - 304 - 50",
+	},
 })

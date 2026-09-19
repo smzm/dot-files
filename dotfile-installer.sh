@@ -14,20 +14,7 @@
 # ================================================================
 # Package database format
 #
-# NAME | MANAGER | PLATFORM | SECTION | DESCRIPTION | CONFIG | COMMAND
-#
-# MANAGER:
-#   pacman
-#   aur
-#   npm
-#   cargo
-#   script
-#   None
-#
-# PLATFORM:
-#   arch
-#   wsl
-#   arch,wsl
+# SECTION | NAME | MANAGER | DESCRIPTION | CONFIG | COMMAND
 #
 # SECTION:
 #   1 = Hardware & Drivers
@@ -39,6 +26,14 @@
 #   7 = Terminal & CLI
 #   8 = Development
 #   9 = Applications
+#
+# MANAGER:
+#   pacman
+#   aur
+#   npm
+#   cargo
+#   script
+#   None
 #
 # CONFIG:
 #   config:SOURCE=>DESTINATION
@@ -118,7 +113,7 @@ SECTION_NAMES=(
 # ================================================================
 # Package database
 #
-# NAME | MANAGER | PLATFORM | SECTION | DESCRIPTION | CONFIG | COMMAND
+# SECTION | NAME | MANAGER | DESCRIPTION | CONFIG | COMMAND
 # ================================================================
 
 PACKAGES=(
@@ -128,31 +123,31 @@ PACKAGES=(
     # Section 1
     # ═════════════════════════════════════════════════════════════
 
-    "nvidia-open|pacman|arch|1|Open NVIDIA kernel module||"
-    "nvidia-utils|pacman|arch|1|NVIDIA userspace utilities and libraries||"
-    "vulkan-tools|pacman|arch|1|Vulkan diagnostic and information utilities||"
+    "1|nvidia-open|pacman|Open NVIDIA kernel module||"
+    "1|nvidia-utils|pacman|NVIDIA userspace utilities and libraries||"
+    "1|vulkan-tools|pacman|Vulkan diagnostic and information utilities||"
 
-    "pipewire|pacman|arch|1|Modern Linux audio and video framework||command:systemctl --user enable --now pipewire.service && systemctl --user enable --now pipewire-pulse.service"
-    "pipewire-pulse|pacman|arch|1|PulseAudio compatibility layer using PipeWire||"
-    "pipewire-audio|pacman|arch|1|PipeWire audio support||"
-    "pipewire-alsa|pacman|arch|1|ALSA support through PipeWire||"
-    "pipewire-jack|pacman|arch|1|JACK compatibility through PipeWire||"
+    "1|pipewire|pacman|Modern Linux audio and video framework||command:systemctl --user enable --now pipewire.service && systemctl --user enable --now pipewire-pulse.service"
+    "1|pipewire-pulse|pacman|PulseAudio compatibility layer using PipeWire||"
+    "1|pipewire-audio|pacman|PipeWire audio support||"
+    "1|pipewire-alsa|pacman|ALSA support through PipeWire||"
+    "1|pipewire-jack|pacman|JACK compatibility through PipeWire||"
 
-    "wireplumber|pacman|arch|1|PipeWire session and policy manager||command:systemctl --user enable --now wireplumber.service"
+    "1|wireplumber|pacman|PipeWire session and policy manager||command:systemctl --user enable --now wireplumber.service"
 
-    "pavucontrol|pacman|arch|1|GTK volume and audio device controller||"
+    "1|pavucontrol|pacman|GTK volume and audio device controller||"
 
-    "networkmanager|pacman|arch|1|Network connection manager||"
-    "network-manager-applet|pacman|arch|1|NetworkManager graphical tray applet||"
-    "networkmanager-openvpn|pacman|arch|1|OpenVPN support for NetworkManager||"
+    "1|networkmanager|pacman|Network connection manager||"
+    "1|network-manager-applet|pacman|NetworkManager graphical tray applet||"
+    "1|networkmanager-openvpn|pacman|OpenVPN support for NetworkManager||"
 
-    "bluez|pacman|arch|1|Linux Bluetooth protocol stack||"
-    "bluez-utils|pacman|arch|1|Bluetooth command-line utilities||"
-    "blueman|pacman|arch|1|GTK Bluetooth device manager||"
+    "1|bluez|pacman|Linux Bluetooth protocol stack||"
+    "1|bluez-utils|pacman|Bluetooth command-line utilities||"
+    "1|blueman|pacman|GTK Bluetooth device manager||"
 
-    "mtpfs|pacman|arch|1|FUSE filesystem for mounting MTP devices such as Android phones||"
-    "gvfs-mtp|pacman|arch|1|GVFS support for MTP devices such as Android phones||"
-    "gvfs-gphoto2|pacman|arch|1|GVFS support for cameras and PTP devices||"
+    "1|mtpfs|pacman|FUSE filesystem for mounting MTP devices such as Android phones||"
+    "1|gvfs-mtp|pacman|GVFS support for MTP devices such as Android phones||"
+    "1|gvfs-gphoto2|pacman|GVFS support for cameras and PTP devices||"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -160,24 +155,24 @@ PACKAGES=(
     # Section 2
     # ═════════════════════════════════════════════════════════════
 
-    "ly|pacman|arch|2|Lightweight terminal display manager||"
+    "2|ly|pacman|Lightweight terminal display manager||"
 
-    "hyprland|pacman|arch|2|Dynamic tiling Wayland compositor|config:.config/hypr=>~/.config/hypr|"
+    "2|hyprland|pacman|Dynamic tiling Wayland compositor|config:.config/hypr=>~/.config/hypr|"
 
-    "xdg-desktop-portal|pacman|arch|2|Desktop integration portal framework||"
-    "xdg-desktop-portal-hyprland|pacman|arch|2|XDG desktop portal backend for Hyprland||"
-    "xdg-desktop-portal-gtk|pacman|arch|2|GTK XDG desktop portal backend||"
+    "2|xdg-desktop-portal|pacman|Desktop integration portal framework||"
+    "2|xdg-desktop-portal-hyprland|pacman|XDG desktop portal backend for Hyprland||"
+    "2|xdg-desktop-portal-gtk|pacman|GTK XDG desktop portal backend||"
 
-    "hyprpicker|pacman|arch|2|Color picker for Hyprland and Wayland||"
-    "hyprpaper|pacman|arch|2|Fast Wayland wallpaper utility||"
-    "waypaper|aur|arch|2|GUI wallpaper manager for Wayland and Xorg Linux systems|| "
-    "hyprpolkitagent|pacman|arch|2|Polkit authentication agent for Hyprland||"
-    "hypridle|pacman|arch|2|Idle management daemon for Hyprland||"
-    "wlogout|aur|arch|2|Wayland logout and power menu||"
+    "2|hyprpicker|pacman|Color picker for Hyprland and Wayland||"
+    "2|hyprpaper|pacman|Fast Wayland wallpaper utility||"
+    "2|waypaper|aur|GUI wallpaper manager for Wayland and Xorg Linux systems|| "
+    "2|hyprpolkitagent|pacman|Polkit authentication agent for Hyprland||"
+    "2|hypridle|pacman|Idle management daemon for Hyprland||"
+    "2|wlogout|aur|Wayland logout and power menu||"
 
-    "qt5-wayland|pacman|arch|2|Wayland platform plugin for Qt5||"
-    "qt6-wayland|pacman|arch|2|Wayland platform plugin for Qt6||"
-    "qt6ct|pacman|arch|2|Qt6 configuration utility||"
+    "2|qt5-wayland|pacman|Wayland platform plugin for Qt5||"
+    "2|qt6-wayland|pacman|Wayland platform plugin for Qt6||"
+    "2|qt6ct|pacman|Qt6 configuration utility||"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -185,39 +180,40 @@ PACKAGES=(
     # Section 3
     # ═════════════════════════════════════════════════════════════
 
-    "rofi|pacman|arch|3|Application launcher|config:.config/rofi=>~/.config/rofi|"
-    "dunst|pacman|arch|3|Lightweight desktop notification daemon|config:.config/dunst=>~/.config/dunst;.config/systemd/user/dunst.service=>~/.config/systemd/user/dunst.service|command:systemctl --user daemon-reload && systemctl --user enable --now dunst.service"
+    "3|rofi|pacman|Application launcher|config:.config/rofi=>~/.config/rofi|"
+    "3|dunst|pacman|Lightweight desktop notification daemon|config:.config/dunst=>~/.config/dunst;.config/systemd/user/dunst.service=>~/.config/systemd/user/dunst.service|command:systemctl --user daemon-reload && systemctl --user enable --now dunst.service"
 
-    "nwg-look|pacman|arch|3|GTK theme configuration utility for Wayland||"
-    "gnome-themes-extra|pacman|arch|3|Additional GNOME and GTK themes||"
+    "3|nwg-look|pacman|GTK theme configuration utility for Wayland||"
+    "3|gnome-themes-extra|pacman|Additional GNOME and GTK themes||"
 
-    "wl-clipboard|pacman|arch|3|Wayland clipboard command-line utilities||"
-    "clipse|aur|arch|3|TUI clipboard manager for Wayland|config:.config/systemd/user/clipse.service=>~/.config/systemd/user/clipse.service|command:systemctl --user daemon-reload && systemctl --user enable --now clipse.service"
+    "3|wl-clipboard|pacman|Wayland clipboard command-line utilities||"
+    "3|clipse|aur|TUI clipboard manager for Wayland|config:.config/systemd/user/clipse.service=>~/.config/systemd/user/clipse.service|command:systemctl --user daemon-reload && systemctl --user enable --now clipse.service"
 
-    "grim|pacman|arch|3|Screenshot utility for Wayland||"
-    "slurp|pacman|arch|3|Interactive Wayland region selector||"
-    "swappy|pacman|arch|3|Wayland screenshot annotation tool||"
+    "3|grim|pacman|Screenshot utility for Wayland||"
+    "3|slurp|pacman|Interactive Wayland region selector||"
+    "3|swappy|pacman|Wayland screenshot annotation tool||"
 
-    "udiskie|pacman|arch|3|Removable-disk automounter|config:.config/systemd/user/udiskie.service=>~/.config/systemd/user/udiskie.service|command:systemctl --user daemon-reload && systemctl --user enable --now udiskie.service"
-    "udisks2|pacman|arch|3|Disk management service||"
+    "3|udiskie|pacman|Removable-disk automounter|config:.config/systemd/user/udiskie.service=>~/.config/systemd/user/udiskie.service|command:systemctl --user daemon-reload && systemctl --user enable --now udiskie.service"
+    "3|udisks2|pacman|Disk management service||"
 
-    "imv|pacman|arch|3|Simple image viewer with Wayland support||"
+    "3|imv|pacman|Simple image viewer with Wayland support||"
 
-    "mpv|pacman|arch|3|Powerful command-line media player|config:.config/mpv=>~/.config/mpv|"
-    "mpv-mpris|pacman|arch|3|MPRIS support for MPV||"
+    "3|mpv|pacman|Powerful command-line media player|config:.config/mpv=>~/.config/mpv|"
+    "3|mpv-mpris|pacman|MPRIS support for MPV||"
 
-    "ffmpeg|pacman|arch,wsl|3|Audio and video processing framework||"
-    "ffmpegthumbnailer|pacman|arch,wsl|3|Video thumbnail generator||"
+    "3|ffmpeg|pacman|Audio and video processing framework||"
+    "3|ffmpegthumbnailer|pacman|Video thumbnail generator||"
 
-    "poppler|pacman|arch,wsl|3|PDF rendering and processing tools||"
+    "3|poppler|pacman|PDF rendering and processing tools||"
 
-    "zathura|pacman|arch|3|Minimalist document viewer|config:.config/zathura=>~/.config/zathura|"
-    "zathura-pdf-mupdf|pacman|arch|3|PDF backend for Zathura||"
+    "3|evince|pacman|Document viewer (PDF, PostScript, XPS, djvu, dvi, tiff, cbr, cbz, cb7, cbt)||"
+    "3|zathura|pacman|Minimalist document viewer|config:.config/zathura=>~/.config/zathura|"
+    "3|zathura-pdf-mupdf|pacman|PDF backend for Zathura||"
 
-    "gammastep|pacman|arch|3|Screen color temperature and brightness adjustment||"
+    "3|gammastep|pacman|Screen color temperature and brightness adjustment||"
 
-    "gnome-keyring|pacman|arch|3|Stores passwords and encryption keys||"
-    "libsecret|pacman|arch|3|Library for storing and retrieving passwords and other secrets||"
+    "3|gnome-keyring|pacman|Stores passwords and encryption keys||"
+    "3|libsecret|pacman|Library for storing and retrieving passwords and other secrets||"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -225,24 +221,24 @@ PACKAGES=(
     # Section 4
     # ═════════════════════════════════════════════════════════════
 
-    "waybar|pacman|arch|4|Highly customizable Wayland status bar|config:.config/waybar=>~/.config/waybar|"
+    "4|waybar|pacman|Highly customizable Wayland status bar|config:.config/waybar=>~/.config/waybar|"
 
-    "inotify-tools|pacman|arch|4|Filesystem event monitoring utilities||"
-    "python-setuptools|pacman|arch|4|Python package build and installation utilities||"
-    "zscroll|aur|arch|4|Scrolling text utility for status bars||"
-    "playerctl|pacman|arch|4|Command-line MPRIS media player controller|config:.config/systemd/user/playerctl.service=>~/.config/systemd/user/playerctl.service|command:systemctl --user daemon-reload && systemctl --user enable --now playerctl.service"
-    "brightnessctl|pacman|arch|4|Backlight and brightness control utility||"
-    "geoip|pacman|arch|4|GeoIP database and lookup utilities||"
+    "4|inotify-tools|pacman|Filesystem event monitoring utilities||"
+    "4|python-setuptools|pacman|Python package build and installation utilities||"
+    "4|zscroll|aur|Scrolling text utility for status bars||"
+    "4|playerctl|pacman|Command-line MPRIS media player controller|config:.config/systemd/user/playerctl.service=>~/.config/systemd/user/playerctl.service|command:systemctl --user daemon-reload && systemctl --user enable --now playerctl.service"
+    "4|brightnessctl|pacman|Backlight and brightness control utility||"
+    "4|geoip|pacman|GeoIP database and lookup utilities||"
 
-    "curl|pacman|arch,wsl|4|Command-line HTTP and data transfer utility||"
-    "awk|pacman|arch,wsl|4|Text processing language and utility||"
-    "coreutils|pacman|arch,wsl|4|Core GNU command-line utilities||"
+    "4|curl|pacman|Command-line HTTP and data transfer utility||"
+    "4|awk|pacman|Text processing language and utility||"
+    "4|coreutils|pacman|Core GNU command-line utilities||"
 
-    "waybar-lyric|aur|arch|4|Waybar lyrics module||"
+    "4|waybar-lyric|aur|Waybar lyrics module||"
 
-    "jq|pacman|arch,wsl|4|Command-line JSON processor||"
-    "bc|pacman|arch,wsl|4|Arbitrary precision calculator||"
-    "htop|pacman|arch,wsl|4|Interactive process viewer||"
+    "4|jq|pacman|Command-line JSON processor||"
+    "4|bc|pacman|Arbitrary precision calculator||"
+    "4|htop|pacman|Interactive process viewer||"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -250,16 +246,16 @@ PACKAGES=(
     # Section 5
     # ═════════════════════════════════════════════════════════════
 
-    "noto-fonts|pacman|arch|5|Noto font family||"
-    "noto-fonts-emoji|pacman|arch|5|Noto emoji font||"
-    "noto-fonts-cjk|pacman|arch|5|Noto fonts for Chinese Japanese and Korean text||"
+    "5|noto-fonts|pacman|Noto font family||"
+    "5|noto-fonts-emoji|pacman|Noto emoji font||"
+    "5|noto-fonts-cjk|pacman|Noto fonts for Chinese Japanese and Korean text||"
 
-    "ttf-firacode-nerd|pacman|arch|5|FiraCode Nerd Font with programming symbols||"
-    "ttf-jetbrains-mono-nerd|pacman|arch|5|JetBrains Mono Nerd Font||"
+    "5|ttf-firacode-nerd|pacman|FiraCode Nerd Font with programming symbols||"
+    "5|ttf-jetbrains-mono-nerd|pacman|JetBrains Mono Nerd Font||"
 
-    "otf-font-awesome|pacman|arch|5|Font Awesome WOFF2 icon font||"
-    "inter-font|pacman|arch|5|Inter UI font||"
-    "fontconfig|None|arch|5|Font aliases and settings|config:.config/fontconfig=>~/.config/fontconfig|command:fc-cache -f"
+    "5|otf-font-awesome|pacman|Font Awesome WOFF2 icon font||"
+    "5|inter-font|pacman|Inter UI font||"
+    "5|fontconfig|None|Font aliases and settings|config:.config/fontconfig=>~/.config/fontconfig|command:fc-cache -f"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -267,16 +263,16 @@ PACKAGES=(
     # Section 6
     # ═════════════════════════════════════════════════════════════
 
-    "zsh|pacman|arch,wsl|6|ZSH shell|config:.zshrc=>~/.zshrc|command:chsh -s /usr/bin/zsh"
+    "6|zsh|pacman|ZSH shell|config:.zshrc=>~/.zshrc|command:chsh -s /usr/bin/zsh"
 
-    "zsh-theme-powerlevel10k|aur|arch,wsl|6|Powerlevel10k theme for Zsh|config:.p10k.zsh=>~/.p10k.zsh|"
+    "6|zsh-theme-powerlevel10k|aur|Powerlevel10k theme for Zsh|config:.p10k.zsh=>~/.p10k.zsh|"
 
-    "oh-my-zsh|None|arch,wsl|6|Zsh configuration framework||command:if [[ ! -d \"\$HOME/.oh-my-zsh\" ]]; then RUNZSH=no CHSH=no sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\"; fi"
+    "6|oh-my-zsh|None|Zsh configuration framework||command:if [[ ! -d \"\$HOME/.oh-my-zsh\" ]]; then RUNZSH=no CHSH=no sh -c \"\$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)\"; fi"
 
-    "zsh-autosuggestions|pacman|arch,wsl|6|Fish-like autosuggestions for Zsh||"
-    "zsh-syntax-highlighting|pacman|arch,wsl|6|Syntax highlighting for Zsh||"
+    "6|zsh-autosuggestions|pacman|Fish-like autosuggestions for Zsh||"
+    "6|zsh-syntax-highlighting|pacman|Syntax highlighting for Zsh||"
 
-    "tmux|pacman|arch,wsl|6|Terminal multiplexer|config:.config/tmux=>~/.config/tmux|command:if [[ ! -d \"$HOME/.config/tmux/plugins/tpm\" ]]; then git clone https://github.com/tmux-plugins/tpm \"$HOME/.config/tmux/plugins/tpm\"; fi"
+    "6|tmux|pacman|Terminal multiplexer|config:.config/tmux=>~/.config/tmux|command:if [[ ! -d \"$HOME/.config/tmux/plugins/tpm\" ]]; then git clone https://github.com/tmux-plugins/tpm \"$HOME/.config/tmux/plugins/tpm\"; fi"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -284,35 +280,35 @@ PACKAGES=(
     # Section 7
     # ═════════════════════════════════════════════════════════════
 
-    "yazi|aur|arch,wsl|7|Terminal file manager|config:.config/yazi=>~/.config/yazi|command:cd \"$HOME/.config/yazi\" && ya pkg add yazi-rs/plugins:full-border"
+    "7|yazi|aur|Terminal file manager|config:.config/yazi=>~/.config/yazi|command:cd \"$HOME/.config/yazi\" && ya pkg add yazi-rs/plugins:full-border"
 
-    "mediainfo|pacman|arch,wsl|7|Media metadata inspector||"
-    "imagemagick|pacman|arch,wsl|7|Image manipulation toolkit||"
-    "ripgrep|pacman|arch,wsl|7|Fast recursive search tool||"
-    "fd|pacman|arch,wsl|7|Fast find alternative||"
-    "fzf|pacman|arch,wsl|7|Command-line fuzzy finder||"
-    "zoxide|pacman|arch,wsl|7|Smarter cd command||"
-    "tldr|pacman|arch,wsl|7|Simplified command-line documentation||"
-    "aria2|pacman|arch,wsl|7|Multi-protocol download utility||"
+    "7|mediainfo|pacman|Media metadata inspector||"
+    "7|imagemagick|pacman|Image manipulation toolkit||"
+    "7|ripgrep|pacman|Fast recursive search tool||"
+    "7|fd|pacman|Fast find alternative||"
+    "7|fzf|pacman|Command-line fuzzy finder||"
+    "7|zoxide|pacman|Smarter cd command||"
+    "7|tldr|pacman|Simplified command-line documentation||"
+    "7|aria2|pacman|Multi-protocol download utility||"
 
-    "tree|pacman|arch,wsl|7|Directory tree viewer||"
-    "lsd|pacman|arch,wsl|7|Modern ls replacement||"
-    "eza|pacman|arch,wsl|7|Modern replacement for ls||"
+    "7|tree|pacman|Directory tree viewer||"
+    "7|lsd|pacman|Modern ls replacement||"
+    "7|eza|pacman|Modern replacement for ls||"
 
-    "unrar|pacman|arch,wsl|7|RAR archive extraction utility||"
-    "unzip|pacman|arch,wsl|7|ZIP archive extraction utility||"
-    "tar|pacman|arch,wsl|7|Archive utility||"
-    "p7zip|pacman|arch,wsl|7|7-Zip archive support||"
+    "7|unrar|pacman|RAR archive extraction utility||"
+    "7|unzip|pacman|ZIP archive extraction utility||"
+    "7|tar|pacman|Archive utility||"
+    "7|p7zip|pacman|7-Zip archive support||"
 
-    "ntfsprogs|pacman|arch|7|NTFS filesystem utilities||"
+    "7|ntfsprogs|pacman|NTFS filesystem utilities||"
 
-    "yt-dlp|pacman|arch,wsl|7|Media downloader||"
-    "lf|pacman|arch,wsl|7|Terminal file manager||"
+    "7|yt-dlp|pacman|Media downloader||"
+    "7|lf|pacman|Terminal file manager||"
 
-    "lazygit|pacman|arch,wsl|7|Terminal UI for Git|config:.config/lazygit=>~/.config/lazygit|"
-    "lazydocker|pacman|arch,wsl|7|Terminal UI for Docker||"
+    "7|lazygit|pacman|Terminal UI for Git|config:.config/lazygit=>~/.config/lazygit|"
+    "7|lazydocker|pacman|Terminal UI for Docker||"
 
-    "github-cli|pacman|arch,wsl|7|GitHub command-line interface||command:gh auth login"
+    "7|github-cli|pacman|GitHub command-line interface||command:gh auth login"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -320,57 +316,57 @@ PACKAGES=(
     # Section 8
     # ═════════════════════════════════════════════════════════════
 
-    "git|pacman|arch,wsl|8|Distributed version control system||"
-    "clang|pacman|arch,wsl|8|LLVM C/C++ compiler||"
-    "llvm|pacman|arch,wsl|8|LLVM compiler infrastructure||"
+    "8|git|pacman|Distributed version control system||"
+    "8|clang|pacman|LLVM C/C++ compiler||"
+    "8|llvm|pacman|LLVM compiler infrastructure||"
 
-    "neovim|pacman|arch,wsl|8|Extensible terminal text editor|config:.config/nvim=>~/.config/nvim|command:nvim --headless \"+Lazy! sync\" +qa"
+    "8|neovim|pacman|Extensible terminal text editor|config:.config/nvim=>~/.config/nvim|command:nvim --headless \"+Lazy! sync\" +qa"
 
-    "python|pacman|arch,wsl|8|Python programming language||"
-    "python-pip|pacman|arch,wsl|8|Python package installer||"
-    "uv|pacman|arch,wsl|8|Extremely fast Python package installer||"
+    "8|python|pacman|Python programming language||"
+    "8|python-pip|pacman|Python package installer||"
+    "8|uv|pacman|Extremely fast Python package installer||"
 
-    "python-pynvim|pacman|arch,wsl|8|Python client for Neovim||"
-    "python-ipykernel|pacman|arch,wsl|8|Jupyter Python kernel||"
-    "python-pillow|pacman|arch,wsl|8|Python imaging library||"
-    "python-cairosvg|pacman|arch,wsl|8|SVG renderer for Python||"
-    "python-pyperclip|pacman|arch,wsl|8|Python clipboard library||"
+    "8|python-pynvim|pacman|Python client for Neovim||"
+    "8|python-ipykernel|pacman|Jupyter Python kernel||"
+    "8|python-pillow|pacman|Python imaging library||"
+    "8|python-cairosvg|pacman|SVG renderer for Python||"
+    "8|python-pyperclip|pacman|Python clipboard library||"
 
-    "pyright|aur|arch,wsl|8|Python type checker and language server||"
+    "8|pyright|aur|Python type checker and language server||"
 
-    "nodejs|pacman|arch,wsl|8|JavaScript runtime||"
-    "npm|pacman|arch,wsl|8|Node.js package manager||command:mkdir -p \"$HOME/.npm\" && npm config set prefix \"$HOME/.npm\""
+    "8|nodejs|pacman|JavaScript runtime||"
+    "8|npm|pacman|Node.js package manager||command:mkdir -p \"$HOME/.npm\" && npm config set prefix \"$HOME/.npm\""
 
-    "bun|pacman|arch,wsl|8|JavaScript runtime and package manager||"
-    "yarn|pacman|arch,wsl|8|JavaScript package manager||"
+    "8|bun|pacman|JavaScript runtime and package manager||"
+    "8|yarn|pacman|JavaScript package manager||"
 
-    "rustup|pacman|arch,wsl|8|Rust toolchain installer||command:rustup install stable"
-    "rust-analyzer|pacman|arch,wsl|8|Rust language server||"
-    "lldb|pacman|arch,wsl|8|LLVM debugger||"
+    "8|rustup|pacman|Rust toolchain installer||command:rustup install stable"
+    "8|rust-analyzer|pacman|Rust language server||"
+    "8|lldb|pacman|LLVM debugger||"
 
-    "tree-sitter-cli|cargo|arch,wsl|8|Tree-sitter command-line interface||"
+    "8|tree-sitter-cli|cargo|Tree-sitter command-line interface||"
 
-    "docker|pacman|arch|8|Container engine||command:sudo groupadd -f docker && sudo usermod -aG docker \"$USER\""
-    "docker-compose|pacman|arch|8|Docker Compose integration||"
-    "docker-buildx|pacman|arch|8|Docker Buildx plugin||"
+    "8|docker|pacman|Container engine||command:sudo groupadd -f docker && sudo usermod -aG docker \"$USER\""
+    "8|docker-compose|pacman|Docker Compose integration||"
+    "8|docker-buildx|pacman|Docker Buildx plugin||"
 
-    "typescript|pacman|arch,wsl|8|TypeScript language||"
+    "8|typescript|pacman|TypeScript language||"
 
-    "typescript-language-server|aur|arch,wsl|8|TypeScript language server||"
-    "vim-language-server|aur|arch,wsl|8|Vim language server||"
+    "8|typescript-language-server|aur|TypeScript language server||"
+    "8|vim-language-server|aur|Vim language server||"
 
-    "vscode-langservers-extracted|npm|arch,wsl|8|HTML CSS and JSON language servers||"
-    "emmet-ls|npm|arch,wsl|8|Emmet language server||"
-    "bash-language-server|npm|arch,wsl|8|Bash language server||"
-    "yaml-language-server|npm|arch,wsl|8|YAML language server||"
+    "8|vscode-langservers-extracted|npm|HTML CSS and JSON language servers||"
+    "8|emmet-ls|npm|Emmet language server||"
+    "8|bash-language-server|npm|Bash language server||"
+    "8|yaml-language-server|npm|YAML language server||"
 
-    "neovim|npm|arch,wsl|8|Neovim Node.js provider||"
+    "8|neovim|npm|Neovim Node.js provider||"
 
-    "biome|npm|arch,wsl|8|JavaScript and TypeScript formatter and linter||"
-    "prettier|npm|arch,wsl|8|Code formatter||"
+    "8|biome|npm|JavaScript and TypeScript formatter and linter||"
+    "8|prettier|npm|Code formatter||"
 
-    "opencode|pacman|arch,wsl|8|AI-powered coding agent for the terminal|config:.config/opencode=>~/.config/opencode|"
-    "herdr-bin|aur|arch,wsl|8|Command-line utility|config:.config/herdr=>~/.config/herdr|"
+    "8|opencode|pacman|AI-powered coding agent for the terminal|config:.config/opencode=>~/.config/opencode|"
+    "8|herdr-bin|aur|Command-line utility|config:.config/herdr=>~/.config/herdr|"
 
 
     # ═════════════════════════════════════════════════════════════
@@ -378,27 +374,28 @@ PACKAGES=(
     # Section 9
     # ═════════════════════════════════════════════════════════════
 
-    "kitty|pacman|arch|9|GPU-accelerated terminal emulator|config:.config/kitty=>~/.config/kitty|"
+    "9|kitty|pacman|GPU-accelerated terminal emulator|config:.config/kitty=>~/.config/kitty|"
 
-    "nautilus|pacman|arch|9|GNOME file manager||"
-    "file-roller|pacman|arch|9|Archive manager||"
+    "9|nautilus|pacman|GNOME file manager||"
+    "9|strata|aur|A fast, keyboard-first file manager for Linux||"
+    "9|file-roller|pacman|Archive manager||"
 
-    "zen-browser-bin|aur|arch|9|Privacy-focused Firefox-based web browser||"
+    "9|zen-browser-bin|aur|Privacy-focused Firefox-based web browser||"
 
-    "telegram-desktop|pacman|arch|9|Telegram desktop client||"
-    "gnome-calculator|pacman|arch|9|GNOME calculator application||"
-    "zed|pacman|arch|9|High-performance modern code editor|config:.config/zed=>~/.config/zed|"
-    "visual-studio-code-bin|aur|arch|9|Microsoft Visual Studio Code binary package||"
-    "obsidian|pacman|arch|9|Markdown knowledge-management application||"
+    "9|telegram-desktop|pacman|Telegram desktop client||"
+    "9|gnome-calculator|pacman|GNOME calculator application||"
+    "9|zed|pacman|High-performance modern code editor|config:.config/zed=>~/.config/zed|"
+    "9|visual-studio-code-bin|aur|Microsoft Visual Studio Code binary package||"
+    "9|obsidian|pacman|Markdown knowledge-management application||"
 
-    "ocrdesktop|pacman|arch|9|Desktop OCR utility||"
-    "tesseract-data-eng|pacman|arch|9|English OCR language data||"
+    "9|ocrdesktop|pacman|Desktop OCR utility||"
+    "9|tesseract-data-eng|pacman|English OCR language data||"
 
-    "windscribe|None|arch|9|windscribe VPN|config:.config/systemd/user/windscribe.service=>~/.config/systemd/user/windscribe.service|command:systemctl --user daemon-reload && systemctl --user enable --now windscribe.service"
+    "9|windscribe|None|windscribe VPN|config:.config/systemd/user/windscribe.service=>~/.config/systemd/user/windscribe.service|command:systemctl --user daemon-reload && systemctl --user enable --now windscribe.service"
 
-    "mimeapps.list|None|arch|9|MIME type associations|config:.config/mimeapps.list=>~/.config/mimeapps.list"
+    "9|mimeapps.list|None|MIME type associations|config:.config/mimeapps.list=>~/.config/mimeapps.list"
 
-    "spotify|aur|arch|9|Spotify client|config:applications/spotify.desktop=>~/.local/share/applications/spotify.desktop|command:update-desktop-database ~/.local/share/applications"
+    "9|spotify|aur|Spotify client|config:applications/spotify.desktop=>~/.local/share/applications/spotify.desktop|command:update-desktop-database ~/.local/share/applications"
 
 )
 
@@ -491,18 +488,34 @@ expand_path() {
 
 
 # ================================================================
-# Detect platform
+# Interactive command execution
+#
+# Installations keep `--noconfirm`, so the installer never asks
+# whether a package should be installed.
+#
+# Commands may still have to ask something in the middle of an
+# installation (sudo password, PGP key import, `gh auth login`,
+# `chsh`, ...).
+#
+# Those prompts must stay answerable, so installation commands are
+# attached to the terminal instead of inheriting whatever stdin the
+# installer itself was started with.
 # ================================================================
 
-detect_platform() {
+if [[ -e /dev/tty ]] && (: < /dev/tty) 2>/dev/null; then
+    TTY_INPUT="/dev/tty"
+else
+    TTY_INPUT=""
+fi
 
-    if [[ -f /proc/version ]] && grep -qiE 'microsoft|wsl' /proc/version; then
-        PLATFORM="wsl"
+
+run_interactive() {
+
+    if [[ -n "$TTY_INPUT" ]]; then
+        "$@" < "$TTY_INPUT"
     else
-        PLATFORM="arch"
+        "$@"
     fi
-
-    info "Detected platform: ${BOLD}${PLATFORM}${RESET}"
 }
 
 
@@ -652,7 +665,7 @@ ensure_yay() {
     info "yay is not installed."
     info "Installing base-devel..."
 
-    if ! sudo pacman -S --needed --noconfirm base-devel git; then
+    if ! run_interactive sudo pacman -S --needed --noconfirm base-devel git; then
         error "Failed to install base-devel/git."
         return 1
     fi
@@ -663,7 +676,7 @@ ensure_yay() {
 
     info "Cloning yay..."
 
-    if ! git clone https://aur.archlinux.org/yay.git "$tmp_dir/yay"; then
+    if ! run_interactive git clone https://aur.archlinux.org/yay.git "$tmp_dir/yay"; then
         error "Failed to clone yay."
         rm -rf "$tmp_dir"
         return 1
@@ -673,7 +686,7 @@ ensure_yay() {
 
     if ! (
         cd "$tmp_dir/yay" &&
-        makepkg -si --noconfirm
+        run_interactive makepkg -si --noconfirm
     ); then
 
         error "Failed to install yay."
@@ -694,6 +707,40 @@ ensure_yay() {
 
 
 # ================================================================
+# Interactive retry
+#
+# `--noconfirm` answers every question with its default, and the
+# default of a conflict question is "no":
+#
+#   :: A and B are in conflict (x). Remove B? [y/N]
+#   error: unresolvable package conflicts detected
+#
+# The same happens when a transaction needs a provider to be
+# picked. Those are decisions only the user can make, so instead
+# of failing the package, the transaction is run once more without
+# `--noconfirm` and the question is handed over to the user.
+# ================================================================
+
+needs_interactive_retry() {
+
+    local name="$1"
+
+    # Without a terminal there is nobody to answer anything.
+
+    if [[ -z "$TTY_INPUT" ]]; then
+        return 1
+    fi
+
+    echo
+    warning "${BOLD}$name${RESET} could not be installed unattended."
+    info "Retrying without --noconfirm so the questions can be answered."
+    echo
+
+    return 0
+}
+
+
+# ================================================================
 # Install package
 # ================================================================
 
@@ -708,7 +755,13 @@ install_package() {
 
             info "Installing ${BOLD}$name${RESET} with pacman..."
 
-            sudo pacman -S --needed --noconfirm "$name"
+            if run_interactive sudo pacman -S --needed --noconfirm "$name"; then
+                return 0
+            fi
+
+            needs_interactive_retry "$name" || return 1
+
+            run_interactive sudo pacman -S --needed "$name"
             ;;
 
 
@@ -720,7 +773,20 @@ install_package() {
 
             info "Installing ${BOLD}$name${RESET} from AUR..."
 
-            yay -S --needed --noconfirm "$name"
+            if run_interactive yay -S --needed --noconfirm "$name"; then
+                return 0
+            fi
+
+            needs_interactive_retry "$name" || return 1
+
+            # Only the packaging questions keep their default, the
+            # conflict and provider questions are left to the user.
+
+            run_interactive yay -S --needed \
+                --answerdiff=None \
+                --answerclean=None \
+                --answeredit=None \
+                "$name"
             ;;
 
 
@@ -739,7 +805,30 @@ install_package() {
 
             export PATH="$HOME/.npm/bin:$PATH"
 
-            npm install -g "$name"
+            # npm defaults hide everything behind a spinner and wait
+            # up to 5 minutes per request before retrying, which looks
+            # like a frozen installer on a slow registry.
+            #
+            #   --loglevel=info      progress of every request, live
+            #   --foreground-scripts install scripts stream their output
+            #   --no-progress        no spinner hiding that output
+            #   --no-audit           no extra registry round trip
+            #   --no-fund            no extra registry round trip
+            #   --no-update-notifier no background version check
+            #   --fetch-*            fail in bounded time, not silently
+
+            run_interactive npm install -g \
+                --loglevel=info \
+                --foreground-scripts \
+                --no-progress \
+                --no-audit \
+                --no-fund \
+                --no-update-notifier \
+                --fetch-timeout=60000 \
+                --fetch-retries=2 \
+                --fetch-retry-mintimeout=5000 \
+                --fetch-retry-maxtimeout=20000 \
+                "$name"
             ;;
 
 
@@ -752,7 +841,7 @@ install_package() {
 
             info "Installing ${BOLD}$name${RESET} with cargo..."
 
-            cargo install --locked "$name"
+            run_interactive cargo install --locked "$name"
             ;;
 
 
@@ -899,7 +988,7 @@ run_command() {
     echo -e "${DIM}$command${RESET}"
     echo
 
-    bash -c "$command"
+    run_interactive bash -c "$command"
 }
 
 
@@ -912,10 +1001,9 @@ parse_package() {
     local entry="$1"
 
     IFS='|' read -r \
+        PKG_SECTION \
         PKG_NAME \
         PKG_MANAGER \
-        PKG_PLATFORM \
-        PKG_SECTION \
         PKG_DESCRIPTION \
         PKG_CONFIG \
         PKG_COMMAND \
@@ -937,18 +1025,6 @@ package_id() {
 
 
 # ================================================================
-# Check whether package belongs to current platform
-# ================================================================
-
-platform_matches() {
-
-    local platforms="$1"
-
-    [[ ",$platforms," == *",$PLATFORM,"* ]]
-}
-
-
-# ================================================================
 # Find package entry
 # ================================================================
 
@@ -963,7 +1039,7 @@ find_package_entry() {
 
     for entry in "${PACKAGES[@]}"; do
 
-        IFS='|' read -r name manager _ <<< "$entry"
+        IFS='|' read -r _ name manager _ <<< "$entry"
 
         if [[ "$name" == "$wanted_name" && "$manager" == "$wanted_manager" ]]; then
             echo "$entry"
@@ -999,7 +1075,7 @@ select_section_packages() {
     local entry
 
     # ------------------------------------------------------------
-    # Collect packages for this section and platform.
+    # Collect packages for this section.
     # ------------------------------------------------------------
 
     for entry in "${PACKAGES[@]}"; do
@@ -1007,10 +1083,6 @@ select_section_packages() {
         parse_package "$entry"
 
         if [[ "$PKG_SECTION" != "$section_number" ]]; then
-            continue
-        fi
-
-        if ! platform_matches "$PKG_PLATFORM"; then
             continue
         fi
 
@@ -1024,7 +1096,7 @@ select_section_packages() {
 
     if ((${#section_entries[@]} == 0)); then
 
-        warning "No packages are available for this section on platform: $PLATFORM"
+        warning "No packages are available for this section."
 
         echo
         read -r -p "Press ENTER to continue..."
@@ -1180,11 +1252,7 @@ select_section_packages() {
                 end="${BASH_REMATCH[2]}"
 
 
-                if (
-                    (start < 1) ||
-                    (end > ${#section_entries[@]}) ||
-                    (start > end)
-                ); then
+                if ((start < 1 || end > ${#section_entries[@]} || start > end)); then
 
                     warning "Invalid package range: $token"
 
@@ -1274,10 +1342,6 @@ process_package() {
     local entry="$1"
 
     parse_package "$entry"
-
-    if ! platform_matches "$PKG_PLATFORM"; then
-        return 0
-    fi
 
     echo
     echo -e "${BOLD}${CYAN}[$PKG_NAME]${RESET}"
@@ -1578,13 +1642,11 @@ section_summary() {
     fi
 
 
-    if (
-        ((${#CURRENT_SECTION_INSTALLED[@]} == 0)) &&
-        ((${#CURRENT_SECTION_SKIPPED[@]} == 0)) &&
-        ((${#CURRENT_SECTION_FAILED[@]} == 0))
-    ); then
+    if (( ${#CURRENT_SECTION_INSTALLED[@]} == 0 &&
+        ${#CURRENT_SECTION_SKIPPED[@]} == 0 &&
+        ${#CURRENT_SECTION_FAILED[@]} == 0 )); then
 
-        info "Nothing to install for this platform."
+        info "Nothing to install for this section."
     fi
 }
 
@@ -1682,11 +1744,6 @@ section_menu() {
 
         echo -e "Dotfiles:"
         echo -e "  ${DIM}$DOTFILES_DIR${RESET}"
-
-        echo
-
-        echo -e "Platform:"
-        echo -e "  ${BOLD}$PLATFORM${RESET}"
 
         echo
 
@@ -1826,8 +1883,6 @@ main() {
 
 
     check_arch
-
-    detect_platform
 
     prepare_sudo
 

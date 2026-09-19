@@ -106,6 +106,7 @@ alias ll='eza --tree --level=2 --icons --git --group-directories-first'
 alias lx='eza --tree --level=1 --long --icons --git --group-directories-first'
 alias llx='eza --tree --level=2 --long --icons --git --group-directories-first'
 
+
 # Git / Docker
 alias lg='lazygit'
 alias ld='lazydocker'
@@ -141,8 +142,12 @@ alias tmux='tmux new-session -A -s 0'
 # uv normally handles project environments itself, so this is
 # mainly useful when working with traditional .venv projects.
 
+# Initialize zoxide without taking over `cd`
+eval "$(zoxide init zsh --no-cmd)"
+
 function cd() {
-    builtin cd "$@" || return
+    # Let zoxide handle normal paths and smart directory jumping
+    __zoxide_z "$@" || return
 
     # No virtual environment currently active
     if [[ -z "$VIRTUAL_ENV" ]]; then
@@ -159,15 +164,12 @@ function cd() {
 
         # Deactivate when leaving the project directory
         if [[ "${PWD}" != "$parentdir"* ]]; then
-
             if (( $+functions[deactivate] )); then
                 deactivate
             fi
-
         fi
     fi
 }
-
 
 # ============================================================
 # Yazi
