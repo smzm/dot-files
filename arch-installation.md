@@ -540,7 +540,7 @@ Color
 It is pretty bad idea to use the root user for normal computing tasks. So, let create a normal user
 
 ```bash
-useradd -m -g users -G wheel,storage,power,audio,video -s /bin/bash [username]
+useradd -m -g users -G wheel,storage,power,audio,video,input -s /bin/bash [username]
 passwd [username]
 ```
 

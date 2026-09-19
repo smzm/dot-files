@@ -359,14 +359,11 @@ PACKAGES=(
     "8|emmet-ls|npm|Emmet language server||"
     "8|bash-language-server|npm|Bash language server||"
     "8|yaml-language-server|npm|YAML language server||"
-
     "8|neovim|npm|Neovim Node.js provider||"
-
     "8|biome|npm|JavaScript and TypeScript formatter and linter||"
     "8|prettier|npm|Code formatter||"
 
     "8|opencode|pacman|AI-powered coding agent for the terminal|config:.config/opencode=>~/.config/opencode|"
-    "8|herdr-bin|aur|Command-line utility|config:.config/herdr=>~/.config/herdr|"
 
 
     # ═════════════════════════════════════════════════════════════
