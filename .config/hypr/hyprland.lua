@@ -32,7 +32,8 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal = "kitty"
-local fileManager = "nautilus"
+-- local fileManager = "nautilus"
+local fileManager = "strata"
 local browser = "zen-browser"
 local menu = "rofi -show drun -show-icons -dpi 150"
 local runner = "rofi -show run -dpi 150"
@@ -309,7 +310,7 @@ local secondMod = "SUPER + SHIFT"
 
 -- => APP
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(secondMod .. " + space", hl.dsp.exec_cmd(runner))
@@ -490,7 +491,7 @@ hl.window_rule({
 hl.window_rule({
 	name = "move-windscribe",
 	match = { class = "Windscribe" }, -- recognize with "hyprctl clients"
-	workspace = 5,
+	workspace = "5 silent",
 	float = true,
 })
 

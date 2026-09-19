@@ -1,13 +1,48 @@
-@define-color bg #15141b;
-@define-color fg-light #8B85B6;
-@define-color fg-medium #635F7D;
-@define-color fg-dark #302E3E;
-@define-color accent-primary #a277ff ;
-@define-color accent-secondary #61ffca;
-@define-color accent-tertiary #82e2ff;
-@define-color warning #ffca85;
-@define-color critical #ff6767;
+/* ============================================================
+ * Waybar style.css
+ * ------------------------------------------------------------
+ *  1. Colors
+ *  2. Global reset
+ *  3. Bar window & tooltip
+ *  4. Shared module base  (ALL spacing is defined here)
+ *  5. Left side      : launcher, workspaces, window title
+ *  6. System stats   : clock, cpu, gpu, temperature, memory, battery
+ *  7. Connectivity   : network, bluetooth, ip location, network usage
+ *  8. Audio & display: pulseaudio, slider, backlight, brightness, blue light
+ *  9. Media player
+ * 10. Input          : language, keyboard state
+ * 11. Misc           : tray, weather, power
+ * 12. Animations
+ *
+ * SPACING RULE
+ *   Every module uses the same spacing from section 4:
+ *     padding: 1px 10px;   (inside the module, affects hover area)
+ *     margin:  2px 8px;    (gap between modules)
+ *   To change spacing everywhere, edit only those two lines.
+ *   Per-module rules below must NOT set padding/margin, except
+ *   the documented exceptions (workspaces, pulseaudio + slider,
+ *   iplocation + network usage).
+ *
+ * NOTE: these named colors are used below but never defined,
+ * so GTK ignores those declarations (kept as-is, unchanged):
+ *   @background  @foreground  @color1  @color2  @color3  @color4
+ * ============================================================ */
 
+
+/* ── 1. Colors ───────────────────────────────────────────── */
+
+@define-color bg               #15141b;
+@define-color fg-light         #8B85B6;
+@define-color fg-medium        #635F7D;
+@define-color fg-dark          #302E3E;
+@define-color accent-primary   #a277ff;
+@define-color accent-secondary #61ffca;
+@define-color accent-tertiary  #82e2ff;
+@define-color warning          #ffca85;
+@define-color critical         #ff6767;
+
+
+/* ── 2. Global reset ─────────────────────────────────────── */
 
 * {
   border: none;
@@ -16,6 +51,9 @@
   font-size: 12px;
   min-height: 0;
 }
+
+
+/* ── 3. Bar window & tooltip ─────────────────────────────── */
 
 window#waybar {
   background: alpha(@bg, 0.68);
@@ -29,15 +67,71 @@ window#waybar.hidden {
   opacity: 0.1;
 }
 
+tooltip {
+  background: alpha(@bg, 0.65);
+  border-radius: 8px;
+  border: 1px solid alpha(@fg-dark, 0.5);
+}
 
-/* ── Workspaces ──────────────────────────────────────────── */
+tooltip label {
+  color: @fg-light;
+}
+
+
+/* ── 4. Shared module base ───────────────────────────────── */
+/* Keep this block ABOVE the per-module rules below: they   */
+/* override it, and same-specificity rules resolve by order. */
+
+#custom-launcher,
+#clock,
+#cpu,
+#custom-gpu-temp,
+#temperature,
+#memory,
+#battery,
+#network,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#custom-brightness,
+#custom-bluelight,
+#custom-media,
+#media,
+#custom-media-animation,
+#custom-media-now-playing,
+#custom-media-time,
+#language,
+#keyboard-state,
+#tray,
+#custom-weather,
+#custom-power {
+  padding: 1px 10px;
+  margin: 2px 8px;
+  border-radius: 8px;
+  background: alpha(@bg, 0);
+  color: @fg-light;
+  transition: none;
+}
+
+
+/* ── 5. Left side ────────────────────────────────────────── */
+
+/* Launcher */
+
+#custom-launcher {
+  /* font-size: 24px; */
+  border-radius: 10px;
+}
+
+#custom-launcher:hover {
+  color: @accent-tertiary;
+}
+
+/* Workspaces (container; exception: no padding from base) */
 
 #workspaces {
   background: transparent;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  margin-left: 2px;
-  margin-right: 40px;
+  margin: 2px 8px;
   padding: 0 2px;
 }
 
@@ -68,17 +162,16 @@ window#waybar.hidden {
 }
 
 #workspaces button:hover {
-  color: alpha(@fg-light , 0.7);
+  color: alpha(@fg-light, 0.7);
   background: transparent;
   box-shadow: none;
 }
 
-
-/* ── Active window title ─────────────────────────────────── */
+/* Active window title */
 
 #window {
-  margin: 2px 4px;
-  padding: 1px 12px;
+  margin: 2px 8px;
+  padding: 1px 10px;
   border-radius: 10px;
   background: alpha(@accent-primary, 0.5);
   color: alpha(@fg-light, 0.65);
@@ -86,44 +179,16 @@ window#waybar.hidden {
   font-size: 12px;
 }
 
-/* ── Shared module base ──────────────────────────────────── */
 
-#clock,
-#battery,
-#cpu,
-#memory,
-#temperature,
-#backlight,
-#network,
-#bluetooth,
-#language,
-#network,
-#tray,
-#custom-gpu-temp,
-#custom-power,
-#custom-bluelight,
-#custom-brightness,
-#custom-media {
-  padding: 1px 10px;
-  margin-right: 5px;
-  margin-left: 5px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  border-radius: 8px;
-  background: alpha(@bg, 0);
-  color: @fg-light;
-  transition: none;
-}
+/* ── 6. System stats ─────────────────────────────────────── */
 
-
-/* ── Clock ───────────────────────────────────────────────── */
+/* Clock */
 
 #clock {
   font-size: 13px;
   /* font-weight: bold; */
   color: @fg-medium;
   /* letter-spacing: 1px; */
-  padding: 1px 18px;
 }
 
 /* #clock:hover { */
@@ -131,111 +196,7 @@ window#waybar.hidden {
 /*   background: @accent-secondary; */
 /* } */
 
-/* ── Media player ────────────────────────────────────────── */
-
-#custom-media {
-  color: @fg-light;
-  margin-right: 6px;
-  font-style: italic;
-}
-
-#custom-media:hover {
-  color: @accent-tertiary;
-}
-
-#custom-media.spotify {
-  color: #1db954;
-}
-
-/* ── System tray ─────────────────────────────────────────── */
-
-#tray {
-  padding: 1px 8px;
-}
-
-#tray > .passive {
-  -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-  -gtk-icon-effect: highlight;
-  padding: 1px 8px;
-  background: alpha(@fg-dark, 0.5);
-  border-radius: 4px;
-}
-
-/* ── Backlight ───────────────────────────────────────────── */
-
-#backlight {
-  color: @fg-light;
-}
-
-#backlight:hover {
-  color: @background;
-}
-
-/* ── Audio ───────────────────────────────────────────────── */
-
-#pulseaudio {
-  color: @color5;
-}
-
-#pulseaudio.muted {
-  color: alpha(@foreground, 0.35);
-}
-
-#pulseaudio:hover {
-  color: @accent-tertiary;
-}
-
-/* ── Bluetooth ───────────────────────────────────────────── */
-
-#bluetooth {
-  color: @fg-medium;
-}
-
-#bluetooth.connected {
-  color: @accent-primary;
-}
-
-#bluetooth.disabled,
-#bluetooth.off {
-  color: alpha(@fg-medium, 0.85);
-}
-
-#bluetooth:hover {
-  color: @accent-tertiary;
-  /* background: @accent-secondary; */
-}
-
-/* ── Blue light filter ───────────────────────────────────── */
-
-#custom-bluelight {
-  color: @fg-light;
-  /* font-size: 15px; */
-}
-
-#custom-bluelight:hover {
-  color: @accent-tertiary;
-  background: @color3;
-}
-
-/* ── Network ─────────────────────────────────────────────── */
-
-#network {
-  color: @color4;
-}
-
-#network.disconnected {
-  color: @color1;
-}
-
-#network:hover {
-  color: @background;
-  background: @color4;
-}
-
-/* ── CPU ─────────────────────────────────────────────────── */
+/* CPU */
 
 #cpu {
   color: @fg-light;
@@ -253,16 +214,17 @@ window#waybar.hidden {
   color: @accent-tertiary;
 }
 
+/* GPU temperature */
 
 #custom-gpu-temp {
-    color: @fg-light;
+  color: @fg-light;
 }
 
 #custom-gpu-temp:hover {
-    color: @accent-tertiary;
+  color: @accent-tertiary;
 }
 
-/* ── Temperature ─────────────────────────────────────────── */
+/* Temperature */
 
 #temperature {
   color: @fg-light;
@@ -277,7 +239,7 @@ window#waybar.hidden {
   color: @accent-tertiary;
 }
 
-/* ── Memory ──────────────────────────────────────────────── */
+/* Memory */
 
 #memory {
   color: @fg-light;
@@ -295,7 +257,7 @@ window#waybar.hidden {
   color: @accent-tertiary;
 }
 
-/* ── Battery ─────────────────────────────────────────────── */
+/* Battery */
 
 #battery {
   color: @fg-light;
@@ -323,70 +285,89 @@ window#waybar.hidden {
   background: @color2;
 }
 
-/* ── Launcher ────────────────────────────────────────────── */
 
-#custom-launcher {
-  /* font-size: 24px; */
-  color: @fg-light;
-  padding: 1px 14px;
-  margin-right: 4px;
-  margin-left: 4px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  border-radius: 10px;
-  transition: none;
+/* ── 7. Connectivity ─────────────────────────────────────── */
+
+/* Network */
+
+#network {
+  color: @color4;
 }
 
-#custom-launcher:hover {
+#network.disconnected {
+  color: @color1;
+}
+
+#network:hover {
+  color: @background;
+  background: @color4;
+}
+
+/* Bluetooth */
+
+#bluetooth {
+  color: @fg-medium;
+}
+
+#bluetooth.connected {
+  color: @accent-primary;
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+  color: alpha(@fg-medium, 0.85);
+}
+
+#bluetooth:hover {
   color: @accent-tertiary;
+  /* background: @accent-secondary; */
 }
 
-/* ── Power ───────────────────────────────────────────────── */
+/* IP location + network usage
+ * Exception: these two are children of one concept (a pair), so they
+ * keep their own tight spacing instead of the shared base. The outer
+ * edges keep a 10px margin; the two sit close together in the middle. */
 
-#custom-power {
-  font-size: 16px;
-  padding: 1px 14px;
+#custom-iplocation {
+  color: @fg-medium;
+  padding: 2px 3px;
   margin-left: 10px;
-  margin-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  color: alpha(@accent-primary, 0.88);
-  background: alpha(@accent-primary, 0.08);
+  border-radius: 8px;
 }
 
-#custom-power:hover {
-  color: alpha(@critical, 0.7);
-  background: alpha(@critical, 0.18);
-}
-
-/* ── Blink animation ─────────────────────────────────────── */
-
-@keyframes blink {
-  to {
-    background: @critical;
-    color: @bg;
-  }
+#custom-network-usage {
+  color: @fg-medium;
+  padding: 2px 3px;
+  margin-right: 10px;
+  border-radius: 8px;
 }
 
 
-/* ── Pulse Audio ─────────────────────────────────────── */
+/* ── 8. Audio & display ──────────────────────────────────── */
+
+/* PulseAudio
+ * Exception: the icon and its slider are one visual unit, so the
+ * icon has no right margin and the slider has no left margin.
+ * Outer edges still use the standard 8px margin. */
+
 #pulseaudio {
   color: @fg-light;
-  padding: 1px 14px;
-  margin-right: 0px;
-  margin-left: 4px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-right: 0;
+}
+
+#pulseaudio.muted {
+  color: alpha(@foreground, 0.35);
 }
 
 #pulseaudio:hover {
   color: @accent-tertiary;
 }
 
+/* PulseAudio slider */
+
 #pulseaudio-slider {
-  padding: 0px;
-  margin: 0px;
-  margin-left: 2px;
+  padding: 0;
+  margin: 0 8px 0 0;
 }
 
 #pulseaudio-slider slider {
@@ -412,11 +393,76 @@ window#waybar.hidden {
   background: @accent-primary;
 }
 
+/* Backlight */
+
+#backlight {
+  color: @fg-light;
+}
+
+#backlight:hover {
+  color: @background;
+}
+
+/* Brightness */
+
+#custom-brightness {
+  color: @fg-medium;
+}
+
+#custom-brightness:hover {
+  color: @accent-tertiary;
+}
+
+/* Blue light filter */
+
+#custom-bluelight {
+  color: @fg-light;
+  /* font-size: 15px; */
+}
+
+#custom-bluelight:hover {
+  color: @accent-tertiary;
+  background: @color3;
+}
+
+
+/* ── 9. Media player ─────────────────────────────────────── */
+
+#custom-media {
+  color: @fg-light;
+  font-style: italic;
+}
+
+#custom-media:hover {
+  color: @accent-tertiary;
+}
+
+#custom-media.spotify {
+  color: #1db954;
+}
+
+#media {
+  color: @accent-secondary;
+}
+
+/* #custom-media-animation { font-size: 12px; } */
+
+#custom-media-time {
+  color: @fg-medium;
+}
+
+
+/* ── 10. Input ───────────────────────────────────────────── */
+
+/* Keyboard layout */
+
+#language:hover {
+  color: @accent-tertiary;
+}
+
+/* Keyboard state (caps / num lock) */
+
 #keyboard-state {
-  margin-right: 10px;
-  margin-left: 10px;
-  margin-top: 2px;
-  margin-bottom: 2px;
   color: @accent-primary;
 }
 
@@ -424,71 +470,47 @@ window#waybar.hidden {
   color: @accent-secondary;
 }
 
-tooltip {
-  background: alpha(@bg, 0.65);
-  border-radius: 8px;
-  border: 1px solid alpha(@fg-dark, 0.5);
+
+/* ── 11. Misc ────────────────────────────────────────────── */
+
+/* System tray */
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
 }
 
-tooltip label {
-  color: @fg-light;
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  padding: 1px 8px;
+  background: alpha(@fg-dark, 0.5);
+  border-radius: 4px;
 }
 
+/* Weather */
 
-#media {
-  color: @accent-secondary;
-  margin-right: 10px;
-  margin-left: 20px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-
-#custom-media-animation {
-  /* font-size: 12px; */
-  margin-right: 10px;
-}
-
-#custom-media-now-playing {
-  margin-right: 10px;
-}
-
-#custom-media-time {
+#custom-weather {
   color: @fg-medium;
 }
 
-#custom-iplocation {
-    color: @fg-medium;
-    padding: 2px 3px;
-    margin-left: 10px;
-    border-radius: 8px;
+/* Power */
+
+#custom-power {
+  font-size: 16px;
+  color: alpha(@accent-primary, 0.88);
+  background: alpha(@accent-primary, 0.08);
 }
 
-#custom-network-usage {
-    color: @fg-medium;
-    padding: 2px 3px;
-    margin-right: 10px;
-    border-radius: 8px;
+#custom-power:hover {
+  color: alpha(@critical, 0.7);
+  background: alpha(@critical, 0.18);
 }
 
-#language:hover {
-    color: @accent-tertiary;
-}
 
-#custom-weather {
-    color: @fg-medium;
-    padding: 2px 10px;
-    margin-right: 5px;
-    margin-left: 5px;
-    border-radius: 8px;
-}
+/* ── 12. Animations ──────────────────────────────────────── */
 
-#custom-brightness {
-    color: @fg-medium;
-    padding: 2px 10px;
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-#custom-brightness:hover {
-    color: @accent-tertiary;
+@keyframes blink {
+  to {
+    background: @critical;
+    color: @bg;
+  }
 }
