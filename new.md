@@ -803,7 +803,7 @@ Arch already ships sane FreeType defaults through symlinks in `/etc/fonts/conf.d
 11-lcdfilter-default.conf    default LCD filter
 ```
 
-Do not hand-write hinting, antialiasing, or `rgba` subpixel configuration to "fix" fonts. The reference Omarchy system left all three defaults untouched and changed only font *selection*. Aggressive hinting or full RGBA subpixel rendering is usually what makes text look wrong on a Wayland desktop.
+Do not hand-write hinting, antialiasing, or `rgba` subpixel configuration to "fix" fonts. The reference Omarchy system left all three defaults untouched and changed only font _selection_. Aggressive hinting or full RGBA subpixel rendering is usually what makes text look wrong on a Wayland desktop.
 
 What genuinely needs configuration is which real font each generic family resolves to, plus emoji and icon fallback. Create `/etc/fonts/local.conf` using the same approach as the reference system:
 

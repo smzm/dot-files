@@ -1,3 +1,5 @@
+# Arch installation
+
 ## 0. Before you start
 
 - First, download the Arch Linux installation ISO from the [Arch Linux website](https://www.archlinux.org/download/).
@@ -5,16 +7,39 @@
 - When the ISO is downloaded, you need to check its signature to make sure it has not been compromised;
   `gpg --keyserver-options auto-key-retrieve --verify /path/to/archlinux.iso.sig` <br>
   If you see `“Good signature from …“`, this means everything is alright.
-- Next, you need to write it to your USB flash drive. Open the Linux terminal and use the following command: <br>
+- Next, you need to write it to your USB flash drive. First identify the USB device: <br>
+  `lsblk -o NAME,PATH,SIZE,MODEL,TRAN,MOUNTPOINTS` <br>
+  Unmount its mounted partitions, then open the Linux terminal and use the following command: <br>
   `dd bs=4M if=path/to/archlinux-version-x86_64.iso of=/dev/sdx conv=fsync oflag=direct status=progress` - **_Restore the USB drive :_** After you have used the bootable USB flash drive, you need to restore it back to its normal not-bootable state
   `sudo wipefs --all /dev/sdX`br
   After that create a new partition on it: <br>
   `fdisk /dev/sdX`
+- #### Firmware / BIOS settings
+- Before installing, set your firmware to `Boot mode: UEFI`, `Partition style: GPT`, disable `CSM/Legacy`, and disable `Secure Boot` for the initial installation.
+- If your machine has both Intel and NVIDIA GPUs (hybrid graphics) and you want both visible, enable the integrated GPU or an equivalent `iGPU Multi-Monitor` firmware option.
+- If the Arch ISO cannot see an NVMe disk, check the Intel VMD/RST/RAID settings in your firmware. Don't change the storage-controller mode blindly on a machine that already boots another OS.
 - #### Dual boot `Windows` + `Arch`
 - If you want to install Windows11 and Arch in dual boot, first install windows.
 - **After installing windows you need to go to the boot setup in your system and disable `secure boot` and `RAID` in nvme configuration part and then run arch installer**
 
 ## 1. Network Connectivity
+
+Before anything else, verify you're actually in UEFI mode:
+
+```bash
+test -d /sys/firmware/efi/efivars \
+  && echo "UEFI mode detected" \
+  || echo "ERROR: reboot the ISO in UEFI mode"
+```
+
+Do not continue with the installation if UEFI mode was not detected.
+
+Set the console keyboard layout (if you need something other than US):
+
+```bash
+localectl list-keymaps
+loadkeys us
+```
 
 ```bash
 ping google.com
@@ -33,6 +58,24 @@ ifconfig
 wifi-menu -o wlp9s0
 ```
 
+> **Note:** `wifi-menu` is no longer shipped on current Arch ISOs. If it's unavailable, use `iwctl` instead:
+
+```bash
+iwctl
+```
+
+Inside `iwctl`:
+
+```text
+device list
+station wlan0 scan
+station wlan0 get-networks
+station wlan0 connect YOUR_SSID
+exit
+```
+
+Replace `wlan0` and `YOUR_SSID` with your actual device and network name.
+
 <br>
 <br>
 
@@ -46,6 +89,12 @@ timedatectl set-ntp true
 
 ```bash
 timedatectl set-timezone Asia/Tehran
+```
+
+Verify it took effect:
+
+```bash
+timedatectl status
 ```
 
 <br>
@@ -73,11 +122,11 @@ cfdisk /dev/nvme0n[x]
 
 To standard installation you need 4 partition :
 
-- `boot` => `Size: [512M]` ==> `Type: [EFI SYSTEM]`
-- `Root` => `Size: [30G]` ==> `Type: [linux file system]`
+- `boot` => `Size: [2G]` ==> `Type: [EFI SYSTEM]`
+- `Root` => `Size: [100G]` ==> `Type: [linux file system]`
 - `home` => `Size: [...]` ==> `Type: [linux file system]`
-- `swap` => `Size: [moe than half of ram size]` ==> `Type: [swap]`
-    > **You can skip creating swap partition and create swap file later**
+- `swap` => `Size: [more than half of ram size]` ==> `Type: [swap]`
+  > **You can skip creating swap partition and create swap file later**
 
 <br>
 <br>
@@ -156,8 +205,14 @@ reflector -c 'United States, France' -a 12 -f 5 --protocol https --sort rate --s
 ## 6. Install Arch
 
 ```bash
-pacstrap -i /mnt base base-devel linux linux-firmware vim
+pacstrap -K /mnt \
+            base base-devel \
+            linux linux-headers linux-firmware intel-ucode \
+            networkmanager sudo git vim pciutils
 ```
+
+- For an AMD CPU, replace `intel-ucode` with `amd-ucode`.
+- `linux-headers` is not required by the normal kernel itself, but keeping the matching headers installed is useful when DKMS modules are added.
 
 <br>
 <br>
@@ -165,7 +220,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware vim
 ## 7. Generating fstab file
 
 ```bash
-genfstab -U -p /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 <br>
@@ -179,8 +234,11 @@ genfstab -U -p /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 ```
 
+All commands in the next sections run as `root` inside the chroot.
+
 - ### Configure the system language:
-    Uncomment `en_US.UTF-8 UTF-8`, as well as other needed localisations.
+
+Uncomment `en_US.UTF-8 UTF-8`, as well as other needed localisations.
 
 ```bash
  vim /etc/locale.gen
@@ -206,35 +264,30 @@ LANG=en_US.UTF-8
 
 Save and close the file.
 
+Also set Console keyboard with :
+
+```bash
+printf 'KEYMAP=us\n' > /etc/vconsole.conf
+```
+
 - ### System timezone
-    List out the available timezones using command:
+
+  List out the available timezones using command:
 
 ```bash
-ls /usr/share/zoneinfo/
-```
-
-and there is a path should link to one of the timezone :
-
-```bash
-ls /etc/localtime
-```
-
-or use
-
-```bash
-timedatectl set-timezone Iran
-```
-
-For create link run the command:
-
-```bash
-ln -sf /usr/share/zoneinfo/[iran] /etc/localtime
+ln -sf /usr/share/zoneinfo/Asia/Tehran /etc/localtime
 ```
 
 Set local time :
 
 ```bash
 hwclock --systohc --utc
+```
+
+Enable network time synchronization for the installed system:
+
+```bash
+systemctl enable systemd-timesyncd.service
 ```
 
 And check the time:
@@ -246,15 +299,15 @@ date
 If the time is incorrect, go back and make sure you have set the timezone correctly.
 
 - ### Set Password
-    Set `root` user password with command:
+  Set `root` user password with command:
 
 ```bash
 passwd
 ```
 
 - ### Network configuration
-    A hostname is the computer's name. for example `archPC`
-    Edit `/etc/hostname` file and add `archPC` to :
+  A **hostname** is the computer's name. for example `archPC`
+  Edit `/etc/hostname` file and add `archPC` to :
 
 ```bash
 vim /etc/hostname # Enter a name like archPC
@@ -263,45 +316,47 @@ vim /etc/hostname # Enter a name like archPC
 Save and close the file.
 
 Then, edit `/etc/hosts` file and set the hostname as well.Be mindful that you need to set the same hostname in the both files.
-in `etc/hosts`
 
 ```
-127.0.0.1 localhost
-#::1 localhost # ipv6 could show your original IP address when connecting to VPNs
-127.0.1.1 archPC.localdomain localhost # archpc :--> hostname
-```
-
-To disable `IPv6` create `/etc/sysctl.d/ipv6.conf ` and Add these line to :
-
-```bash
-net.ipv6.conf.all.disable_ipv6 = 1
-net.ipv6.conf.default.disable_ipv6 = 1
-net.ipv6.conf.lo.disable_ipv6 = 1
-```
-
-```bash
-sudo sysctl -p /etc/sysctl.d/ipv6.conf
-sudo sysctl --system
-```
-
-if you have IPv6 hots in `/etc/hosts` comment that lines : `sed -i 's/^[[:space:]]*::/#::/' /etc/hosts`
-for check it's disabled :
-
-```bash
-cat /proc/sys/net/ipv6/conf/all/disable_ipv6
+127.0.0.1  localhost
+::1        localhost
+127.0.1.1  archPC.localdomain localhost # archpc :--> hostname
 ```
 
 Then make Network connections persistent using commands:
 
 ```bash
-systemctl enable dhcpcd
+sudo pacman -S networkmanager network-manager-applet networkmanager-openvpn
+
+systemctl enable NetworkManager.service
+systemctl enable systemd-resolved.service
 ```
 
-**OR** You can use network manager:
+Do not also enable `dhcpcd`, `netctl`, or `systemd-networkd` as competing managers.
+
+- **DNS management** :
+
+You can set dns management with **systemd-resolved** in **NetworkManager** :
+
+```
+NetworkManager → systemd-resolved → /etc/resolv.conf
+```
+
+Configure NetworkManager
 
 ```bash
-sudo pacman -S networkmanager network-manager-applet networkmanager-openvpn
-systemctl enable NetworkManager
+mkdir -p /etc/NetworkManager/conf.d
+
+cat > /etc/NetworkManager/conf.d/20-dns.conf <<'EOF'
+[main]
+dns=systemd-resolved
+EOF
+```
+
+Then configure the resolver symlink :
+
+```bash
+ln -sfn ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 ```
 
 <br>
@@ -329,9 +384,9 @@ if you don't want to add other os to the grub, just mount boot partition and ins
 ### For Adding Other OS to the grub automatically (better):
 
 - #### Add automatically with `os-prober` :
-    `pacman -S os-prober` is utility if you have more than one OS on your machine. It will **automate** the process of adding other operating systems to grub menu for easy dual booting.
-    **If your purpose is dual boot with `os-prober` , go to the `/etc/default/grub` and at the last line uncomment the :**
-    `GRUB_DISABLE_OS_PROBER="false"` and mount boot partition to efi directory :
+  `pacman -S os-prober` is utility if you have more than one OS on your machine. It will **automate** the process of adding other operating systems to grub menu for easy dual booting.
+  **If your purpose is dual boot with `os-prober` , go to the `/etc/default/grub` and at the last line uncomment the :**
+  `GRUB_DISABLE_OS_PROBER="false"` and mount boot partition to efi directory :
 - First run :
 
 ```
@@ -347,7 +402,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 You need change grub priority in BIOS setup to make it work properly.
 
 - #### Add manually with customizing `/etc/grub.d/40_custom`:
-    For adding windows [**_manually_**](https://wiki.archlinux.org/title/GRUB#Windows_installed_in_UEFI/GPT_mode) to the grub, go to the `/etc/grub.d/40_custom` and add this codes to the end of the file. at the end your file is like this:
+  For adding windows [**_manually_**](https://wiki.archlinux.org/title/GRUB#Windows_installed_in_UEFI/GPT_mode) to the grub, go to the `/etc/grub.d/40_custom` and add this codes to the end of the file. at the end your file is like this:
 
 ```
 #!/bin/sh
@@ -515,6 +570,32 @@ And add the following (10 is the most commonly recommended value):
 vm.swappiness=10
 ```
 
+<br>
+
+### zram
+
+zram, is a Linux kernel module for creating a compressed block device in RAM. The block device created with zram can then be used for swap or as a general-purpose RAM disk.
+The two most common uses for zram are for the storage of temporary files (/tmp) and as a swap device.
+
+To install:
+
+```bash
+pacman -S zram-generator
+```
+
+Create `/etc/systemd/zram-generator.conf`:
+
+```ini
+[zram0]
+zram-size = ram
+compression-algorithm = zstd
+swap-priority = 100
+```
+
+The configured size is virtual compressed-swap capacity, not preallocated physical RAM.
+
+<br>
+
 ### Configure Package manager
 
 It is always a good idea to keep an updated mirrorlist.To do so ,go to Pacman Mirrorlist Generator page and select your nearest mirror:
@@ -527,7 +608,7 @@ pacman -Syy
 ```
 
 - #### Add some color to the package manager:
-    Uncomment `color` in `etc/pacman.conf` :
+  Uncomment `color` in `etc/pacman.conf` :
 
 ```bash
 ...
@@ -540,7 +621,7 @@ Color
 It is pretty bad idea to use the root user for normal computing tasks. So, let create a normal user
 
 ```bash
-useradd -m -g users -G wheel,storage,power,audio,video,input -s /bin/bash [username]
+useradd -m -g users -G wheel,input -s /bin/bash [username]
 passwd [username]
 ```
 
@@ -577,7 +658,12 @@ This means the new users that are belongs to Wheel group can perform administrat
 ### Install Wayland and Hyprland
 
 ```bash
-pacman -S hyprland xorg-xwayland wayland wl-clipboard
+pacman -S \
+  hyprland \
+  xorg-xwayland \
+  qt5-wayland qt6-wayland \
+  polkit hyprpolkitagent \
+  gnome-keyring libsecret \
 ```
 
 > **Note:** `xorg-xwayland` provides compatibility for X11 applications under Wayland.
@@ -585,63 +671,69 @@ pacman -S hyprland xorg-xwayland wayland wl-clipboard
 Also install the XDG Desktop Portal and Qt Wayland support for proper desktop integration:
 
 ```bash
-pacman -S xdg-desktop-portal-hyprland xdg-desktop-portal-gtk qt5-wayland qt6-wayland
+pacman -S xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
+```
+
+Wayland compositors require a seat manager to start. If you do not install, Hyprland will fail to start :
+
+```bash
+pacman -S polkit hyprpolkitagent
+```
+
+There are tools needed after reboot in hyprland :
+
+```bash
+pacman -S hyprland kitty firefox rofi waybar wl-clipboard
+```
+
+Install the Hyprland ecosystem tools (optional but recommended):
+
+```bash
+pacman -S hyprpaper hypridle hyprlock hyprpicker hyprsunset
 ```
 
 <br>
-
-### Seat management (required for Wayland)
-
-Wayland compositors require a seat manager to start. You have two options:
-
-**Option A: polkit (recommended with systemd)**
-
-```bash
-pacman -S polkit
-```
-
-**Option B: seatd (lightweight alternative)**
-
-```bash
-pacman -S seatd
-systemctl enable seatd.service
-usermod -a -G seat [username]
-```
-
-> **Important:** If you do not install `polkit` or enable `seatd`, Hyprland will fail to start.
-
-<br>
-
-### Install a graphical Polkit authentication agent
-
-For GUI apps that need elevated privileges (e.g., file managers, package managers):
-
-```bash
-pacman -S polkit-gnome
-```
-
-You will autostart this later in your Hyprland config.
-
 <br>
 
 ### Install A Display Manager
 
-#### ly or SDDM
+There are different display managers you can find them in arch document about [display manager](https://wiki.archlinux.org/title/Display_manager)
 
-- ###### Install ly
-    ly is a minimal display manager that works well with Wayland and Hyprland.
+- #### gdm
+
+It's the GNOME Display Manager, can be installed with :
+
+```bash
+sudo pacman -S gdm
+```
+
+To start and enable gdm :
+
+```bash
+systemctl enable gdm
+```
+
+To enable automatic login with GDM, add the following to `/etc/gdm/custom.conf` (replace username with your own):
+
+```
+[daemon]
+AutomaticLogin=username
+AutomaticLoginEnable=True
+```
+
+- #### ly
+  ly is a minimal display manager that works well with Wayland and Hyprland.
 
 ```bash
 pacman -S ly
 ```
 
-- ###### Start and Enable ly : 
+To Start and Enable ly :
 
 ```bash
 systemctl enable ly@tty2.service
 ```
 
-- ###### Enable autologin
 To enable autologin, edit the autologin file in :
 
 ```bash
@@ -657,8 +749,6 @@ auto_login_user = <username>
 
 > Replace `username` with your actual username.
 
-**Alternative display managers for Hyprland:** `greetd` (with `tuigreet` or `regreet`) and `ly` also work well.
-
 <br>
 
 ### Install audio drivers (PipeWire)
@@ -666,8 +756,7 @@ auto_login_user = <username>
 PipeWire is the modern audio server standard for Wayland. It replaces PulseAudio and provides better Bluetooth and screen-sharing support.
 
 ```bash
-sudo pacman -S pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber
-sudo pacman -S alsa-utils alsa-firmware
+sudo pacman -S pipewire pipewire-audio pipewire-alsa pipewire-pulse wireplumber \
 ```
 
 ```bash
@@ -688,71 +777,99 @@ systemctl --user enable --now wireplumber.service
 
 ### Install graphics card
 
-You can check graphic card with :
+First identify the hardware:
 
 ```bash
-lspci | grep -E "VGA|3D"
+lspci -nnk | grep -A4 -E 'VGA compatible controller|3D controller|Display controller'
 ```
 
-**if you don't have dedicated graphics card** : On Wayland, Mesa provides everything needed out of the box. No additional X11 video driver is required.
+**if you don't have dedicated graphics card** : On Wayland, `mesa` provides everything needed out of the box. No additional X11 video driver is required.
 
-**Nvidia** driver installation:
+- **AMD graphics :**
+
+For AMD instead of Intel:
 
 ```bash
-sudo pacman -Syyu
+pacman -S mesa vulkan-radeon libva-mesa-driver libva-utils vulkan-tools mesa-utils
+```
+
+- **Intel graphics :**
+
+For a modern Intel GPU:
+
+```bash
+pacman -S mesa vulkan-intel intel-media-driver libva-utils vulkan-tools mesa-utils
+```
+
+The normal kernel driver may be `i915` or, on supported newer hardware, `xe`. Do not force one without a hardware-specific reason.
+
+- **NVIDIA graphics :**
+
+```bash
+pacman -S \
+  nvidia-open nvidia-utils nvidia-settings egl-wayland \
+  mesa-utils vulkan-tools libva-utils
 ```
 
 ```bash
-pacman -S nvidia-open nvidia-settings cuda cudnn mesa-utils
+pacman -S cuda cudnn
 ```
 
-##### Enable proper NVIDIA DRM driver (required for Wayland)
-
-- Edit `/etc/default/grub` with root privileges and find the `GRUB_CMDLINE_LINUX_DEFAULT` line and append `nvidia-drm.modeset=1` inside the quotes, for example:
-
-```
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet nvidia-drm.modeset=1"
-```
-
-- Save the file and regenerate the grub config:
+If using a custom kernel or several kernels, use DKMS instead:
 
 ```bash
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+pacman -S \
+  nvidia-open-dkms nvidia-utils egl-wayland \
+  mesa-utils vulkan-tools libva-utils
 ```
 
-> **Warning:** Using an NVIDIA GPU with Hyprland is unsupported by upstream. Many users have had success, but if something is broken then you are on your own. Make sure your NVIDIA driver supports GBM (driver >= 495).
-
-##### Kernel problem troubleshooting
-
-- **If you encounter load kernel problem with nvidia graphic card :** <br>
-  Disable Intel IBT in your grub configuration to prevent an issue with NVIDIA graphics cards
-  In `etc/default/grub`:
-    ```
-    ...
-    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 ibt=off quiet"
-    ...
-    ```
-    _At the end, generate `grub.cfg` again with :_ `grub-mkconfig -o /boot/grub/grub.cfg`
-- [NVIDIA/Troubleshooting](https://wiki.archlinux.org/title/NVIDIA/Troubleshooting)
-- To use the Intel media engine (Quick Sync) for video encoding/decoding :
+For NVIDIA VA-API video decoding, add the driver only when you intend to use it:
 
 ```bash
-sudo pacman -S intel-media-driver libva-utils
+pacman -S libva-nvidia-driver
 ```
+
+For Steam, Wine, and other 32-bit applications, enable `[multilib]` in `/etc/pacman.conf`, run `pacman -Syu`, and install the matching 32-bit userspace packages:
+
+```bash
+pacman -S lib32-mesa lib32-vulkan-intel lib32-nvidia-utils
+```
+
+Adjust that list to the GPUs actually installed.
+
+- **Hybrid Intel + NVIDIA :**
+
+On a hybrid machine, both GPUs stay available and the compositor renders on one of them.
+
+Decide which case matches the hardware:
+
+```text
+Desktop, monitor cable in the NVIDIA card
+    → NVIDIA is the primary renderer
+    → render offload is unnecessary
+
+Laptop/board routing the panel through Intel
+    → Intel is the primary renderer
+    → NVIDIA is used per-application via offload
+```
+
+- Optional early NVIDIA module loading :
+
+For a desktop whose monitor is physically attached to NVIDIA, early module loading can make graphical startup more deterministic:
+
+```bash
+mkdir -p /etc/mkinitcpio.conf.d
+
+cat > /etc/mkinitcpio.conf.d/20-nvidia.conf <<'EOF'
+MODULES+=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+EOF
+```
+
+On hybrid laptops, early loading may increase dGPU activity. Treat it as a hardware-policy decision, not a universal optimization.
 
 <br>
 
-### Install Hyprland
-
-```bash
-pacman -S hyprland kitty firefox wofi waybar
-```
-
-Install the Hyprland ecosystem tools (optional but recommended):
-
-```bash
-pacman -S hyprpaper hypridle hyprlock
-```
+### Customize Hyprland
 
 Hyprland uses a Lua-based configuration since v0.55. The config file is located at `~/.config/hypr/hyprland.lua`. If no config exists, Hyprland auto-generates one on first launch.
 
@@ -817,6 +934,8 @@ sudo systemctl start bluetooth.service
 sudo systemctl enable bluetooth.service
 ```
 
+Install `blueman` only if you want its GUI.
+
 - **Setting up auto connection :**
   With PipeWire/WirePlumber, Bluetooth audio devices are usually handled automatically. Make sure that your bluetooth audio device is trusted, otherwise repeated pairing will fail.
 
@@ -832,6 +951,20 @@ sudo pacman -S system-config-printer
 yay -S brother-mfc7360n
 yay -S brscan4
 ```
+
+<br>
+
+### Firewall
+
+For a workstation firewall:
+
+```bash
+pacman -S ufw
+ufw default deny incoming
+ufw default allow outgoing
+```
+
+Do not run `ufw enable` from the chroot: it shares the live ISO's network namespace and could interrupt a remote installation. Activate it after a successful local boot.
 
 <br>
 
@@ -905,10 +1038,7 @@ yay -S jmtpfs
 ### Appearance packages
 
 ```bash
-# Icon Theme
-yay -S flat-remix
-# GTK Theme
-yay -S flatplat-blue-theme
+yay -S orchis-theme
 ```
 
 - #### [Apple cursor](https://github.com/ful1e5/apple_cursor)
@@ -917,160 +1047,12 @@ yay -S flatplat-blue-theme
 yay -S apple_cursor
 ```
 
-Edit cursor in `lxappearance`.
-Download from release page `macOSMonterey` and then :
-
-```bash
-tar -xvf macOSMonterey.tar.gz
-mv macOSMonterey ~/.icons/
-```
-
-and edit `~/.config/gtk-3.0/settings.ini` to :
-
-```ini
-...
-gtk-cursor-theme-name=macOSMonterey
-...
-```
+Edit cursor in `GTK settings`.
 
 <br>
 <br>
 
 ## 13. Usable snippets
-
-### Encrypted DNS :
-
-#### DNSCRYPT-proxy
-
-```bash
-# Install dnscrypt-proxy
-sudo pacman -S dnscrypt-proxy
-```
-
-**Edit dnscrypt-proxy configuration file : `vim /etc/dnscrypt-proxy/dnscrypt-proxy.toml`**
-
-```toml
-# you can sets servers you want in `server_name` and choose dns resolver
-server_names = [
-  'dnscrypt.eu-dk',
-  'dnscrypt.eu-nl',
-  'dnscrypt.uk-ipv4',
-  'ffmuc.net',
-  'meganerd',
-  'publicarray-au',
-  'scaleway-ams',
-  'scaleway-fr',
-  'v.dnscrypt.uk-ipv4',
-]
-# If you want you can change the address of port
-listen_addresses = ['127.0.0.1:53000', '[::1]:53000']
-# I don't use ipv6
-ipv6_servers = false
-# Enabling dnssec
-require_dnssec = true
-# set the response for blocked queries:
-blocked_query_response = 'refused'
-dnscrypt_ephemeral_keys = true # optional
-# block the ipv6 here too
-block_ipv6 = true
-```
-
-- Then setup our Anonymous DNS routes - more info [here](https://github.com/DNSCrypt/dnscrypt-proxy/wiki/Anonymized-DNS) and the Anonymized DNS relays list [here](https://github.com/DNSCrypt/dnscrypt-resolvers/blob/master/v2/relays.md):
-
-```toml
-routes = [
-  { server_name = 'dnscrypt.eu-dk', via = [
-    'anon-meganerd',
-    'anon-scaleway-ams',
-  ] },
-  { server_name = 'dnscrypt.eu-nl', via = [
-    'anon-meganerd',
-    'anon-scaleway-ams',
-  ] },
-  { server_name = 'dnscrypt.uk-ipv4', via = [
-    'anon-scaleway',
-    'anon-tiarap',
-  ] },
-  { server_name = 'ffmuc.net', via = [
-    'anon-ibksturm',
-    'anon-scaleway-ams',
-  ] },
-  { server_name = 'meganerd', via = [
-    'anon-scaleway',
-    'anon-tiarap',
-  ] },
-  { server_name = 'publicarray-au', via = [
-    'anon-ibksturm',
-    'anon-tiarap',
-  ] },
-  { server_name = 'scaleway-ams', via = [
-    'anon-scaleway',
-    'anon-meganerd',
-  ] },
-  { server_name = 'scaleway-fr', via = [
-    'anon-meganerd',
-    'anon-v.dnscrypt.uk-ipv4',
-  ] },
-  { server_name = 'v.dnscrypt.uk-ipv4', via = [
-    'anon-scaleway',
-    'anon-meganerd',
-  ] },
-]
-```
-
-- Edit `/etc/resolv.conf` :
-
-```
-nameserver 127.0.0.1
-options edns0 single-request-reopen
-```
-
-and for permanent `/etc/resolv.conf` file :
-
-```bash
-chattr +i /etc/resolv.conf
-```
-
-- Start service and add it ot the boot time :
-
-```bash
-sudo systemctl start dnscrypt-proxy
-sudo systemctl enable dnscrypt-proxy
-```
-
-<br>
-
-### dnsmasq : Configure `dnsmasq` 
-
-```bash
-sudo pacman -S dnsmasq
-```
-Then : 
-
-```bash
-sudo mkdir -p /etc/NetworkManager/conf.d
-sudo nano /etc/NetworkManager/conf.d/dns.conf
-```
-Put : 
-
-```INI
-[main]
-dns=dnsmasq
-```
-Then configure dnsmasq to cloudflare DNS in `/etc/NetworkManager/dnsmasq.d/cloudflare.conf` :
-
-```
-no-resolv
-server=1.1.1.1
-server=1.0.0.1
-```
-Then, Restart NetworkManager:  : 
-
-```
-sudo systemctl restart NetworkManager
-```
-
-<br>
 
 ### Bunch of useful utilities:
 
@@ -1222,33 +1204,33 @@ passmenu
 ```
 
 - **pass otp :**
-    - To add an otp, first you need URI. you can get it from QR-Code :
+  - To add an otp, first you need URI. you can get it from QR-Code :
 
-    ```bash
-    zbarimg -q qrcode.png
-    ```
+  ```bash
+  zbarimg -q qrcode.png
+  ```
 
-    - Then you can add it to pass otp :
+  - Then you can add it to pass otp :
 
-    ```bash
-    pass otp add myGmailOtp
-    ```
+  ```bash
+  pass otp add myGmailOtp
+  ```
 
-    - To see and check the otp URI :
+  - To see and check the otp URI :
 
-    ```bash
-    pass myGmailOtp
-    ```
+  ```bash
+  pass myGmailOtp
+  ```
 
-    - To get otp code :
+  - To get otp code :
 
-    ```bash
-    pass otp myGmailOtp
-    ```
+  ```bash
+  pass otp myGmailOtp
+  ```
 
 #### To export keys and pass :
 
--   1. Password store directory :
+- 1. Password store directory :
 
 ```bash
 ~/.password-store/
@@ -1256,7 +1238,7 @@ passmenu
 # tar czf pass-backup.tar.gz ~/.password-store
 ```
 
--   2. Export your GPG keys :
+- 2. Export your GPG keys :
 
 ```bash
 gpg --output public.gpg --armor --export <gpg_key_email_address_or_id>
@@ -1333,24 +1315,24 @@ sudo parted -a optimal /dev/sdb -- mkpart primary 0% 100%
 
 - For **NTFS** partition :
 
-    ```bash
-    sudo pacman -S ntfsprogs
-    ```
+  ```bash
+  sudo pacman -S ntfsprogs
+  ```
 
-    - Format the partition :
+  - Format the partition :
 
-    ```bash
-    mkfs.ntfs -f /dev/sdb1
-    ```
+  ```bash
+  mkfs.ntfs -f /dev/sdb1
+  ```
 
 - For **exFAT** partition :
 
-    ```bash
-    sudo pacman -S exfatprogs
-    ```
+  ```bash
+  sudo pacman -S exfatprogs
+  ```
 
-    - Format the partition :
+  - Format the partition :
 
-    ```bash
-    sudo mkfs.exfat -n USB /dev/sdb1
-    ```
+  ```bash
+  sudo mkfs.exfat -n USB /dev/sdb1
+  ```
