@@ -32,8 +32,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal = "kitty"
--- local fileManager = "nautilus"
-local fileManager = "strata"
+local fileManager = "nautilus"
 local browser = "zen-browser"
 local menu = "rofi -show drun -show-icons -dpi 150"
 local runner = "rofi -show run -dpi 150"
@@ -116,6 +115,9 @@ hl.config({
 		allow_tearing = false,
 
 		layout = "dwindle",
+	},
+	xwayland = {
+		force_zero_scaling = true,
 	},
 	group = {
 		col = {
@@ -310,7 +312,7 @@ local secondMod = "SUPER + SHIFT"
 
 -- => APP
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
 hl.bind(secondMod .. " + space", hl.dsp.exec_cmd(runner))
@@ -514,6 +516,7 @@ hl.window_rule({
 	name = "telegram",
 	match = { class = "org.telegram.desktop" },
 	float = true,
+	size = "900 1000",
 	center = true,
 })
 
