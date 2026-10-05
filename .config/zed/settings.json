@@ -6,96 +6,33 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "context_servers": {
+    "mcp-server-playwright": {
+      "enabled": true,
+      "remote": false,
+      "settings": {},
+    },
+  },
   "show_edit_predictions": false,
   "agent": {
-    "inline_assistant_model": {
-      "provider": "zed.dev",
-      "model": "gpt-5.6-sol",
-      "enable_thinking": false,
-    },
     "default_model": {
-      "effort": "medium",
-      "provider": "zed.dev",
-      "model": "gpt-5.6-luna",
-      "enable_thinking": true,
+      "provider": "OrcaRouter",
+      "model": "z-ai/glm-5.3-flash-free",
+      "enable_thinking": false
     },
-    "favorite_models": [
-      {
-        "provider": "zed.dev",
-        "model": "gpt-5.6-sol",
-        "enable_thinking": true,
-        "effort": "medium"
-      },
-      {
-        "provider": "OrcaRouter",
-        "model": "z-ai/glm-5.3-flash-free",
-        "enable_thinking": true,
-        "effort": "medium"
-      },
-      {
-        "provider": "zed.dev",
-        "model": "gpt-5.6-luna",
-        "enable_thinking": true,
-        "effort": "medium"
-      },
-      {
-        "provider": "zed.dev",
-        "model": "claude-sonnet-5",
-        "enable_thinking": true,
-        "effort": "high"
-      },
-      {
-        "provider": "zed.dev",
-        "model": "claude-opus-5",
-        "enable_thinking": true,
-        "effort": "high"
-      },
-      {
-        "provider": "codeCraftApi",
-        "model": "gpt-5.6-sol",
-        "enable_thinking": true,
-        "effort": "medium"
-      },
-      {
-        "provider": "codeCraftApi",
-        "model": "qwen3.8-max",
-        "enable_thinking": true,
-        "effort": "medium"
-      }
-    ],
+    "favorite_models": [],
     "model_parameters": [],
   },
   "language_models": {
-    "opencode": {
-      "show_zen_models": true,
-      "show_go_models": false,
-    },
     "openai_compatible": {
-      "codeCraftApi": {
-        "api_url": "https://codecraftapi.com/v1",
+      "OrcaRouter": {
+        "api_url": "https://api.orcarouter.ai/v1/chat/completions",
         "available_models": [
           {
-            "name": "gpt-5.6-sol",
-            "max_tokens": 100000,
+            "name": "z-ai/glm-5.3-flash-free",
+            "max_tokens": 200000,
             "max_output_tokens": 32000,
-            "max_completion_tokens": 100000,
-            "reasoning_effort": "medium",
-            "capabilities": {
-              "tools": true,
-              "images": false,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-              "interleaved_reasoning": false,
-              "max_tokens_parameter": false
-            }
-          },
-          {
-            "name": "qwen3.8-max",
-            "max_tokens": 1000000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 1000000,
-            "reasoning_effort": "medium",
+            "max_completion_tokens": 200000,
             "capabilities": {
               "tools": true,
               "images": false,
@@ -107,73 +44,14 @@
             }
           }
         ]
-      },
-      "OrcaRouter": {
-        "api_url": "https://api.orcarouter.ai/v1",
-        "available_models": [
-          {
-            "name": "z-ai/glm-5.3-flash-free",
-            "max_tokens": 1000000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 1000000,
-            "reasoning_effort": "medium",
-            "capabilities": {
-              "tools": true,
-              "images": true,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-              "interleaved_reasoning": false,
-              "max_tokens_parameter": false,
-            },
-          },
-          {
-            "name": "deepseek/deepseek-v4-flash-free",
-            "max_tokens": 1000000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 1000000,
-            "reasoning_effort": "medium",
-            "capabilities": {
-              "tools": true,
-              "images": false,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-              "interleaved_reasoning": false,
-              "max_tokens_parameter": false,
-            },
-          },
-          {
-            "name": "orcarouter/free",
-            "max_tokens": 1000000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 1000000,
-            "reasoning_effort": "medium",
-            "capabilities": {
-              "tools": true,
-              "images": true,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-              "interleaved_reasoning": false,
-              "max_tokens_parameter": false,
-            },
-          },
-        ],
-      },
+      }
     },
-  },
-  "agent_servers": {
     "opencode": {
-      "default_config_options": {
-        "mode": "build",
-        "effort": "medium",
-        "model": "opencode/muse-spark-1.3-contributor-free",
-      },
-      "type": "registry",
+      "show_zen_models": true,
+      "show_go_models": false,
     },
   },
-
+  "agent_servers": {},
   "edit_predictions": {
     "allow_data_collection": "no",
     "disabled_globs": [".env"],
