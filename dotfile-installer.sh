@@ -374,7 +374,6 @@ PACKAGES=(
     "9|kitty|pacman|GPU-accelerated terminal emulator|config:.config/kitty=>~/.config/kitty|"
 
     "9|nautilus|pacman|GNOME file manager||"
-    "9|strata|aur|A fast, keyboard-first file manager for Linux||"
     "9|file-roller|pacman|Archive manager||"
 
     "9|zen-browser-bin|aur|Privacy-focused Firefox-based web browser||"
@@ -382,7 +381,6 @@ PACKAGES=(
     "9|telegram-desktop|pacman|Telegram desktop client||"
     "9|gnome-calculator|pacman|GNOME calculator application||"
     "9|zed|pacman|High-performance modern code editor|config:.config/zed=>~/.config/zed|"
-    "9|visual-studio-code-bin|aur|Microsoft Visual Studio Code binary package||"
     "9|obsidian|pacman|Markdown knowledge-management application||"
 
     "9|ocrdesktop|pacman|Desktop OCR utility||"
@@ -394,6 +392,7 @@ PACKAGES=(
 
     "9|spotify|aur|Spotify client|config:applications/spotify.desktop=>~/.local/share/applications/spotify.desktop|command:update-desktop-database ~/.local/share/applications"
 
+    "9|rencal-bin|aur|A gui calendar||"
 )
 
 
