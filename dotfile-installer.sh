@@ -393,6 +393,7 @@ PACKAGES=(
     "9|spotify|aur|Spotify client|config:applications/spotify.desktop=>~/.local/share/applications/spotify.desktop|command:update-desktop-database ~/.local/share/applications"
 
     "9|rencal-bin|aur|A gui calendar||"
+    "9|photocraft-bin|aur|An open-source, clean-room reimplementation of Adobe Photoshop in pure Rust||"
 )
 
 
