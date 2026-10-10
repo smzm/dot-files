@@ -373,7 +373,7 @@ PACKAGES=(
 
     "9|kitty|pacman|GPU-accelerated terminal emulator|config:.config/kitty=>~/.config/kitty|"
 
-    "9|nautilus|pacman|GNOME file manager||"
+    "9|nautilus|pacman|GNOME file manager|config:.config/user-dirs.dirs=>~/.config/user-dirs.dirs;|"
     "9|file-roller|pacman|Archive manager||"
 
     "9|zen-browser-bin|aur|Privacy-focused Firefox-based web browser||"
