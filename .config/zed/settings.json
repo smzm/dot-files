@@ -18,7 +18,7 @@
     "default_model": {
       "provider": "OrcaRouter",
       "model": "z-ai/glm-5.3-flash-free",
-      "enable_thinking": false
+      "enable_thinking": false,
     },
     "favorite_models": [],
     "model_parameters": [],
@@ -40,11 +40,11 @@
               "prompt_cache_key": false,
               "chat_completions": true,
               "interleaved_reasoning": false,
-              "max_tokens_parameter": false
-            }
-          }
-        ]
-      }
+              "max_tokens_parameter": false,
+            },
+          },
+        ],
+      },
     },
     "opencode": {
       "show_zen_models": true,
@@ -205,5 +205,7 @@
     "sql": true,
     "make": true,
     "mcp-server-playwright": true,
+    "latex": true,
+    "latex-snippets": true,
   },
 }
