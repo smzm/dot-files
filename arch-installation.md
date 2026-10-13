@@ -850,7 +850,6 @@ sudo pacman -S --needed \
   mesa lib32-mesa lib32-libdrm libdrm \
   vulkan-icd-loader vulkan-intel vulkan-mesa-implicit-layers \
   vulkan-tools intel-media-driver libva libva-nvidia-driver \
-  linux-omarchy-headers
 ```
 
 Decide which case matches the hardware:
