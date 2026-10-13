@@ -737,13 +737,13 @@ systemctl enable ly@tty2.service
 To enable autologin, edit the autologin file in :
 
 ```bash
-vim /etc/ly/config.conf
+vim /etc/ly/config.ini
 ```
 
 Add the following:
 
 ```conf
-auto_login_session = hyprland
+auto_login_session = Hyprland	// With capital H
 auto_login_user = <username>
 ```
 
