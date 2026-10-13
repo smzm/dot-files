@@ -841,6 +841,18 @@ Adjust that list to the GPUs actually installed.
 
 On a hybrid machine, both GPUs stay available and the compositor renders on one of them.
 
+Install both drivers : 
+
+```bash
+sudo pacman -S --needed \
+  dkms nvidia-open-dkms nvidia-utils lib32-nvidia-utils \
+  linux-firmware-nvidia egl-gbm egl-wayland egl-wayland2 egl-x11 \
+  mesa lib32-mesa lib32-libdrm libdrm \
+  vulkan-icd-loader vulkan-intel vulkan-mesa-implicit-layers \
+  vulkan-tools intel-media-driver libva libva-nvidia-driver \
+  linux-omarchy-headers
+```
+
 Decide which case matches the hardware:
 
 ```text
