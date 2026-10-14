@@ -852,6 +852,16 @@ sudo pacman -S --needed \
   vulkan-tools intel-media-driver libva libva-nvidia-driver \
 ```
 
+In `/etc/modprobe.d/nvidia.conf` : 
+
+Put this contents:
+
+```text
+options nvidia_drm modeset=1
+```
+
+This explicitly enables NVIDIA DRM modesetting, which is relevant to Wayland.
+
 Decide which case matches the hardware:
 
 ```text
