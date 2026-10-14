@@ -53,9 +53,9 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("hyprpolkitagent")
 	hl.exec_cmd("nm-applet")
 	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4500 -b 1.0:0.9")
-	hl.exec_cmd("hyprpaper")
 	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 	hl.exec_cmd("clipse -listen")
+	--    hl.exec_cmd("hyprpaper")
 end)
 
 -------------------------------
@@ -75,7 +75,6 @@ hl.env("OZONE_PLATFORM", "wayland")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("NVD_BACKEND", "direct")
-
 
 -----------------------
 ----- PERMISSIONS -----
@@ -105,7 +104,7 @@ hl.config({
 		gaps_in = 4,
 		gaps_out = 8,
 
-		border_size = 4,
+		border_size = 2,
 
 		col = {
 			active_border = { colors = { "rgb(312289)", "rgb(6615B2)" }, angle = 45 },
