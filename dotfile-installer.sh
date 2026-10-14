@@ -149,6 +149,7 @@ PACKAGES=(
     "1|gvfs-mtp|pacman|GVFS support for MTP devices such as Android phones||"
     "1|gvfs-gphoto2|pacman|GVFS support for cameras and PTP devices||"
 
+    "1|ddcutil|pacman|Monitor and control monitors and displays using DDC/CI||"
 
     # ═════════════════════════════════════════════════════════════
     # Hyprland / Wayland
@@ -221,7 +222,7 @@ PACKAGES=(
     # Section 4
     # ═════════════════════════════════════════════════════════════
 
-    "4|waybar|pacman|Highly customizable Wayland status bar|config:.config/waybar=>~/.config/waybar|"
+    "4|waybar-git|aur|Highly customizable Wayland status bar|config:.config/waybar=>~/.config/waybar|"
 
     "4|inotify-tools|pacman|Filesystem event monitoring utilities||"
     "4|python-setuptools|pacman|Python package build and installation utilities||"
