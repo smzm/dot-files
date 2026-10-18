@@ -55,4 +55,4 @@ map <C-v> toggle_fullscreen
 set database "sqlite"
 
 # ============================== THEME ===============================
-include "themes/monoshine"
+#include "themes/monoshine"
