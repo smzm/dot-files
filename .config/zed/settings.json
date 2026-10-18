@@ -42,8 +42,8 @@
               "prompt_cache_key": false,
               "chat_completions": true,
               "interleaved_reasoning": false,
-              "max_tokens_parameter": false
-            }
+              "max_tokens_parameter": false,
+            },
           },
           {
             "name": "free/deepseek-v4.1-flash",
@@ -58,10 +58,10 @@
               "prompt_cache_key": false,
               "chat_completions": true,
               "interleaved_reasoning": false,
-              "max_tokens_parameter": false
-            }
-          }
-        ]
+              "max_tokens_parameter": false,
+            },
+          },
+        ],
       },
       "OrcaRouter": {
         "api_url": "https://api.orcarouter.ai/v1/chat/completions",
@@ -251,8 +251,9 @@
     "env": true,
     "color-highlight": true,
     "rust-snippets": true,
-    "rust-analyzer": true,
     "mcp-server-playwright": true,
     "latex-snippets": true,
+    "rust-glancer": true,
+    "rust-analyzer": true,
   },
 }
