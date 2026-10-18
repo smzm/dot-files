@@ -13,18 +13,56 @@
       "settings": {},
     },
   },
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "agent": {
     "default_model": {
-      "provider": "OrcaRouter",
-      "model": "z-ai/glm-5.3-flash-free",
-      "enable_thinking": false,
+      "effort": "medium",
+      "provider": "apinex",
+      "model": "free/deepseek-v4.1-flash",
+      "enable_thinking": true,
     },
     "favorite_models": [],
     "model_parameters": [],
   },
   "language_models": {
     "openai_compatible": {
+      "apinex": {
+        "api_url": "https://api.apinex.bond/v1",
+        "available_models": [
+          {
+            "name": "free/qwen-3.8-max",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "reasoning_effort": "medium",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "free/deepseek-v4.1-flash",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "reasoning_effort": "medium",
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          }
+        ]
+      },
       "OrcaRouter": {
         "api_url": "https://api.orcarouter.ai/v1/chat/completions",
         "available_models": [
@@ -53,6 +91,12 @@
   },
   "agent_servers": {},
   "edit_predictions": {
+    "mercury": {
+      "prediction_debounce": 300,
+    },
+    "zed": {
+      "prediction_debounce": 0,
+    },
     "allow_data_collection": "no",
     "disabled_globs": [".env"],
     "mode": "eager",
@@ -61,7 +105,7 @@
       "max_tokens": 150,
       "prediction_debounce": 250,
     },
-    "provider": "codestral",
+    "provider": "mercury",
   },
   "cli_default_open_behavior": "existing_window",
   "proxy": "",
@@ -130,7 +174,7 @@
   },
   "preferred_line_length": 110,
   "show_wrap_guides": true,
-  "soft_wrap": "none",
+  "soft_wrap": "editor_width",
   "vim": {
     "use_smartcase_find": true,
   },
@@ -161,9 +205,9 @@
     "anthropic_retention": false,
   },
   "icon_theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Colored Zed Icons Theme Dark",
-    "dark": "Warm Charmed Icons",
+    "dark": "Colored Zed Icons Theme Dark",
   },
   "autosave": "on_focus_change",
   "format_on_save": "on",
@@ -189,7 +233,7 @@
   "theme": {
     "mode": "dark",
     "light": "v0-light",
-    "dark": "Rich Vesper",
+    "dark": "Modern Vesper",
   },
   "auto_install_extensions": {
     "html": true,
@@ -200,12 +244,12 @@
     "make": true,
     "lua": true,
     "latex": true,
+    "rich-vesper": true,
     "catppuccin-blur": true,
     "colored-zed-icons-theme": true,
     "rainbow-csv": true,
     "env": true,
     "color-highlight": true,
-    "rich-vesper": true,
     "rust-snippets": true,
     "rust-analyzer": true,
     "mcp-server-playwright": true,
