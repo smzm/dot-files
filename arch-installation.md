@@ -878,12 +878,9 @@ Laptop/board routing the panel through Intel
 
 For a desktop whose monitor is physically attached to NVIDIA, early module loading can make graphical startup more deterministic:
 
+- In `/etc/mkinitcpio.conf.d/nvidia.conf` : 
 ```bash
-mkdir -p /etc/mkinitcpio.conf.d
-
-cat > /etc/mkinitcpio.conf.d/20-nvidia.conf <<'EOF'
 MODULES+=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-EOF
 ```
 
 On hybrid laptops, early loading may increase dGPU activity. Treat it as a hardware-policy decision, not a universal optimization.
