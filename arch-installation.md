@@ -751,19 +751,32 @@ auto_login_user = <username>
 
 <br>
 
-### Install audio drivers (PipeWire)
+## Insall Hardwares 
+
+Uncomment `[multilib]` and its Include line in `/etc/pacman.conf`, then run `sudo pacman -Syu`. This is needed for Steam, Wine and other 32-bit software.
+
+### Firmware and microcode
+
+- `intel-ucode` : CPU microcode updates, loaded at early boot. Fixes CPU bugs and stability issues.
+- `linux-firmware` : Firmware blobs for GPUs, Wi-Fi, Bluetooth and more. Includes the NVIDIA firmware split package.
+- `sof-firmware` : Sound Open Firmware for the Intel audio DSP. 
+
+```bash
+sudo pacman -S --needed intel-ucode linux-firmware sof-firmware
+```
+
+### Install audio drivers
 
 PipeWire is the modern audio server standard for Wayland. It replaces PulseAudio and provides better Bluetooth and screen-sharing support.
 
 ```bash
-sudo pacman -S pipewire pipewire-audio pipewire-alsa pipewire-pulse wireplumber \
+sudo pacman -S --needed pipewire pipewire-alsa pipewire-pulse pipewire-jack pipewire-audio \
+  wireplumber gst-plugin-pipewire libpulse alsa-utils alsa-ucm-conf sof-firmware \
+  pavucontrol helvum \
 ```
 
-```bash
-sudo pacman -S pavucontrol helvum
-```
 
-Enable and start the PipeWire services:
+Enable and start the PipeWire and wireplumber services:
 
 ```bash
 systemctl --user enable --now pipewire.socket
@@ -841,51 +854,49 @@ Adjust that list to the GPUs actually installed.
 
 On a hybrid machine, both GPUs stay available and the compositor renders on one of them.
 
+First uncomment 32 bit packages in `/etc/pacman.conf` : 
+
 Install both drivers : 
 
 ```bash
 sudo pacman -S --needed \
-  dkms nvidia-open-dkms nvidia-utils lib32-nvidia-utils \
+  nvidia-open-dkms nvidia-utils lib32-nvidia-utils \
   linux-firmware-nvidia egl-gbm egl-wayland egl-wayland2 egl-x11 \
   mesa lib32-mesa lib32-libdrm libdrm \
   vulkan-icd-loader vulkan-intel vulkan-mesa-implicit-layers \
   vulkan-tools intel-media-driver libva libva-nvidia-driver \
 ```
+Create two small files.
 
-In `/etc/modprobe.d/nvidia.conf` : 
-
-Put this contents:
-
-```text
+- `/etc/modprobe.d/nvidia.conf` : 
+```
 options nvidia_drm modeset=1
 ```
-
-This explicitly enables NVIDIA DRM modesetting, which is relevant to Wayland.
-
-Decide which case matches the hardware:
-
-```text
-Desktop, monitor cable in the NVIDIA card
-    → NVIDIA is the primary renderer
-    → render offload is unnecessary
-
-Laptop/board routing the panel through Intel
-    → Intel is the primary renderer
-    → NVIDIA is used per-application via offload
+- `/etc/mkinitcpio.conf.d/nvidia.conf` :
 ```
-
-- Optional early NVIDIA module loading :
-
-For a desktop whose monitor is physically attached to NVIDIA, early module loading can make graphical startup more deterministic:
-
-- In `/etc/mkinitcpio.conf.d/nvidia.conf` : 
-```bash
 MODULES+=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
 ```
 
-On hybrid laptops, early loading may increase dGPU activity. Treat it as a hardware-policy decision, not a universal optimization.
+Then rebuild the initramfs:
+`sudo mkinitcpio -P` 
 
-<br>
+Why:
+- `modeset=1` turns on kernel mode setting for NVIDIA. Wayland compositors require it. Recent drivers may already default to it, but Omarchy sets it explicitly, which is harmless.
+- Loading the four modules in the initramfs brings the display up early, which avoids flicker and missing-display problems at boot. Removes it only on NVIDIA only machines, and keeps it on machines with an Intel iGPU.
+
+also make sure sets this env variables : 
+
+| Variable | What it does |
+| --- | --- |
+| `LIBVA_DRIVER_NAME=nvidia` | Makes video decode use the NVIDIA GPU. |
+| `__GLX_VENDOR_LIBRARY_NAME=nvidia` | X11/GLX apps in Xwayland use NVIDIA's GLX. |
+| `ELECTRON_OZONE_PLATFORM_HINT=wayland` | Electron apps (Obsidian, Telegram and others) run natively on Wayland, so text is sharp and scaled correctly instead of blurry. |
+| `OZONE_PLATFORM=wayland` | Same for Chromium-based browsers. |
+| `MOZ_ENABLE_WAYLAND=1` | Firefox-based browsers run natively on Wayland. |
+| `QT_QPA_PLATFORM=wayland;xcb` | Qt apps prefer Wayland and fall back to X11. |
+| `QT_QPA_PLATFORMTHEME=gtk3` | Qt apps follow your GTK theme and fonts. |
+| `GDK_BACKEND=wayland,x11,*` | GTK apps prefer Wayland, then X11. |
+| `XCURSOR_SIZE, HYPRCURSOR_SIZE` | Consistent cursor size (24). |
 
 ### Customize Hyprland
 
@@ -1056,16 +1067,33 @@ yay -S jmtpfs
 ### Appearance packages
 
 ```bash
-yay -S orchis-theme
+sudo pacman -S --needed gnome-themes-extra yaru-icon-theme
 ```
-
-- #### [Apple cursor](https://github.com/ful1e5/apple_cursor)
-
+And sets these gsettings values :
 ```bash
-yay -S apple_cursor
-```
 
-Edit cursor in `GTK settings`.
+// UI and monospace fonts for GTK apps.
+gsettings set org.gnome.desktop.interface font-name 'Adwaita Sans 11'
+gsettings set org.gnome.desktop.interface document-font-name 'Adwaita Sans 12'
+gsettings set org.gnome.desktop.interface monospace-font-name 'Adwaita Mono 11'
+
+// Clean text without color fringes, ideal on high-DPI panels.
+gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
+
+// Keeps glyph shapes natural.
+gsettings set org.gnome.desktop.interface font-hinting 'slight'
+
+// Make UI text larger or smaller. This is a personal choice tuned for your monitor, so start at 1.0 and adjust.
+gsettings set org.gnome.desktop.interface text-scaling-factor 1
+
+// Dark mode for GTK 3 and GTK 4 apps.
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+
+// Set Theme, Icon and Cursor size
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+gsettings set org.gnome.desktop.interface icon-theme 'Yaru-purple'
+gsettings set org.gnome.desktop.interface cursor-size 24
+```
 
 <br>
 <br>
@@ -1121,6 +1149,63 @@ UUID=YOUR-UUID /mnt/[name] ntfs3 uid=1000,gid=1000,force 0 0
 
 ### Install fonts
 
+```bash
+sudo pacman -S --needed ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoji \
+  ttf-jetbrains-mono-nerd adwaita-fonts woff2-font-awesome
+```
+
+#### Add the fontconfig rules
+Create `~/.config/fontconfig/conf.d/50-font.conf` :
+
+```
+<?xml version='1.0'?>
+<!DOCTYPE fontconfig SYSTEM 'fonts.dtd'>
+<fontconfig>
+  <match target='pattern'>
+    <test name='family' qual='any'><string>sans-serif</string></test>
+    <edit name='family' mode='assign' binding='strong'><string>Liberation Sans</string></edit>
+  </match>
+  <match target='pattern'>
+    <test name='family' qual='any'><string>serif</string></test>
+    <edit name='family' mode='assign' binding='strong'><string>Liberation Serif</string></edit>
+  </match>
+  <match target='pattern'>
+    <test name='family' qual='any'><string>monospace</string></test>
+    <edit name='family' mode='assign' binding='strong'><string>JetBrainsMono Nerd Font</string></edit>
+  </match>
+
+  <match target='pattern'>
+    <test name='lang' compare='contains'><string>ar</string></test>
+    <edit name='family' mode='prepend' binding='strong'><string>Noto Naskh Arabic</string></edit>
+  </match>
+  <match target='pattern'>
+    <test name='lang' compare='contains'><string>ur</string></test>
+    <edit name='family' mode='append' binding='strong'><string>Noto Nastaliq Urdu</string></edit>
+  </match>
+  <match target='pattern'>
+    <edit name='family' mode='append' binding='strong'><string>Noto Naskh Arabic</string></edit>
+  </match>
+
+  <alias><family>system-ui</family><prefer><family>Liberation Sans</family></prefer></alias>
+  <alias><family>ui-monospace</family><default><family>monospace</family></default></alias>
+  <alias><family>-apple-system</family><prefer><family>Liberation Sans</family></prefer></alias>
+  <alias><family>BlinkMacSystemFont</family><prefer><family>Liberation Sans</family></prefer></alias>
+  <alias><family>Liberation Sans</family><accept><family>JetBrainsMono Nerd Font</family><family>Noto Color Emoji</family></accept></alias>
+  <alias><family>sans-serif</family><accept><family>JetBrainsMono Nerd Font</family><family>Noto Color Emoji</family></accept></alias>
+  <alias><family>serif</family><accept><family>Noto Color Emoji</family></accept></alias>
+  <alias><family>monospace</family><accept><family>Noto Color Emoji</family></accept></alias>
+</fontconfig>
+```
+
+Refresh and verify :
+
+```
+fc-cache -f
+fc-match sans-serif; fc-match serif; fc-match monospace; fc-match emoji
+```
+ 
+
+#### Custom fonts
 - Copy your fonts directories in `/usr/share/fonts`.
 - Copy fonts in `~/.fonts` directory and then run:
 
