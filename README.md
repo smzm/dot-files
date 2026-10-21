@@ -6,7 +6,7 @@ The repository also contains configuration and installation instructions for **A
 
 ---
 
-# Installation
+## Installation
 
 Clone the repository:
 
