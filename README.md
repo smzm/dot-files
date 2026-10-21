@@ -8,8 +8,6 @@ The repository also contains configuration and installation instructions for **A
 
 # Installation
 
-## Arch Linux
-
 Clone the repository:
 
 ```bash
