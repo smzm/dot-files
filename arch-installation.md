@@ -1067,8 +1067,12 @@ yay -S jmtpfs
 ### Appearance packages
 
 ```bash
-sudo pacman -S --needed gnome-themes-extra yaru-icon-theme
+sudo pacman -S --needed gnome-themes-extra
 ```
+```bash
+yay -S yaru-icon-theme
+```
+
 And sets these gsettings values :
 ```bash
 
