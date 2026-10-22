@@ -821,7 +821,7 @@ The normal kernel driver may be `i915` or, on supported newer hardware, `xe`. Do
 ```bash
 pacman -S \
   nvidia-open nvidia-utils nvidia-settings egl-wayland \
-  mesa-utils vulkan-tools libva-utils
+  mesa-utils vulkan-tools libva-utils libva-nvidia-driver
 ```
 
 ```bash
@@ -833,14 +833,9 @@ If using a custom kernel or several kernels, use DKMS instead:
 ```bash
 pacman -S \
   nvidia-open-dkms nvidia-utils egl-wayland \
-  mesa-utils vulkan-tools libva-utils
+  mesa-utils vulkan-tools libva-utils libva-nvidia-driver
 ```
 
-For NVIDIA VA-API video decoding, add the driver only when you intend to use it:
-
-```bash
-pacman -S libva-nvidia-driver
-```
 
 For Steam, Wine, and other 32-bit applications, enable `[multilib]` in `/etc/pacman.conf`, run `pacman -Syu`, and install the matching 32-bit userspace packages:
 
@@ -860,11 +855,12 @@ Install both drivers :
 
 ```bash
 sudo pacman -S --needed \
-  nvidia-open-dkms nvidia-utils lib32-nvidia-utils \
+  nvidia-open-dkms nvidia-utils  \
   linux-firmware-nvidia egl-gbm egl-wayland egl-wayland2 egl-x11 \
-  mesa lib32-mesa lib32-libdrm libdrm \
+  mesa libdrm \
   vulkan-icd-loader vulkan-intel vulkan-mesa-implicit-layers \
   vulkan-tools intel-media-driver libva libva-nvidia-driver \
+  lib32-nvidia-utils lib32-mesa lib32-libdrm \
 ```
 Create two small files.
 
@@ -897,6 +893,11 @@ also make sure sets this env variables :
 | `QT_QPA_PLATFORMTHEME=gtk3` | Qt apps follow your GTK theme and fonts. |
 | `GDK_BACKEND=wayland,x11,*` | GTK apps prefer Wayland, then X11. |
 | `XCURSOR_SIZE, HYPRCURSOR_SIZE` | Consistent cursor size (24). |
+
+
+- Enable the NVIDIA suspend/resume services with : 
+
+`sudo systemctl enable nvidia-suspend.service nvidia-resume.service nvidia-hibernate.service`
 
 ### Customize Hyprland
 
@@ -951,6 +952,26 @@ hl.bind("SUPER + mouse:273", hl.dsp.window.resize())
 
 ```bash
 gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+```
+
+<br>
+
+### Enable weekly SSD TRIM
+An SSD can’t overwrite data in place. It has to erase a whole block before writing to it again. When you delete a file, your filesystem (ext4) just marks that space as free, and the SSD never finds out. It still thinks those blocks hold valid data.
+TRIM is a message from the OS to the drive saying “these blocks are no longer in use.” The drive can then erase them in the background, ahead of time, instead of in the middle of a write.
+
+
+```bash
+sudo pacman -S nvme-cli
+sudo nvme smart-log /dev/nvme0
+```
+🔧 Enable it and test it
+
+```bash
+lsblk --discard                      # non-zero DISC-GRAN/DISC-MAX = TRIM supported
+sudo systemctl enable --now fstrim.timer
+sudo fstrim -av                      # optional: run one pass now
+systemctl list-timers fstrim.timer   # confirm the weekly schedule
 ```
 
 <br>

@@ -21,8 +21,8 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
 	output = "",
-	position = "auto",
-	mode = "3440x1440@60",
+	position = "0x0",
+	mode = "3440x1440@144",
 	scale = "1.25",
 })
 
@@ -48,14 +48,15 @@ local colorPicker = "hyprpicker"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function()
+	hl.exec_cmd("xrdb -merge ~/.Xresources")
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("hyprpolkitagent")
 	hl.exec_cmd("nm-applet")
-	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4500 -b 1.0:0.9")
 	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 	hl.exec_cmd("clipse -listen")
-	--    hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4000 -b 1.0:0.9")
 end)
 
 -------------------------------
@@ -64,8 +65,8 @@ end)
 
 -- See https://wiki.hypr.land/Configuring/Advanced-and-Cool/Environment-variables/
 
-hl.env("XCURSOR_SIZE", "24")
-hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("XCURSOR_SIZE", "30")
+hl.env("HYPRCURSOR_SIZE", "30")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("ELECTRON_OZONE_PLATFORM_HINT", "wayland")
@@ -75,6 +76,7 @@ hl.env("OZONE_PLATFORM", "wayland")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("NVD_BACKEND", "direct")
+hl.env("MOZ_DISABLE_RDD_SANDBOX", "1")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -121,6 +123,23 @@ hl.config({
 	},
 	xwayland = {
 		force_zero_scaling = true,
+	},
+
+	-- Direct scanout: the GPU scans the lone fullscreen client's buffer straight
+	-- to the display instead of compositing it through Hyprland first.
+	-- 0 = off, 1 = always, 2 = auto (only when the client reports content type "game").
+	-- NOTE: there is an unfixed NVIDIA black-screen bug under native Wayland
+	-- (hyprwm/Hyprland#14843). If a fullscreen window ever goes black, set this
+	-- to 2 to limit scanout to "game" content, or 0 to disable it entirely.
+	render = {
+		direct_scanout = 1,
+	},
+
+	-- A software-rendered cursor blocks direct scanout, so this has to be 0 for
+	-- the setting above to actually engage.
+	-- 0 = use hardware cursors when possible, 1 = never, 2 = auto.
+	cursor = {
+		no_hardware_cursors = 0,
 	},
 	group = {
 		col = {
@@ -170,7 +189,7 @@ hl.config({
 		blur = {
 			enabled = true,
 			size = 3,
-			passes = 5,
+			passes = 3,
 			vibrancy = 0.1696,
 			popups = true,
 		},
@@ -255,8 +274,9 @@ hl.config({
 hl.config({
 	misc = {
 		force_default_wallpaper = -1, -- Set to 0 or 1 to disable the anime mascot wallpapers
-		disable_hyprland_logo = true, -- If true disables the random hyprland logo / anime girl background. :(
+		disable_hyprland_logo = true, -- If true disables the raedom hyprland logo / anime girl background. :(
 		disable_splash_rendering = true,
+		vrr = 2, -- adaptive sync only for fullscreen windows
 	},
 })
 
