@@ -76,7 +76,7 @@ hl.env("OZONE_PLATFORM", "wayland")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("NVD_BACKEND", "direct")
-hl.env("MOZ_DISABLE_RDD_SANDBOX", "1")
+-- hl.env("MOZ_DISABLE_RDD_SANDBOX", "1")
 
 -----------------------
 ----- PERMISSIONS -----
@@ -106,7 +106,7 @@ hl.config({
 		gaps_in = 4,
 		gaps_out = 8,
 
-		border_size = 2,
+		border_size = 0,
 
 		col = {
 			active_border = { colors = { "rgb(312289)", "rgb(6615B2)" }, angle = 45 },
@@ -177,7 +177,7 @@ hl.config({
 		active_opacity = 1.0,
 		inactive_opacity = 1.0,
 		dim_inactive = true,
-		dim_strength = 0.10,
+		dim_strength = 0.35,
 
 		shadow = {
 			enabled = true,
