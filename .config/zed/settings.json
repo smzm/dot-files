@@ -16,10 +16,9 @@
   "show_edit_predictions": true,
   "agent": {
     "default_model": {
-      "effort": "medium",
-      "provider": "apinex",
-      "model": "free/deepseek-v4.1-flash",
-      "enable_thinking": true,
+      "provider": "mistral",
+      "model": "codestral-latest",
+      "enable_thinking": false,
     },
     "favorite_models": [],
     "model_parameters": [],
@@ -101,6 +100,7 @@
     "disabled_globs": [".env"],
     "mode": "eager",
     "codestral": {
+      "api_url": "https://codestral.mistral.ai",
       "model": "codestral-latest",
       "max_tokens": 150,
       "prediction_debounce": 250,
@@ -219,7 +219,12 @@
   "vim_mode": true,
   "multi_cursor_modifier": "cmd_or_ctrl",
   "ui_font_size": 16.0,
-  "buffer_font_size": 15.0,
+  "buffer_font_size": 16.0,
+  "languages": {
+    "Rust": {
+      "language_servers": ["!rust-analyzer", "..."],
+    },
+  },
   "lsp": {
     "basedpyright": {
       "settings": {
@@ -233,7 +238,7 @@
   "theme": {
     "mode": "dark",
     "light": "v0-light",
-    "dark": "Modern Vesper",
+    "dark": "Catppuccin Mocha (Blur)",
   },
   "auto_install_extensions": {
     "html": true,
