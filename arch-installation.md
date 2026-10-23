@@ -1608,7 +1608,7 @@ The installer will let you select the sections and packages you want to install.
 
 ---
 
-## Windows Terminal
+### Windows Terminal
 
 If you are using windows terminal, you can optionally configure it to match the setup.
 
