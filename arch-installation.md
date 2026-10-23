@@ -751,7 +751,7 @@ auto_login_user = <username>
 
 <br>
 
-## Insall Hardwares 
+## Insall Hardwares
 
 Uncomment `[multilib]` and its Include line in `/etc/pacman.conf`, then run `sudo pacman -Syu`. This is needed for Steam, Wine and other 32-bit software.
 
@@ -759,7 +759,7 @@ Uncomment `[multilib]` and its Include line in `/etc/pacman.conf`, then run `sud
 
 - `intel-ucode` : CPU microcode updates, loaded at early boot. Fixes CPU bugs and stability issues.
 - `linux-firmware` : Firmware blobs for GPUs, Wi-Fi, Bluetooth and more. Includes the NVIDIA firmware split package.
-- `sof-firmware` : Sound Open Firmware for the Intel audio DSP. 
+- `sof-firmware` : Sound Open Firmware for the Intel audio DSP.
 
 ```bash
 sudo pacman -S --needed intel-ucode linux-firmware sof-firmware
@@ -774,7 +774,6 @@ sudo pacman -S --needed pipewire pipewire-alsa pipewire-pulse pipewire-jack pipe
   wireplumber gst-plugin-pipewire libpulse alsa-utils alsa-ucm-conf sof-firmware \
   pavucontrol helvum \
 ```
-
 
 Enable and start the PipeWire and wireplumber services:
 
@@ -836,7 +835,6 @@ pacman -S \
   mesa-utils vulkan-tools libva-utils libva-nvidia-driver
 ```
 
-
 For Steam, Wine, and other 32-bit applications, enable `[multilib]` in `/etc/pacman.conf`, run `pacman -Syu`, and install the matching 32-bit userspace packages:
 
 ```bash
@@ -849,9 +847,9 @@ Adjust that list to the GPUs actually installed.
 
 On a hybrid machine, both GPUs stay available and the compositor renders on one of them.
 
-First uncomment 32 bit packages in `/etc/pacman.conf` : 
+First uncomment 32 bit packages in `/etc/pacman.conf` :
 
-Install both drivers : 
+Install both drivers :
 
 ```bash
 sudo pacman -S --needed \
@@ -862,40 +860,44 @@ sudo pacman -S --needed \
   vulkan-tools intel-media-driver libva libva-nvidia-driver \
   lib32-nvidia-utils lib32-mesa lib32-libdrm \
 ```
+
 Create two small files.
 
-- `/etc/modprobe.d/nvidia.conf` : 
+- `/etc/modprobe.d/nvidia.conf` :
+
 ```
 options nvidia_drm modeset=1
 ```
+
 - `/etc/mkinitcpio.conf.d/nvidia.conf` :
+
 ```
 MODULES+=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)
 ```
 
 Then rebuild the initramfs:
-`sudo mkinitcpio -P` 
+`sudo mkinitcpio -P`
 
 Why:
+
 - `modeset=1` turns on kernel mode setting for NVIDIA. Wayland compositors require it. Recent drivers may already default to it, but Omarchy sets it explicitly, which is harmless.
 - Loading the four modules in the initramfs brings the display up early, which avoids flicker and missing-display problems at boot. Removes it only on NVIDIA only machines, and keeps it on machines with an Intel iGPU.
 
-also make sure sets this env variables : 
+also make sure sets this env variables :
 
-| Variable | What it does |
-| --- | --- |
-| `LIBVA_DRIVER_NAME=nvidia` | Makes video decode use the NVIDIA GPU. |
-| `__GLX_VENDOR_LIBRARY_NAME=nvidia` | X11/GLX apps in Xwayland use NVIDIA's GLX. |
+| Variable                               | What it does                                                                                                                    |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `LIBVA_DRIVER_NAME=nvidia`             | Makes video decode use the NVIDIA GPU.                                                                                          |
+| `__GLX_VENDOR_LIBRARY_NAME=nvidia`     | X11/GLX apps in Xwayland use NVIDIA's GLX.                                                                                      |
 | `ELECTRON_OZONE_PLATFORM_HINT=wayland` | Electron apps (Obsidian, Telegram and others) run natively on Wayland, so text is sharp and scaled correctly instead of blurry. |
-| `OZONE_PLATFORM=wayland` | Same for Chromium-based browsers. |
-| `MOZ_ENABLE_WAYLAND=1` | Firefox-based browsers run natively on Wayland. |
-| `QT_QPA_PLATFORM=wayland;xcb` | Qt apps prefer Wayland and fall back to X11. |
-| `QT_QPA_PLATFORMTHEME=gtk3` | Qt apps follow your GTK theme and fonts. |
-| `GDK_BACKEND=wayland,x11,*` | GTK apps prefer Wayland, then X11. |
-| `XCURSOR_SIZE, HYPRCURSOR_SIZE` | Consistent cursor size (24). |
+| `OZONE_PLATFORM=wayland`               | Same for Chromium-based browsers.                                                                                               |
+| `MOZ_ENABLE_WAYLAND=1`                 | Firefox-based browsers run natively on Wayland.                                                                                 |
+| `QT_QPA_PLATFORM=wayland;xcb`          | Qt apps prefer Wayland and fall back to X11.                                                                                    |
+| `QT_QPA_PLATFORMTHEME=gtk3`            | Qt apps follow your GTK theme and fonts.                                                                                        |
+| `GDK_BACKEND=wayland,x11,*`            | GTK apps prefer Wayland, then X11.                                                                                              |
+| `XCURSOR_SIZE, HYPRCURSOR_SIZE`        | Consistent cursor size (24).                                                                                                    |
 
-
-- Enable the NVIDIA suspend/resume services with : 
+- Enable the NVIDIA suspend/resume services with :
 
 `sudo systemctl enable nvidia-suspend.service nvidia-resume.service nvidia-hibernate.service`
 
@@ -957,14 +959,15 @@ gsettings set org.gnome.desktop.interface color-scheme prefer-dark
 <br>
 
 ### Enable weekly SSD TRIM
+
 An SSD can’t overwrite data in place. It has to erase a whole block before writing to it again. When you delete a file, your filesystem (ext4) just marks that space as free, and the SSD never finds out. It still thinks those blocks hold valid data.
 TRIM is a message from the OS to the drive saying “these blocks are no longer in use.” The drive can then erase them in the background, ahead of time, instead of in the middle of a write.
-
 
 ```bash
 sudo pacman -S nvme-cli
 sudo nvme smart-log /dev/nvme0
 ```
+
 🔧 Enable it and test it
 
 ```bash
@@ -1090,11 +1093,13 @@ yay -S jmtpfs
 ```bash
 sudo pacman -S --needed gnome-themes-extra
 ```
+
 ```bash
 yay -S yaru-icon-theme
 ```
 
 And sets these gsettings values :
+
 ```bash
 
 // UI and monospace fonts for GTK apps.
@@ -1180,6 +1185,7 @@ sudo pacman -S --needed ttf-liberation noto-fonts noto-fonts-cjk noto-fonts-emoj
 ```
 
 #### Add the fontconfig rules
+
 Create `~/.config/fontconfig/conf.d/50-font.conf` :
 
 ```
@@ -1228,9 +1234,9 @@ Refresh and verify :
 fc-cache -f
 fc-match sans-serif; fc-match serif; fc-match monospace; fc-match emoji
 ```
- 
 
 #### Custom fonts
+
 - Copy your fonts directories in `/usr/share/fonts`.
 - Copy fonts in `~/.fonts` directory and then run:
 
@@ -1464,3 +1470,212 @@ sudo parted -a optimal /dev/sdb -- mkpart primary 0% 100%
   ```bash
   sudo mkfs.exfat -n USB /dev/sdb1
   ```
+
+---
+
+## Arch Linux in WSL
+
+### 1. Install Arch Linux
+
+First, update WSL from Windows:
+
+```powershell
+wsl.exe --update
+```
+
+Then install Arch Linux:
+
+```powershell
+wsl --install archlinux
+```
+
+Start Arch Linux:
+
+```powershell
+wsl -d archlinux
+```
+
+---
+
+### 2. Set Arch Linux as the Default WSL Distribution
+
+From a Windows shell:
+
+```powershell
+wsl --set-default Arch
+```
+
+You can verify the installed distributions with:
+
+```powershell
+wsl --list --verbose
+```
+
+---
+
+### 3. Initialize Pacman
+
+Inside Arch Linux, initialize and populate the Pacman keyring:
+
+```bash
+sudo pacman-key --init
+sudo pacman-key --populate
+```
+
+Update the Arch Linux keyring:
+
+```bash
+sudo pacman -Sy archlinux-keyring
+```
+
+Then update the system:
+
+```bash
+sudo pacman -Syyu --noconfirm
+```
+
+---
+
+### 4. Create a User
+
+Install `sudo`:
+
+```bash
+pacman -S sudo
+```
+
+Create the `sudo` group:
+
+```bash
+groupadd sudo
+```
+
+Enable sudo access for the `wheel` group:
+
+```bash
+sed -i '/^#.*%wheel ALL=(ALL:ALL) ALL/s/^#//' /etc/sudoers
+```
+
+Create your user:
+
+```bash
+useradd -m -G wheel,sudo -s /bin/bash <username>
+passwd <username>
+```
+
+Switch to the new user:
+
+```bash
+su - <username>
+```
+
+> Replace `<username>` with the username you want to use.
+
+---
+
+### 5. Set the Default WSL User
+
+From a Windows shell, set your newly created user as the default WSL user:
+
+```powershell
+wsl --manage archlinux --set-default-user <username>
+```
+
+---
+
+### 6. Install the Dotfiles
+
+Install the required base packages:
+
+```bash
+sudo pacman -S git --noconfirm --needed
+```
+
+Clone the repository:
+
+```bash
+git clone https://github.com/smzm/dot-files.git
+cd dot-files
+```
+
+Run the installer:
+
+```bash
+./install.sh
+```
+
+The installer will let you select the sections and packages you want to install. (6, 7, 8)
+
+---
+
+## Windows Terminal
+
+If you are using windows terminal, you can optionally configure it to match the setup.
+
+```json
+"schemes": [
+		{
+			"name": "xcad",
+			"background": "#070707",
+			"black": "#121212",
+			"blue": "#2B4FFF",
+			"brightBlack": "#666666",
+			"brightBlue": "#5C78FF",
+			"brightCyan": "#5AC8FF",
+			"brightGreen": "#905AFF",
+			"brightPurple": "#5EA2FF",
+			"brightRed": "#BA5AFF",
+			"brightWhite": "#FFFFFF",
+			"brightYellow": "#685AFF",
+			"cursorColor": "#FFFFFF",
+			"cyan": "#28B9FF",
+			"foreground": "#F1F1F1",
+			"green": "#D335FF",
+			"purple": "#2883FF",
+			"red": "#A52AFF",
+			"selectionBackground": "#FFFFFF",
+			"white": "#F1F1F1",
+			"yellow": "#3D2AFF"
+		}
+
+	],
+```
+
+```json
+"profiles": {
+	// ...
+    	"defaults": {
+			"colorScheme": "xcad",
+			"bellStyle": "none",
+			"font": {
+				"cellHeight": "2",
+				"face": "CaskaydiaCove Nerd Font",
+				"size": 12,
+				"weight": "light",
+				"features": {
+					"calt": 1,
+					"liga": 1,
+					"zero": 1,
+					"ss03": 1,
+					"ss04": 1,
+					"ss05": 1,
+					"ss19": 1,
+					"ss20": 1,
+					"kern": 1,
+					"dlig": 1,
+					"tnum": 1,
+					"pnum": 1,
+					"case": 1,
+					"salt": 1
+				}
+			},
+			"historySize": 12000,
+			"intenseTextStyle": "all",
+			"opacity": 100,
+			"padding": "10",
+			"scrollbarState": "hidden",
+			"useAcrylic": true
+		},
+	// ...
+}
+```
