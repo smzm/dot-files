@@ -23,71 +23,6 @@
     "favorite_models": [],
     "model_parameters": [],
   },
-  "language_models": {
-    "openai_compatible": {
-      "apinex": {
-        "api_url": "https://api.apinex.bond/v1",
-        "available_models": [
-          {
-            "name": "free/qwen-3.8-max",
-            "max_tokens": 200000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 200000,
-            "reasoning_effort": "medium",
-            "capabilities": {
-              "tools": true,
-              "images": false,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-              "interleaved_reasoning": false,
-              "max_tokens_parameter": false,
-            },
-          },
-          {
-            "name": "free/deepseek-v4.1-flash",
-            "max_tokens": 200000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 200000,
-            "reasoning_effort": "medium",
-            "capabilities": {
-              "tools": true,
-              "images": false,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-              "interleaved_reasoning": false,
-              "max_tokens_parameter": false,
-            },
-          },
-        ],
-      },
-      "OrcaRouter": {
-        "api_url": "https://api.orcarouter.ai/v1/chat/completions",
-        "available_models": [
-          {
-            "name": "z-ai/glm-5.3-flash-free",
-            "max_tokens": 200000,
-            "max_output_tokens": 32000,
-            "max_completion_tokens": 200000,
-            "capabilities": {
-              "tools": true,
-              "images": false,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false,
-              "chat_completions": true,
-              "interleaved_reasoning": false,
-              "max_tokens_parameter": false,
-            },
-          },
-        ],
-      },
-    },
-    "opencode": {
-      "show_zen_models": true,
-      "show_go_models": false,
-    },
-  },
   "agent_servers": {},
   "edit_predictions": {
     "mercury": {
@@ -200,7 +135,7 @@
   "ui_font_family": "Exo",
   "buffer_line_height": "comfortable",
   "telemetry": {
-    "diagnostics": true,
+    "diagnostics": false,
     "metrics": false,
     "anthropic_retention": false,
   },
@@ -220,11 +155,6 @@
   "multi_cursor_modifier": "cmd_or_ctrl",
   "ui_font_size": 16.0,
   "buffer_font_size": 16.0,
-  "languages": {
-    "Rust": {
-      "language_servers": ["!rust-analyzer", "..."],
-    },
-  },
   "lsp": {
     "basedpyright": {
       "settings": {
@@ -237,7 +167,7 @@
   },
   "theme": {
     "mode": "dark",
-    "light": "v0-light",
+    "light": "Ayu Light",
     "dark": "Catppuccin Mocha (Blur)",
   },
   "auto_install_extensions": {
@@ -249,7 +179,6 @@
     "make": true,
     "lua": true,
     "latex": true,
-    "rich-vesper": true,
     "catppuccin-blur": true,
     "colored-zed-icons-theme": true,
     "rainbow-csv": true,
@@ -258,7 +187,6 @@
     "rust-snippets": true,
     "mcp-server-playwright": true,
     "latex-snippets": true,
-    "rust-glancer": true,
     "rust-analyzer": true,
   },
 }
