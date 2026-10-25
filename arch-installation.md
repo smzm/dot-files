@@ -326,7 +326,7 @@ Then, edit `/etc/hosts` file and set the hostname as well.Be mindful that you ne
 Then make Network connections persistent using commands:
 
 ```bash
-sudo pacman -S networkmanager network-manager-applet networkmanager-openvpn
+sudo pacman -S networkmanager network-manager-applet networkmanager-openvpn strongswan networkmanager-strongswan
 
 systemctl enable NetworkManager.service
 systemctl enable systemd-resolved.service
