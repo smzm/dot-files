@@ -51,7 +51,7 @@ element {
 
 element selected {
   text-color: @bg;
-  background-image: linear-gradient(#7cb1ec, #e46c67);
+  background-image: linear-gradient(#B1A1D2, #714AC6);
 }
 
 element-text {
