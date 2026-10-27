@@ -22,7 +22,7 @@
 hl.monitor({
 	output = "",
 	position = "0x0",
-	mode = "3440x1440@144",
+	mode = "3440x1440@99.99Hz",
 	scale = "1.25",
 })
 
@@ -48,14 +48,14 @@ local colorPicker = "hyprpicker"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function()
-	hl.exec_cmd("xrdb -merge ~/.Xresources")
+	-- hl.exec_cmd("xrdb -merge ~/.Xresources")
+	-- hl.exec_cmd("hyprpaper")
 	hl.exec_cmd("waybar")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("hyprpolkitagent")
 	hl.exec_cmd("nm-applet")
 	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 	hl.exec_cmd("clipse -listen")
-	hl.exec_cmd("hyprpaper")
 	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4000 -b 1.0:0.9")
 end)
 
