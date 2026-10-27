@@ -168,7 +168,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Light",
-    "dark": "Catppuccin Mocha (Blur)",
+    "dark": "Aura Dark",
   },
   "auto_install_extensions": {
     "html": true,
@@ -180,6 +180,7 @@
     "lua": true,
     "latex": true,
     "catppuccin-blur": true,
+    "aura-theme": true,
     "colored-zed-icons-theme": true,
     "rainbow-csv": true,
     "env": true,
