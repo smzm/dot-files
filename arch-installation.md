@@ -583,13 +583,40 @@ To install:
 pacman -S zram-generator
 ```
 
-Create `/etc/systemd/zram-generator.conf`:
+To use zram, create `/etc/systemd/zram-generator.conf`:
 
 ```ini
 [zram0]
-zram-size = ram
+zram-size = min(ram / 2, 8192)
 compression-algorithm = zstd
 swap-priority = 100
+fs-type = swap
+```
+It will start automatically on every boot.
+```bash 
+sudo systemctl daemon-reload
+sudo systemctl start systemd-zram-setup@zram0.service
+```
+Verify it with :
+
+```bash
+zramctl
+swapon --show
+```
+Tune the kernel for zram (Recommended) : 
+
+Create `/etc/sysctl.d/99-vm-zram-parameters.conf` :
+
+```ini 
+vm.swappiness = 180
+vm.watermark_boost_factor = 0
+vm.watermark_scale_factor = 125
+vm.page-cluster = 0
+```
+Apply it with:
+
+```bash 
+sudo sysctl --system
 ```
 
 The configured size is virtual compressed-swap capacity, not preallocated physical RAM.
