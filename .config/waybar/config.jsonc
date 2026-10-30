@@ -1,6 +1,6 @@
 {
     "position": "bottom",
-    "height": 37,
+    "height": 35,
     "margin-bottom": 0,
     "margin-top": 0,
     "margin-left": 0,
@@ -31,8 +31,9 @@
         "on-scroll-down": "hyprctl dispatch \"hl.dsp.focus({ workspace = 'e-1' })\"",
         "all-outputs": true,
         "sort-by-number": true,
+        "show-special": false,
         "persistent-workspaces": {
-            "*": 5
+            "*": [1, 2, 3, 4, 5]
         }
     },
     "hyprland/window": {
