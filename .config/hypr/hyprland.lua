@@ -48,13 +48,13 @@ local colorPicker = "hyprpicker"
 -- Or execute your favorite apps at launch like this:
 --
 hl.on("hyprland.start", function()
+	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 	-- hl.exec_cmd("xrdb -merge ~/.Xresources")
 	-- hl.exec_cmd("hyprpaper")
-	hl.exec_cmd("waybar")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("hyprpolkitagent")
+	hl.exec_cmd("waybar")
 	hl.exec_cmd("nm-applet")
-	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 	hl.exec_cmd("clipse -listen")
 	hl.exec_cmd("gammastep -l 36.2605:59.6168 -t 6500:4000 -b 1.0:0.9")
 end)
@@ -76,6 +76,7 @@ hl.env("OZONE_PLATFORM", "wayland")
 hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
 hl.env("LIBVA_DRIVER_NAME", "nvidia")
 hl.env("NVD_BACKEND", "direct")
+
 -- hl.env("MOZ_DISABLE_RDD_SANDBOX", "1")
 
 -----------------------
@@ -287,7 +288,7 @@ hl.config({
 hl.config({
 	input = {
 		kb_layout = "us,ir",
-		kb_variant = "",
+		kb_variant = ",winkeys",
 		kb_model = "",
 		kb_options = "grp:alt_shift_toggle",
 		kb_rules = "",
