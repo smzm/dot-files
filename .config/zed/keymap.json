@@ -110,4 +110,11 @@
       "tab": "agent::CycleModeSelector",
     },
   },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-]": "multi_workspace::NextProject",
+      "alt-[": "multi_workspace::PreviousProject",
+    },
+  },
 ]
