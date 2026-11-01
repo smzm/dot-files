@@ -156,8 +156,6 @@ PACKAGES=(
     # Section 2
     # ═════════════════════════════════════════════════════════════
 
-    "2|ly|pacman|Lightweight terminal display manager||"
-
     "2|hyprland|pacman|Dynamic tiling Wayland compositor|config:.config/hypr=>~/.config/hypr|"
 
     "2|xdg-desktop-portal|pacman|Desktop integration portal framework||"
@@ -215,6 +213,8 @@ PACKAGES=(
 
     "3|gnome-keyring|pacman|Stores passwords and encryption keys||"
     "3|libsecret|pacman|Library for storing and retrieving passwords and other secrets||"
+    
+    "3|smile|aur|An emoji picker with custom tags support||"
 
 
     # ═════════════════════════════════════════════════════════════
