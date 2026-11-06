@@ -154,7 +154,7 @@ hl.config({
 			enabled = true,
 
 			font_size = 12,
-			font_family = "FiraCode Nerd Font",
+			font_family = "JetBrainsMono Nerd Font Propo",
 
 			text_color = "rgb(d4d4d4)",
 
@@ -178,7 +178,7 @@ hl.config({
 		active_opacity = 1.0,
 		inactive_opacity = 1.0,
 		dim_inactive = true,
-		dim_strength = 0.35,
+		dim_strength = 0.25,
 
 		shadow = {
 			enabled = true,
@@ -452,6 +452,8 @@ hl.bind("Print", hl.dsp.exec_cmd("grim - | swappy -f -"))
 
 -- Area screenshot
 hl.bind(secondMod .. " + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
+
+hl.bind(secondMod .. " + V", hl.dsp.exec_cmd("~/.local/bin/paste-markdown"))
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
