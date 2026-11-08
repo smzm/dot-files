@@ -148,12 +148,21 @@ tooltip label {
   /* background: alpha(@fg-dark, 0.3); */
 }
 
+
+
 #workspaces button.active {
   color: @accent-primary;
   background: transparent;
   font-weight: 900;
   margin: 2px 4px;
   /* background: @accent-primary; */
+}
+
+/* Has windows, but not focused */
+#workspaces button:not(.empty):not(.active):not(.urgent) {
+  color: @fg-medium;
+  background: transparent;
+  font-weight: 700;
 }
 
 #workspaces button.urgent {
