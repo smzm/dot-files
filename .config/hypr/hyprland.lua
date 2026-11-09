@@ -390,11 +390,13 @@ hl.bind(secondMod .. " + L", hl.dsp.window.move({ direction = "right" }))
 hl.bind(secondMod .. " + K", hl.dsp.window.move({ direction = "up" }))
 hl.bind(secondMod .. " + J", hl.dsp.window.move({ direction = "down" }))
 
--- => Resize windows
-hl.bind(mainMod .. " + " .. " CTRL " .. " + " .. " + left", hl.dsp.window.resize({ x = -20, y = 0, relative = true }))
-hl.bind(mainMod .. " + " .. " CTRL " .. " + " .. " + right", hl.dsp.window.resize({ x = 20, y = 0, relative = true }))
-hl.bind(mainMod .. " + " .. " CTRL " .. " + " .. " + up", hl.dsp.window.resize({ x = 0, y = -20, relative = true }))
-hl.bind(mainMod .. " + " .. " CTRL " .. " + " .. " + down", hl.dsp.window.resize({ x = 0, y = 20, relative = true }))
+-- => Resize windows (hold to repeat)
+local resize_opts = { repeating = true }
+
+hl.bind(mainMod .. " + CTRL + left", hl.dsp.window.resize({ x = -20, y = 0, relative = true }), resize_opts)
+hl.bind(mainMod .. " + CTRL + right", hl.dsp.window.resize({ x = 20, y = 0, relative = true }), resize_opts)
+hl.bind(mainMod .. " + CTRL + up", hl.dsp.window.resize({ x = 0, y = -20, relative = true }), resize_opts)
+hl.bind(mainMod .. " + CTRL + down", hl.dsp.window.resize({ x = 0, y = 20, relative = true }), resize_opts)
 
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
