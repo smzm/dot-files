@@ -265,7 +265,7 @@ hl.config({
 hl.config({
 	scrolling = {
 		fullscreen_on_one_column = true,
-		column_width = 0.333,
+		-- column_width = 0.333,
 	},
 })
 
@@ -419,14 +419,6 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- flips the *current workspace* between scrolling (thirds) and your normal dwindle
-local scrollingWs = {}
-hl.bind(mainMod .. " + T", function()
-	local id = tostring(hl.get_active_workspace().id)
-	scrollingWs[id] = not scrollingWs[id]
-	hl.workspace_rule({ workspace = id, layout = scrollingWs[id] and "scrolling" or "dwindle" })
-end)
-
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind(
 	"XF86AudioRaiseVolume",
@@ -465,6 +457,48 @@ hl.bind("Print", hl.dsp.exec_cmd("grim - | swappy -f -"))
 hl.bind(secondMod .. " + Print", hl.dsp.exec_cmd('grim -g "$(slurp)" - | swappy -f -'))
 
 hl.bind(secondMod .. " + V", hl.dsp.exec_cmd("~/.local/bin/paste-markdown"))
+
+-- Persistent per-workspace layout toggle (dwindle <-> scrolling)
+local stateDir = (os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")) .. "/hypr"
+local stateFile = stateDir .. "/scrolling-workspaces"
+local scrollingWs = {}
+local function applyLayout(id)
+	hl.workspace_rule({ workspace = id, layout = scrollingWs[id] and "scrolling" or "dwindle" })
+end
+local function saveState()
+	os.execute('mkdir -p "' .. stateDir .. '"')
+	local f = io.open(stateFile, "w")
+	if not f then
+		return
+	end
+	for id, on in pairs(scrollingWs) do
+		if on then
+			f:write(id, "\n")
+		end
+	end
+	f:close()
+end
+local function loadState()
+	local f = io.open(stateFile, "r")
+	if not f then
+		return
+	end
+	for line in f:lines() do
+		local id = line:match("^%s*(%S+)%s*$")
+		if id then
+			scrollingWs[id] = true
+			applyLayout(id)
+		end
+	end
+	f:close()
+end
+loadState() -- restore on startup / reload
+hl.bind(mainMod .. " + T", function()
+	local id = tostring(hl.get_active_workspace().id)
+	scrollingWs[id] = not scrollingWs[id]
+	applyLayout(id)
+	saveState()
+end)
 
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----

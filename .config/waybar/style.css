@@ -21,7 +21,7 @@
  *   To change spacing everywhere, edit only those two lines.
  *   Per-module rules below must NOT set padding/margin, except
  *   the documented exceptions (workspaces, pulseaudio + slider,
- *   iplocation + network usage).
+ *   iplocation + network usage, session save + restore).
  *
  * NOTE: these named colors are used below but never defined,
  * so GTK ignores those declarations (kept as-is, unchanged):
@@ -104,6 +104,8 @@ tooltip label {
 #keyboard-state,
 #tray,
 #custom-weather,
+#custom-session-save,
+#custom-session-restore,
 #custom-power {
   padding: 1px 10px;
   margin: 2px 8px;
@@ -499,6 +501,35 @@ tooltip label {
 
 #custom-weather {
   color: @fg-medium;
+}
+
+/* Session save / restore buttons and their dedicated separator.
+ * The separator is its own Waybar module, not part of either action. */
+
+#custom-session-save,
+#custom-session-restore {
+  color: @fg-medium;
+  padding: 1px 3px;
+}
+
+#custom-session-save {
+  margin-right: 0;
+}
+
+#custom-session-separator {
+  color: alpha(@fg-dark, 0.95);
+  font-size: 14px;
+  padding: 0;
+  margin: 0 5px;
+}
+
+#custom-session-restore {
+  margin-left: 0;
+}
+
+#custom-session-save:hover,
+#custom-session-restore:hover {
+  color: @accent-tertiary;
 }
 
 /* Power */

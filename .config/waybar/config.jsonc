@@ -20,6 +20,9 @@
         "custom/gpu-temp",
         "custom/iplocation",
         "custom/network-usage",
+        "custom/session-save",
+        "custom/session-separator",
+        "custom/session-restore",
         "tray",
         "custom/power"
     ],
@@ -186,6 +189,24 @@
         "format": "󰐥",
         "tooltip": "Power menu",
         "on-click": "~/.config/waybar/custom_modules/power_menu.sh"
+    },
+    "custom/session-save": {
+        "format": "󰆓",
+        "tooltip": true,
+        "tooltip-format": "Save windows of this workspace",
+        "on-click": "~/.config/hypr/scripts/session.sh save $(hyprctl activeworkspace -j | jq -r .id)"
+    },
+    "custom/session-separator": {
+        "exec": "printf '│'",
+        "format": "{}",
+        "interval": "once",
+        "tooltip": false
+    },
+    "custom/session-restore": {
+        "format": "󰁯",
+        "tooltip": true,
+        "tooltip-format": "Restore saved windows of this workspace",
+        "on-click": "~/.config/hypr/scripts/session.sh restore $(hyprctl activeworkspace -j | jq -r .id) $(hyprctl activeworkspace -j | jq -r .id)"
     },
 
     "group/media": {
