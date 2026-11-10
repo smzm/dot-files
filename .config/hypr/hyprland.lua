@@ -178,7 +178,7 @@ hl.config({
 		active_opacity = 1.0,
 		inactive_opacity = 1.0,
 		dim_inactive = true,
-		dim_strength = 0.25,
+		dim_strength = 0.20,
 
 		shadow = {
 			enabled = true,
@@ -188,7 +188,7 @@ hl.config({
 		},
 
 		blur = {
-			enabled = true,
+			enabled = false,
 			size = 3,
 			passes = 3,
 			vibrancy = 0.1696,
@@ -265,6 +265,7 @@ hl.config({
 hl.config({
 	scrolling = {
 		fullscreen_on_one_column = true,
+		column_width = 0.333,
 	},
 })
 
@@ -417,6 +418,14 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 -- Move/resize windows with mainMod + LMB/RMB and dragging
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+-- flips the *current workspace* between scrolling (thirds) and your normal dwindle
+local scrollingWs = {}
+hl.bind(mainMod .. " + T", function()
+	local id = tostring(hl.get_active_workspace().id)
+	scrollingWs[id] = not scrollingWs[id]
+	hl.workspace_rule({ workspace = id, layout = scrollingWs[id] and "scrolling" or "dwindle" })
+end)
 
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind(
