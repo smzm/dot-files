@@ -50,7 +50,7 @@ local colorPicker = "hyprpicker"
 hl.on("hyprland.start", function()
 	hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 	-- hl.exec_cmd("xrdb -merge ~/.Xresources")
-	-- hl.exec_cmd("hyprpaper")
+	hl.exec_cmd("hyprpaper")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("hyprpolkitagent")
 	hl.exec_cmd("waybar")
@@ -500,6 +500,10 @@ hl.bind(mainMod .. " + T", function()
 	saveState()
 end)
 
+-- Scrolling layout: re-fit columns so open windows fill the screen again
+hl.bind(mainMod .. " + R", hl.dsp.layout("fit visible"))
+-- Fit every column on the workspace into the screen, even the off-screen ones
+hl.bind(secondMod .. " + R", hl.dsp.layout("fit all"))
 --------------------------------
 ---- WINDOWS AND WORKSPACES ----
 --------------------------------

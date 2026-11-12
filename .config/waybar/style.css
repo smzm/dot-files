@@ -43,7 +43,6 @@
 
 
 /* ── 2. Global reset ─────────────────────────────────────── */
-
 * {
   border: none;
   border-radius: 0;
@@ -54,12 +53,11 @@
 
 
 /* ── 3. Bar window & tooltip ─────────────────────────────── */
-
 window#waybar {
-  background: alpha(@bg, 0.68);
+  background: alpha(@bg, 0.9);
   color: @fg-light;
   /* border-radius: 10px; */
-  border: 1px solid alpha(@fg-dark, 0.5);
+  border-top: 1px solid alpha(@fg-dark, 0.5);
   transition: none;
 }
 
@@ -505,7 +503,6 @@ tooltip label {
 
 /* Session save / restore buttons and their dedicated separator.
  * The separator is its own Waybar module, not part of either action. */
-
 #custom-session-save,
 #custom-session-restore {
   color: @fg-medium;
@@ -533,7 +530,6 @@ tooltip label {
 }
 
 /* Power */
-
 #custom-power {
   font-size: 16px;
   color: alpha(@accent-primary, 0.88);
