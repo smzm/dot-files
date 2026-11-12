@@ -180,7 +180,7 @@ PACKAGES=(
     # ═════════════════════════════════════════════════════════════
 
     "3|rofi|pacman|Application launcher|config:.config/rofi=>~/.config/rofi|"
-    "3|dunst|pacman|Lightweight desktop notification daemon|config:.config/dunst=>~/.config/dunst;.config/systemd/user/dunst.service=>~/.config/systemd/user/dunst.service|command:systemctl --user daemon-reload && systemctl --user enable --now dunst.service"
+    "3|hokum-bin|aur|Notifications for Wayland||command:systemctl --user enable --now hokum.service"
 
     "3|nwg-look|pacman|GTK theme configuration utility for Wayland||"
     "3|gnome-themes-extra|pacman|Additional GNOME and GTK themes||"
