@@ -394,6 +394,9 @@ PACKAGES=(
     "9|spotify|aur|Spotify client|config:applications/spotify.desktop=>~/.local/share/applications/spotify.desktop|command:update-desktop-database ~/.local/share/applications"
 
     "9|photocraft-bin|aur|An open-source, clean-room reimplementation of Adobe Photoshop in pure Rust||"
+
+    # Install Flatpack and gearlevel to install appimages by drag and drop
+    "9|flatpack|pacman|Linux application sandboxing and distribution framework||command:flatpak install flathub it.mijorus.gearlever|"
 )
 
 
