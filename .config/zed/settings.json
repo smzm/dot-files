@@ -6,7 +6,7 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
-  "buffer_font_family": "CaskaydiaCove Nerd Font",
+  "buffer_font_family": "SF Mono",
   "context_servers": {
     "mcp-server-playwright": {
       "enabled": true,
